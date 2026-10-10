@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FBF6EE;color:#2B1E18;font-family:'Figtree',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#C8441F;text-decoration:none}a:hover{color:#9E3115;text-decoration:underline}
+*{box-sizing:border-box}
+</style>
+</helmet>
+
+<div style="max-width:1240px;margin:0 auto;padding:40px 32px 120px;display:flex;flex-direction:column;gap:120px">
+
+  <header style="display:flex;flex-direction:column;gap:72px">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:14px;color:#6B5A50">
+      <div style="display:flex;align-items:center;gap:10px">
+        <svg viewBox="0 0 64 64" width="28" height="28"><path d="M16 0H42L64 22V48A16 16 0 0 1 48 64H16A16 16 0 0 1 0 48V16A16 16 0 0 1 16 0Z" fill="#EE5A36"></path><path d="M42 0V14A8 8 0 0 0 50 22H64Z" fill="#F5B83D"></path><text x="30" y="47" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="42" fill="#FBF6EE">g</text></svg>
+        <span style="font-weight:600;color:#2B1E18">Brand kit</span><span>v1.0 · Oct 2026</span>
+      </div>
+      <nav style="display:flex;gap:20px;flex-wrap:wrap">
+        <a href="#logo">Logo</a><a href="#color">Color</a><a href="#type">Type</a><a href="#shape">Shape</a><a href="#components">Components</a><a href="#in-use">In use</a>
+      </nav>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:48px;align-items:end">
+      <div style="display:flex;flex-direction:column;gap:28px">
+        <div style="display:flex;align-items:center;gap:20px">
+          <svg viewBox="0 0 64 64" width="104" height="104"><path d="M16 0H42L64 22V48A16 16 0 0 1 48 64H16A16 16 0 0 1 0 48V16A16 16 0 0 1 16 0Z" fill="#EE5A36"></path><path d="M42 0V14A8 8 0 0 0 50 22H64Z" fill="#F5B83D"></path><text x="30" y="47" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="42" fill="#FBF6EE">g</text></svg>
+          <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(56px,9vw,112px);letter-spacing:-0.045em;line-height:1">greet<span style="color:#EE5A36">hub</span></span>
+        </div>
+        <p style="margin:0;font-family:'Bricolage Grotesque';font-weight:700;font-size:clamp(28px,3.4vw,40px);letter-spacing:-0.02em;line-height:1.1;max-width:560px;text-wrap:pretty">Made by you. Felt by them.</p>
+      </div>
+      <p style="margin:0;font-size:18px;line-height:1.6;color:#6B5A50;max-width:480px;text-wrap:pretty">GreetHub is where people make greeting cards and picture books from scratch — their photos, their words, their in-jokes. The brand should feel like a handwritten note: warm, a little playful, never precious. These are the parts.</p>
+    </div>
+  </header>
+
+  <!-- LOGO -->
+  <section id="logo" style="display:flex;flex-direction:column;gap:32px">
+    <div style="display:flex;align-items:baseline;gap:16px;border-top:1.5px solid #2B1E18;padding-top:16px">
+      <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:15px;color:#EE5A36">01</span>
+      <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:800;font-size:40px;letter-spacing:-0.03em">Logo</h2>
+    </div>
+    <p style="margin:0;max-width:640px;font-size:17px;line-height:1.6;color:#6B5A50;text-wrap:pretty">The mark is a card with its corner folded — the moment just before someone opens it. Wordmark is always lowercase; “hub” takes the brand color.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px">
+      <div style="grid-column:span 2;min-height:280px;background:#FFFFFF;border-radius:22px;display:flex;flex-direction:column;justify-content:space-between;padding:24px;box-shadow:0 1px 0 rgba(43,30,24,.06),0 12px 32px -16px rgba(43,30,24,.22)">
+        <span style="font-size:13px;color:#6B5A50">Primary lockup</span>
+        <div style="display:flex;align-items:center;gap:14px;align-self:center">
+          <svg viewBox="0 0 64 64" width="64" height="64"><path d="M16 0H42L64 22V48A16 16 0 0 1 48 64H16A16 16 0 0 1 0 48V16A16 16 0 0 1 16 0Z" fill="#EE5A36"></path><path d="M42 0V14A8 8 0 0 0 50 22H64Z" fill="#F5B83D"></path><text x="30" y="47" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="42" fill="#FBF6EE">g</text></svg>
+          <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:60px;letter-spacing:-0.045em;line-height:1">greet<span style="color:#EE5A36">hub</span></span>
+        </div>
+        <span style="font-size:13px;color:#6B5A50">Clear space = height of the fold on all sides</span>
+      </div>
+      <div style="min-height:280px;background:#F3EADB;border-radius:22px;display:flex;flex-direction:column;justify-content:space-between;padding:24px">
+        <span style="font-size:13px;color:#6B5A50">Mark / app icon</span>
+        <div style="align-self:center;display:flex;gap:20px;align-items:flex-end">
+          <svg viewBox="0 0 64 64" width="120" height="120"><path d="M16 0H42L64 22V48A16 16 0 0 1 48 64H16A16 16 0 0 1 0 48V16A16 16 0 0 1 16 0Z" fill="#EE5A36"></path><path d="M42 0V14A8 8 0 0 0 50 22H64Z" fill="#F5B83D"></path><text x="30" y="47" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="42" fill="#FBF6EE">g</text></svg>
+          <svg viewBox="0 0 64 64" width="48" height="48"><path d="M16 0H42L64 22V48A16 16 0 0 1 48 64H16A16 16 0 0 1 0 48V16A16 16 0 0 1 16 0Z" fill="#EE5A36"></path><path d="M42 0V14A8 8 0 0 0 50 22H64Z" fill="#F5B83D"></path><text x="30" y="47" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="42" fill="#FBF6EE">g</text></svg>
+          <svg viewBox="0 0 64 64" width="24" height="24"><path d="M16 0H42L64 22V48A16 16 0 0 1 48 64H16A16 16 0 0 1 0 48V16A16 16 0 0 1 16 0Z" fill="#EE5A36"></path><path d="M42 0V14A8 8 0 0 0 50 22H64Z" fill="#F5B83D"></path><text x="30" y="47" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="42" fill="#FBF6EE">g</text></svg>
+        </div>
+        <span style="font-size:13px;color:#6B5A50">Min size 20px</span>
+      </div>
+      <div style="min-height:200px;background:#5B2A4B;border-radius:22px;display:flex;align-items:center;justify-content:center;gap:12px;padding:24px">
+        <svg viewBox="0 0 64 64" width="44" height="44"><path d="M16 0H42L64 22V48A16 16 0 0 1 48 64H16A16 16 0 0 1 0 48V16A16 16 0 0 1 16 0Z" fill="#EE5A36"></path><path d="M42 0V14A8 8 0 0 0 50 22H64Z" fill="#F5B83D"></path><text x="30" y="47" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="42" fill="#FBF6EE">g</text></svg>
+        <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:40px;letter-spacing:-0.045em;color:#FBF6EE">greet<span style="color:#F5B83D">hub</span></span>
+      </div>
+      <div style="min-height:200px;background:#EE5A36;border-radius:22px;display:flex;align-items:center;justify-content:center;gap:12px;padding:24px">
+        <svg viewBox="0 0 64 64" width="44" height="44"><path d="M16 0H42L64 22V48A16 16 0 0 1 48 64H16A16 16 0 0 1 0 48V16A16 16 0 0 1 16 0Z" fill="#FBF6EE"></path><path d="M42 0V14A8 8 0 0 0 50 22H64Z" fill="#F5B83D"></path><text x="30" y="47" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="42" fill="#EE5A36">g</text></svg>
+        <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:40px;letter-spacing:-0.045em;color:#2B1E18">greethub</span>
+      </div>
+      <div style="min-height:200px;background:#FBF6EE;border:1.5px dashed #D9CBB6;border-radius:22px;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:24px;font-size:14px;line-height:1.5;color:#6B5A50">
+        <span style="font-weight:700;color:#2B1E18">Don’t</span>
+        <span>Capitalize it (“GreetHub” is for prose only)</span>
+        <span>Rotate, outline, or add shadows to the mark</span>
+        <span>Put persimmon on marigold</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLOR -->
+  <section id="color" style="display:flex;flex-direction:column;gap:32px">
+    <div style="display:flex;align-items:baseline;gap:16px;border-top:1.5px solid #2B1E18;padding-top:16px">
+      <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:15px;color:#EE5A36">02</span>
+      <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:800;font-size:40px;letter-spacing:-0.03em">Color</h2>
+    </div>
+    <p style="margin:0;max-width:640px;font-size:17px;line-height:1.6;color:#6B5A50;text-wrap:pretty">Paper and cocoa do most of the work. Persimmon is the voice — CTAs, the logo, one moment per screen. Marigold, blush and plum are for celebration: stickers, badges, occasion themes.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:12px">
+      <div style="grid-column:span 2;height:240px;background:#EE5A36;border-radius:22px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;color:#2B1E18">
+        <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:28px;letter-spacing:-0.02em">Persimmon</span>
+        <span style="font-size:13px;line-height:1.6;font-weight:500">#EE5A36 · brand<br>#C8441F · buttons, links (AA on white)</span>
+      </div>
+      <div style="height:240px;background:#F5B83D;border-radius:22px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;color:#2B1E18">
+        <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:24px;letter-spacing:-0.02em">Marigold</span>
+        <span style="font-size:13px;font-weight:500">#F5B83D</span>
+      </div>
+      <div style="height:240px;background:#F6C9C0;border-radius:22px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;color:#2B1E18">
+        <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:24px;letter-spacing:-0.02em">Blush</span>
+        <span style="font-size:13px;font-weight:500">#F6C9C0</span>
+      </div>
+      <div style="height:240px;background:#5B2A4B;border-radius:22px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;color:#FBF6EE">
+        <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:24px;letter-spacing:-0.02em">Plum</span>
+        <span style="font-size:13px;font-weight:500">#5B2A4B</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:12px">
+      <div style="display:flex;flex-direction:column;gap:8px"><div style="height:80px;border-radius:14px;background:#2B1E18"></div><span style="font-size:13px;font-weight:600">Cocoa</span><span style="font-size:12px;color:#6B5A50">#2B1E18 · text</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><div style="height:80px;border-radius:14px;background:#6B5A50"></div><span style="font-size:13px;font-weight:600">Cocoa 70</span><span style="font-size:12px;color:#6B5A50">#6B5A50 · secondary</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><div style="height:80px;border-radius:14px;background:#D9CBB6"></div><span style="font-size:13px;font-weight:600">Twine</span><span style="font-size:12px;color:#6B5A50">#D9CBB6 · borders</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><div style="height:80px;border-radius:14px;background:#F3EADB"></div><span style="font-size:13px;font-weight:600">Cream</span><span style="font-size:12px;color:#6B5A50">#F3EADB · surface</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><div style="height:80px;border-radius:14px;background:#FBF6EE;border:1.5px solid #E8DCC8"></div><span style="font-size:13px;font-weight:600">Paper</span><span style="font-size:12px;color:#6B5A50">#FBF6EE · background</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><div style="height:80px;border-radius:14px;background:#FFFFFF;border:1.5px solid #E8DCC8"></div><span style="font-size:13px;font-weight:600">White</span><span style="font-size:12px;color:#6B5A50">#FFFFFF · cards</span></div>
+    </div>
+    <div style="display:flex;gap:4px;height:14px;border-radius:999px;overflow:hidden;max-width:640px">
+      <div style="flex:60;background:#FBF6EE;border:1px solid #E8DCC8;border-radius:999px 0 0 999px"></div>
+      <div style="flex:20;background:#2B1E18"></div>
+      <div style="flex:10;background:#EE5A36"></div>
+      <div style="flex:4;background:#F5B83D"></div>
+      <div style="flex:3;background:#F6C9C0"></div>
+      <div style="flex:3;background:#5B2A4B"></div>
+    </div>
+    <span style="font-size:13px;color:#6B5A50;margin-top:-20px">Rough ratio per screen — 60 / 20 / 10 / 10</span>
+  </section>
+
+  <!-- TYPE -->
+  <section id="type" style="display:flex;flex-direction:column;gap:32px">
+    <div style="display:flex;align-items:baseline;gap:16px;border-top:1.5px solid #2B1E18;padding-top:16px">
+      <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:15px;color:#EE5A36">03</span>
+      <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:800;font-size:40px;letter-spacing:-0.03em">Type</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px">
+      <div style="background:#FFFFFF;border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:20px;box-shadow:0 1px 0 rgba(43,30,24,.06),0 12px 32px -16px rgba(43,30,24,.22)">
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:#6B5A50"><span>Display</span><span>Google Fonts · 700 / 800</span></div>
+        <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:96px;letter-spacing:-0.045em;line-height:.9">Aa</span>
+        <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:28px;letter-spacing:-0.02em">Bricolage Grotesque</span>
+        <span style="font-size:14px;line-height:1.5;color:#6B5A50">Headlines, the wordmark, numbers. Tight tracking (−2% to −4.5%). Its slightly uneven, inky shapes keep things from feeling corporate.</span>
+      </div>
+      <div style="background:#F3EADB;border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:#6B5A50"><span>Text &amp; UI</span><span>Google Fonts · 400–700</span></div>
+        <span style="font-family:'Figtree';font-weight:600;font-size:96px;letter-spacing:-0.03em;line-height:.9">Aa</span>
+        <span style="font-family:'Figtree';font-weight:600;font-size:28px">Figtree</span>
+        <span style="font-size:14px;line-height:1.5;color:#6B5A50">Body copy, labels, buttons, inputs. Round, open and readable at 13px on a phone.</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;border-radius:22px;overflow:hidden;background:#FFFFFF">
+      <div style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:baseline;padding:20px 24px;border-bottom:1px solid #F3EADB"><span style="font-size:12px;color:#6B5A50">Display · 72/0.95</span><span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(40px,6vw,72px);letter-spacing:-0.04em;line-height:.95">Happy 80th, Nonna</span></div>
+      <div style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:baseline;padding:20px 24px;border-bottom:1px solid #F3EADB"><span style="font-size:12px;color:#6B5A50">H1 · 48/1.05</span><span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(32px,4vw,48px);letter-spacing:-0.03em;line-height:1.05">Start with a photo</span></div>
+      <div style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:baseline;padding:20px 24px;border-bottom:1px solid #F3EADB"><span style="font-size:12px;color:#6B5A50">H2 · 32/1.1</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:32px;letter-spacing:-0.02em;line-height:1.1">Your picture books</span></div>
+      <div style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:baseline;padding:20px 24px;border-bottom:1px solid #F3EADB"><span style="font-size:12px;color:#6B5A50">H3 · 20/1.25</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:20px;letter-spacing:-0.01em">Pick an occasion</span></div>
+      <div style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:baseline;padding:20px 24px;border-bottom:1px solid #F3EADB"><span style="font-size:12px;color:#6B5A50">Body · 17/1.6</span><span style="font-size:17px;line-height:1.6;max-width:600px">Drop in your photos, write what you actually want to say, and we’ll print it on thick, matte stock and mail it for you.</span></div>
+      <div style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:baseline;padding:20px 24px"><span style="font-size:12px;color:#6B5A50">Label · 13/1.4</span><span style="font-size:13px;font-weight:600;letter-spacing:.01em">Ships in 2–3 days · Free returns</span></div>
+    </div>
+  </section>
+
+  <!-- SHAPE + VOICE -->
+  <section id="shape" style="display:flex;flex-direction:column;gap:32px">
+    <div style="display:flex;align-items:baseline;gap:16px;border-top:1.5px solid #2B1E18;padding-top:16px">
+      <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:15px;color:#EE5A36">04</span>
+      <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:800;font-size:40px;letter-spacing:-0.03em">Shape, depth &amp; voice</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px">
+      <div style="background:#FFFFFF;border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:20px">
+        <span style="font-size:13px;color:#6B5A50">Radius</span>
+        <div style="display:flex;gap:12px;align-items:flex-end">
+          <div style="display:flex;flex-direction:column;gap:6px;align-items:center"><div style="width:48px;height:48px;background:#F3EADB;border-radius:8px"></div><span style="font-size:12px">8</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px;align-items:center"><div style="width:48px;height:48px;background:#F3EADB;border-radius:14px"></div><span style="font-size:12px">14</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px;align-items:center"><div style="width:48px;height:48px;background:#F3EADB;border-radius:22px"></div><span style="font-size:12px">22</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px;align-items:center"><div style="width:72px;height:48px;background:#F3EADB;border-radius:999px"></div><span style="font-size:12px">pill</span></div>
+        </div>
+        <span style="font-size:13px;line-height:1.5;color:#6B5A50">Inputs 14 · cards 22 · buttons and chips pill.</span>
+      </div>
+      <div style="background:#F3EADB;border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:20px">
+        <span style="font-size:13px;color:#6B5A50">Depth</span>
+        <div style="display:flex;gap:16px">
+          <div style="flex:1;height:72px;background:#FFFFFF;border-radius:14px;box-shadow:0 1px 2px rgba(43,30,24,.08)"></div>
+          <div style="flex:1;height:72px;background:#FFFFFF;border-radius:14px;box-shadow:0 1px 0 rgba(43,30,24,.06),0 12px 32px -16px rgba(43,30,24,.28)"></div>
+          <div style="flex:1;height:72px;background:#FFFFFF;border-radius:14px;box-shadow:0 2px 0 rgba(43,30,24,.06),0 24px 48px -20px rgba(91,42,75,.4);transform:rotate(-3deg)"></div>
+        </div>
+        <span style="font-size:13px;line-height:1.5;color:#6B5A50">Rest · raised · lifted. Lifted cards tilt ±2–4° — like paper on a table.</span>
+      </div>
+      <div style="background:#5B2A4B;color:#FBF6EE;border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:14px">
+        <span style="font-size:13px;color:#E6CFDD">Voice</span>
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:700;color:#F5B83D">SAY</span><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:20px;letter-spacing:-0.01em">“Your card’s on its way to Sam.”</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:700;color:#F6C9C0">NOT</span><span style="font-size:16px;color:#E6CFDD;text-decoration:line-through">“Order #4821 has been successfully processed!”</span></div>
+        <span style="font-size:13px;line-height:1.5;color:#E6CFDD">Warm, plain, first names. One exclamation mark per screen, max.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPONENTS -->
+  <section id="components" style="display:flex;flex-direction:column;gap:32px">
+    <div style="display:flex;align-items:baseline;gap:16px;border-top:1.5px solid #2B1E18;padding-top:16px">
+      <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:15px;color:#EE5A36">05</span>
+      <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:800;font-size:40px;letter-spacing:-0.03em">Components</h2>
+    </div>
+    <p style="margin:0;max-width:640px;font-size:17px;line-height:1.6;color:#6B5A50;text-wrap:pretty">Shipped as React in the webkit bundle. Everything here is interactive.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:16px">
+
+      <div style="background:#FFFFFF;border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:20px">
+        <span style="font-size:13px;color:#6B5A50">Button</span>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+          <button style="font-family:'Figtree';font-weight:700;font-size:16px;height:48px;padding:0 24px;border-radius:999px;white-space:nowrap;border:none;background:#C8441F;color:#FFFFFF;cursor:pointer;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18)" style-hover="background:#9E3115">Start a card</button>
+          <button style="font-family:'Figtree';font-weight:700;font-size:16px;height:48px;padding:0 24px;border-radius:999px;white-space:nowrap;border:1.5px solid #2B1E18;background:transparent;color:#2B1E18;cursor:pointer" style-hover="background:#F3EADB">Browse</button>
+          <button style="font-family:'Figtree';font-weight:700;font-size:16px;height:48px;padding:0 18px;border-radius:999px;white-space:nowrap;border:none;background:transparent;color:#C8441F;cursor:pointer" style-hover="background:#FDE3D8">Skip</button>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+          <button style="font-family:'Figtree';font-weight:700;font-size:14px;height:36px;padding:0 16px;border-radius:999px;white-space:nowrap;border:none;background:#2B1E18;color:#FBF6EE;cursor:pointer">Send</button>
+          <button style="font-family:'Figtree';font-weight:700;font-size:14px;height:36px;padding:0 16px;border-radius:999px;white-space:nowrap;border:none;background:#F5B83D;color:#2B1E18;cursor:pointer">Add sticker</button>
+          <button style="font-family:'Figtree';font-weight:700;font-size:14px;height:36px;padding:0 16px;border-radius:999px;white-space:nowrap;border:none;background:#F3EADB;color:#A99888;cursor:not-allowed">Disabled</button>
+        </div>
+      </div>
+
+      <div style="background:#FFFFFF;border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:16px">
+        <span style="font-size:13px;color:#6B5A50">Input</span>
+        <label style="display:flex;flex-direction:column;gap:6px">
+          <span style="font-size:13px;font-weight:600">Who’s it for?</span>
+          <input placeholder="Grandma Rosa" style="font-family:'Figtree';font-size:16px;height:48px;padding:0 16px;border-radius:14px;border:1.5px solid #D9CBB6;background:#FBF6EE;color:#2B1E18;outline:none" style-focus="border-color:#C8441F;box-shadow:0 0 0 4px #FDE3D8;background:#FFFFFF">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:6px">
+          <span style="font-size:13px;font-weight:600">Your message</span>
+          <textarea rows="2" placeholder="Write it the way you’d say it…" style="font-family:'Figtree';font-size:16px;line-height:1.5;padding:12px 16px;border-radius:14px;border:1.5px solid #D9CBB6;background:#FBF6EE;color:#2B1E18;outline:none;resize:none" style-focus="border-color:#C8441F;box-shadow:0 0 0 4px #FDE3D8;background:#FFFFFF"></textarea>
+        </label>
+      </div>
+
+      <div style="background:#FFFFFF;border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:20px">
+        <span style="font-size:13px;color:#6B5A50">Chips · toggle · badge</span>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ chips }}" as="c" hint-placeholder-count="5">
+            <button onClick="{{ c.onClick }}" style="font-family:'Figtree';font-weight:600;font-size:14px;height:36px;padding:0 14px;border-radius:999px;white-space:nowrap;cursor:pointer;white-space:nowrap;flex:none;border:1.5px solid {{ c.border }};background:{{ c.bg }};color:{{ c.fg }}">{{ c.label }}</button>
+          </sc-for>
+        </div>
+        <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+          <button onClick="{{ toggle }}" style="display:flex;align-items:center;gap:10px;background:none;border:none;padding:0;cursor:pointer;font-family:'Figtree';font-size:15px;color:#2B1E18">
+            <span style="width:48px;height:28px;border-radius:999px;background:{{ toggleBg }};padding:3px;display:flex;justify-content:{{ toggleJustify }};transition:background .2s">
+              <span style="width:22px;height:22px;border-radius:999px;background:#FFFFFF;box-shadow:0 1px 3px rgba(43,30,24,.3)"></span>
+            </span>
+            Mail it for me
+          </button>
+          <div style="display:flex;gap:6px">
+            <span style="font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:#F5B83D;color:#2B1E18">New</span>
+            <span style="font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:#F6C9C0;color:#5B2A4B">Draft</span>
+            <span style="font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:#2B1E18;color:#FBF6EE">Sent</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#F3EADB;border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:16px">
+        <span style="font-size:13px;color:#6B5A50">Template card</span>
+        <div style="display:flex;gap:14px">
+          <div style="flex:1;background:#FFFFFF;border-radius:22px;padding:10px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 0 rgba(43,30,24,.06),0 12px 32px -16px rgba(43,30,24,.28);transform:rotate(-2deg)" style-hover="transform:rotate(0deg) translateY(-4px)">
+            <div style="aspect-ratio:4/5;border-radius:14px;background:repeating-linear-gradient(135deg,#F6C9C0 0 8px,#F9D7D0 8px 16px);display:flex;align-items:flex-end;padding:10px;font-family:ui-monospace,monospace;font-size:11px;color:#5B2A4B">card cover</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:0 4px 4px"><span style="font-weight:700;font-size:14px">Big Birthday</span><span style="font-size:12px;color:#6B5A50">$4.99</span></div>
+          </div>
+          <div style="flex:1;background:#FFFFFF;border-radius:22px;padding:10px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 0 rgba(43,30,24,.06),0 12px 32px -16px rgba(43,30,24,.28);transform:rotate(2deg)" style-hover="transform:rotate(0deg) translateY(-4px)">
+            <div style="aspect-ratio:4/5;border-radius:14px;background:repeating-linear-gradient(135deg,#F5B83D 0 8px,#F8C964 8px 16px);display:flex;align-items:flex-end;padding:10px;font-family:ui-monospace,monospace;font-size:11px;color:#2B1E18">book cover</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:0 4px 4px"><span style="font-weight:700;font-size:14px">Our Summer</span><span style="font-size:12px;color:#6B5A50">24 pp</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#FFFFFF;border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:16px">
+        <span style="font-size:13px;color:#6B5A50">Avatars · toast</span>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="display:flex">
+            <span style="width:40px;height:40px;border-radius:999px;background:#F6C9C0;color:#5B2A4B;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;border:3px solid #FFFFFF">MR</span>
+            <span style="width:40px;height:40px;border-radius:999px;background:#F5B83D;color:#2B1E18;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;border:3px solid #FFFFFF;margin-left:-10px">JS</span>
+            <span style="width:40px;height:40px;border-radius:999px;background:#5B2A4B;color:#FBF6EE;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;border:3px solid #FFFFFF;margin-left:-10px">AK</span>
+            <span style="width:40px;height:40px;border-radius:999px;background:#F3EADB;color:#2B1E18;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;border:3px solid #FFFFFF;margin-left:-10px">+4</span>
+          </div>
+          <span style="font-size:14px;color:#6B5A50">7 people are signing this card</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;background:#2B1E18;color:#FBF6EE;border-radius:999px;padding:8px 8px 8px 18px;align-self:flex-start;box-shadow:0 12px 32px -12px rgba(43,30,24,.5)">
+          <span style="width:8px;height:8px;border-radius:999px;background:#F5B83D"></span>
+          <span style="font-size:14px;font-weight:500">Your card’s on its way to Sam.</span>
+          <button style="font-family:'Figtree';font-weight:700;font-size:13px;height:32px;padding:0 14px;border-radius:999px;white-space:nowrap;border:none;background:#FBF6EE;color:#2B1E18;cursor:pointer">Track</button>
+        </div>
+      </div>
+
+      <div style="background:#FFFFFF;border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:16px">
+        <span style="font-size:13px;color:#6B5A50">Segmented · progress</span>
+        <div style="display:flex;background:#F3EADB;border-radius:999px;padding:4px;gap:4px;align-self:flex-start">
+          <sc-for list="{{ segs }}" as="s" hint-placeholder-count="3">
+            <button onClick="{{ s.onClick }}" style="font-family:'Figtree';font-weight:700;font-size:14px;height:36px;padding:0 16px;border-radius:999px;white-space:nowrap;border:none;cursor:pointer;background:{{ s.bg }};color:{{ s.fg }};box-shadow:{{ s.shadow }}">{{ s.label }}</button>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;font-size:13px"><span style="font-weight:600">Step 2 of 4 · Add photos</span><span style="color:#6B5A50">50%</span></div>
+          <div style="height:8px;border-radius:999px;background:#F3EADB;overflow:hidden"><div style="width:50%;height:100%;background:#EE5A36;border-radius:999px"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IN USE -->
+  <section id="in-use" style="display:flex;flex-direction:column;gap:32px">
+    <div style="display:flex;align-items:baseline;gap:16px;border-top:1.5px solid #2B1E18;padding-top:16px">
+      <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:15px;color:#EE5A36">06</span>
+      <h2 style="margin:0;font-family:'Bricolage Grotesque';font-weight:800;font-size:40px;letter-spacing:-0.03em">In use</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:24px;align-items:start">
+
+      <div style="grid-column:span 2;background:#FBF6EE;border-radius:22px;overflow:hidden;box-shadow:0 0 0 1.5px #E8DCC8,0 24px 48px -24px rgba(43,30,24,.3)">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 28px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:8px">
+            <svg viewBox="0 0 64 64" width="30" height="30"><path d="M16 0H42L64 22V48A16 16 0 0 1 48 64H16A16 16 0 0 1 0 48V16A16 16 0 0 1 16 0Z" fill="#EE5A36"></path><path d="M42 0V14A8 8 0 0 0 50 22H64Z" fill="#F5B83D"></path><text x="30" y="47" text-anchor="middle" font-family="Bricolage Grotesque" font-weight="800" font-size="42" fill="#FBF6EE">g</text></svg>
+            <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:24px;letter-spacing:-0.045em">greet<span style="color:#EE5A36">hub</span></span>
+          </div>
+          <div style="display:flex;gap:24px;font-size:15px;font-weight:600;flex-wrap:wrap"><span>Cards</span><span>Picture books</span><span>Occasions</span><span>Pricing</span></div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:15px;font-weight:600;padding:0 12px">Sign in</span>
+            <button style="font-family:'Figtree';font-weight:700;font-size:14px;height:40px;padding:0 18px;border-radius:999px;white-space:nowrap;border:none;background:#C8441F;color:#FFFFFF;cursor:pointer;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18)">Start a card</button>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:32px;padding:48px 28px 56px;align-items:center">
+          <div style="display:flex;flex-direction:column;gap:24px">
+            <span style="font-size:13px;font-weight:700;padding:6px 12px;border-radius:999px;background:#F6C9C0;color:#5B2A4B;align-self:flex-start">Mother’s Day ships free until May 4</span>
+            <h1 style="margin:0;font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(44px,5.5vw,72px);letter-spacing:-0.045em;line-height:.95;text-wrap:pretty">Cards that sound like <span style="color:#EE5A36">you.</span></h1>
+            <p style="margin:0;font-size:18px;line-height:1.6;color:#6B5A50;max-width:440px">Your photos, your words, your in-jokes — printed on thick matte paper and mailed for you. Or make it a whole picture book.</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button style="font-family:'Figtree';font-weight:700;font-size:16px;height:52px;padding:0 26px;border-radius:999px;white-space:nowrap;border:none;background:#C8441F;color:#FFFFFF;cursor:pointer;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18)">Start a card</button>
+              <button style="font-family:'Figtree';font-weight:700;font-size:16px;height:52px;padding:0 26px;border-radius:999px;white-space:nowrap;border:1.5px solid #2B1E18;background:transparent;color:#2B1E18;cursor:pointer">Make a picture book</button>
+            </div>
+          </div>
+          <div style="position:relative;height:380px">
+            <div style="position:absolute;left:4%;top:30px;width:52%;aspect-ratio:4/5;border-radius:22px;background:#FFFFFF;padding:10px;transform:rotate(-6deg);box-shadow:0 2px 0 rgba(43,30,24,.06),0 24px 48px -20px rgba(91,42,75,.4)"><div style="width:100%;height:100%;border-radius:14px;background:repeating-linear-gradient(135deg,#F5B83D 0 8px,#F8C964 8px 16px);display:flex;align-items:flex-end;padding:12px;font-family:ui-monospace,monospace;font-size:11px">family photo card</div></div>
+            <div style="position:absolute;right:4%;top:0;width:52%;aspect-ratio:4/5;border-radius:22px;background:#FFFFFF;padding:10px;transform:rotate(5deg);box-shadow:0 2px 0 rgba(43,30,24,.06),0 24px 48px -20px rgba(91,42,75,.4)"><div style="width:100%;height:100%;border-radius:14px;background:repeating-linear-gradient(135deg,#F6C9C0 0 8px,#F9D7D0 8px 16px);display:flex;align-items:flex-end;padding:12px;font-family:ui-monospace,monospace;font-size:11px;color:#5B2A4B">birthday card cover</div></div>
+            <span style="position:absolute;left:38%;bottom:40px;z-index:2;white-space:nowrap;font-family:'Bricolage Grotesque';font-weight:800;font-size:20px;letter-spacing:-0.02em;background:#5B2A4B;color:#FBF6EE;padding:10px 16px;border-radius:999px;transform:rotate(-4deg)">Love, Maya</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:center">
+        <div style="width:340px;height:700px;border-radius:48px;background:#2B1E18;padding:10px;box-shadow:0 30px 60px -30px rgba(43,30,24,.6)">
+          <div style="width:100%;height:100%;border-radius:38px;background:#FBF6EE;overflow:hidden;display:flex;flex-direction:column">
+            <div style="display:flex;justify-content:space-between;padding:14px 26px 0;font-size:13px;font-weight:700"><span>9:41</span><span style="width:72px;height:22px;background:#2B1E18;border-radius:999px"></span><span>100%</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:18px;padding:22px 20px 0;overflow:hidden">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:#6B5A50">Good morning, Maya</span><span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:28px;letter-spacing:-0.03em;line-height:1.05">Who are we<br>celebrating?</span></div>
+                <span style="width:44px;height:44px;border-radius:999px;background:#F6C9C0;color:#5B2A4B;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">MR</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;background:#FFFFFF;border-radius:20px;padding:12px;box-shadow:0 1px 0 rgba(43,30,24,.06),0 12px 32px -16px rgba(43,30,24,.28)">
+                <span style="width:48px;height:48px;border-radius:14px;background:#F5B83D;display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque';font-weight:800;font-size:18px">12</span>
+                <div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-weight:700;font-size:15px">Dad’s birthday</span><span style="font-size:13px;color:#6B5A50">In 12 days · mail by Friday</span></div>
+                <span style="font-size:13px;font-weight:700;color:#C8441F">Make</span>
+              </div>
+              <div style="display:flex;gap:8px;overflow:hidden">
+                <span style="flex:none;font-size:14px;font-weight:600;height:36px;padding:0 14px;border-radius:999px;white-space:nowrap;background:#2B1E18;color:#FBF6EE;display:flex;align-items:center">All</span>
+                <span style="flex:none;font-size:14px;font-weight:600;height:36px;padding:0 14px;border-radius:999px;white-space:nowrap;white-space:nowrap;border:1.5px solid #D9CBB6;display:flex;align-items:center">Birthday</span>
+                <span style="flex:none;font-size:14px;font-weight:600;height:36px;padding:0 14px;border-radius:999px;white-space:nowrap;white-space:nowrap;border:1.5px solid #D9CBB6;display:flex;align-items:center">Thank you</span>
+                <span style="flex:none;font-size:14px;font-weight:600;height:36px;padding:0 14px;border-radius:999px;white-space:nowrap;white-space:nowrap;border:1.5px solid #D9CBB6;display:flex;align-items:center">Baby</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:18px">Your drafts</span><span style="font-size:13px;font-weight:700;color:#C8441F">See all</span></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div style="background:#FFFFFF;border-radius:18px;padding:8px;display:flex;flex-direction:column;gap:8px"><div style="aspect-ratio:4/5;border-radius:12px;background:repeating-linear-gradient(135deg,#F6C9C0 0 7px,#F9D7D0 7px 14px);display:flex;align-items:flex-end;padding:8px;font-family:ui-monospace,monospace;font-size:10px;color:#5B2A4B">card</div><span style="font-size:13px;font-weight:700;padding:0 4px 4px">For Nonna</span></div>
+                <div style="background:#FFFFFF;border-radius:18px;padding:8px;display:flex;flex-direction:column;gap:8px"><div style="aspect-ratio:4/5;border-radius:12px;background:repeating-linear-gradient(135deg,#F5B83D 0 7px,#F8C964 7px 14px);display:flex;align-items:flex-end;padding:8px;font-family:ui-monospace,monospace;font-size:10px">book</div><span style="font-size:13px;font-weight:700;padding:0 4px 4px">Our Summer</span></div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);align-items:center;padding:10px 12px 24px;background:#FFFFFF;border-top:1px solid #F3EADB;font-size:11px;font-weight:600;color:#6B5A50;text-align:center">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px;color:#2B1E18"><span style="width:22px;height:22px;border-radius:7px;background:#2B1E18"></span>Home</div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="width:22px;height:22px;border-radius:7px;border:2px solid #A99888"></span>Explore</div>
+              <div style="display:flex;justify-content:center"><span style="width:52px;height:52px;border-radius:999px;background:#C8441F;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:500;margin-top:-22px;box-shadow:0 10px 20px -8px rgba(200,68,31,.6)">+</span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="width:22px;height:22px;border-radius:7px;border:2px solid #A99888"></span>Books</div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="width:22px;height:22px;border-radius:999px;white-space:nowrap;border:2px solid #A99888"></span>Me</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1.5px solid #2B1E18;padding-top:16px;font-size:14px;color:#6B5A50">
+    <span>greethub brand kit · React webkit in <span style="font-weight:600;color:#2B1E18">greethub-webkit/</span></span>
+    <span>Made by you. Felt by them.</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { chip: 'Birthday', on: true, seg: 'Card' };
+  renderVals() {
+    const chips = ['Birthday', 'Thank you', 'Wedding', 'New baby', 'Just because'].map(label => {
+      const a = this.state.chip === label;
+      return { label, bg: a ? '#2B1E18' : '#FFFFFF', fg: a ? '#FBF6EE' : '#2B1E18', border: a ? '#2B1E18' : '#D9CBB6', onClick: () => this.setState({ chip: label }) };
+    });
+    const segs = ['Card', 'Picture book', 'Postcard'].map(label => {
+      const a = this.state.seg === label;
+      return { label, bg: a ? '#FFFFFF' : 'transparent', fg: a ? '#2B1E18' : '#6B5A50', shadow: a ? '0 1px 3px rgba(43,30,24,.15)' : 'none', onClick: () => this.setState({ seg: label }) };
+    });
+    return {
+      chips, segs,
+      toggle: () => this.setState(s => ({ on: !s.on })),
+      toggleBg: this.state.on ? '#C8441F' : '#D9CBB6',
+      toggleJustify: this.state.on ? 'flex-end' : 'flex-start',
+    };
+  }
+}
+</script>
+</body>
+</html>
