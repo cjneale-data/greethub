@@ -1,14 +1,15 @@
+import type { Metadata } from "next";
 import { SiteNav } from "@/components/brand";
+import { CardCreator } from "./CardCreator";
+
+export const metadata: Metadata = { title: "Start a card | GreetHub" };
 
 export default function Page() {
   return (
     <>
       <SiteNav />
-      <main style={{ maxWidth: 720, margin: "0 auto", padding: "48px 28px" }}>
-        <h1 style={{ fontFamily: "var(--gh-font-display)", fontWeight: 800, letterSpacing: "-0.03em" }}>
-          Start a card
-        </h1>
-        <p>The creator arrives in milestone M3 (intake) and M4 (book flow).</p>
+      <main className="gc-page">
+        <CardCreator />
       </main>
     </>
   );
