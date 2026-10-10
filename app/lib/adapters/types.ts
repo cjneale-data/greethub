@@ -3,27 +3,83 @@ import type { Address } from "@greethub/shared";
 export type Session = { userId: string; email?: string; isGuest: boolean };
 
 export interface AuthAdapter {
-  /** Current session from the request cookies, or a new anonymous guest session. */
+  readonly name: "supabase" | "fake";
+  /** Current session from the request cookies, or the anonymous guest session. */
   getSession(): Promise<Session>;
-  sendMagicLink(email: string, redirectTo: string): Promise<void>;
-  signInWithGoogle(redirectTo: string): Promise<{ url: string }>;
-  /** Carries the guest draft over to the account after sign-up. */
+  /** Sends a sign-in link. The fake provider also returns the link so local dev needs no inbox. */
+  sendMagicLink(email: string, redirectTo: string, opts?: { accepted?: boolean }): Promise<{ devLink?: string }>;
+  /** Exchanges a magic-link token for a user. Returns null if it is expired, used or unknown. */
+  verifyMagicLink(token: string): Promise<{ userId: string; email: string; next: string; accepted?: boolean } | null>;
+  signInWithGoogle(redirectTo: string, opts?: { accepted?: boolean }): Promise<{ url: string }>;
+  /** Carries the guest draft and cart over to the account after sign-up. */
   upgradeGuest(guestUserId: string, newUserId: string): Promise<void>;
+  /** Writes the signed-in cookie. Route handlers only. */
+  startSession(user: { userId: string; email: string }): Promise<void>;
+  signOut(): Promise<void>;
 }
 
-export type CheckoutLine = { sku: string; description: string; unitAmountCents: number; quantity: number; creationId: string };
+/** One line on the Stripe-hosted page. Postage and shipping surcharges are lines too (creationId empty). */
+export type CheckoutLine = { sku: string; description: string; unitAmountCents: number; quantity: number; creationId?: string };
+
+export type CheckoutSessionInput = {
+  /** Our pending checkout id; echoed back in metadata and as client_reference_id. */
+  checkoutId: string;
+  userId: string;
+  email: string;
+  lines: CheckoutLine[];
+  shipTo?: Address;
+  successUrl: string;
+  cancelUrl: string;
+};
+
+/** What the rest of the app needs from a payment webhook, independent of the provider's wire format. */
+export type PaymentEvent = {
+  id: string;
+  type: string;
+  sessionId?: string;
+  checkoutId?: string;
+  /** "paid" | "unpaid" | "no_payment_required" for Stripe. */
+  paymentStatus?: string;
+  amountTotalCents?: number;
+  paymentIntentId?: string;
+  email?: string;
+};
+
 export interface PaymentsAdapter {
-  createCheckoutSession(input: { userId: string; lines: CheckoutLine[]; shipTo?: Address; successUrl: string; cancelUrl: string }): Promise<{ id: string; url: string }>;
-  /** Verify and parse a webhook; order creation runs on checkout.session.completed. */
-  parseWebhook(rawBody: string, signature: string): Promise<{ type: string; sessionId?: string }>;
+  readonly name: "stripe" | "fake";
+  createCheckoutSession(input: CheckoutSessionInput): Promise<{ id: string; url: string }>;
+  /** Verify the signature and parse a webhook. Throws if the signature is bad. Order creation runs on checkout.session.completed. */
+  parseWebhook(rawBody: string, signature: string | null): Promise<PaymentEvent>;
 }
 
-export type PrintJob = { orderId: string; sku: string; pdfUrls: { interior?: string; cover?: string; single?: string }; shipTo: Address; quantity: number };
+export type PrintJob = {
+  orderId: string;
+  /** Unique per line within the order; sent as the printer's external reference so retries do not double-print. */
+  lineId: string;
+  sku: string;
+  title: string;
+  email: string;
+  pdfUrls: { interior?: string; cover?: string; single?: string };
+  shipTo: Address;
+  quantity: number;
+  /** Shipping level requested at checkout. */
+  expedited?: boolean;
+};
+
+export type PrinterStatus = { state: string; trackingUrl?: string; trackingNumber?: string; carrier?: string };
+
 export interface PrinterAdapter {
   readonly name: "lulu" | "prodigi" | "gelato";
+  readonly fake: boolean;
   validateFiles(job: PrintJob): Promise<{ ok: boolean; problems: string[] }>;
   submit(job: PrintJob): Promise<{ externalId: string }>;
-  status(externalId: string): Promise<{ state: string; trackingUrl?: string }>;
+  status(externalId: string): Promise<PrinterStatus>;
+}
+
+export type EmailMessage = { to: string; subject: string; text: string; html?: string; tag?: string };
+export interface EmailAdapter {
+  readonly name: "resend" | "fake";
+  send(msg: EmailMessage): Promise<{ id: string }>;
 }
 
 export interface StorageAdapter {
