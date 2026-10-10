@@ -1,14 +1,15 @@
+import type { Metadata } from "next";
 import { SiteNav } from "@/components/brand";
+import { BookCreator } from "@/components/book/BookCreator";
+
+export const metadata: Metadata = { title: "Make a picture book | GreetHub" };
 
 export default function Page() {
   return (
     <>
       <SiteNav />
-      <main style={{ maxWidth: 720, margin: "0 auto", padding: "48px 28px" }}>
-        <h1 style={{ fontFamily: "var(--gh-font-display)", fontWeight: 800, letterSpacing: "-0.03em" }}>
-          Make a picture book
-        </h1>
-        <p>The creator arrives in milestone M3 (intake) and M4 (book flow).</p>
+      <main>
+        <BookCreator />
       </main>
     </>
   );
