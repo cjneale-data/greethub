@@ -1,0 +1,23 @@
+@import "../styles/tokens.css";
+@import "../styles/components.css";
+
+:root {
+  --gh-font-display: var(--font-bricolage), "Bricolage Grotesque", system-ui, sans-serif;
+  --gh-font-body: var(--font-figtree), "Figtree", system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; font-size: 17px; line-height: 1.6; }
+
+.gh-hero { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 32px; padding: 48px 28px 56px; align-items: center; max-width: 1200px; margin: 0 auto; }
+.gh-hero__copy { display: flex; flex-direction: column; gap: 24px; }
+.gh-hero__badge { align-self: flex-start; }
+.gh-hero__h1 { margin: 0; font-family: var(--gh-font-display); font-weight: 800; font-size: clamp(44px, 5.5vw, 72px); letter-spacing: -0.045em; line-height: 0.95; text-wrap: pretty; }
+.gh-hero__h1 em { font-style: normal; color: var(--gh-persimmon); }
+.gh-hero__lede { margin: 0; font-size: 18px; line-height: 1.6; color: var(--gh-cocoa-70); max-width: 440px; }
+.gh-hero__ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+.gh-hero__pile { position: relative; height: 380px; }
+.gh-hero__card { position: absolute; width: 52%; aspect-ratio: 4 / 5; border-radius: var(--gh-r-lg); background: #fff; padding: 10px; box-shadow: var(--gh-shadow-lifted); }
+.gh-hero__card .gh-placeholder { border-radius: var(--gh-r-md); padding: 12px; }
+.gh-hero__card--a { left: 4%; top: 30px; transform: rotate(-6deg); }
+.gh-hero__card--b { right: 4%; top: 0; transform: rotate(5deg); }
+.gh-hero__sticker { position: absolute; left: 38%; bottom: 40px; z-index: 2; white-space: nowrap; font-family: var(--gh-font-display); font-weight: 800; font-size: 20px; letter-spacing: -0.02em; background: var(--gh-plum); color: var(--gh-paper); padding: 10px 16px; border-radius: var(--gh-r-pill); transform: rotate(-4deg); }

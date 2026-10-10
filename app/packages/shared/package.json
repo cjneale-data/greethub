@@ -1,0 +1,10 @@
+{
+  "name": "@greethub/shared",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "description": "Platform-neutral schemas and constants shared by the web app, the pipeline and the future Expo mobile app. Depends only on zod.",
+  "peerDependencies": { "zod": "^4.0.0" }
+}

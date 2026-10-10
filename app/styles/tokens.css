@@ -1,0 +1,23 @@
+:root{
+  /* brand */
+  --gh-persimmon:#EE5A36; --gh-persimmon-ink:#C8441F; --gh-persimmon-deep:#9E3115; --gh-persimmon-tint:#FDE3D8;
+  --gh-marigold:#F5B83D; --gh-blush:#F6C9C0; --gh-plum:#5B2A4B; --gh-plum-tint:#E6CFDD;
+  /* neutrals */
+  --gh-cocoa:#2B1E18; --gh-cocoa-70:#6B5A50; --gh-cocoa-40:#A99888; --gh-twine:#D9CBB6; --gh-line:#E8DCC8;
+  --gh-cream:#F3EADB; --gh-paper:#FBF6EE; --gh-white:#FFFFFF;
+  /* type */
+  --gh-font-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --gh-font-body:'Figtree',system-ui,sans-serif;
+  /* radius */
+  --gh-r-sm:8px; --gh-r-md:14px; --gh-r-lg:22px; --gh-r-pill:999px;
+  /* depth */
+  --gh-shadow-rest:0 1px 2px rgba(43,30,24,.08);
+  --gh-shadow-raised:0 1px 0 rgba(43,30,24,.06),0 12px 32px -16px rgba(43,30,24,.28);
+  --gh-shadow-lifted:0 2px 0 rgba(43,30,24,.06),0 24px 48px -20px rgba(91,42,75,.4);
+  --gh-focus-ring:0 0 0 4px var(--gh-persimmon-tint);
+  /* spacing (4pt) */
+  --gh-s-1:4px;--gh-s-2:8px;--gh-s-3:12px;--gh-s-4:16px;--gh-s-5:20px;--gh-s-6:24px;--gh-s-8:32px;--gh-s-10:40px;--gh-s-12:48px;--gh-s-16:64px;--gh-s-24:96px;--gh-s-30:120px;
+  --gh-ease:cubic-bezier(.2,.8,.2,1);
+}
+html,body{background:var(--gh-paper);color:var(--gh-cocoa);font-family:var(--gh-font-body);-webkit-font-smoothing:antialiased}
+a{color:var(--gh-persimmon-ink)}a:hover{color:var(--gh-persimmon-deep)}
