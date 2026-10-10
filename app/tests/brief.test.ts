@@ -92,8 +92,8 @@ describe("CreationBrief", () => {
     const c = CreationBriefSchema.parse(card);
     const b = CreationBriefSchema.parse(book);
     expect(plannedRenders(c).total).toBe(2);
-    expect(plannedRenders(b).total).toBe(13);
-    expect(plannedRenders(CreationBriefSchema.parse({ ...book, pageCount: 32 })).total).toBe(17);
+    expect(plannedRenders(b).total).toBe(14);
+    expect(plannedRenders(CreationBriefSchema.parse({ ...book, pageCount: 32 })).total).toBe(18);
   });
 
   it("every style preset carries a non-photoreal prompt", () => {

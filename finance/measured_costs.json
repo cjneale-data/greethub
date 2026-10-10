@@ -1,0 +1,128 @@
+{
+  "generated_at": "2026-10-10T10:24:39.512Z",
+  "currency": "USD",
+  "source": "pipeline/measurements/*.jsonl (OpenRouter usage.cost per call, costSource=openrouter_usage)",
+  "test_spend_total_usd": 1.5273,
+  "models": {
+    "text": "anthropic/claude-sonnet-5.5",
+    "image_used": "google/gemini-nano-banana-2.1 (first in chain, served every call)",
+    "fallbacks_not_triggered": [
+      "google/gemini-3.1-flash-image",
+      "google/gemini-3-pro-image"
+    ]
+  },
+  "per_call_usd": {
+    "image_1K": 0.041,
+    "image_2K": 0.0609,
+    "image_4K": 0.1233,
+    "identity_sheet": 0.0106,
+    "qa_vision_per_page": 0.0025,
+    "card_copy": 0.0054,
+    "book_story_3_spreads": 0.0223,
+    "page_prompts_card_2_pages": 0.0417,
+    "page_prompts_book_4_pages": 0.0376
+  },
+  "per_call_detail": {
+    "image_by_size": {
+      "1K": {
+        "avg": 0.041,
+        "n": 5
+      },
+      "2K": {
+        "avg": 0.0609,
+        "n": 14
+      },
+      "4K": {
+        "avg": 0.1233,
+        "n": 1,
+        "note": "single probe call"
+      }
+    },
+    "latency_seconds_avg_image_2K": 16.1838
+  },
+  "measured_products": {
+    "card_2K_front_plus_inside": {
+      "run": "card-3",
+      "renders": 3,
+      "rerolls": 0,
+      "costUsd": 0.2393,
+      "note": "clean run: model sheet + front + inside, vision QA, no re-rolls"
+    },
+    "card_2K_with_two_qa_rerolls": {
+      "run": "card-2",
+      "renders": 5,
+      "rerolls": 2,
+      "costUsd": 0.3683,
+      "note": "both pages hit a real white-border failure and re-rolled once"
+    },
+    "card_1K_front_plus_inside": {
+      "run": "card-1",
+      "renders": 5,
+      "rerolls": 2,
+      "costUsd": 0.2649,
+      "note": "1K; re-rolls were false positives of an early over-strict border check (fixed), so cost is inflated by ~$0.08"
+    },
+    "book_2K_4_art_pages": {
+      "run": "book-1",
+      "renders": 6,
+      "rerolls": 1,
+      "costUsd": 0.4685,
+      "note": "model sheet + cover + 3 spreads (+1 re-roll caused by a QA counting bug, fixed). Text: identity, 3-spread story, prompts"
+    }
+  },
+  "extrapolated_per_product_usd": {
+    "assumptions": {
+      "image_size": "2K (about 280 DPI at card size, 234 DPI at book size)",
+      "reroll_rate": 0.2,
+      "prompts_cost_per_page": 0.0094,
+      "story_cost_per_spread": 0.0074
+    },
+    "card_front_only": {
+      "renders": 2,
+      "base_no_rerolls": 0.1497,
+      "expected_with_rerolls": 0.1624
+    },
+    "card_front_plus_inside": {
+      "renders": 3,
+      "base_no_rerolls": 0.2225,
+      "expected_with_rerolls": 0.2479
+    },
+    "book_24_pages": {
+      "renders": 14,
+      "base_no_rerolls": 1.0993,
+      "expected_with_rerolls": 1.2641,
+      "art": 0.8526,
+      "text": 0.2467
+    },
+    "book_32_pages": {
+      "renders": 18,
+      "base_no_rerolls": 1.4201,
+      "expected_with_rerolls": 1.6357,
+      "art": 1.0962,
+      "text": 0.3239
+    },
+    "book_24_pages_at_4K": {
+      "base_no_rerolls": 1.9729,
+      "expected_with_rerolls": 2.3124
+    },
+    "guest_preview_1K_front_only_no_model_sheet": {
+      "costUsd": 0.0689,
+      "note": "estimate; not run end to end"
+    }
+  },
+  "reliability": {
+    "total_calls": 43,
+    "http_errors": 0,
+    "network_errors": 0,
+    "no_image_responses": 0,
+    "retry_rate": 0,
+    "fallback_model_used": false,
+    "page_qa_first_pass_failures": "2 of 8 real page renders at 2K failed QA first pass (white-border vignette); 1 more flagged by a QA counting bug since fixed; 0 of 3 at 1K were true failures",
+    "assumed_reroll_rate": 0.2
+  },
+  "notes": [
+    "Costs exclude print, shipping, Stripe and hosting.",
+    "4K costs about 2x the 2K price; 2K is the recommended default for print at these trim sizes.",
+    "Only 4 pipeline runs fit the $2.50 test budget, so reroll and failure rates are small-sample."
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "product": "card",
+  "occasion": "birthday",
+  "recipient": { "name": "Louisa", "relationship": "cousin" },
+  "tone": "funny",
+  "artStyle": "watercolor",
+  "characters": [
+    { "name": "Madison", "ageBand": "child", "role": "big cousin", "photoIds": ["Madison"] },
+    { "name": "Lee", "ageBand": "child", "role": "little cousin", "photoIds": ["Lee"] }
+  ],
+  "messageWording": "Happy birthday Louisa! We saved you the biggest slice.",
+  "delivery": "ecard",
+  "insideIllustration": true
+}

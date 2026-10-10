@@ -1,0 +1,17 @@
+{
+  "product": "book",
+  "occasion": "just_because",
+  "recipient": { "name": "The cousins", "relationship": "grandchildren" },
+  "tone": "adventurous",
+  "artStyle": "watercolor",
+  "readingAge": "3-5",
+  "pageCount": 24,
+  "characters": [
+    { "name": "Madison", "ageBand": "child", "role": "the smart one", "pronouns": "she/her", "photoIds": ["Madison"] },
+    { "name": "Lee", "ageBand": "child", "role": "the inventor", "pronouns": "he/him", "photoIds": ["Lee"] },
+    { "name": "Louisa", "ageBand": "child", "role": "the brave one", "pronouns": "she/her", "photoIds": ["Louisa"] }
+  ],
+  "storyIdea": "Three cousins at their grandparents house sneak out at night with flashlights to explore the woods, and meet friendly animals whose glowing eyes turn out to be curious, not scary.",
+  "settingDetails": "A red-brick farmhouse at the edge of a big forest, moonlit night.",
+  "consent": { "adultConfirmed": true, "photoConsent": true }
+}

@@ -159,13 +159,18 @@ export function isReadyToGenerate(draft: BriefDraft): boolean {
   return missingFields(draft).length === 0;
 }
 
+/** Story spreads in a book: title page + N text/art spreads + The End = pageCount (24 -> 11, 32 -> 15). */
+export function bookSpreads(pageCount: 24 | 32): number {
+  return (pageCount - 2) / 2;
+}
+
 /** Image renders a finished brief will cost, before re-rolls: used for pricing and spend caps. */
 export function plannedRenders(brief: CreationBrief): { modelSheet: number; pages: number; total: number } {
   if (brief.product === "card") {
     const pages = brief.insideIllustration ? 2 : 1;
     return { modelSheet: 1, pages, total: 1 + pages };
   }
-  // 24 pages -> 10 art pages, 32 -> 14, plus front and back cover.
-  const art = brief.pageCount === 24 ? 10 : 14;
-  return { modelSheet: 1, pages: art + 2, total: 1 + art + 2 };
+  // one art page per spread, plus front and back cover
+  const pages = bookSpreads(brief.pageCount) + 2;
+  return { modelSheet: 1, pages, total: 1 + pages };
 }
