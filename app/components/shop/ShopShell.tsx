@@ -4,6 +4,7 @@ import { Logo } from "@/components/brand";
 import { MobileTabs, ShopNav } from "./ShopNav";
 import { ToastProvider } from "./client";
 import { CookieNotice } from "./CookieNotice";
+import { DmcaAgentBlock } from "./DmcaAgentBlock";
 import "./shop.css";
 
 export function Footer() {
@@ -38,6 +39,7 @@ export function Footer() {
           <a href="mailto:hello@greethub.example">Contact</a>
         </div>
       </div>
+      <p className="gs-footer__legal"><DmcaAgentBlock compact /></p>
       <p className="gs-footer__legal">
         {/* TODO(owner): company legal name and postal address (docs/legal 06, req. 50). */}
         GreetHub, [company legal name], [postal address]. Art is AI-illustrated. For adults 18 and over.

@@ -114,6 +114,22 @@ export type PendingCheckout = {
 
 export type OutboxMessage = { id: string; to: string; subject: string; text: string; sentAt: string; tag?: string };
 
+export type ContentReport = {
+  id: string;
+  createdAt: string;
+  kind: "copyright" | "likeness" | "inappropriate" | "other";
+  what: string;
+  where: string;
+  depicted: string;
+  contactEmail: string;
+  /** Copyright claims only: the reporter ticked the good-faith statement. */
+  goodFaith: boolean;
+  signature: string;
+  status: "new" | "in_review" | "actioned" | "closed";
+  /** 48-hour response target (ISO). */
+  dueAt: string;
+};
+
 export type DB = {
   users: Record<string, UserRecord>;
   carts: Record<string, CartItem[]>;
@@ -127,4 +143,5 @@ export type DB = {
   deleteTokens: Record<string, { userId: string; expiresAt: number }>;
   fakePrinterJobs: Record<string, { stage: number; printer: string }>;
   outbox: OutboxMessage[];
+  reports: ContentReport[];
 };

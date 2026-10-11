@@ -20,6 +20,7 @@ const emptyDB = (): DB => ({
   deleteTokens: {},
   fakePrinterJobs: {},
   outbox: [],
+  reports: [],
 });
 
 function file(): string {
