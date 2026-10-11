@@ -191,4 +191,6 @@ export type ProjectView = Omit<BookProject, "userId" | "photos" | "mergedJobIds"
   job?: PublicJob;
   rerollsLeft: number;
   sheetFreeRedosLeft: number;
+  /** One-line notes when the IP screen rewrote customer text on this request (not stored). */
+  ipNotices?: string[];
 };

@@ -3,7 +3,7 @@ import path from "node:path";
 import { PAGE_ID } from "../constants";
 import type { JobStore } from "../store/types";
 import type { Job, JobPageState, PagePlanLite } from "../types";
-import { FatalJobError, type BookEngine, type EngineCtx } from "./types";
+import { FatalJobError, PageBlockedError, type BookEngine, type EngineCtx } from "./types";
 
 export const HEARTBEAT_MS = 8_000;
 
@@ -141,11 +141,23 @@ async function runPages(start: Job, ectx: EngineCtx, deps: RunnerDeps) {
       progress: { ...j.progress, label: `Drawing ${labelFor(page)}` },
       pages: { ...j.pages, [page.id]: { status: isRedraw ? "redrawing" : "rendering", versions: [] } },
     }));
-    let version = await engine.renderPage(ectx, page, { note: input.note });
-    if (!version) {
+    let version: Awaited<ReturnType<BookEngine["renderPage"]>> = null;
+    let blockedMessage = "";
+    try {
+      version = await engine.renderPage(ectx, page, { note: input.note });
+    } catch (e) {
+      if (!(e instanceof PageBlockedError)) throw e;
+      blockedMessage = e.userMessage; // blocked after its one automatic re-roll: no further retry, offer a different direction
+    }
+    if (!version && !blockedMessage) {
       // one automatic retry, shown as "Redrawing"
       await jobs.update(start.id, (j) => ({ ...j, pages: { ...j.pages, [page.id]: { status: "redrawing", versions: [] } } }));
-      version = await engine.renderPage(ectx, page, { note: input.note });
+      try {
+        version = await engine.renderPage(ectx, page, { note: input.note });
+      } catch (e) {
+        if (!(e instanceof PageBlockedError)) throw e;
+        blockedMessage = e.userMessage;
+      }
     }
     done++;
     if (!version) failed++;
@@ -156,7 +168,7 @@ async function runPages(start: Job, ectx: EngineCtx, deps: RunnerDeps) {
         ...j.pages,
         [page.id]: version
           ? { status: "done", versions: [version] }
-          : { status: "failed", versions: [], error: "We couldn't draw this one. Try again." },
+          : { status: "failed", versions: [], error: blockedMessage || "We couldn't draw this one. Try again." },
       },
     }));
   }

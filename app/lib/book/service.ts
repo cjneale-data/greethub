@@ -3,6 +3,8 @@ import { NewCartItemSchema, bookSpreads, type NewCartItem } from "@greethub/shar
 import { isPet, validateBriefForm, type FieldErrors } from "./briefForm";
 import { buildConsentRecord, consentCovers, consentValid, evaluateConsentGate, requiredBoxesTicked } from "./consent";
 import { moderatePhoto } from "./moderation";
+import { screenFields } from "../safety/server";
+import type { IpInput } from "../safety/types";
 import { MAX_PHOTOS_PER_CHARACTER, MAX_PHOTO_BYTES, MIN_PHOTO_SHORT_EDGE, PHOTO_RETENTION_DAYS, REROLL_ALLOWANCE, SHEET_FREE_REDOS } from "./constants";
 import { projectSpendCapUsd, spreadsOverride } from "./config";
 import { artPlan } from "./engine/runner";
@@ -76,6 +78,43 @@ function cleanBrief(b: BriefForm): BriefForm {
     characters: b.characters.map((c) => ({ ...c, name: t(c.name), role: t(c.role), pronouns: t(c.pronouns) })),
   };
 }
+
+/* ------------------------------------------------------------------ IP screen (docs/legal/07) */
+
+export type Screened<T> = { value: T; notes: string[] };
+
+/** Screens named strings; rewrites are applied (original characters inspired by the idea), blocked text refuses with a friendly message. */
+async function screenTexts(d: Deps, items: { key: string; text: string; field: IpInput["field"] }[], knownNames: string[]): Promise<{ out: Record<string, string>; notes: string[] }> {
+  const live = items.filter((i) => i.text.trim());
+  const res = live.length ? await screenFields(live.map((i) => ({ text: i.text, field: i.field, knownNames })), { mock: d.mock }) : [];
+  const out: Record<string, string> = Object.fromEntries(items.map((i) => [i.key, i.text]));
+  const notes: string[] = [];
+  res.forEach((r, n) => {
+    if (r.verdict === "blocked") throw new BookError(422, "ip_blocked", r.userNote, { field: live[n].key });
+    if (r.verdict === "rewritten") {
+      out[live[n].key] = r.safeText;
+      if (r.userNote && !notes.includes(r.userNote)) notes.push(r.userNote);
+    }
+  });
+  return { out, notes };
+}
+
+async function screenBrief(d: Deps, b: BriefForm): Promise<Screened<BriefForm>> {
+  const known = [b.recipientName, ...b.characters.map((c) => c.name)].filter(Boolean);
+  const items = [
+    { key: "storyIdea", text: b.storyIdea, field: "story_idea" as const },
+    { key: "settingDetails", text: b.settingDetails, field: "story_idea" as const },
+    { key: "dedication", text: b.dedication, field: "story_text" as const },
+    ...b.characters.map((c, i) => ({ key: `role.${i}`, text: c.role, field: "character_note" as const })),
+  ];
+  const { out, notes } = await screenTexts(d, items, known);
+  return {
+    value: { ...b, storyIdea: out.storyIdea, settingDetails: out.settingDetails, dedication: out.dedication, characters: b.characters.map((c, i) => ({ ...c, role: out[`role.${i}`] })) },
+    notes,
+  };
+}
+
+const withNotes = (v: ProjectView, notes: string[]): ProjectView => (notes.length ? { ...v, ipNotices: notes } : v);
 
 function assertValidBrief(b: BriefForm) {
   const v = validateBriefForm(b);
@@ -221,16 +260,18 @@ export async function listProjects(d: Deps, userId: string) {
 /* ------------------------------------------------------------------ brief and photos */
 
 export async function createProject(d: Deps, userId: string, brief: BriefForm): Promise<ProjectView> {
-  const b = cleanBrief(brief);
-  assertValidBrief(b);
+  const cleaned = cleanBrief(brief);
+  assertValidBrief(cleaned);
+  const { value: b, notes } = await screenBrief(d, cleaned);
   const p = emptyProject(d, userId, b);
   await d.projects.put(p);
-  return viewOf(d, p);
+  return withNotes(await viewOf(d, p), notes);
 }
 
 export async function updateBrief(d: Deps, userId: string, id: string, brief: BriefForm): Promise<ProjectView> {
-  const b = cleanBrief(brief);
-  assertValidBrief(b);
+  const cleaned = cleanBrief(brief);
+  assertValidBrief(cleaned);
+  const { value: b, notes } = await screenBrief(d, cleaned);
   const cur = await syncProject(d, await mustOwn(d, userId, id));
   if (briefLocked(cur)) throw new BookError(409, "locked", "The idea is locked once the story is written. Start a new book to change it.");
   const removedPhotos: PhotoRecord[] = [];
@@ -246,7 +287,7 @@ export async function updateBrief(d: Deps, userId: string, id: string, brief: Br
     return p;
   });
   for (const x of removedPhotos) await d.storage.remove(x.path);
-  return viewOf(d, next!);
+  return withNotes(await viewOf(d, next!), notes);
 }
 
 export async function addPhoto(d: Deps, userId: string, id: string, input: { characterId: string; data: Uint8Array }): Promise<ProjectView> {
@@ -263,7 +304,12 @@ export async function addPhoto(d: Deps, userId: string, id: string, input: { cha
   if (cur.photos.filter((x) => x.characterId === input.characterId).length >= MAX_PHOTOS_PER_CHARACTER) {
     throw new BookError(422, "too_many", `Up to ${MAX_PHOTOS_PER_CHARACTER} photos each.`);
   }
-  const mod = await moderatePhoto(input.data);
+  const mod = await moderatePhoto(input.data, { contentType: info.type, userId, projectId: id, mock: d.mock });
+  if (mod.halt) {
+    // Suspected CSAM: stop here. Nothing is stored, displayed or forwarded (hook already called with metadata only).
+    throw new BookError(422, "photo_blocked", "We can't use that photo. Try another where the person is clearly the one in it.");
+  }
+  if (mod.unavailable) throw new BookError(503, "photo_check_unavailable", "We couldn't check that photo just now. Try again in a moment.");
   if (!mod.ok) throw new BookError(422, "photo_blocked", "We can't use that photo. Try another where the person is clearly the one in it.");
   const photoId = newId("ph");
   const rel = `books/${userId}/${id}/photos/${photoId}.${extFor(info.type)}`;
@@ -274,7 +320,8 @@ export async function addPhoto(d: Deps, userId: string, id: string, input: { cha
     p.photosConfirmed = false;
     return p;
   });
-  return viewOf(d, next!);
+  const warn = mod.warnings.length ? ["Heads up: we'll draw the clothing plain, without any logo or character print."] : [];
+  return withNotes(await viewOf(d, next!), warn);
 }
 
 export async function removePhoto(d: Deps, userId: string, id: string, photoId: string): Promise<ProjectView> {
@@ -440,6 +487,21 @@ export async function saveStory(d: Deps, userId: string, id: string, edit: { tit
   const cur = await mustOwn(d, userId, id);
   if (!cur.story) throw new BookError(409, "no_story", "There's no story yet.");
   if (cur.story.approved) throw new BookError(409, "locked", "The story is approved. Changing it now would mean redrawing the pages.");
+  // Printed text: the customer's edits are screened too (slogans, characters, brands, public figures).
+  const known = [cur.brief.recipientName, ...cur.brief.characters.map((c) => c.name)];
+  const sc = await screenTexts(
+    d,
+    [
+      { key: "title", text: edit.title ?? "", field: "story_text" },
+      { key: "dedication", text: edit.dedication ?? "", field: "story_text" },
+      ...Object.entries(edit.texts ?? {}).map(([k, v]) => ({ key: `t.${k}`, text: String(v), field: "story_text" as const })),
+    ],
+    known,
+  );
+  const notes = sc.notes;
+  if (typeof edit.title === "string") edit = { ...edit, title: sc.out.title };
+  if (typeof edit.dedication === "string") edit = { ...edit, dedication: sc.out.dedication };
+  if (edit.texts) edit = { ...edit, texts: Object.fromEntries(Object.keys(edit.texts).map((k) => [k, sc.out[`t.${k}`]])) };
   const next = await d.projects.update(id, (p) => {
     const s = p.story!;
     if (typeof edit.title === "string") {
@@ -461,7 +523,7 @@ export async function saveStory(d: Deps, userId: string, id: string, edit: { tit
     }
     return p;
   });
-  return viewOf(d, next!);
+  return withNotes(await viewOf(d, next!), notes);
 }
 
 export async function approveStory(d: Deps, userId: string, id: string): Promise<ProjectView> {
@@ -471,6 +533,18 @@ export async function approveStory(d: Deps, userId: string, id: string): Promise
   const empty = cur.story.pages.find((x) => x.kind === "spread" && !x.text?.trim());
   if (empty) throw new BookError(422, "empty_page", `Page ${empty.id.slice(1)} has no words yet.`, { pageId: empty.id });
   if (!cur.story.title.trim()) throw new BookError(422, "no_title", "Give the book a title.");
+  // Last check on everything that will be printed. If anything still needs changing, apply it and let the customer look before approving.
+  const known = [cur.brief.recipientName, ...cur.brief.characters.map((c) => c.name)];
+  const spreads = cur.story.pages.filter((x) => x.kind === "spread");
+  const last = await screenTexts(d, [{ key: "title", text: cur.story.title, field: "story_text" }, ...spreads.map((x) => ({ key: x.id, text: x.text ?? "", field: "story_text" as const }))], known);
+  if (last.notes.length) {
+    await d.projects.update(id, (p) => {
+      p.story!.title = last.out.title;
+      for (const pg of p.story!.pages) if (pg.kind === "spread") pg.text = last.out[pg.id];
+      return p;
+    });
+    throw new BookError(422, "ip_rewritten", last.notes[0], { notices: last.notes });
+  }
   const next = await d.projects.update(id, (p) => {
     p.story!.approved = true;
     return p;
@@ -485,6 +559,9 @@ export async function generateSheet(d: Deps, userId: string, id: string, opts: {
   requireConsent(cur);
   if (!cur.story?.approved) throw new BookError(409, "story_not_approved", "Approve the story first.");
   if (cur.sheet.approved) throw new BookError(409, "locked", "The characters are approved. Changing them now would mean redrawing the pages.");
+  const noteKeys = Object.keys(opts.notes ?? {});
+  const sn = await screenTexts(d, noteKeys.map((k) => ({ key: k, text: opts.notes![k], field: "character_note" as const })), [cur.brief.recipientName, ...cur.brief.characters.map((c) => c.name)]);
+  opts = { ...opts, notes: noteKeys.length ? sn.out : opts.notes };
   const redo = !!opts.redo && cur.sheet.versions.length > 0;
   return startJob(d, userId, id, "sheet", (p) => {
     let charge: Job["charge"];
@@ -543,7 +620,8 @@ export async function rerollPage(d: Deps, userId: string, id: string, pageId: st
   const free = art.status === "failed" && art.versions.length === 0; // retry of a page that never drew costs nothing
   if (!free && art.status !== "done") throw new BookError(409, "busy", "That page is still being drawn.");
   if (!free && cur.rerollsUsed >= REROLL_ALLOWANCE) throw new BookError(402, "no_rerolls", "No redraws left on this book.");
-  const cleanNote = (note ?? "").trim().slice(0, 300);
+  const rn = await screenTexts(d, [{ key: "note", text: (note ?? "").trim().slice(0, 300), field: "reroll_note" }], [cur.brief.recipientName, ...cur.brief.characters.map((c) => c.name)]);
+  const cleanNote = rn.out.note;
   return startJob(d, userId, id, free ? "pages" : "reroll", (p) => ({
     input: { pageIds: [pageId], pageId, note: cleanNote || undefined, sheetFile: p.sheet.approvedFile },
     charge: free ? undefined : "reroll",
@@ -574,7 +652,9 @@ export async function approveProof(
     throw new BookError(409, "not_ready", "Every page needs to be drawn first.");
   }
   if (cur.proof.approved) return viewOf(d, cur);
-  const title = input.title.trim().slice(0, 80);
+  const pt = await screenTexts(d, [{ key: "title", text: input.title.trim().slice(0, 80), field: "story_text" }, { key: "ded", text: input.dedication.trim().slice(0, 300), field: "story_text" }], [cur.brief.recipientName, ...cur.brief.characters.map((c) => c.name)]);
+  const title = pt.out.title;
+  input = { ...input, dedication: pt.out.ded };
   if (!title) throw new BookError(422, "no_title", "Give the book a title.");
   return startJob(d, userId, id, "layout", (p) => ({
     input: {

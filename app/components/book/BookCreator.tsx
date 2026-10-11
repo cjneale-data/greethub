@@ -142,6 +142,11 @@ export function BookCreator() {
     try {
       const p = await fn();
       setProject(p);
+      if (p.ipNotices?.length) {
+        // Rewritten text is shown in the form so the customer can edit it; the note says what changed.
+        setFormState(p.brief);
+        notify(p.ipNotices[0]);
+      }
       return true;
     } catch (e) {
       const err = e as ApiError;

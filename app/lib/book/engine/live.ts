@@ -9,7 +9,7 @@ import path from "node:path";
 import { liveImageSize, projectSpendCapUsd } from "../config";
 import { buildBookBrief } from "../briefForm";
 import type { AssetVersion, PagePlanLite } from "../types";
-import { FatalJobError, type BookEngine, type EngineCtx } from "./types";
+import { FatalJobError, PageBlockedError, type BookEngine, type EngineCtx } from "./types";
 
 function readKey(): string {
   if (process.env.OPENROUTER_API_KEY) return process.env.OPENROUTER_API_KEY;
@@ -32,7 +32,7 @@ const zdrFetch = (url: string, init: { method: string; headers: Record<string, s
 const redact = (s: string) => s.replace(/sk-[A-Za-z0-9_-]{8,}/g, "sk-***");
 
 export async function createLiveEngine(): Promise<BookEngine> {
-  const [{ OpenRouterClient }, { FileLedger }, identityMod, sheetMod, copyMod, promptsMod, renderMod, layoutMod] = await Promise.all([
+  const [{ OpenRouterClient }, { FileLedger }, identityMod, sheetMod, copyMod, promptsMod, renderMod, layoutMod, safetyMod] = await Promise.all([
     import("../../../../pipeline/src/openrouter.js"),
     import("../../../../pipeline/src/ledger.js"),
     import("../../../../pipeline/src/stages/identity.js"),
@@ -41,6 +41,7 @@ export async function createLiveEngine(): Promise<BookEngine> {
     import("../../../../pipeline/src/stages/prompts.js"),
     import("../../../../pipeline/src/stages/render.js"),
     import("../../../../pipeline/src/layout/book.js"),
+    import("../../../../pipeline/src/safety/index.js"),
   ]);
 
   const build = (e: EngineCtx) => {
@@ -63,6 +64,8 @@ export async function createLiveEngine(): Promise<BookEngine> {
       brief,
       imageSize: liveImageSize(),
       log: (m: string) => e.log(redact(m)),
+      // Live IP screen for model-written text; every call lands in this project's cost ledger.
+      safety: safetyMod.pipelineIpSafety(client),
       photos: { get: async (id: string) => readFile(input.photoPaths[id]) },
     };
     return { ctx, ledger, spent: () => ledger.totalUsd() - startUsd };
@@ -83,6 +86,7 @@ export async function createLiveEngine(): Promise<BookEngine> {
     } catch (err) {
       const msg = redact(String((err as Error).message));
       if (/spend cap|SpendCap/i.test(msg) || (err as Error).constructor?.name === "SpendCapExceeded") throw new FatalJobError("This book has reached its drawing budget.");
+      if (err instanceof safetyMod.IpBlockedError) throw new FatalJobError(err.userMessage);
       throw err;
     } finally {
       e.reportCost(spent());
@@ -133,6 +137,7 @@ export async function createLiveEngine(): Promise<BookEngine> {
         const sheetFile = e.job.input.sheetFile;
         if (!sheetFile) throw new Error("No approved model sheet");
         const r = await renderMod.renderPage(ctx, page, prompt, path.join(e.imagesDir, sheetFile), { visionQa: true });
+        if (r?.ipBlocked) throw new PageBlockedError(safetyMod.PAGE_BLOCKED_MESSAGE);
         if (!r) return null;
         return { file: path.basename(r.file), createdAt: new Date().toISOString(), model: r.model, qaNote: r.qa && !r.qa.pass ? r.qa.notes : undefined };
       });
@@ -140,14 +145,17 @@ export async function createLiveEngine(): Promise<BookEngine> {
 
     async layout(e, plan, art) {
       const input = e.job.input;
+      // Last check on every printed string (free rules): nothing protected reaches a print file.
+      const known = [input.brief.recipientName, ...input.characters.map((c) => c.name)];
+      const lastMile = (t: string) => (t ? safetyMod.fastText(t, "story_text", known) : t);
       const file = (id: string) => (art[id] ? readFileSync(path.join(e.imagesDir, art[id])) : undefined);
       const cover = file("cover");
       if (!cover) throw new Error("No cover art to lay out");
       const outDir = path.join(e.workDir, "print");
       mkdirSync(outDir, { recursive: true });
-      const spreads = plan.filter((p) => p.kind === "spread").map((p) => ({ text: p.text ?? "", art: file(p.id)! }));
+      const spreads = plan.filter((p) => p.kind === "spread").map((p) => ({ text: lastMile(p.text ?? ""), art: file(p.id)! }));
       const report = await layoutMod.layoutBook(
-        { title: input.proofTitle ?? input.story?.title ?? "Our book", blurb: input.story?.blurb ?? "", coverArt: cover, backArt: file("back"), spreads },
+        { title: lastMile(input.proofTitle ?? input.story?.title ?? "Our book"), blurb: lastMile(input.story?.blurb ?? ""), coverArt: cover, backArt: file("back"), spreads },
         outDir,
         "book",
       );

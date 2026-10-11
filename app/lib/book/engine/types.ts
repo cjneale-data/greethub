@@ -3,6 +3,13 @@ import type { AssetVersion, Job, PagePlanLite } from "../types";
 /** Thrown for failures that must stop the whole job (spend cap, missing key), not just one page. */
 export class FatalJobError extends Error {}
 
+/** A page the IP check blocked after its one automatic re-roll. `message` is customer-facing. Not retried. */
+export class PageBlockedError extends Error {
+  constructor(public userMessage: string) {
+    super("page_blocked");
+  }
+}
+
 export type EngineCtx = {
   job: Job;
   /** Per-project working directory (images, prompts, ledger). */
