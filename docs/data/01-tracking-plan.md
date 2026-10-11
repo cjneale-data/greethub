@@ -2,7 +2,7 @@
 
 Owner: Head of Data. Machine-readable twin: `tracking-plan.json` (the build script `tools/build-tracking-plan.mjs` generates both this event catalogue and the JSON from `tools/events-a.mjs` and `tools/events-b.mjs`, and fails on any violation of the rules below). Date: 2026-10-10.
 
-Scope: 89 events (86 at launch, 3 after), only 11 fired from the browser. Everything that can be recorded on the server is recorded on the server. This replaces the 13-event list in `docs/cmo/ux-spec.md` section 12 (mapping at the end of this file).
+Scope: 93 events (90 at launch, 3 after), only 11 fired from the browser. Everything that can be recorded on the server is recorded on the server. This replaces the 13-event list in `docs/cmo/ux-spec.md` section 12 (mapping at the end of this file).
 
 ## 1. Principles
 
@@ -1211,6 +1211,10 @@ Note: Recorded in privacy.deletion_log without a subject id; no event row surviv
 |---|---|---|---|---|---|---|
 | `text_moderation_result` | server | C0 / T0 | CTO | 365 d | P5_moderation_rate | launch |
 | `output_check_result` | worker | C0 / T0 | CTO | 365 d | P5_moderation_rate, Q1_first_pass_qa | launch |
+| `ip_input_rewritten` | server | C0 / T0 | CTO | 365 d | P5_moderation_rate | launch |
+| `ip_input_blocked` | server | C0 / T0 | CTO | 365 d | P5_moderation_rate, Q9_intake_friction | launch |
+| `ip_output_flagged` | worker | C0 / T0 | CTO | 365 d | P5_moderation_rate, Q1_first_pass_qa | launch |
+| `ip_output_rerolled` | worker | C0 / T0 | CTO | 365 d | P5_moderation_rate, Q2_auto_reroll_rate | launch |
 
 **`text_moderation_result`** - Moderation runs on a brief, story, chat message or name field.
 
@@ -1228,6 +1232,43 @@ Note: Recorded in privacy.deletion_log without a subject id; no event row surviv
 | `page_id` | string | R |  |
 | `result` | enum (pass, rerolled, blocked) | R |  |
 | `category` | enum (none, copyright_character, logo, celebrity) | R |  |
+
+**`ip_input_rewritten`** - IP-safety screening rewrote customer text so a protected character, brand, franchise or slogan became an original idea (docs/legal/07).
+
+| Property | Type | Req | Notes |
+|---|---|---|---|
+| `surface` | enum (chat, card_message, story_idea, character_note, photo_caption, reroll_note, brief_field, story_text, image_prompt) | R | Where the text was typed or produced |
+| `detected_count` | int | R | Number of items found |
+| `detected_kinds` | string[] | R | Kinds only: character, brand, slogan, person, franchise |
+| `engine` | enum (rules, model) | R |  |
+| `changed_chars` | int | R | Length of the text before minus after, absolute value |
+
+**`ip_input_blocked`** - IP-safety screening refused customer text (for example a real public figure) and asked for a different direction.
+
+| Property | Type | Req | Notes |
+|---|---|---|---|
+| `surface` | enum (chat, card_message, story_idea, character_note, photo_caption, reroll_note, brief_field, story_text, image_prompt) | R |  |
+| `detected_count` | int | R |  |
+| `detected_kinds` | string[] | R | Kinds only |
+| `engine` | enum (rules, model) | R |  |
+
+**`ip_output_flagged`** - Output vision check flagged a rendered page (recognisable protected character, logo, slogan, licensed merchandise or high look-alike risk) or Sonnet-written story text was flagged.
+
+| Property | Type | Req | Notes |
+|---|---|---|---|
+| `page_id` | string | R |  |
+| `flags` | string[] | R | Closed list: protected_character, logo, slogan, licensed_merch, lookalike_risk, story_text |
+| `lookalike_risk` | int | O | 0-10 score from the vision check |
+| `is_final` | bool | R | True when the page was blocked after the re-roll |
+
+**`ip_output_rerolled`** - A flagged page was automatically re-rolled once with a hardened prompt.
+
+| Property | Type | Req | Notes |
+|---|---|---|---|
+| `page_id` | string | R |  |
+| `flags` | string[] | R | Same closed list as ip_output_flagged |
+| `passed_after_reroll` | bool | R |  |
+| `cost_usd` | decimal | O | Extra spend of the re-roll and its check |
 
 ### Experiments
 

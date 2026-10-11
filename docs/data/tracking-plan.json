@@ -6528,6 +6528,234 @@
       ]
     },
     {
+      "name": "ip_input_rewritten",
+      "version": 1,
+      "domain": "safety",
+      "funnel_stage": "intake",
+      "phase": "launch",
+      "source": "server",
+      "trigger": "IP-safety screening rewrote customer text so a protected character, brand, franchise or slogan became an original idea (docs/legal/07).",
+      "sensitivity": "C0",
+      "min_consent_tier": "T0",
+      "owner": "CTO",
+      "retention_days": 365,
+      "kpis": [
+        "P5_moderation_rate"
+      ],
+      "identity": "none or job-level; subject_id optional",
+      "properties": [
+        {
+          "name": "surface",
+          "type": "enum",
+          "required": true,
+          "values": [
+            "chat",
+            "card_message",
+            "story_idea",
+            "character_note",
+            "photo_caption",
+            "reroll_note",
+            "brief_field",
+            "story_text",
+            "image_prompt"
+          ],
+          "sensitivity": "C0",
+          "description": "Where the text was typed or produced"
+        },
+        {
+          "name": "detected_count",
+          "type": "int",
+          "required": true,
+          "sensitivity": "C0",
+          "description": "Number of items found"
+        },
+        {
+          "name": "detected_kinds",
+          "type": "string[]",
+          "required": true,
+          "sensitivity": "C0",
+          "description": "Kinds only: character, brand, slogan, person, franchise"
+        },
+        {
+          "name": "engine",
+          "type": "enum",
+          "required": true,
+          "values": [
+            "rules",
+            "model"
+          ],
+          "sensitivity": "C0",
+          "description": ""
+        },
+        {
+          "name": "changed_chars",
+          "type": "int",
+          "required": true,
+          "sensitivity": "C0",
+          "description": "Length of the text before minus after, absolute value"
+        }
+      ]
+    },
+    {
+      "name": "ip_input_blocked",
+      "version": 1,
+      "domain": "safety",
+      "funnel_stage": "intake",
+      "phase": "launch",
+      "source": "server",
+      "trigger": "IP-safety screening refused customer text (for example a real public figure) and asked for a different direction.",
+      "sensitivity": "C0",
+      "min_consent_tier": "T0",
+      "owner": "CTO",
+      "retention_days": 365,
+      "kpis": [
+        "P5_moderation_rate",
+        "Q9_intake_friction"
+      ],
+      "identity": "none or job-level; subject_id optional",
+      "properties": [
+        {
+          "name": "surface",
+          "type": "enum",
+          "required": true,
+          "values": [
+            "chat",
+            "card_message",
+            "story_idea",
+            "character_note",
+            "photo_caption",
+            "reroll_note",
+            "brief_field",
+            "story_text",
+            "image_prompt"
+          ],
+          "sensitivity": "C0",
+          "description": ""
+        },
+        {
+          "name": "detected_count",
+          "type": "int",
+          "required": true,
+          "sensitivity": "C0",
+          "description": ""
+        },
+        {
+          "name": "detected_kinds",
+          "type": "string[]",
+          "required": true,
+          "sensitivity": "C0",
+          "description": "Kinds only"
+        },
+        {
+          "name": "engine",
+          "type": "enum",
+          "required": true,
+          "values": [
+            "rules",
+            "model"
+          ],
+          "sensitivity": "C0",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "ip_output_flagged",
+      "version": 1,
+      "domain": "safety",
+      "funnel_stage": "qa",
+      "phase": "launch",
+      "source": "worker",
+      "trigger": "Output vision check flagged a rendered page (recognisable protected character, logo, slogan, licensed merchandise or high look-alike risk) or Sonnet-written story text was flagged.",
+      "sensitivity": "C0",
+      "min_consent_tier": "T0",
+      "owner": "CTO",
+      "retention_days": 365,
+      "kpis": [
+        "P5_moderation_rate",
+        "Q1_first_pass_qa"
+      ],
+      "identity": "none or job-level; subject_id optional",
+      "properties": [
+        {
+          "name": "page_id",
+          "type": "string",
+          "required": true,
+          "sensitivity": "C0",
+          "description": ""
+        },
+        {
+          "name": "flags",
+          "type": "string[]",
+          "required": true,
+          "sensitivity": "C0",
+          "description": "Closed list: protected_character, logo, slogan, licensed_merch, lookalike_risk, story_text"
+        },
+        {
+          "name": "lookalike_risk",
+          "type": "int",
+          "required": false,
+          "sensitivity": "C0",
+          "description": "0-10 score from the vision check"
+        },
+        {
+          "name": "is_final",
+          "type": "bool",
+          "required": true,
+          "sensitivity": "C0",
+          "description": "True when the page was blocked after the re-roll"
+        }
+      ]
+    },
+    {
+      "name": "ip_output_rerolled",
+      "version": 1,
+      "domain": "safety",
+      "funnel_stage": "qa",
+      "phase": "launch",
+      "source": "worker",
+      "trigger": "A flagged page was automatically re-rolled once with a hardened prompt.",
+      "sensitivity": "C0",
+      "min_consent_tier": "T0",
+      "owner": "CTO",
+      "retention_days": 365,
+      "kpis": [
+        "P5_moderation_rate",
+        "Q2_auto_reroll_rate"
+      ],
+      "identity": "none or job-level; subject_id optional",
+      "properties": [
+        {
+          "name": "page_id",
+          "type": "string",
+          "required": true,
+          "sensitivity": "C0",
+          "description": ""
+        },
+        {
+          "name": "flags",
+          "type": "string[]",
+          "required": true,
+          "sensitivity": "C0",
+          "description": "Same closed list as ip_output_flagged"
+        },
+        {
+          "name": "passed_after_reroll",
+          "type": "bool",
+          "required": true,
+          "sensitivity": "C0",
+          "description": ""
+        },
+        {
+          "name": "cost_usd",
+          "type": "decimal",
+          "required": false,
+          "sensitivity": "C0",
+          "description": "Extra spend of the re-roll and its check"
+        }
+      ]
+    },
+    {
       "name": "experiment_assigned",
       "version": 1,
       "domain": "experiment",

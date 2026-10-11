@@ -237,6 +237,23 @@ ev("output_check_result", "safety", {
   trigger: "Character/logo/celebrity vision check on a rendered page (legal 06 req 19).", props: ["page_id|string|R|", "result|enum(pass,rerolled,blocked)|R|", "category|enum(none,copyright_character,logo,celebrity)|R|"], kpis: ["P5_moderation_rate", "Q1_first_pass_qa"]
 });
 
+ev("ip_input_rewritten", "safety", {
+  stage: "intake", src: "server", cls: "C0", tier: "T0", owner: "CTO", ret: 365, phase: "launch",
+  trigger: "IP-safety screening rewrote customer text so a protected character, brand, franchise or slogan became an original idea (docs/legal/07).", props: ["surface|enum(chat,card_message,story_idea,character_note,photo_caption,reroll_note,brief_field,story_text,image_prompt)|R|Where the text was typed or produced", "detected_count|int|R|Number of items found", "detected_kinds|string[]|R|Kinds only: character, brand, slogan, person, franchise", "engine|enum(rules,model)|R|", "changed_chars|int|R|Length of the text before minus after, absolute value"], kpis: ["P5_moderation_rate"]
+});
+ev("ip_input_blocked", "safety", {
+  stage: "intake", src: "server", cls: "C0", tier: "T0", owner: "CTO", ret: 365, phase: "launch",
+  trigger: "IP-safety screening refused customer text (for example a real public figure) and asked for a different direction.", props: ["surface|enum(chat,card_message,story_idea,character_note,photo_caption,reroll_note,brief_field,story_text,image_prompt)|R|", "detected_count|int|R|", "detected_kinds|string[]|R|Kinds only", "engine|enum(rules,model)|R|"], kpis: ["P5_moderation_rate", "Q9_intake_friction"]
+});
+ev("ip_output_flagged", "safety", {
+  stage: "qa", src: "worker", cls: "C0", tier: "T0", owner: "CTO", ret: 365, phase: "launch",
+  trigger: "Output vision check flagged a rendered page (recognisable protected character, logo, slogan, licensed merchandise or high look-alike risk) or Sonnet-written story text was flagged.", props: ["page_id|string|R|", "flags|string[]|R|Closed list: protected_character, logo, slogan, licensed_merch, lookalike_risk, story_text", "lookalike_risk|int|O|0-10 score from the vision check", "is_final|bool|R|True when the page was blocked after the re-roll"], kpis: ["P5_moderation_rate", "Q1_first_pass_qa"]
+});
+ev("ip_output_rerolled", "safety", {
+  stage: "qa", src: "worker", cls: "C0", tier: "T0", owner: "CTO", ret: 365, phase: "launch",
+  trigger: "A flagged page was automatically re-rolled once with a hardened prompt.", props: ["page_id|string|R|", "flags|string[]|R|Same closed list as ip_output_flagged", "passed_after_reroll|bool|R|", "cost_usd|decimal|O|Extra spend of the re-roll and its check"], kpis: ["P5_moderation_rate", "Q2_auto_reroll_rate"]
+});
+
 /* ---------------- EXPERIMENTS ---------------- */
 ev("experiment_assigned", "experiment", {
   stage: "ml", src: "server", cls: "C1", tier: "T0", owner: "Data", ret: D, phase: "post_launch",

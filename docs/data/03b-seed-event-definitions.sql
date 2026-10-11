@@ -89,6 +89,10 @@ values
   ('training_candidate_registered', 1, 'privacy', 'C0', 'T1', 'batch', 1825, 'Data', array['P4_tier_mix']),
   ('text_moderation_result', 1, 'safety', 'C0', 'T0', 'server', 365, 'CTO', array['P5_moderation_rate']),
   ('output_check_result', 1, 'safety', 'C0', 'T0', 'worker', 365, 'CTO', array['P5_moderation_rate','Q1_first_pass_qa']),
+  ('ip_input_rewritten', 1, 'safety', 'C0', 'T0', 'server', 365, 'CTO', array['P5_moderation_rate']),
+  ('ip_input_blocked', 1, 'safety', 'C0', 'T0', 'server', 365, 'CTO', array['P5_moderation_rate','Q9_intake_friction']),
+  ('ip_output_flagged', 1, 'safety', 'C0', 'T0', 'worker', 365, 'CTO', array['P5_moderation_rate','Q1_first_pass_qa']),
+  ('ip_output_rerolled', 1, 'safety', 'C0', 'T0', 'worker', 365, 'CTO', array['P5_moderation_rate','Q2_auto_reroll_rate']),
   ('experiment_assigned', 1, 'experiment', 'C1', 'T0', 'server', 395, 'Data', array['Q1_first_pass_qa','B3_brief_completion'])
 on conflict (event_name) do update set schema_version = excluded.schema_version, domain = excluded.domain, max_sensitivity = excluded.max_sensitivity,
   min_tier = excluded.min_tier, source = excluded.source, retention_days = excluded.retention_days, owner = excluded.owner, kpis = excluded.kpis, deprecated_at = null;
