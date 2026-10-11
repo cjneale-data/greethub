@@ -1,5 +1,7 @@
 "use client";
-import { ART_STYLES, ART_STYLE_IDS, PRICING } from "@greethub/shared";
+import { PRICING, type ArtStyleId } from "@greethub/shared";
+import { StyleBrowser } from "../styles/StyleBrowser";
+import { useStyleOffer } from "../styles/useStyleOffer";
 import { Badge, Button, ChipGroup, Segmented, TextField, Toggle } from "../brand";
 import { newCharacterId, type FieldErrors } from "../../lib/book/briefForm";
 import { AGE_BAND_LABELS, BOOK_OCCASIONS, OCCASION_LABELS, READING_AGE_LABELS, TONE_LABELS } from "../../lib/book/constants";
@@ -9,7 +11,6 @@ const ROLES = ["Hero", "Sibling", "Parent", "Grandparent", "Friend", "Other"];
 const SPECIES = ["Dog", "Cat", "Rabbit", "Bird", "Other"];
 const BANDS = ["baby", "toddler", "child", "teen", "adult", "senior"] as const;
 const SUGGESTIONS = ["A bedtime adventure in the garden", "The day we all went camping", "A treasure hunt around grandma's house"];
-const SWATCH = ["var(--gh-blush)", "var(--gh-marigold)", "var(--gh-plum-tint)", "var(--gh-persimmon-tint)", "var(--gh-cream)", "var(--gh-twine)"];
 
 const byLabel = <T extends string>(labels: Record<T, string>, label: string) => (Object.keys(labels) as T[]).find((k) => labels[k] === label) ?? "";
 const price = (c: number) => `$${c / 100}`;
@@ -35,6 +36,7 @@ export function BriefStep({
   const pet = form.characters.find((c) => c.isPet);
   const occasionOptions = BOOK_OCCASIONS.map((o) => OCCASION_LABELS[o]);
   const err = (k: string) => errors[k];
+  const styleOffer = useStyleOffer(`${form.storyIdea} ${form.settingDetails}`, "book");
 
   return (
     <div className="gb-stack">
@@ -79,14 +81,7 @@ export function BriefStep({
           <h2 className="gb-h2" id="look-h">
             Pick a look
           </h2>
-          <div className="gb-styles" role="group" aria-label="Art style">
-            {ART_STYLE_IDS.map((id, i) => (
-              <button key={id} type="button" className="gb-style" aria-pressed={form.artStyle === id} onClick={() => set("artStyle", id)} data-testid={`style-${id}`}>
-                <span className="gb-style__swatch" style={{ background: SWATCH[i % SWATCH.length] }} />
-                <span className="gb-style__name">{ART_STYLES[id].label}</span>
-              </button>
-            ))}
-          </div>
+          <StyleBrowser product="book" value={form.artStyle || undefined} brief={{ occasion: form.occasion || undefined, tone: form.tone || undefined, readingAge: form.readingAge || undefined }} suggestion={styleOffer} onChange={(id) => set("artStyle", id as ArtStyleId)} testIdPrefix="style" />
           {err("artStyle") && <p className="gh-field__hint gh-field__hint--error">{err("artStyle")}</p>}
         </section>
 

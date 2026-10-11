@@ -6,6 +6,7 @@
 import { TEXT_MODEL, isMockAi, openRouterKey, redact } from "../intake/config";
 import { logInputResult } from "./events";
 import { createLiveIpSafety, createMockIpSafety, type ModelCaller } from "./service";
+import { withStyleOffers } from "./style-offer";
 import type { IpField, IpInput, IpResult, IpSafetyService } from "./types";
 
 const spend = { usd: 0 };
@@ -44,11 +45,11 @@ export const openRouterCaller: ModelCaller = async ({ system, user }) => {
 };
 
 let live: IpSafetyService | null = null;
-const mock = createMockIpSafety();
+const mock = withStyleOffers(createMockIpSafety());
 
 export function getIpSafety(forceMock?: boolean): IpSafetyService {
   if (forceMock ?? isMockAi()) return mock;
-  return (live ??= createLiveIpSafety(openRouterCaller));
+  return (live ??= withStyleOffers(createLiveIpSafety(openRouterCaller)));
 }
 
 /** Screen one field and log the data event. */

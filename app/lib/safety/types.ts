@@ -66,6 +66,8 @@ export type IpResult = {
   engine: "rules" | "model";
   /** True when the model call failed and only the free rules ran. */
   degraded?: boolean;
+  /** A generic style offered because the customer asked for a franchise look (see style-offer.ts). */
+  styleOffer?: { styleId: string; styleName: string; note: string };
 };
 
 export interface IpSafetyService {

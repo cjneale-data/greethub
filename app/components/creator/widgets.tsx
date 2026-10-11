@@ -101,31 +101,6 @@ export function ChipPicker({
   );
 }
 
-export function StylePicker({
-  styles, value, onChange, defaultId,
-}: {
-  styles: { id: string; label: string; hint: string; swatch: readonly string[] }[];
-  value?: string;
-  onChange: (id: string) => void;
-  defaultId?: string;
-}) {
-  return (
-    <div className="gc-styles" role="group" aria-label="Art style">
-      {styles.map((s) => (
-        <button key={s.id} type="button" className="gc-style" aria-pressed={s.id === value} onClick={() => onChange(s.id)}>
-          <span className="gc-style__swatch" aria-hidden="true">
-            {s.swatch.map((t) => (
-              <i key={t} style={{ background: `var(${t})` }} />
-            ))}
-          </span>
-          <span className="gc-style__name">{s.label}</span>
-          <span className="gc-style__hint">{s.id === defaultId && !value ? "Suggested for this card" : s.hint}</span>
-        </button>
-      ))}
-    </div>
-  );
-}
-
 /** Bottom sheet used on mobile for the brief card drawer. */
 export function Sheet({ open, onClose, title, children }: { open: boolean; onClose: () => void; title: string; children: ReactNode }) {
   useEffect(() => {

@@ -59,6 +59,8 @@ export async function POST(req: NextRequest) {
   // A rewrite is applied right away: original characters inspired by the idea. The customer sees a note and can rephrase.
   const text = screened.verdict === "rewritten" ? screened.safeText : userText;
   let ipNote = screened.verdict === "rewritten" ? screened.userNote : "";
+  // A franchise-look request ("like a famous movie") gets the nearest original style offered, never copied.
+  const styleOffer = screened.styleOffer ?? null;
 
   let reply = "";
   let patch: Partial<CardDraft> = {};
@@ -110,7 +112,11 @@ export async function POST(req: NextRequest) {
   if (!reply) reply = nextField(final) ? QUESTIONS[nextField(final)!] : "That's everything I need. Check the card, then make your preview.";
   if (ipNote) {
     const body = await respond(`${ipNote} ${reply}`.trim(), final, usedFallback ? { degraded: true } : {}).json();
-    return NextResponse.json({ ...body, quickReplies: [...REWRITE_CHIPS, ...(body.quickReplies ?? [])], ipNote });
+    return NextResponse.json({ ...body, quickReplies: [...(styleOffer ? [styleOffer.styleName] : []), ...REWRITE_CHIPS, ...(body.quickReplies ?? [])], ipNote, ...(styleOffer ? { styleOffer } : {}) });
+  }
+  if (styleOffer && !final.artStyle) {
+    const body = await respond(`${styleOffer.note} ${reply}`.trim(), final, usedFallback ? { degraded: true } : {}).json();
+    return NextResponse.json({ ...body, quickReplies: [styleOffer.styleName, ...(body.quickReplies ?? []).filter((q: string) => q !== styleOffer.styleName)], styleOffer });
   }
   return respond(reply, final, usedFallback ? { degraded: true } : {});
 }

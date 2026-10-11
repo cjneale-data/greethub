@@ -4,11 +4,12 @@ import type { ArtStyleId } from "@greethub/shared";
 import { OCCASIONS } from "@greethub/shared";
 import type { CardDraft } from "@/lib/intake/draft";
 import {
-  FIELD_LABELS, LIMITS, OCCASION_LABELS, RELATIONSHIPS, STYLE_CARDS, TONE_LABELS, defaultStyle, ideaSuggestions,
+  FIELD_LABELS, LIMITS, OCCASION_LABELS, RELATIONSHIPS, TONE_LABELS, ideaSuggestions,
   type FieldKey, type Occasion, type Tone,
 } from "@/lib/intake/fields";
 import { checkText } from "@/lib/intake/guardrails";
-import { ChipPicker, StylePicker } from "./widgets";
+import { StyleBrowser, type StyleSuggestion } from "@/components/styles/StyleBrowser";
+import { ChipPicker } from "./widgets";
 
 const toneEntries = Object.entries(TONE_LABELS) as [Tone, string][];
 const occasionLabels = OCCASIONS.map((o) => OCCASION_LABELS[o]);
@@ -21,10 +22,12 @@ type Props = {
   error?: string | null;
   onWriteMessage?: () => void;
   writing?: boolean;
+  /** A generic style offered after a franchise-look request in chat (artStyle field only). */
+  styleSuggestion?: StyleSuggestion | null;
 };
 
 /** One editable field, used by the Form tab and by the brief card's inline edit. Chat and form edit the same draft. */
-export function FieldEditor({ field, draft, onPatch, error, onWriteMessage, writing }: Props) {
+export function FieldEditor({ field, draft, onPatch, error, onWriteMessage, writing, styleSuggestion }: Props) {
   const text = (key: "recipientName" | "idea" | "message" | "insideJokes" | "include" | "avoid" | "signoff", opts: { multiline?: boolean; placeholder?: string; hint?: string }) => {
     const value = draft[key] ?? "";
     const verdict = value ? checkText(value, { nameLike: key === "recipientName" || key === "signoff" }) : null;
@@ -82,7 +85,7 @@ export function FieldEditor({ field, draft, onPatch, error, onWriteMessage, writ
         <ChipPicker ariaLabel="Tone" options={toneEntries.map(([, l]) => l)} value={draft.tone ? TONE_LABELS[draft.tone] : undefined} onChange={(l) => onPatch({ tone: toneEntries.find(([, x]) => x === l)![0] })} />
       );
     case "artStyle":
-      return <StylePicker styles={STYLE_CARDS} value={draft.artStyle} defaultId={defaultStyle(draft.occasion, draft.tone)} onChange={(id) => onPatch({ artStyle: id as ArtStyleId })} />;
+      return <StyleBrowser product="card" value={draft.artStyle} brief={{ occasion: draft.occasion, tone: draft.tone }} suggestion={styleSuggestion} onChange={(id) => onPatch({ artStyle: id as ArtStyleId })} />;
     case "idea":
       return (
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>

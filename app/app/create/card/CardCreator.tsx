@@ -48,6 +48,7 @@ export function CardCreator() {
   const [toast, setToast] = useState<{ text: string; retry?: () => void } | null>(null);
   const [writing, setWriting] = useState(false);
   const [pendingRewrite, setPendingRewrite] = useState<string | null>(null);
+  const [styleOffer, setStyleOffer] = useState<{ styleId: string; note: string } | null>(null);
   const [chatErr, setChatErr] = useState(false);
   const chatEnd = useRef<HTMLDivElement>(null);
   const draftRef = useRef(draft);
@@ -138,6 +139,7 @@ export function CardCreator() {
         setChat([...history, { role: "assistant", content: body.reply }]);
         setQuick(body.quickReplies ?? []);
         if (body.guardrail?.kind === "copyright") setPendingRewrite(body.guardrail.rewritten);
+        if (body.styleOffer) setStyleOffer({ styleId: body.styleOffer.styleId, note: body.styleOffer.note });
       } catch (e) {
         setChat(history);
         setChatErr(true);
@@ -368,7 +370,7 @@ export function CardCreator() {
           </form>
         </>
       ) : (
-        <FormPane draft={draft} onPatch={patchDraft} onWriteMessage={writeMessage} writing={writing} />
+        <FormPane draft={draft} onPatch={patchDraft} onWriteMessage={writeMessage} writing={writing} styleOffer={styleOffer} />
       )}
     </section>
   );
@@ -442,7 +444,7 @@ export function CardCreator() {
 }
 
 /** Form mode: every brief field as a control, in the order of the question bank. Same draft as the chat. */
-function FormPane({ draft, onPatch, onWriteMessage, writing }: { draft: CardDraft; onPatch: (p: Partial<CardDraft>) => void; onWriteMessage: () => void; writing: boolean }) {
+function FormPane({ draft, onPatch, onWriteMessage, writing, styleOffer }: { draft: CardDraft; onPatch: (p: Partial<CardDraft>) => void; onWriteMessage: () => void; writing: boolean; styleOffer: { styleId: string; note: string } | null }) {
   const section = (f: FieldKey) => {
     const required = (REQUIRED_FIELDS as readonly string[]).includes(f);
     const err = required ? validateField(f as (typeof REQUIRED_FIELDS)[number], draft) : null;
@@ -451,7 +453,7 @@ function FormPane({ draft, onPatch, onWriteMessage, writing }: { draft: CardDraf
         {!["recipientName", "idea", "message", "insideJokes", "include", "avoid", "signoff"].includes(f) && (
           <legend style={{ fontWeight: 700, fontSize: 15, marginBottom: 6, padding: 0 }}>{FIELD_LABELS[f]}</legend>
         )}
-        <FieldEditor field={f} draft={draft} onPatch={onPatch} error={f === "artStyle" || f === "occasion" || f === "tone" ? undefined : err} onWriteMessage={f === "message" ? onWriteMessage : undefined} writing={writing} />
+        <FieldEditor field={f} draft={draft} onPatch={onPatch} styleSuggestion={f === "artStyle" ? styleOffer : null} error={f === "artStyle" || f === "occasion" || f === "tone" ? undefined : err} onWriteMessage={f === "message" ? onWriteMessage : undefined} writing={writing} />
       </fieldset>
     );
   };
