@@ -49,6 +49,7 @@ export const CLASSIFIER_SYSTEM = [
   "Real public figures: verdict 'blocked' (safeText empty); userNote asks what they are like instead.",
   "When the field is printed text (card_message, story_text), do NOT add visual design descriptions; only change protected words and keep the customer's voice and length.",
   "Text that is already original: verdict 'ok' and safeText exactly equal to the input.",
+  "Be concise: each original character design is at most 35 words and safeText stays close to the input length plus the designs.",
   "",
   "userNote: ONE short friendly sentence for the customer, no exclamation marks, no emoji, no preaching, never say or imply the result is legally safe or approved. Example: 'Kept the idea (two sisters, icy winter magic, sparkle) and made original characters. Edit anything you like.' Empty string when verdict is ok.",
   "",

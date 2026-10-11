@@ -1,0 +1,83 @@
+{
+  "customer": "Anna and Elsa from Frozen on a birthday card: two sisters, icy winter magic, a snowy castle, sparkle",
+  "screened": {
+    "verdict": "rewritten",
+    "note": "Kept the idea (two sisters, icy winter magic and sparkle) and made original characters. Edit anything you like.",
+    "safeText": "Juniper (a girl with a chestnut bob, round glasses, a plum puffer jacket and striped mittens, always carrying a tin of cocoa) and Wren (a winter-sprite woman with short black curls, a mustard-yellow wool coat and a tall pine-green bobble hat, who sparkles frost from a carved wooden lantern) from icy winter-magic on a birthday card: two sisters, icy winter magic, a snowy castle, sparkle"
+  },
+  "results": [
+    {
+      "label": "themed_1",
+      "model": "google/gemini-nano-banana-2.1",
+      "ip": {
+        "recognizableProtectedCharacter": null,
+        "logoOrBrandMark": false,
+        "slogan": false,
+        "licensedMerchOnClothing": false,
+        "lookalikeRisk": 2,
+        "flags": []
+      },
+      "raw": {
+        "character_count": 2,
+        "text_in_image": false,
+        "recognizable_protected_character": null,
+        "logo_or_brand_mark": false,
+        "slogan_or_trademarked_text": false,
+        "licensed_merch_on_clothing": false,
+        "character_lookalike_risk": 2,
+        "notes": "Two children in winter clothes, ice castle, lantern and cocoa; no text or logos; original design."
+      },
+      "spentSoFar": 0.0402
+    },
+    {
+      "label": "themed_2",
+      "model": "google/gemini-nano-banana-2.1",
+      "ip": {
+        "recognizableProtectedCharacter": null,
+        "logoOrBrandMark": false,
+        "slogan": false,
+        "licensedMerchOnClothing": false,
+        "lookalikeRisk": 2,
+        "flags": []
+      },
+      "raw": {
+        "character_count": 2,
+        "text_in_image": true,
+        "recognizable_protected_character": null,
+        "logo_or_brand_mark": false,
+        "slogan_or_trademarked_text": false,
+        "licensed_merch_on_clothing": false,
+        "character_lookalike_risk": 2,
+        "notes": "Word 'COCOA' on the mug; two girls in snowy scene with castle, original design."
+      },
+      "spentSoFar": 0.0808
+    },
+    {
+      "label": "control_mouse",
+      "model": "google/gemini-nano-banana-2.1",
+      "ip": {
+        "recognizableProtectedCharacter": "Mickey Mouse",
+        "logoOrBrandMark": false,
+        "slogan": false,
+        "licensedMerchOnClothing": false,
+        "lookalikeRisk": 8,
+        "flags": [
+          "protected_character",
+          "lookalike_risk"
+        ]
+      },
+      "raw": {
+        "character_count": 1,
+        "text_in_image": false,
+        "recognizable_protected_character": "Mickey Mouse",
+        "logo_or_brand_mark": false,
+        "slogan_or_trademarked_text": false,
+        "licensed_merch_on_clothing": false,
+        "character_lookalike_risk": 8,
+        "notes": "Mouse with red shorts, two white buttons, white gloves, yellow shoes echoes Mickey; only one cast member visible."
+      },
+      "spentSoFar": 0.1257
+    }
+  ],
+  "totalUsd": 0.1257
+}

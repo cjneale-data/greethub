@@ -24,7 +24,7 @@ export const openRouterCaller: ModelCaller = async ({ system, user }) => {
           { role: "system", content: system },
           { role: "user", content: user },
         ],
-        max_tokens: 3000,
+        max_tokens: 8000,
         temperature: 0,
         usage: { include: true },
       }),

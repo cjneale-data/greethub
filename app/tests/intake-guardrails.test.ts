@@ -1,15 +1,18 @@
 import { describe, expect, it } from "vitest";
-import { PHOTO_GUEST_MESSAGE, PUBLIC_FIGURE_MESSAGE, SENSITIVE_MESSAGE, checkDraft, checkText, guestPhotoViolation, rewriteCopyrighted } from "@/lib/intake/guardrails";
+import { PHOTO_GUEST_MESSAGE, PUBLIC_FIGURE_MESSAGE, SENSITIVE_MESSAGE, checkDraft, checkText, guestPhotoViolation } from "@/lib/intake/guardrails";
 
 describe("guardrails", () => {
-  it("rewrites copyrighted characters to generic descriptions", () => {
-    expect(rewriteCopyrighted("a card like Meeko eating a cupcake").text).toBe("a card like a friendly raccoon eating a cupcake");
-    expect(rewriteCopyrighted("Elsa and Spider-Man").text).toBe("an ice queen with a braid and a masked hero in a red and blue suit");
-    expect(rewriteCopyrighted("a cheerful picnic").hits).toHaveLength(0);
-  });
-
-  it("does not double the noun when the user already named the animal", () => {
-    expect(rewriteCopyrighted("Meeko the raccoon in her garden").text).toBe("a friendly raccoon in her garden");
+  it("rewrites protected characters to ORIGINAL designs, not near-copies", () => {
+    const v = checkText("a card with Elsa and Spider-Man", { field: "card_idea" });
+    expect(v.ok).toBe(false);
+    if (!v.ok && v.kind === "copyright") {
+      const t = v.rewritten.toLowerCase();
+      expect(t).not.toContain("elsa");
+      expect(t).not.toContain("spider");
+      expect(t).not.toContain("ice queen with a braid");
+      expect(v.message).not.toMatch(/legal|safe/i);
+      expect((v.message.match(/!/g) ?? []).length).toBeLessThanOrEqual(1);
+    } else throw new Error("expected a rewrite");
   });
 
   it("never leaves the trademark name in the rewritten text", () => {
@@ -18,16 +21,13 @@ describe("guardrails", () => {
     if (!v.ok && v.kind === "copyright") {
       expect(v.rewritten.toLowerCase()).not.toContain("mickey");
       expect(v.rewritten.toLowerCase()).not.toContain("nike");
-      expect(v.message).toContain("I can't draw");
-    } else {
-      throw new Error("expected a copyright verdict");
-    }
+    } else throw new Error("expected a copyright verdict");
   });
 
-  it("uses the logo wording for brand-only hits", () => {
+  it("brand-only hits leave the brand off", () => {
     const v = checkText("Wearing Gucci shoes");
     expect(v.ok).toBe(false);
-    if (!v.ok) expect(v.message).toContain("leave the logo off");
+    if (!v.ok) expect(v.message).toContain("brand name off");
   });
 
   it("blocks real public figures with the exact wording", () => {
@@ -41,7 +41,7 @@ describe("guardrails", () => {
 
   it("does not flag first names that match a character", () => {
     expect(checkDraft({ recipientName: "Elsa", relationship: "Grandparent" }).ok).toBe(true);
-    expect(checkDraft({ idea: "Elsa at the beach" }).ok).toBe(false);
+    expect(checkDraft({ idea: "Elsa at the beach", recipientName: "Maya" }).ok).toBe(false);
   });
 
   it("checks every free-text field and reports which one failed", () => {

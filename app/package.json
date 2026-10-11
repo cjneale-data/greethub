@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "eval:ip": "node ../pipeline/node_modules/tsx/dist/cli.mjs scripts/eval-ip.ts"
   },
   "dependencies": {
     "heic2any": "^0.0.4",
