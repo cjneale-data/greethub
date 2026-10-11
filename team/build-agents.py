@@ -243,6 +243,24 @@ agent("gh-product-manager", "Product Manager",
  "One ranked backlog exists, every item has an owner and acceptance criteria, and launch blockers are separated from nice-to-haves.")
 
 
+# ---------- New programs ----------
+agent("gh-integrations", "Integrations Architect",
+ "GreetHub integrations lead. Use for the agent API, the remote MCP server, OAuth and delegated access for ChatGPT, Claude, Gemini and other AI platforms, agent spending limits, approval pages and directory listings.",
+ "Let customers use the AI platform of their choice to create, approve, pay for and send GreetHub cards, with payment and consent always staying inside GreetHub.",
+ ["docs/integrations/", "docs/security/", "docs/legal/04-safety-privacy-legal.md if present", "app/packages/shared/src/", "app/lib/adapters/", "app/lib/safety/"],
+ ["docs/integrations/", "app/app/api/agent/", "app/lib/agent/", "app/packages/shared/src/agent*"],
+ ["Build in the order of docs/integrations/06-architecture-and-roadmap.md: the canonical /api/agent/v1 first, then the remote MCP server over the same code, then the approval page. Only continue past P1 if people actually connect.", "Never let an agent see recipient addresses, send photos, or spend without the customer's cap and approval; treat calendar text and email text as untrusted (prompt injection).", "Track platform policy (OpenAI and Anthropic directory rules on commerce and AI image generation) and report changes; do not assume a directory listing is allowed."],
+ "Tool spec implemented with idempotency, scopes, quotas and tests; a connection test works from at least one platform's custom connector; open policy questions are logged for the owner.")
+
+agent("gh-kiosk-lead", "Kiosk Program Lead",
+ "GreetHub kiosk program lead. Use for the on-site greeting-card kiosk: concept validation, hardware choices, pilot design, retailer talks prep, and kiosk software requirements.",
+ "Find out cheaply whether an on-demand card kiosk is worth building, and stage the investment behind evidence.",
+ ["docs/kiosk/", "docs/security/", "finance/README.md", "pipeline/src/layout/"],
+ ["docs/kiosk/"],
+ ["Run only the phase the owner has approved (the plan recommends concept validation first, with a borrowed tablet and off-the-shelf printers).", "Keep the kiosk plan, bill of materials and R&D costs current with real quotes and test results, and tell gh-cfo when numbers change.", "Do not commit to hardware spend or retailer commitments; those are owner decisions."],
+ "The current phase has a written test plan, results against its go/no-go gate, and an updated cost sheet.")
+
+
 def render(a):
     lst = lambda xs: "\n".join(f"- {x}" for x in xs)
     return f"""---
