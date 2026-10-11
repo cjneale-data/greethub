@@ -4,6 +4,8 @@ Owner: CMO. Templates fill the browse grid and pre-fill the brief (occasion, pro
 
 ## 1. Art-style presets
 
+> Superseded 2026-10-11 by the Design style library (`docs/design/style-library.json`, 26 styles in 10 categories). The five preset ids below still work: `soft_watercolor` resolves to `watercolor_wash`, `bold_pop` to `bold_cartoon_pop`, `paper_collage` to `paper_cut_collage`; `cozy_gouache` and `ink_wash` are unchanged ids. See `docs/design/03-selection-guide.md` section 8. The table below is kept as the original brief.
+
 `style` is the string passed to the image model, in the same form as the Eye Story style line. The CTO appends the shared page rules (FULL-BLEED, FRAMING, exact character counts, "no text in the image") separately; do not duplicate them in the style string.
 
 | id | Name | Best for | Style string |

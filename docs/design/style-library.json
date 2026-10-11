@@ -1,0 +1,4442 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-10-11",
+  "note": "Source of truth for GreetHub art styles. Edit this file, then run node docs/design/tools/build-knowledge.mjs. Style strings never name artists, studios or franchises; ipSafeAliases are customer phrases only and never reach a prompt.",
+  "ageBandDefs": {
+    "0-3": "Babies and toddlers: board-book simplicity",
+    "4-7": "Picture-book years",
+    "8-10": "Older kids and grown-up gifts"
+  },
+  "sources": [
+    {
+      "id": "R01",
+      "title": "Publishers Weekly: 2025 children's bestsellers",
+      "url": "https://www.publishersweekly.com/pw/by-topic/childrens/childrens-industry-news/article/99672-2025-children-s-bestsellers-buzzy-series-additions-graphic-novel-retellings-and-beloved-picture-books.html",
+      "dateRead": "2026-10-11",
+      "tag": "V"
+    },
+    {
+      "id": "R02",
+      "title": "Publishers Weekly: Caldecott win Q&A (2026-01-27)",
+      "url": "https://www.publishersweekly.com/pw/by-topic/childrens/childrens-authors/article/99557-c-tia-chien-s-caldecott-win-wait-is-this-what-i-think-it-means.html",
+      "dateRead": "2026-10-11",
+      "tag": "V"
+    },
+    {
+      "id": "R03",
+      "title": "American Libraries: 2026 Youth Media Award winners",
+      "url": "https://americanlibrariesmagazine.org/blogs/the-scoop/2026-youth-media-award-winners/",
+      "dateRead": "2026-10-11",
+      "tag": "V"
+    },
+    {
+      "id": "R04",
+      "title": "The Bright Agency: Trends in Children's Literature 2026",
+      "url": "https://thebrightagency.com/uk/case-studies/trends-in-children-s-literature-2026-vicki-willden-lebrecht",
+      "dateRead": "2026-10-11",
+      "tag": "V"
+    },
+    {
+      "id": "R05",
+      "title": "Lumonova Studio: Children's book illustration styles (2025-12-20, vendor blog)",
+      "url": "https://lumonovastudio.com/childrens-book-illustration-styles/",
+      "dateRead": "2026-10-11",
+      "tag": "V"
+    },
+    {
+      "id": "R06",
+      "title": "Printed.com: Top greeting card trends for 2026 (2026-01-09, printer blog)",
+      "url": "https://www.printed.com/blog/greeting-card-trends-2026/",
+      "dateRead": "2026-10-11",
+      "tag": "V"
+    },
+    {
+      "id": "R07",
+      "title": "Greetopia: Greeting card design trends 2026 (2025-12-18, retailer blog)",
+      "url": "https://greetopia.com/blog/greeting-card-design-trends-whats-hot-for-2026",
+      "dateRead": "2026-10-11",
+      "tag": "V"
+    },
+    {
+      "id": "R08",
+      "title": "Shutterfly: Top Christmas and holiday card trends (updated 2026-08-07)",
+      "url": "https://www.shutterfly.com/ideas/top-christmas-holiday-card-trends/",
+      "dateRead": "2026-10-11",
+      "tag": "V"
+    },
+    {
+      "id": "R09",
+      "title": "ToonyStory: art styles menu (competitor)",
+      "url": "https://toonystory.com/styles",
+      "dateRead": "2026-10-11",
+      "tag": "V"
+    },
+    {
+      "id": "R10",
+      "title": "Magic Story home page (competitor)",
+      "url": "https://www.magicstory.com/",
+      "dateRead": "2026-10-11",
+      "tag": "V"
+    },
+    {
+      "id": "R12",
+      "title": "AI illustration tools (IllustratorMagic, Musely, Neolemon, Booklet AI): style menus via search",
+      "url": "https://musely.ai/tools/children-book-generator",
+      "dateRead": "2026-10-11",
+      "tag": "S"
+    },
+    {
+      "id": "R13",
+      "title": "Moonpig US: hottest birthday cards 2026 (search result, retailer self-promo)",
+      "url": "https://www.moonpig.com/us/blog/gifts-and-wishes/hottest-birthday-cards-usa-2026/",
+      "dateRead": "2026-10-11",
+      "tag": "S"
+    },
+    {
+      "id": "R14",
+      "title": "Etsy, Amazon and Hallmark listing roundups (search results, listing counts not sales)",
+      "url": "https://www.etsy.com/market/watercolor_birthday_cards",
+      "dateRead": "2026-10-11",
+      "tag": "S"
+    },
+    {
+      "id": "R15",
+      "title": "Adobe Express design trends 2026 and Creative Market trends (search)",
+      "url": "https://www.adobe.com/express/learn/blog/design-trends-2026",
+      "dateRead": "2026-10-11",
+      "tag": "S"
+    },
+    {
+      "id": "R16",
+      "title": "Pinterest Predicts 2026 coverage (Axios, PG Buzz)",
+      "url": "https://axios.com/2025/12/09/2026-pinterest-trend-report",
+      "dateRead": "2026-10-11",
+      "tag": "S"
+    },
+    {
+      "id": "R17",
+      "title": "Premium stationery: letterpress and gold foil cards (Sugar Paper, museum stores)",
+      "url": "https://www.belleandblush.com/collections/gold/products/sugar-paper-throw-some-sprinkles-on-it-card",
+      "dateRead": "2026-10-11",
+      "tag": "S"
+    },
+    {
+      "id": "R18",
+      "title": "GreetHub market landscape: Wonderbly, Hooray Heroes, Imagitime",
+      "url": "docs/market/00-landscape.md",
+      "dateRead": "2026-10-11",
+      "tag": "V"
+    },
+    {
+      "id": "R19",
+      "title": "Design head's own knowledge of how top-selling picture books look (unverified)",
+      "url": "docs/design/00-research-notes.md",
+      "dateRead": "2026-10-11",
+      "tag": "U"
+    },
+    {
+      "id": "R20",
+      "title": "NC State study of parents and AI picture books (2025-11-12)",
+      "url": "https://news.ncsu.edu/?p=1531242",
+      "dateRead": "2026-10-11",
+      "tag": "V"
+    }
+  ],
+  "categories": [
+    {
+      "id": "soft-watery",
+      "name": "Soft & Watery",
+      "blurb": "Gentle washes of color. Think baby showers, grandma and bedtime.",
+      "order": 1
+    },
+    {
+      "id": "cozy-storybook",
+      "name": "Cozy Storybook",
+      "blurb": "Warm, lamplit, classic picture-book charm.",
+      "order": 2
+    },
+    {
+      "id": "bold-silly",
+      "name": "Bold & Silly",
+      "blurb": "Big shapes and bright color, built to get a laugh.",
+      "order": 3
+    },
+    {
+      "id": "handmade-crafty",
+      "name": "Cut, Stitched & Handmade",
+      "blurb": "Looks you could almost touch: paper, felt and clay.",
+      "order": 4
+    },
+    {
+      "id": "retro-graphic",
+      "name": "Retro & Graphic",
+      "blurb": "Bold shapes and old-school printing.",
+      "order": 5
+    },
+    {
+      "id": "sketchy-homemade",
+      "name": "Sketchy & Homemade",
+      "blurb": "Crayon, pencil and wobbly pen. Happily imperfect.",
+      "order": 6
+    },
+    {
+      "id": "movie-bright",
+      "name": "Big-Screen Bright",
+      "blurb": "Glowy, rounded, animated-film looks.",
+      "order": 7
+    },
+    {
+      "id": "lifelike",
+      "name": "Lifelike & Cinematic",
+      "blurb": "Painted or photographic realism for grown-up moments.",
+      "order": 8
+    },
+    {
+      "id": "clean-simple",
+      "name": "Clean & Simple",
+      "blurb": "Fine lines, open space and hand lettering.",
+      "order": 9
+    },
+    {
+      "id": "fancy-foil",
+      "name": "Fancy & Fabulous",
+      "blurb": "Gold, geometry and show-off pattern.",
+      "order": 10
+    }
+  ],
+  "styles": [
+    {
+      "id": "watercolor_wash",
+      "name": "Soft Watercolor",
+      "category": "soft-watery",
+      "status": "stable",
+      "legacyIds": [
+        "watercolor",
+        "soft_watercolor"
+      ],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "0-3",
+        "4-7"
+      ],
+      "occasions": [
+        "birthday",
+        "new_baby",
+        "mothers_day",
+        "get_well",
+        "thank_you",
+        "just_because",
+        "bedtime",
+        "sympathy"
+      ],
+      "tones": [
+        "tender",
+        "adventurous"
+      ],
+      "description": "Gentle, wet-on-paper color with soft edges and a little white showing through, like a classic picture book.",
+      "whyThisOne": "Warm and gentle, the safe choice when the feeling matters more than the joke.",
+      "popularity": {
+        "rating": "high",
+        "sources": [
+          "R05",
+          "R07",
+          "R09",
+          "R12",
+          "R14"
+        ],
+        "summary": "Named as the nostalgic default for ages 3-6, still popular for Mother's Day, strong on Etsy, and on every AI-book style menu we found."
+      },
+      "look": {
+        "medium": "Transparent watercolor with touches of gouache on cold-press paper",
+        "technique": "Wet-on-wet washes, a few dry-brush edges, paper white left as highlight",
+        "line": "Thin, soft pencil-and-ink outlines that fade in places",
+        "palette": "Muted warm: peach, cream, sage, dusty blue, a single deeper accent",
+        "composition": "Centered subject, generous calm background, soft vignette inside the picture",
+        "mood": "Tender, calm, nostalgic",
+        "era": "Classic 20th-century picture book, refreshed"
+      },
+      "styleString": "Soft 2D watercolor and gouache illustration, classic children's picture book style, gentle hand-drawn ink outlines, warm natural light, visible cold-press paper grain, rounded friendly shapes, muted warm palette with peach, cream and sage, soft diffuse lighting, simple softly washed backgrounds, characters with soft round proportions and oversized expressive eyes - not photorealistic, no realistic skin texture, no sharp photographic shadows, no 3D render.",
+      "avoid": [
+        "photorealism",
+        "3D render",
+        "hard black outlines",
+        "neon colors",
+        "text or letters in the picture",
+        "glossy airbrushed skin"
+      ],
+      "swatches": [
+        {
+          "hex": "#F6C9C0",
+          "name": "blush peach"
+        },
+        {
+          "hex": "#FBF6EE",
+          "name": "paper cream"
+        },
+        {
+          "hex": "#B7C9A8",
+          "name": "sage"
+        },
+        {
+          "hex": "#9DB4C8",
+          "name": "dusty blue"
+        },
+        {
+          "hex": "#C8441F",
+          "name": "deep persimmon accent"
+        }
+      ],
+      "consistency": {
+        "bookRating": 3,
+        "cardRating": 5,
+        "notes": "Models hold hair color and outfit colors well but drift on face shape, because loose washes invite re-interpretation each page.",
+        "tips": [
+          "Attach the approved model sheet first on every page",
+          "Repeat each character's locked outfit colors verbatim",
+          "Keep one outfit and one hair color per person; avoid patterns",
+          "Re-roll one page, not the book, when a face drifts"
+        ],
+        "renderNotes": "Good, but it reads closer to wash-over-pencil than wet-on-wet watercolor: edges are cleaner than a real painting. Faces stay friendly; the child's outfit lost the raincoat's yellow saturation (drifted to pale mustard), which is the colour drift to expect across pages."
+      },
+      "photoReference": "Reduce each person to 3 anchors from the photo (hair color and shape, one face trait, skin tone) and redraw as rounded watercolor figures with simple dot or soft eyes. Never trace the photo; ignore the clothing in it and use the locked outfit.",
+      "card": {
+        "typography": {
+          "display": [
+            "Fraunces 600 (soft serif)",
+            "Caveat 600 (handwritten accent)"
+          ],
+          "body": [
+            "Figtree 400"
+          ],
+          "notes": "A soft serif headline with a handwritten sign-off reads warm. Keep the message at 17 to 20 pt in cocoa, never pure black."
+        },
+        "layout": "Subject in the middle 60 percent; the washes fade toward the edges so the card never looks boxed in.",
+        "textSafeZone": "Keep the bottom 25 percent of the front calm for an optional caption; the inside message page is plain paper with a faint wash corner."
+      },
+      "print": {
+        "bleed": "Washes that fade to paper white need a printed tint to the edge: tell the model FULL-BLEED, or the trim will show a pale rim.",
+        "inkCoverage": "Light coverage (under 160 percent). Dries fast, low risk of show-through on 100 lb stock.",
+        "foilAndSpot": "No foil. A gold-look accent is possible only as printed ink."
+      },
+      "bestFor": [
+        "New baby and baby showers",
+        "Mother's Day and grandparent cards",
+        "Bedtime and gentle first books",
+        "Get well and thinking-of-you"
+      ],
+      "avoidFor": [
+        "Big laughs and loud humor",
+        "Dad's birthday jokes",
+        "Ages 8 to 10 adventure with fast action"
+      ],
+      "tags": [
+        "watercolor",
+        "soft",
+        "watery",
+        "gentle",
+        "pastel",
+        "dreamy",
+        "nursery",
+        "baby",
+        "grandma",
+        "storybook"
+      ],
+      "synonyms": [
+        "soft and watery",
+        "painted",
+        "wet paint",
+        "light and airy",
+        "delicate",
+        "baby shower",
+        "nursery art",
+        "pretty and soft"
+      ],
+      "ipSafeAliases": [],
+      "risks": {
+        "ip": "Low. Classic watercolor is a medium, not a brand. Do not add rabbits in blue jackets or bears in red shirts by name.",
+        "uncanny": "Low.",
+        "age": "Suits every age band."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FBF6EE",
+        "accentColor": "#C8441F"
+      },
+      "thumbnail": {
+        "file": "watercolor_wash.jpg",
+        "rendered": true,
+        "note": "Rendered 2026-10-11 at 1K. Good: soft washes and paper grain, gentle faces."
+      }
+    },
+    {
+      "id": "ink_wash",
+      "name": "Ink & Wash",
+      "category": "soft-watery",
+      "status": "stable",
+      "legacyIds": [
+        "storybook_ink"
+      ],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "4-7",
+        "8-10"
+      ],
+      "occasions": [
+        "wedding",
+        "anniversary",
+        "sympathy",
+        "thank_you",
+        "just_because",
+        "birthday",
+        "adventure"
+      ],
+      "tones": [
+        "elegant",
+        "tender"
+      ],
+      "description": "Fine pen lines with loose see-through color, plenty of white space. Calm, grown-up and hand-drawn.",
+      "whyThisOne": "Quiet and elegant, perfect when you want it to feel like stationery.",
+      "popularity": {
+        "rating": "medium",
+        "sources": [
+          "R07",
+          "R09",
+          "R05"
+        ],
+        "summary": "Minimalist and fine-line looks are the 2026 pick for wedding and sympathy cards; pencil and sketch looks appear on competitor menus."
+      },
+      "look": {
+        "medium": "Dip-pen or fineliner ink with transparent watercolor tints",
+        "technique": "Line first, color washes dropped loosely beside the line so they do not quite fill it",
+        "line": "Fine, confident, slightly scratchy pen line in warm dark brown",
+        "palette": "Restrained: dusty rose, sage, warm gray, ochre, small gold accent",
+        "composition": "Open page, subject floats on white, botanical or object details",
+        "mood": "Calm, refined, wry",
+        "era": "Vintage storybook sketch"
+      },
+      "styleString": "Delicate 2D ink line and watercolor wash illustration, fine pen linework in warm dark brown with loose translucent color washes that do not fill the lines, generous cream paper white space, soft botanical details, calm elegant composition, restrained palette of dusty rose, sage, warm gray and small gold accents, hand-drawn stationery feel, characters drawn with expressive faces and simple clothing - not photorealistic, no 3D render, no digital gradients.",
+      "avoid": [
+        "photorealism",
+        "3D render",
+        "heavy fills",
+        "saturated primaries",
+        "airbrush gradients",
+        "text in the picture"
+      ],
+      "swatches": [
+        {
+          "hex": "#D9B8B0",
+          "name": "dusty rose"
+        },
+        {
+          "hex": "#A9B79C",
+          "name": "sage"
+        },
+        {
+          "hex": "#8E8A84",
+          "name": "warm gray"
+        },
+        {
+          "hex": "#C9A24B",
+          "name": "gold"
+        },
+        {
+          "hex": "#FBF6EE",
+          "name": "paper"
+        }
+      ],
+      "consistency": {
+        "bookRating": 3,
+        "cardRating": 4,
+        "notes": "Line art helps keep faces recognisable, but wash color is loose, so outfit colors can shift. Fine detail varies page to page.",
+        "tips": [
+          "State exact outfit colors every page",
+          "Name two or three face-defining line traits (glasses, curl, freckles)",
+          "Attach the model sheet first",
+          "Keep backgrounds sparse so the model spends effort on the characters"
+        ],
+        "renderNotes": "Not rendered in the sample run (budget). Ratings are estimates from the Eye Story lessons and the rendered styles, not measurements."
+      },
+      "photoReference": "Describe hair and face as 3 to 4 line-drawing traits (glasses, curls, beard shape, nose line) and let color wash carry skin tone lightly. Do not trace; loosen proportions slightly.",
+      "card": {
+        "typography": {
+          "display": [
+            "Cormorant Garamond 600",
+            "Pinyon Script (names only)"
+          ],
+          "body": [
+            "Figtree 400"
+          ],
+          "notes": "Classic serif with a single script line for names. Message in dark cocoa at 17 to 19 pt, centered on the inside."
+        },
+        "layout": "Subject floats off-center with blank space on one side; weddings: two names centered below in script.",
+        "textSafeZone": "Keep a clear 35 percent band (top or bottom) for a line of type on the front. The inside is mostly white."
+      },
+      "print": {
+        "bleed": "Mostly white page: a tiny cream paper tint is fine, but keep the paper tone out of the bleed or a visible edge appears when trimming.",
+        "inkCoverage": "Very light. Use uncoated or textured stock to match the hand-drawn feel.",
+        "foilAndSpot": "A gold foil line on the front is a lovely add-on but is not simulated by the picture."
+      },
+      "bestFor": [
+        "Weddings, anniversaries, sympathy",
+        "Grown-up thank-you notes",
+        "Books for ages 8 to 10 with a gentle humor",
+        "Pet and garden themes"
+      ],
+      "avoidFor": [
+        "Loud kids' birthdays",
+        "Toddler books (too fine)",
+        "Anything needing saturated, energetic color"
+      ],
+      "tags": [
+        "ink",
+        "pen",
+        "line art",
+        "sketch",
+        "wash",
+        "elegant",
+        "botanical",
+        "stationery",
+        "wedding",
+        "refined"
+      ],
+      "synonyms": [
+        "pen and ink",
+        "fine line",
+        "sketchy and pretty",
+        "classic illustration",
+        "like an old storybook sketch",
+        "etching"
+      ],
+      "ipSafeAliases": [
+        "beatrix potter",
+        "peter rabbit",
+        "wind in the willows"
+      ],
+      "risks": {
+        "ip": "Low to medium. Classic vintage animals in clothes are a well-known visual identity; keep animals generic and clothing plain.",
+        "uncanny": "Low.",
+        "age": "Fine for all ages; subtle for toddlers."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FBF6EE",
+        "accentColor": "#5B2A4B"
+      },
+      "thumbnail": {
+        "file": "ink_wash.jpg",
+        "rendered": false,
+        "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      }
+    },
+    {
+      "id": "pastel_chalk",
+      "name": "Dreamy Pastel",
+      "category": "soft-watery",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "0-3",
+        "4-7"
+      ],
+      "occasions": [
+        "new_baby",
+        "valentines",
+        "birthday",
+        "bedtime",
+        "mothers_day",
+        "just_because"
+      ],
+      "tones": [
+        "tender"
+      ],
+      "description": "Powdery chalk-pastel color, soft clouds and glow. Sweet, sleepy and light.",
+      "whyThisOne": "Sleepy and sweet, made for babies, bedtime and gentle love notes.",
+      "popularity": {
+        "rating": "medium",
+        "sources": [
+          "R07",
+          "R09",
+          "R05"
+        ],
+        "summary": "Soft pastels with metallic accents are listed for new baby and Valentine cards; 'soft and dreamy' is a competitor menu entry; neon-pastel palettes called a 2026 trend."
+      },
+      "look": {
+        "medium": "Soft chalk pastel and colored pencil on toothy paper, a little digital blending",
+        "technique": "Smudged gradients, grainy highlights, layered dusty color",
+        "line": "Almost none; edges are formed by color change, with a faint soft outline in a darker tone of the same color",
+        "palette": "Powdery pastels: lilac, baby blue, peach, mint, a dusty rose, optional gold dust accent",
+        "composition": "Floaty central figure, clouds and stars, rounded shapes, low contrast",
+        "mood": "Sleepy, sweet, safe",
+        "era": "Contemporary nursery"
+      },
+      "styleString": "Dreamy 2D chalk pastel and colored pencil illustration on toothy paper, powdery smudged gradients, grainy soft highlights, almost no outlines with edges formed by color change, soft glowing light, pastel palette of lilac, baby blue, peach, mint and dusty rose, rounded sweet shapes with small simple faces, cloud and star backgrounds, gentle low contrast - not photorealistic, no 3D render, no sharp lines.",
+      "avoid": [
+        "hard outlines",
+        "dark heavy shadows",
+        "high contrast",
+        "photorealism",
+        "3D render",
+        "text in the picture"
+      ],
+      "swatches": [
+        {
+          "hex": "#CDB8E0",
+          "name": "lilac"
+        },
+        {
+          "hex": "#B9D3EA",
+          "name": "baby blue"
+        },
+        {
+          "hex": "#F6C9C0",
+          "name": "peach blush"
+        },
+        {
+          "hex": "#BFE3D0",
+          "name": "mint"
+        },
+        {
+          "hex": "#E7C770",
+          "name": "gold dust"
+        }
+      ],
+      "consistency": {
+        "bookRating": 2,
+        "cardRating": 4,
+        "notes": "No outlines means faces shift from page to page; low contrast makes small details disappear. Fine for a quiet 12-page baby book, risky for 32 pages.",
+        "tips": [
+          "Give each character a simple, bold shape (round head, one hair blob)",
+          "Use only one outfit color per person",
+          "Lock hair color and one accessory",
+          "Prefer card or short baby book over long stories"
+        ],
+        "renderNotes": "Not rendered in the sample run (budget). Ratings are estimates from the Eye Story lessons and the rendered styles, not measurements."
+      },
+      "photoReference": "Soften every person into a rounded, simplified character with the photo's hair color and skin tone, eyes as small dots or soft curves. Babies read as sleeping or looking sideways.",
+      "card": {
+        "typography": {
+          "display": [
+            "Fredoka 500 (rounded)",
+            "Dancing Script 600"
+          ],
+          "body": [
+            "Figtree 400"
+          ],
+          "notes": "Rounded sans in a deeper plum or navy for contrast against the pastel. Message at 17 to 20 pt, never in a pastel color (low contrast)."
+        },
+        "layout": "Center a small subject in a big soft field; stars and clouds frame the edges.",
+        "textSafeZone": "Top 30 percent stays pure sky for an optional caption; the inside carries a light pastel corner wash."
+      },
+      "print": {
+        "bleed": "Gradients to the edge band easily; request 'full-bleed' and check for banding in the proof.",
+        "inkCoverage": "Light to medium; pastel gradients can show banding on coated stock, so prefer matte uncoated.",
+        "foilAndSpot": "Gold dust accents can be a spot foil add-on; the picture only suggests it."
+      },
+      "bestFor": [
+        "New baby, baby shower, christening",
+        "Valentine notes",
+        "Bedtime books for ages 0 to 3",
+        "Pregnancy announcements"
+      ],
+      "avoidFor": [
+        "Humor",
+        "Action stories",
+        "Long books where characters must stay identical",
+        "Dad and uncle cards"
+      ],
+      "tags": [
+        "pastel",
+        "chalk",
+        "dreamy",
+        "soft",
+        "baby",
+        "nursery",
+        "clouds",
+        "sleepy",
+        "powdery"
+      ],
+      "synonyms": [
+        "soft and dreamy",
+        "pastel dream",
+        "cloudy",
+        "sweet and sleepy",
+        "baby pastel",
+        "cotton candy"
+      ],
+      "ipSafeAliases": [],
+      "risks": {
+        "ip": "Low.",
+        "uncanny": "Low; faces are too soft to be uncanny.",
+        "age": "Best for 0 to 7."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FBF6EE",
+        "accentColor": "#5B2A4B"
+      },
+      "thumbnail": {
+        "file": "pastel_chalk.jpg",
+        "rendered": false,
+        "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      }
+    },
+    {
+      "id": "cozy_gouache",
+      "name": "Cozy Gouache Storybook",
+      "category": "cozy-storybook",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "4-7",
+        "8-10"
+      ],
+      "occasions": [
+        "christmas",
+        "adventure",
+        "bedtime",
+        "birthday",
+        "new_home",
+        "thank_you",
+        "fathers_day"
+      ],
+      "tones": [
+        "adventurous",
+        "tender"
+      ],
+      "description": "Rich, velvety painted scenes lit by a warm lamp. Detailed but never busy, like a favorite bedtime book.",
+      "whyThisOne": "Warm, rich and a little magical, great for adventures and winter nights.",
+      "popularity": {
+        "rating": "medium",
+        "sources": [
+          "R04",
+          "R09",
+          "R05"
+        ],
+        "summary": "Comfort, nostalgia and hope are the 2026 mood in children's books; 'storybook classic' is a competitor menu entry."
+      },
+      "look": {
+        "medium": "Opaque gouache with colored pencil details on warm paper",
+        "technique": "Flat-to-velvety brush layers with visible strokes, soft glow around lights",
+        "line": "No hard outlines; soft painted edges with darker color for definition",
+        "palette": "Plum, amber, forest green, cream, deep teal night blue",
+        "composition": "Layered foreground, middle and background; a light source in the scene; room for the eye to rest",
+        "mood": "Cozy, warm, adventurous at bedtime",
+        "era": "Mid-century picture book, updated"
+      },
+      "styleString": "Cozy 2D gouache storybook illustration, warm lamplit atmosphere, rich velvety colors in plum, amber, forest green and cream, visible brush texture on warm paper, detailed but uncluttered scenes, gentle depth with soft shadows, vintage picture book charm, characters with soft rounded proportions and friendly expressive faces - not photorealistic, no 3D render, no glossy digital gradients.",
+      "avoid": [
+        "photorealism",
+        "3D render",
+        "neon",
+        "harsh white light",
+        "clutter",
+        "text in the picture"
+      ],
+      "swatches": [
+        {
+          "hex": "#5B2A4B",
+          "name": "plum"
+        },
+        {
+          "hex": "#E8A33D",
+          "name": "lamp amber"
+        },
+        {
+          "hex": "#2F5D4A",
+          "name": "forest green"
+        },
+        {
+          "hex": "#F3EADB",
+          "name": "cream"
+        },
+        {
+          "hex": "#2A3F5F",
+          "name": "night blue"
+        }
+      ],
+      "consistency": {
+        "bookRating": 4,
+        "cardRating": 4,
+        "notes": "Painted but opaque, so outfits and hair hold well. Rich scenes can tempt the model to add extra figures; restate exact counts.",
+        "tips": [
+          "Restate the exact character count every page",
+          "Lock outfit colors that stay readable in low light",
+          "Describe one light source",
+          "Keep backgrounds layered but with calm text area"
+        ],
+        "renderNotes": "Rich, believable gouache texture. It added an inset cream frame and rounded vignette, which would print as a white border; the FULL-BLEED line did not fully stop it, so keep the white-border QA check on. Warm and consistent character colors."
+      },
+      "photoReference": "Translate hair color, skin tone and glasses or beard into painted rounded characters, with warm lamplight on faces. Winter clothes help hide photo clothing; always replace the photo's clothes with the locked outfit.",
+      "card": {
+        "typography": {
+          "display": [
+            "DM Serif Display",
+            "Caveat 600"
+          ],
+          "body": [
+            "Figtree 400"
+          ],
+          "notes": "A sturdy serif headline in cream on deep plum or navy sections, or dark cocoa on light. Message 17 to 19 pt."
+        },
+        "layout": "Scene fills the front; a lit window or lamp makes the focal point.",
+        "textSafeZone": "A calm dark sky or snow band at the top 25 percent is the type zone."
+      },
+      "print": {
+        "bleed": "Dark saturated backgrounds go to the edge: bleed matters, and a cut slightly off shows white.",
+        "inkCoverage": "Heavy (up to 260 percent) in night scenes: use uncoated stock slowly, allow drying time, avoid show-through on thin paper.",
+        "foilAndSpot": "No foil; stars can be a spot gloss add-on only if the printer offers it."
+      },
+      "bestFor": [
+        "Christmas and winter cards",
+        "Adventure and camping books",
+        "New home cards",
+        "Bedtime stories 4 to 8"
+      ],
+      "avoidFor": [
+        "Quick laughs",
+        "Bright summer fun",
+        "Toddler board-book simplicity"
+      ],
+      "tags": [
+        "gouache",
+        "cozy",
+        "storybook",
+        "lamplit",
+        "warm",
+        "winter",
+        "christmas",
+        "bedtime",
+        "painted",
+        "rich"
+      ],
+      "synonyms": [
+        "classic storybook",
+        "warm and rich",
+        "fireside",
+        "cabin",
+        "bedtime book",
+        "painted storybook"
+      ],
+      "ipSafeAliases": [
+        "winnie the pooh",
+        "classic disney storybook"
+      ],
+      "risks": {
+        "ip": "Low. Do not describe specific bear, honey or hundred-acre features.",
+        "uncanny": "Low.",
+        "age": "Fine for all ages; dark scenes should stay friendly for 0 to 3."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#FBF6EE",
+        "paperColor": "#5B2A4B",
+        "accentColor": "#F5B83D"
+      },
+      "thumbnail": {
+        "file": "cozy_gouache.jpg",
+        "rendered": true,
+        "note": "Rendered 2026-10-11 at 1K. Good richness; the model drew a cream border (a vignette frame) despite the full-bleed line."
+      }
+    },
+    {
+      "id": "vintage_storybook",
+      "name": "Vintage Storybook",
+      "category": "cozy-storybook",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "0-3",
+        "4-7"
+      ],
+      "occasions": [
+        "birthday",
+        "thank_you",
+        "christmas",
+        "mothers_day",
+        "fathers_day",
+        "just_because",
+        "new_baby"
+      ],
+      "tones": [
+        "tender",
+        "silly"
+      ],
+      "description": "A mid-century look: a few flat colors printed slightly off the line, friendly animals and kids, a printed-in-1955 charm.",
+      "whyThisOne": "Nostalgic and charming, like a book from grandma's shelf.",
+      "popularity": {
+        "rating": "medium",
+        "sources": [
+          "R04",
+          "R19"
+        ],
+        "summary": "Reinvented heritage and classic looks are rising (R04); several evergreen bestsellers share a vintage printed look (unverified, R19)."
+      },
+      "look": {
+        "medium": "Limited-color screen-print look: gouache and ink, 3 to 5 flat colors",
+        "technique": "Flat color blocks slightly misregistered from a brown or black ink line; subtle halftone speckle",
+        "line": "Brush-ink outline in dark brown, uneven thickness",
+        "palette": "Cream paper, tomato red, mustard, teal, soft brown",
+        "composition": "Single clear scene, bold readable silhouettes, plenty of flat background",
+        "mood": "Nostalgic, warm, gently funny",
+        "era": "1950s to 1960s picture books"
+      },
+      "styleString": "Vintage 1950s-style picture book illustration, limited palette of 4 or 5 flat colors printed slightly off the brown ink brush outline, subtle halftone speckle and cream paper grain, tomato red, mustard, teal and soft brown, simple rounded characters with dot eyes and friendly faces, flat clean backgrounds with a few playful details - not photorealistic, no 3D render, no gradients.",
+      "avoid": [
+        "gradients",
+        "photorealism",
+        "3D render",
+        "glossy highlights",
+        "more than 5 colors",
+        "text in the picture"
+      ],
+      "swatches": [
+        {
+          "hex": "#F3EADB",
+          "name": "cream paper"
+        },
+        {
+          "hex": "#D9482B",
+          "name": "tomato"
+        },
+        {
+          "hex": "#E0A526",
+          "name": "mustard"
+        },
+        {
+          "hex": "#2E7F86",
+          "name": "teal"
+        },
+        {
+          "hex": "#5A3E2E",
+          "name": "brown ink"
+        }
+      ],
+      "consistency": {
+        "bookRating": 4,
+        "cardRating": 4,
+        "notes": "Flat colors and a strong ink line help models repeat characters. Misregistration is applied randomly, which can read as inconsistency but is part of the look.",
+        "tips": [
+          "Lock 3 colors per character",
+          "Say 'dot eyes' once and keep it",
+          "Restate the brown outline color",
+          "Keep scenes to two or three objects"
+        ],
+        "renderNotes": "Not rendered in the sample run (budget). Ratings are estimates from the Eye Story lessons and the rendered styles, not measurements."
+      },
+      "photoReference": "Reduce the person to a bold silhouette: hair shape and color, glasses, a distinctive hat. Eyes as dots, skin as a flat warm tone. No texture from the photo.",
+      "card": {
+        "typography": {
+          "display": [
+            "Rozha One or Abril Fatface (display)",
+            "Patrick Hand"
+          ],
+          "body": [
+            "Figtree 400"
+          ],
+          "notes": "Chunky display type with a hand-drawn sub line fits the printed-in-1955 feel. Use two colors max."
+        },
+        "layout": "One bold subject, flat background, a banner shape for the message.",
+        "textSafeZone": "Reserve a flat color panel in the lower third for an optional caption."
+      },
+      "print": {
+        "bleed": "Flat color panels to the edge; make sure the model fills the bleed, not cream.",
+        "inkCoverage": "Low to medium. Uncoated stock reproduces the printed look well.",
+        "foilAndSpot": "A single metallic ink as the 'fifth color' is an option but is not simulated."
+      },
+      "bestFor": [
+        "Birthday and thank-you cards with retro charm",
+        "Books ages 3 to 7",
+        "Grandparent gifts",
+        "Dad's cards"
+      ],
+      "avoidFor": [
+        "High-realism requests",
+        "Scenes with many characters",
+        "Modern tech themes"
+      ],
+      "tags": [
+        "vintage",
+        "retro",
+        "storybook",
+        "1950s",
+        "nostalgic",
+        "classic",
+        "flat",
+        "limited color",
+        "halftone"
+      ],
+      "synonyms": [
+        "old-fashioned",
+        "like grandma's books",
+        "classic kids book",
+        "oldschool",
+        "heritage"
+      ],
+      "ipSafeAliases": [
+        "goodnight moon",
+        "little golden books",
+        "winnie the pooh classic"
+      ],
+      "risks": {
+        "ip": "Low to medium. Heritage look is adjacent to famous vintage titles; no named animals or outfits.",
+        "uncanny": "Low.",
+        "age": "All ages."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FBF6EE",
+        "accentColor": "#C8441F"
+      },
+      "thumbnail": {
+        "file": "vintage_storybook.jpg",
+        "rendered": false,
+        "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      }
+    },
+    {
+      "id": "moonlit_night",
+      "name": "Moonlit Night",
+      "category": "cozy-storybook",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "0-3",
+        "4-7"
+      ],
+      "occasions": [
+        "bedtime",
+        "new_baby",
+        "birthday",
+        "christmas",
+        "sympathy",
+        "just_because"
+      ],
+      "tones": [
+        "tender",
+        "adventurous"
+      ],
+      "description": "Deep blue nights, soft moonlight and tiny glowing details. Hushed and sleepy.",
+      "whyThisOne": "Hushed and glowy, a gentle way to say goodnight.",
+      "popularity": {
+        "rating": "niche",
+        "sources": [
+          "R04"
+        ],
+        "summary": "Comfort and hope themes (R04) support night-time books; no dedicated sales evidence found for this look specifically."
+      },
+      "look": {
+        "medium": "Gouache and soft acrylic glaze, a little digital glow",
+        "technique": "Dark blue layered glazes, bright small lights, soft halos",
+        "line": "Soft edges, no outlines",
+        "palette": "Navy, indigo, moonlight cream, warm lantern yellow, small blush",
+        "composition": "Small bright subject in a large dark field, one light source",
+        "mood": "Hushed, safe, wondering",
+        "era": "Contemporary bedtime book"
+      },
+      "styleString": "Moonlit 2D gouache and soft acrylic glaze storybook illustration, deep navy and indigo night with soft cream moonlight and a warm lantern-yellow glow, gentle halos around lights, visible soft brush texture, no outlines with edges formed by light and color, rounded friendly characters with softly lit faces, simple uncluttered night scenery - not photorealistic, no 3D render, not scary.",
+      "avoid": [
+        "scary shadows",
+        "pitch black areas",
+        "photorealism",
+        "3D render",
+        "neon",
+        "text in the picture"
+      ],
+      "swatches": [
+        {
+          "hex": "#1F2A4D",
+          "name": "navy night"
+        },
+        {
+          "hex": "#3E4A86",
+          "name": "indigo"
+        },
+        {
+          "hex": "#F4E8C8",
+          "name": "moon cream"
+        },
+        {
+          "hex": "#F2C14E",
+          "name": "lantern yellow"
+        },
+        {
+          "hex": "#E7A9A0",
+          "name": "blush glow"
+        }
+      ],
+      "consistency": {
+        "bookRating": 3,
+        "cardRating": 4,
+        "notes": "Dark palettes hide outfit differences; characters can merge. Faces lit unevenly across pages.",
+        "tips": [
+          "Pick outfit colors that glow against navy (cream, yellow, coral)",
+          "Restate lit face and hair color",
+          "Keep one light source consistent",
+          "Avoid more than 3 characters per scene"
+        ],
+        "renderNotes": "Not rendered in the sample run (budget). Ratings are estimates from the Eye Story lessons and the rendered styles, not measurements."
+      },
+      "photoReference": "Keep hair and skin tone true but lit warmly from one side. Choose pajamas or coats in light colors so characters separate from the night.",
+      "card": {
+        "typography": {
+          "display": [
+            "Fraunces 600",
+            "Caveat 600"
+          ],
+          "body": [
+            "Figtree 500"
+          ],
+          "notes": "Cream text on navy needs weight 500 minimum and 18 pt or larger inside print areas."
+        },
+        "layout": "Moon or window as the focal point at upper third.",
+        "textSafeZone": "Dark sky areas serve as the type zone; add headlines in cream."
+      },
+      "print": {
+        "bleed": "Deep blue to the edge: request 'full-bleed' and check for white slivers at the trim.",
+        "inkCoverage": "Very heavy (up to 280 percent): choose uncoated and allow drying; consider a lighter navy to avoid ink set-off.",
+        "foilAndSpot": "Silver or gold foil stars are a premium add-on, not simulated in the picture."
+      },
+      "bestFor": [
+        "Goodnight and bedtime books",
+        "New baby",
+        "Sympathy (gentle)",
+        "Christmas Eve"
+      ],
+      "avoidFor": [
+        "Daytime action",
+        "Humor",
+        "Tiny details on dark clothes"
+      ],
+      "tags": [
+        "night",
+        "moon",
+        "stars",
+        "bedtime",
+        "sleepy",
+        "navy",
+        "lantern",
+        "goodnight"
+      ],
+      "synonyms": [
+        "goodnight",
+        "starry night",
+        "moon and stars",
+        "dark blue",
+        "sleep book"
+      ],
+      "ipSafeAliases": [],
+      "risks": {
+        "ip": "Low.",
+        "uncanny": "Low.",
+        "age": "Keep shadows friendly for 0 to 3."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#FBF6EE",
+        "paperColor": "#5B2A4B",
+        "accentColor": "#F5B83D"
+      },
+      "thumbnail": {
+        "file": "moonlit_night.jpg",
+        "rendered": false,
+        "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      }
+    },
+    {
+      "id": "bold_cartoon_pop",
+      "name": "Bold Cartoon Pop",
+      "category": "bold-silly",
+      "status": "stable",
+      "legacyIds": [
+        "bold_flat",
+        "bold_pop"
+      ],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "4-7",
+        "8-10"
+      ],
+      "occasions": [
+        "birthday",
+        "fathers_day",
+        "congratulations",
+        "get_well",
+        "graduation",
+        "new_home",
+        "thank_you",
+        "just_because"
+      ],
+      "tones": [
+        "silly",
+        "bold"
+      ],
+      "description": "Thick outlines, bright flat color and big expressions. Built to get a laugh.",
+      "whyThisOne": "Loud, bright and funny, the best choice for birthdays and jokes.",
+      "popularity": {
+        "rating": "high",
+        "sources": [
+          "R05",
+          "R08",
+          "R13",
+          "R14"
+        ],
+        "summary": "Bright polished cartoon is the North American default for ages 3-6; bold and colorful is one of the biggest 2026 card shifts; humor leads card sales."
+      },
+      "look": {
+        "medium": "Digital ink and flat color with light print texture",
+        "technique": "Clean thick outlines, flat saturated fills, one simple shadow shape",
+        "line": "Thick, even, rounded outline in near-black or deep brown",
+        "palette": "Coral, sunny yellow, teal, tomato, deep blue",
+        "composition": "Strong silhouette, big shapes, simple graphic backgrounds, diagonals for energy",
+        "mood": "Silly, loud, cheerful",
+        "era": "Contemporary cartoon"
+      },
+      "styleString": "Bold 2D cartoon illustration, clean thick outlines, flat saturated colors, playful exaggerated proportions, lively exaggerated expressions, simple graphic backgrounds, bright palette with coral, sunny yellow and teal, lightly textured print feel, characters with big heads, simple limbs and expressive faces - not photorealistic, no 3D render, no gradients.",
+      "avoid": [
+        "photorealism",
+        "3D render",
+        "soft gradients",
+        "muted colors",
+        "text in the picture",
+        "tiny details"
+      ],
+      "swatches": [
+        {
+          "hex": "#FF6B57",
+          "name": "coral"
+        },
+        {
+          "hex": "#FFD23F",
+          "name": "sunny yellow"
+        },
+        {
+          "hex": "#1FB5A8",
+          "name": "teal"
+        },
+        {
+          "hex": "#2B1E18",
+          "name": "ink brown"
+        },
+        {
+          "hex": "#3A5BA9",
+          "name": "deep blue"
+        }
+      ],
+      "consistency": {
+        "bookRating": 5,
+        "cardRating": 5,
+        "notes": "The most dependable style for holding characters across pages: simple shapes, thick outline, flat color.",
+        "tips": [
+          "Keep the model sheet and outfit color restate",
+          "Give each character one signature shape (hair, glasses, hat)",
+          "Exaggerate rather than refine faces",
+          "Reuse the same background color per scene"
+        ],
+        "renderNotes": "Best result of the set. Crisp outline and flat fills; both characters clearly distinct and on-style. Slight tendency to add a soft cloud gradient-free sky only."
+      },
+      "photoReference": "Caricature gently: exaggerate the one or two most recognisable features (hair volume, glasses, smile), enlarge the head, simplify the body, flat skin tone, always friendly never mocking.",
+      "card": {
+        "typography": {
+          "display": [
+            "Lilita One or Baloo 2 ExtraBold",
+            "Chewy (already embedded in the pipeline)"
+          ],
+          "body": [
+            "Figtree 600"
+          ],
+          "notes": "Chunky rounded display in white or cocoa on saturated flats; punchy 2 to 4 word headline."
+        },
+        "layout": "Subject large, one joke visible at a glance, color field behind.",
+        "textSafeZone": "Hold the top 25 percent as a flat color band for a headline."
+      },
+      "print": {
+        "bleed": "Saturated flats to the edge need full-bleed, and prefer rounded safe margins.",
+        "inkCoverage": "Medium to high; vivid corals and teals fall outside CMYK and print duller: proof them.",
+        "foilAndSpot": "A spot gloss on the headline or foil confetti is a nice add-on, not simulated."
+      },
+      "bestFor": [
+        "Funny birthdays and Father's Day",
+        "Get well with a joke",
+        "Graduation and congratulations",
+        "Kids ages 4 to 10"
+      ],
+      "avoidFor": [
+        "Sympathy",
+        "Weddings",
+        "Formal thanks"
+      ],
+      "tags": [
+        "cartoon",
+        "bold",
+        "funny",
+        "silly",
+        "bright",
+        "thick lines",
+        "pop",
+        "comic",
+        "playful",
+        "flat color"
+      ],
+      "synonyms": [
+        "goofy",
+        "cartoony",
+        "loud and fun",
+        "kids cartoon",
+        "colorful cartoon",
+        "funny"
+      ],
+      "ipSafeAliases": [
+        "the simpsons",
+        "simpsons style",
+        "cartoon network",
+        "nickelodeon"
+      ],
+      "risks": {
+        "ip": "Medium. Cartoon conventions overlap with famous shows; avoid yellow-skinned or specific hair-and-outfit signatures.",
+        "uncanny": "Low.",
+        "age": "All ages."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FFD23F",
+        "accentColor": "#EE5A36"
+      },
+      "thumbnail": {
+        "file": "bold_cartoon_pop.jpg",
+        "rendered": true,
+        "note": "Rendered 2026-10-11 at 1K (child and fox in a meadow). Excellent: thick outline, flat color, expressive faces, exactly two characters, no text."
+      }
+    },
+    {
+      "id": "flat_vector_friendly",
+      "name": "Friendly Flat Graphic",
+      "category": "bold-silly",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "0-3",
+        "4-7"
+      ],
+      "occasions": [
+        "birthday",
+        "new_baby",
+        "congratulations",
+        "thank_you",
+        "back_to_school",
+        "just_because",
+        "new_home"
+      ],
+      "tones": [
+        "silly",
+        "bold",
+        "tender"
+      ],
+      "description": "Clean modern shapes in a handful of cheerful colors. Simple, friendly and very clear.",
+      "whyThisOne": "Clean and cheerful, easy to read for little eyes.",
+      "popularity": {
+        "rating": "high",
+        "sources": [
+          "R05",
+          "R08",
+          "R04"
+        ],
+        "summary": "Flat vector and minimalist looks suit toddlers (R05); bold and colorful is a top 2026 card shift (R08)."
+      },
+      "look": {
+        "medium": "Digital vector-style shapes with subtle paper-grain texture",
+        "technique": "Shapes only, no outlines or very thin ones, a limited palette of 5 to 6 colors, small details as cut-out shapes",
+        "line": "Minimal or absent; shape edges define forms",
+        "palette": "Cheerful limited: tomato, sunshine, sky, grass green, cream, navy",
+        "composition": "Centered, clear silhouette, big color blocks, simple props",
+        "mood": "Cheerful, calm, modern",
+        "era": "Contemporary"
+      },
+      "styleString": "Modern flat vector-style children's illustration, bold clean geometric shapes with no outlines, limited vivid palette of 5 colors, gentle paper grain texture, cheerful and graphic, simple round-headed characters with dot eyes and small smiles, minimal backgrounds of large color blocks - not photorealistic, no 3D render, no gradients, no shading.",
+      "avoid": [
+        "gradients",
+        "shading",
+        "outlines",
+        "photorealism",
+        "3D render",
+        "text in the picture"
+      ],
+      "swatches": [
+        {
+          "hex": "#EE5A36",
+          "name": "tomato"
+        },
+        {
+          "hex": "#F5B83D",
+          "name": "sunshine"
+        },
+        {
+          "hex": "#7CC2E3",
+          "name": "sky"
+        },
+        {
+          "hex": "#5BAE6B",
+          "name": "grass"
+        },
+        {
+          "hex": "#1F2F4D",
+          "name": "navy"
+        }
+      ],
+      "consistency": {
+        "bookRating": 5,
+        "cardRating": 5,
+        "notes": "Strongest consistency of all: very simple shapes. The cost is less individual likeness.",
+        "tips": [
+          "Name hair shape and color plus one clothing color",
+          "Use the same head shape for all kids and vary hair/glasses",
+          "Keep likeness features few and bold"
+        ],
+        "renderNotes": "Not rendered in the sample run (budget). Ratings are estimates from the Eye Story lessons and the rendered styles, not measurements."
+      },
+      "photoReference": "Convert to an icon-like character: hair shape and color, skin tone as a flat color, one face-defining feature (glasses, freckles). Do not attempt a detailed likeness.",
+      "card": {
+        "typography": {
+          "display": [
+            "Baloo 2 ExtraBold",
+            "Fredoka 600"
+          ],
+          "body": [
+            "Figtree 600"
+          ],
+          "notes": "Rounded sans in navy on cream or white on color; good for big numbers (age 5!)."
+        },
+        "layout": "Big simple object or animal, color block background, lots of negative space.",
+        "textSafeZone": "Reserve one full color block (about 30 percent) for message or age number."
+      },
+      "print": {
+        "bleed": "Flat color to the edge; rich tints print well.",
+        "inkCoverage": "Low to medium, very efficient.",
+        "foilAndSpot": "Pantone-like bright orange or green spot inks are an upgrade; not simulated."
+      },
+      "bestFor": [
+        "Baby books ages 0 to 3",
+        "Age-number birthday cards",
+        "Congratulations",
+        "Back-to-school"
+      ],
+      "avoidFor": [
+        "Strong likeness requests",
+        "Emotional, tender portraits",
+        "Realistic requests"
+      ],
+      "tags": [
+        "flat",
+        "vector",
+        "geometric",
+        "simple",
+        "clean",
+        "modern",
+        "minimal shapes",
+        "friendly",
+        "toddler"
+      ],
+      "synonyms": [
+        "simple shapes",
+        "clean and modern",
+        "like a toddler book",
+        "board book",
+        "graphic"
+      ],
+      "ipSafeAliases": [
+        "peppa pig",
+        "bluey",
+        "cocomelon",
+        "hello kitty",
+        "kawaii"
+      ],
+      "risks": {
+        "ip": "Medium. Flat children's TV characters are very recognisable; avoid pink pig or blue dog palettes.",
+        "uncanny": "None.",
+        "age": "Best 0 to 7."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FBF6EE",
+        "accentColor": "#EE5A36"
+      },
+      "thumbnail": {
+        "file": "flat_vector_friendly.jpg",
+        "rendered": false,
+        "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      }
+    },
+    {
+      "id": "comic_panel",
+      "name": "Comic Strip",
+      "category": "bold-silly",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "8-10"
+      ],
+      "occasions": [
+        "birthday",
+        "graduation",
+        "adventure",
+        "get_well",
+        "congratulations",
+        "just_because"
+      ],
+      "tones": [
+        "adventurous",
+        "silly",
+        "bold"
+      ],
+      "description": "Inked comic art with halftone dots and action poses. Fast, funny and a little cool.",
+      "whyThisOne": "Action-packed and cheeky, for kids who read comics.",
+      "popularity": {
+        "rating": "niche",
+        "sources": [
+          "R05",
+          "R09"
+        ],
+        "summary": "Line drawing and graphic-novel looks suit ages 7-12 (R05); a 'comic' style is on competitor menus (R09)."
+      },
+      "look": {
+        "medium": "Digital ink and flat color with halftone shading",
+        "technique": "Dynamic black ink, cel-shaded color, halftone dot shadows, speed lines",
+        "line": "Variable-weight black ink line",
+        "palette": "Primary-leaning: red, yellow, blue plus black and cream",
+        "composition": "Single dramatic panel per page, strong diagonals, action pose",
+        "mood": "Energetic, cheeky, heroic",
+        "era": "Contemporary comic"
+      },
+      "styleString": "Inked 2D comic-book illustration, dynamic variable-weight black ink linework, flat cel-shaded colors with halftone dot shading, red, yellow, blue and cream palette, energetic action poses and speed lines, expressive cartoon faces, bold simple backgrounds, single-panel composition without any speech bubbles or text - not photorealistic, no 3D render, no gradients.",
+      "avoid": [
+        "speech bubbles",
+        "sound effect lettering",
+        "text in the picture",
+        "photorealism",
+        "3D render",
+        "costumes resembling any known hero"
+      ],
+      "swatches": [
+        {
+          "hex": "#D7263D",
+          "name": "action red"
+        },
+        {
+          "hex": "#F9C80E",
+          "name": "comic yellow"
+        },
+        {
+          "hex": "#2E5EAA",
+          "name": "ink blue"
+        },
+        {
+          "hex": "#FBF6EE",
+          "name": "cream"
+        },
+        {
+          "hex": "#141414",
+          "name": "ink black"
+        }
+      ],
+      "consistency": {
+        "bookRating": 4,
+        "cardRating": 4,
+        "notes": "Outlines and flat colors help, but dynamic poses and cropping vary faces. Caution with capes and masks which push toward known heroes.",
+        "tips": [
+          "Keep costumes plain and original",
+          "Restate outfit colors",
+          "Ask for one action pose per page",
+          "Attach the model sheet first"
+        ],
+        "renderNotes": "Not rendered in the sample run (budget). Ratings are estimates from the Eye Story lessons and the rendered styles, not measurements."
+      },
+      "photoReference": "Turn the person into a confident cartoon hero with the photo's hair and glasses, strong jaw/cheek lines, no costume unless the customer designs one.",
+      "card": {
+        "typography": {
+          "display": [
+            "Bangers or Luckiest Guy (display)",
+            "Figtree 700"
+          ],
+          "body": [
+            "Figtree 500"
+          ],
+          "notes": "Display caps for the front (added by us, not drawn). Keep the inside message readable in plain sans."
+        },
+        "layout": "Diagonal composition with burst shape behind the subject.",
+        "textSafeZone": "A clear burst or banner shape in the top third for added text."
+      },
+      "print": {
+        "bleed": "Halftone dots can moire when scaled; supply at final size.",
+        "inkCoverage": "Medium to high; saturated red and yellow need a proof.",
+        "foilAndSpot": "Spot gloss on the burst is a nice upgrade."
+      },
+      "bestFor": [
+        "Ages 8 to 10 adventure books",
+        "Gaming and sports birthdays",
+        "Graduation jokes"
+      ],
+      "avoidFor": [
+        "Toddlers",
+        "Tender portraits",
+        "Sympathy"
+      ],
+      "tags": [
+        "comic",
+        "graphic novel",
+        "superhero",
+        "action",
+        "halftone",
+        "ink",
+        "panel",
+        "manga-free"
+      ],
+      "synonyms": [
+        "comic book",
+        "graphic novel",
+        "action cartoon",
+        "superhero style",
+        "cool comic"
+      ],
+      "ipSafeAliases": [
+        "marvel",
+        "marvel comic",
+        "dc comics",
+        "superhero movie",
+        "spiderman style"
+      ],
+      "risks": {
+        "ip": "High if costumes or capes are specified. Keep original, plain costumes; no masks with spiders, bats or stars.",
+        "uncanny": "Low.",
+        "age": "8 to 10 best; violence stays cartoon-only."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FBF6EE",
+        "accentColor": "#EE5A36"
+      },
+      "thumbnail": {
+        "file": "comic_panel.jpg",
+        "rendered": false,
+        "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      }
+    },
+    {
+      "id": "paper_cut_collage",
+      "name": "Paper Cut Collage",
+      "category": "handmade-crafty",
+      "status": "stable",
+      "legacyIds": [
+        "paper_cut",
+        "paper_collage"
+      ],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "0-3",
+        "4-7"
+      ],
+      "occasions": [
+        "thank_you",
+        "graduation",
+        "mothers_day",
+        "birthday",
+        "new_baby",
+        "congratulations",
+        "teacher"
+      ],
+      "tones": [
+        "silly",
+        "bold",
+        "tender"
+      ],
+      "description": "Shapes cut from colored paper, layered with tiny shadows. Looks handmade and a little modern.",
+      "whyThisOne": "Handmade-looking and bright, great for thank-yous and toddler books.",
+      "popularity": {
+        "rating": "medium",
+        "sources": [
+          "R05",
+          "R15",
+          "R12",
+          "R19"
+        ],
+        "summary": "Collage stands out for art-minded parents (R05), paper grain and layering are 2026 texture trends (R15), paper craft is on competitor menus; a famous collage classic is a perennial bestseller (unverified, R19)."
+      },
+      "look": {
+        "medium": "Hand-cut colored paper and painted paper, layered and glued",
+        "technique": "Flat shapes with subtle drop shadows between layers, torn edges, painted paper texture",
+        "line": "None; the shape edge is the line",
+        "palette": "Persimmon orange, mustard, blush pink, deep plum, cream and a leaf green",
+        "composition": "Layered shapes, bold silhouettes, a flat 2D plane with slight depth",
+        "mood": "Playful, crafty, bright",
+        "era": "Mid-century revival"
+      },
+      "styleString": "Layered paper-cut collage illustration, hand-cut shapes with subtle shadows between layers, torn paper edges, visible painted-paper texture and fibers, limited bright palette with persimmon orange, mustard, blush pink and deep plum, mid-century picture book feel, flat 2D composition, characters built from simple cut shapes with round heads and small dot eyes - not photorealistic, no 3D render, no gradients.",
+      "avoid": [
+        "gradients",
+        "photorealism",
+        "3D render",
+        "outlines",
+        "text in the picture",
+        "fine detail"
+      ],
+      "swatches": [
+        {
+          "hex": "#EE5A36",
+          "name": "persimmon"
+        },
+        {
+          "hex": "#F5B83D",
+          "name": "mustard"
+        },
+        {
+          "hex": "#F6C9C0",
+          "name": "blush"
+        },
+        {
+          "hex": "#5B2A4B",
+          "name": "plum"
+        },
+        {
+          "hex": "#6AA26E",
+          "name": "leaf green"
+        }
+      ],
+      "consistency": {
+        "bookRating": 3,
+        "cardRating": 5,
+        "notes": "Strong shape language holds basic identity, but models swap paper textures and recut faces differently each time. Restate shapes for hair.",
+        "tips": [
+          "Describe hair as a single cut shape",
+          "Reuse the same two or three paper colors per character",
+          "Avoid detailed clothing patterns",
+          "Use a plain background per spread"
+        ],
+        "renderNotes": "Convincing layered cut paper with torn edges. Faces are cleaner and smoother than real cut paper (looks like digital vector with paper texture), and the child's side-profile differs from the front pose: expect face-shape drift across pages."
+      },
+      "photoReference": "Convert to cut-shape caricature: hair as one big shape in the photo's color, skin as a flat paper tone, glasses as two circles. No fine facial modeling.",
+      "card": {
+        "typography": {
+          "display": [
+            "Bricolage Grotesque 800 (brand)",
+            "Gaegu or Patrick Hand"
+          ],
+          "body": [
+            "Figtree 600"
+          ],
+          "notes": "A bold sans for the headline in cocoa or cream on a solid color panel echoes cut paper."
+        },
+        "layout": "Large cut shape (flower, cake, whistle) with smaller layered pieces; plenty of solid background.",
+        "textSafeZone": "Reserve a solid color panel (lower 30 percent) to simulate a cut label for type."
+      },
+      "print": {
+        "bleed": "Solid colored backgrounds to the edge.",
+        "inkCoverage": "Medium; works well on uncoated textured stock, which echoes paper.",
+        "foilAndSpot": "Embossing under shapes would add tactile realism but is a printer upgrade, not simulated."
+      },
+      "bestFor": [
+        "Thank you and teacher cards",
+        "Mother's Day flowers",
+        "Toddler books",
+        "Congratulations"
+      ],
+      "avoidFor": [
+        "Detailed likeness",
+        "Long, complex scenes",
+        "Elegant weddings"
+      ],
+      "tags": [
+        "paper",
+        "collage",
+        "cut paper",
+        "layered",
+        "craft",
+        "mid-century",
+        "cutout",
+        "handmade",
+        "texture"
+      ],
+      "synonyms": [
+        "paper craft",
+        "cut-out",
+        "collage",
+        "scrapbook",
+        "papercut",
+        "construction paper"
+      ],
+      "ipSafeAliases": [
+        "eric carle",
+        "very hungry caterpillar style",
+        "south park style"
+      ],
+      "risks": {
+        "ip": "Medium. A famous tissue-collage style exists; avoid striped caterpillars and tissue-paper texture phrases.",
+        "uncanny": "None.",
+        "age": "Best 0 to 7."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#FBF6EE",
+        "paperColor": "#5B2A4B",
+        "accentColor": "#EE5A36"
+      },
+      "thumbnail": {
+        "file": "paper_cut_collage.jpg",
+        "rendered": true,
+        "note": "Rendered 2026-10-11 at 1K. Good layered paper look with soft shadows."
+      }
+    },
+    {
+      "id": "felt_thread",
+      "name": "Felt & Thread",
+      "category": "handmade-crafty",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "0-3",
+        "4-7"
+      ],
+      "occasions": [
+        "new_baby",
+        "birthday",
+        "christmas",
+        "mothers_day",
+        "thank_you",
+        "teacher",
+        "just_because"
+      ],
+      "tones": [
+        "tender",
+        "silly"
+      ],
+      "description": "Cut felt shapes sewn with thread, like a handmade quilt or a craft-table scene.",
+      "whyThisOne": "Soft, fuzzy and handmade, like a keepsake someone sewed.",
+      "popularity": {
+        "rating": "niche",
+        "sources": [
+          "R12",
+          "R15"
+        ],
+        "summary": "Felt craft appears as a competitor style (R12); thread and tactile textures are a 2026 trend (R15). No sales evidence found."
+      },
+      "look": {
+        "medium": "Felt appliqué and embroidery thread on linen background",
+        "technique": "Layered felt pieces sewn on with visible thread, soft fuzzy edges and small shadows",
+        "line": "Sewn thread edges and thread outlines in a contrasting color",
+        "palette": "Warm brights: red, mustard, sage, cream linen, denim blue",
+        "composition": "Centered scene on linen, patch-like shapes, a sewn border",
+        "mood": "Sweet, snug, handmade",
+        "era": "Timeless craft"
+      },
+      "styleString": "Handmade felt appliqué and embroidery illustration on natural linen, layered cut felt shapes with soft fuzzy edges and tiny shadows, visible sewn thread borders in contrasting color, warm palette of red, mustard, sage and denim blue, simple rounded characters with button eyes and sewn smiles, flat tabletop view - not photorealistic, no 3D render, not a photograph of real felt.",
+      "avoid": [
+        "photographs of real objects",
+        "3D render",
+        "glossy plastic",
+        "photorealism",
+        "text in the picture"
+      ],
+      "swatches": [
+        {
+          "hex": "#C94438",
+          "name": "felt red"
+        },
+        {
+          "hex": "#E3A93B",
+          "name": "mustard felt"
+        },
+        {
+          "hex": "#8DAE8B",
+          "name": "sage"
+        },
+        {
+          "hex": "#E9DFC9",
+          "name": "linen"
+        },
+        {
+          "hex": "#4F6D8E",
+          "name": "denim"
+        }
+      ],
+      "consistency": {
+        "bookRating": 3,
+        "cardRating": 4,
+        "notes": "Distinct materials help, but thread detail varies. Characters can end up too similar when made of simple shapes.",
+        "tips": [
+          "Use different felt colors per character",
+          "Use button eyes as the constant face trait",
+          "Keep the scene on a flat plane"
+        ],
+        "renderNotes": "Not rendered in the sample run (budget). Ratings are estimates from the Eye Story lessons and the rendered styles, not measurements."
+      },
+      "photoReference": "Reduce to felt shapes: hair as a piece of felt in the photo's color, skin as a flat warm felt, eyes as buttons. Likeness comes from hair and color only.",
+      "card": {
+        "typography": {
+          "display": [
+            "Fredoka 600",
+            "Gochi Hand"
+          ],
+          "body": [
+            "Figtree 500"
+          ],
+          "notes": "Rounded sans reads as soft; a sewn-look script for names (added by us as type, not drawn)."
+        },
+        "layout": "Center a patch, sewn thread border at the edges.",
+        "textSafeZone": "Linen margin on all sides acts as the type zone; avoid text on felt."
+      },
+      "print": {
+        "bleed": "Linen background to the edge; print on uncoated cream stock.",
+        "inkCoverage": "Low to medium.",
+        "foilAndSpot": "Embroidery cannot be simulated in print; a debossed thread border is possible as an upgrade."
+      },
+      "bestFor": [
+        "New baby",
+        "Teacher gifts",
+        "Christmas",
+        "Toddler books"
+      ],
+      "avoidFor": [
+        "Humor with sharp edges",
+        "Formal events",
+        "Complex scenes"
+      ],
+      "tags": [
+        "felt",
+        "thread",
+        "embroidery",
+        "craft",
+        "fabric",
+        "quilt",
+        "handmade",
+        "button eyes",
+        "textile"
+      ],
+      "synonyms": [
+        "fabric",
+        "sewn",
+        "plush",
+        "patchwork",
+        "yarn",
+        "craft felt"
+      ],
+      "ipSafeAliases": [],
+      "risks": {
+        "ip": "Low. Avoid recognisable felt puppets.",
+        "uncanny": "Medium: button eyes can be unsettling if overused; keep expressions friendly.",
+        "age": "Best 0 to 7."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FBF6EE",
+        "accentColor": "#EE5A36"
+      },
+      "thumbnail": {
+        "file": "felt_thread.jpg",
+        "rendered": false,
+        "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      }
+    },
+    {
+      "id": "clay_stopmotion",
+      "name": "Clay Models",
+      "category": "handmade-crafty",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "4-7",
+        "8-10"
+      ],
+      "occasions": [
+        "birthday",
+        "adventure",
+        "congratulations",
+        "get_well",
+        "just_because",
+        "graduation"
+      ],
+      "tones": [
+        "silly",
+        "adventurous"
+      ],
+      "description": "Little sculpted characters made of modeling clay, photographed on a tiny set. Quirky and tactile.",
+      "whyThisOne": "Quirky and tactile, like a tiny handmade movie set.",
+      "popularity": {
+        "rating": "niche",
+        "sources": [
+          "R12"
+        ],
+        "summary": "Clay animation appears on AI illustration menus (R12). No sales evidence found."
+      },
+      "look": {
+        "medium": "Sculpted modeling clay with fingerprints, on a miniature craft set",
+        "technique": "Chunky smooth shapes, thumbprint texture, soft studio lighting, shallow depth of field",
+        "line": "None; forms come from the sculpture",
+        "palette": "Bright toy colors with earthy backdrops",
+        "composition": "A miniature tabletop scene with small props",
+        "mood": "Goofy, handmade, curious",
+        "era": "Timeless craft animation"
+      },
+      "styleString": "Handmade modeling-clay stop-motion look, chunky smooth sculpted characters with visible thumbprint texture and slight imperfections, miniature craft-set backgrounds made of cardboard and paper, soft warm studio lighting, shallow depth of field, bright toy-like palette, big simple eyes and simple mouths, stylized and toy-like - not photorealistic, not a real photograph, no glossy plastic.",
+      "avoid": [
+        "photorealistic humans",
+        "glossy plastic",
+        "real photograph",
+        "text in the picture",
+        "uncanny skin"
+      ],
+      "swatches": [
+        {
+          "hex": "#E8604C",
+          "name": "clay red"
+        },
+        {
+          "hex": "#F2B134",
+          "name": "clay yellow"
+        },
+        {
+          "hex": "#4CA7A0",
+          "name": "clay teal"
+        },
+        {
+          "hex": "#A68A64",
+          "name": "cardboard"
+        },
+        {
+          "hex": "#F3EADB",
+          "name": "backdrop cream"
+        }
+      ],
+      "consistency": {
+        "bookRating": 3,
+        "cardRating": 4,
+        "notes": "Models render clay convincingly, but lighting and set details change page to page. Faces are stable if kept simple.",
+        "tips": [
+          "Lock clay colors per character",
+          "Say 'same clay color and thumbprint texture' on every page",
+          "Keep sets simple"
+        ],
+        "renderNotes": "Not rendered in the sample run (budget). Ratings are estimates from the Eye Story lessons and the rendered styles, not measurements."
+      },
+      "photoReference": "Translate into chunky clay figures with the person's hair color, glasses and one signature outfit color; faces simplified, no realistic skin pores.",
+      "card": {
+        "typography": {
+          "display": [
+            "Chewy (embedded)",
+            "Baloo 2 ExtraBold"
+          ],
+          "body": [
+            "Figtree 600"
+          ],
+          "notes": "Playful rounded display; add type digitally rather than drawing it in clay."
+        },
+        "layout": "Miniature set, subject centered, props at the sides.",
+        "textSafeZone": "Backdrop wall or sky band at the top for type."
+      },
+      "print": {
+        "bleed": "Backdrops to the edge.",
+        "inkCoverage": "Medium; photographic lighting can print dark: lift shadows.",
+        "foilAndSpot": "None."
+      },
+      "bestFor": [
+        "Silly birthdays",
+        "Adventure books for ages 4 to 8",
+        "Get well with humor"
+      ],
+      "avoidFor": [
+        "Tender portraits",
+        "Elegant events",
+        "Complex action"
+      ],
+      "tags": [
+        "clay",
+        "stop motion",
+        "plasticine",
+        "sculpted",
+        "miniature",
+        "toy",
+        "claymation"
+      ],
+      "synonyms": [
+        "claymation",
+        "plasticine",
+        "modeling clay",
+        "stop-motion look",
+        "little figures"
+      ],
+      "ipSafeAliases": [
+        "wallace and gromit",
+        "shaun the sheep",
+        "aardman",
+        "pingu"
+      ],
+      "risks": {
+        "ip": "Medium. Clay animation has recognisable character signatures; no wide grins with big teeth, no pants or sheep ensembles.",
+        "uncanny": "Medium; keep faces simple.",
+        "age": "4 and up."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FBF6EE",
+        "accentColor": "#EE5A36"
+      },
+      "thumbnail": {
+        "file": "clay_stopmotion.jpg",
+        "rendered": false,
+        "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      }
+    },
+    {
+      "id": "midcentury_shapes",
+      "name": "Mid-Century Shapes",
+      "category": "retro-graphic",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "4-7",
+        "8-10"
+      ],
+      "occasions": [
+        "birthday",
+        "fathers_day",
+        "anniversary",
+        "new_home",
+        "graduation",
+        "thank_you",
+        "just_because"
+      ],
+      "tones": [
+        "bold",
+        "elegant",
+        "silly"
+      ],
+      "description": "Big geometric shapes and a few strong colors, like a 1960s travel poster for kids.",
+      "whyThisOne": "Stylish and graphic, the grown-up-cool pick that still works for kids.",
+      "popularity": {
+        "rating": "medium",
+        "sources": [
+          "R06",
+          "R05",
+          "R15"
+        ],
+        "summary": "Bold geometrics are a named 2026 card trend (R06); mid-century picture-book feel appears in art-minded parent segments (R05)."
+      },
+      "look": {
+        "medium": "Digital screen-print look with gouache texture",
+        "technique": "Geometric shape construction, overprint where colors overlap, grain texture",
+        "line": "No outlines; occasional thin white line details",
+        "palette": "Burnt orange, teal, mustard, cream, deep brown",
+        "composition": "Strong geometric silhouettes, asymmetry, big negative space",
+        "mood": "Stylish, confident, playful",
+        "era": "1950s to 1960s graphic design"
+      },
+      "styleString": "Mid-century modern graphic illustration, bold geometric shapes with overprint where colors overlap, gouache and screen-print grain texture, limited palette of burnt orange, teal, mustard, cream and deep brown, no outlines, characters built from simple shapes with small dot eyes, flat 2D composition with large negative space - not photorealistic, no 3D render, no gradients.",
+      "avoid": [
+        "gradients",
+        "outlines",
+        "photorealism",
+        "3D render",
+        "busy detail",
+        "text in the picture"
+      ],
+      "swatches": [
+        {
+          "hex": "#C8581E",
+          "name": "burnt orange"
+        },
+        {
+          "hex": "#1F7F86",
+          "name": "teal"
+        },
+        {
+          "hex": "#E2A82E",
+          "name": "mustard"
+        },
+        {
+          "hex": "#F3EADB",
+          "name": "cream"
+        },
+        {
+          "hex": "#4A2F22",
+          "name": "deep brown"
+        }
+      ],
+      "consistency": {
+        "bookRating": 4,
+        "cardRating": 5,
+        "notes": "Simple shapes are repeatable; likeness is stylized. Models sometimes over-ornament with patterns.",
+        "tips": [
+          "Specify head shape (circle) and body shape per character",
+          "Restate the 5-color palette",
+          "Ban patterns on clothing"
+        ],
+        "renderNotes": "Lands well. Palette drifted a little cooler (teal pond added) but stays in the five-color range. Simple shapes should repeat well across pages."
+      },
+      "photoReference": "Reduce to geometry: hair as a bold shape in the photo's color, skin tone as a flat tone, glasses as circles. Likeness is carried by silhouette, not face.",
+      "card": {
+        "typography": {
+          "display": [
+            "Josefin Sans 700 caps",
+            "DM Serif Display"
+          ],
+          "body": [
+            "Figtree 500"
+          ],
+          "notes": "Geometric sans in cream on burnt orange or cocoa on cream; wide letter-spacing for headlines."
+        },
+        "layout": "Asymmetric: subject off-center, large color field, small details.",
+        "textSafeZone": "Large flat color field takes the type; keep 30 percent clear."
+      },
+      "print": {
+        "bleed": "Color fields to the edge; overprint may look muddy in CMYK, proof.",
+        "inkCoverage": "Medium; works beautifully on uncoated stock.",
+        "foilAndSpot": "Pantone orange or metallic bronze ink is an upgrade; not simulated."
+      },
+      "bestFor": [
+        "Father's Day",
+        "Housewarming",
+        "Modern birthdays",
+        "Ages 4 to 8 books with a design-y parent"
+      ],
+      "avoidFor": [
+        "Soft baby cards",
+        "Detailed likeness",
+        "Elegant weddings"
+      ],
+      "tags": [
+        "mid-century",
+        "geometric",
+        "retro",
+        "shapes",
+        "graphic",
+        "poster",
+        "screenprint",
+        "modern"
+      ],
+      "synonyms": [
+        "60s style",
+        "retro modern",
+        "scandinavian",
+        "poster style",
+        "geometric"
+      ],
+      "ipSafeAliases": [],
+      "risks": {
+        "ip": "Low.",
+        "uncanny": "None.",
+        "age": "All ages."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#F3EADB",
+        "accentColor": "#EE5A36"
+      },
+      "thumbnail": {
+        "file": "midcentury_shapes.jpg",
+        "rendered": true,
+        "note": "Rendered 2026-10-11 at 1K. Good: geometric shapes, limited palette, big negative space."
+      }
+    },
+    {
+      "id": "block_print",
+      "name": "Block Print",
+      "category": "retro-graphic",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "4-7",
+        "8-10"
+      ],
+      "occasions": [
+        "christmas",
+        "thank_you",
+        "anniversary",
+        "wedding",
+        "adventure",
+        "just_because",
+        "new_home"
+      ],
+      "tones": [
+        "elegant",
+        "adventurous",
+        "bold"
+      ],
+      "description": "Carved-and-stamped look: bold shapes, a bit of rough ink, two or three colors.",
+      "whyThisOne": "Earthy and handmade, with a folk-art feel.",
+      "popularity": {
+        "rating": "niche",
+        "sources": [
+          "R05",
+          "R06"
+        ],
+        "summary": "Linocut or woodblock is named for folk tales (R05); earthy palettes are a 2026 card trend (R06). No sales evidence found."
+      },
+      "look": {
+        "medium": "Linocut or woodblock print with hand-inked relief",
+        "technique": "Carved line, flat ink areas with rough edges and tiny speckles, 2 or 3 color layers offset slightly",
+        "line": "Thick carved white lines inside dark shapes",
+        "palette": "Forest green, terracotta, mustard, indigo, cream",
+        "composition": "Bold framed scenes, symmetrical or patterned, folk motifs",
+        "mood": "Earthy, warm, folk-tale",
+        "era": "Timeless folk print"
+      },
+      "styleString": "Hand-carved linocut block print illustration, bold flat ink shapes with carved white lines and rough ink speckle, two or three offset color layers, limited earthy palette of forest green, terracotta, mustard and indigo on cream paper, folk-art motifs, characters with simple carved faces and strong silhouettes, framed composition - not photorealistic, no 3D render, no gradients.",
+      "avoid": [
+        "gradients",
+        "photorealism",
+        "3D render",
+        "fine detail",
+        "text in the picture",
+        "bright neon"
+      ],
+      "swatches": [
+        {
+          "hex": "#2F5D4A",
+          "name": "forest green"
+        },
+        {
+          "hex": "#C4623A",
+          "name": "terracotta"
+        },
+        {
+          "hex": "#D9A32B",
+          "name": "mustard"
+        },
+        {
+          "hex": "#2C3E6B",
+          "name": "indigo"
+        },
+        {
+          "hex": "#F3EADB",
+          "name": "cream"
+        }
+      ],
+      "consistency": {
+        "bookRating": 3,
+        "cardRating": 4,
+        "notes": "Carved faces are simplified and repeatable but the model changes carving detail; likeness is weak.",
+        "tips": [
+          "Lock 3 colors",
+          "State 'carved white line' for hair and details",
+          "Keep one character per scene"
+        ],
+        "renderNotes": "Not rendered in the sample run (budget). Ratings are estimates from the Eye Story lessons and the rendered styles, not measurements."
+      },
+      "photoReference": "Turn the person into a bold carved silhouette: hair shape, glasses, beard; skin as cream paper left unprinted.",
+      "card": {
+        "typography": {
+          "display": [
+            "Alfa Slab One",
+            "DM Serif Display"
+          ],
+          "body": [
+            "Figtree 500"
+          ],
+          "notes": "Slab or serif in dark green or indigo for a printed folk look."
+        },
+        "layout": "Framed panel with a central motif, border pattern.",
+        "textSafeZone": "Leave the inner frame band or the lower 30 percent blank for type."
+      },
+      "print": {
+        "bleed": "If a border frame is used, keep it inside the safe area; bleed the paper color only.",
+        "inkCoverage": "Low to medium: ideal for two-color printing.",
+        "foilAndSpot": "Real letterpress is a premium option and matches this look; the picture only imitates it."
+      },
+      "bestFor": [
+        "Christmas and winter",
+        "Thank-you cards",
+        "Folk-tale style books",
+        "Anniversary (earthy)"
+      ],
+      "avoidFor": [
+        "Babies",
+        "Likeness-driven gifts",
+        "Humor with big expressions"
+      ],
+      "tags": [
+        "linocut",
+        "block print",
+        "woodcut",
+        "folk art",
+        "carved",
+        "print",
+        "stamp",
+        "earthy"
+      ],
+      "synonyms": [
+        "woodblock",
+        "stamp style",
+        "printmaking",
+        "folk print",
+        "carved"
+      ],
+      "ipSafeAliases": [],
+      "risks": {
+        "ip": "Low.",
+        "uncanny": "None.",
+        "age": "4 and up."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FBF6EE",
+        "accentColor": "#C8441F"
+      },
+      "thumbnail": {
+        "file": "block_print.jpg",
+        "rendered": false,
+        "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      }
+    },
+    {
+      "id": "crayon_pencil",
+      "name": "Crayon & Pencil",
+      "category": "sketchy-homemade",
+      "status": "stable",
+      "legacyIds": [
+        "crayon"
+      ],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "0-3",
+        "4-7"
+      ],
+      "occasions": [
+        "birthday",
+        "fathers_day",
+        "mothers_day",
+        "thank_you",
+        "back_to_school",
+        "get_well",
+        "just_because"
+      ],
+      "tones": [
+        "silly",
+        "tender"
+      ],
+      "description": "Wobbly crayon and colored-pencil drawing on textured paper. Happily homemade.",
+      "whyThisOne": "Looks like a kid made it, in the best way.",
+      "popularity": {
+        "rating": "emerging",
+        "sources": [
+          "R15",
+          "R12",
+          "R04",
+          "R19"
+        ],
+        "summary": "Naive crayon and wobbly-line looks are named as a 2026 trend (R15, R04 hand-drawn imperfection); a crayon-and-ink doodle book is a top-70 seller (unverified, R19)."
+      },
+      "look": {
+        "medium": "Wax crayon and colored pencil on textured paper",
+        "technique": "Scribbled fills with paper tooth showing through, overlapping strokes, gentle smudges",
+        "line": "Wobbly, uneven, joyful",
+        "palette": "Saturated childlike: red, blue, green, orange, purple, with cream paper",
+        "composition": "Centered doodle-like characters, floating objects, no strict perspective",
+        "mood": "Joyful, homemade, silly",
+        "era": "Timeless"
+      },
+      "styleString": "Hand-drawn crayon and colored-pencil illustration on textured paper, wobbly joyful uneven waxy crayon lines, scribbled saturated fills that go over the lines with paper tooth showing through, childlike palette of red, blue, green and orange, simple characters with round heads and dot eyes, playful uneven shapes and a loose, homemade feel - not photorealistic, no 3D render, no clean vector lines.",
+      "avoid": [
+        "clean vector lines",
+        "photorealism",
+        "3D render",
+        "gradients",
+        "text in the picture",
+        "airbrush"
+      ],
+      "swatches": [
+        {
+          "hex": "#E0412F",
+          "name": "crayon red"
+        },
+        {
+          "hex": "#2E6FD0",
+          "name": "crayon blue"
+        },
+        {
+          "hex": "#3FA34D",
+          "name": "crayon green"
+        },
+        {
+          "hex": "#F28C28",
+          "name": "crayon orange"
+        },
+        {
+          "hex": "#FBF6EE",
+          "name": "paper"
+        }
+      ],
+      "consistency": {
+        "bookRating": 3,
+        "cardRating": 5,
+        "notes": "Wobbly lines forgive small differences, which helps; but faces are loose so likeness is weaker. Great for cards.",
+        "tips": [
+          "Keep characters to circles and sticks",
+          "Use the same hair scribble color",
+          "Restate outfit colors"
+        ],
+        "renderNotes": "Too polished: line is neat and fills are even, so it looks like colored pencil, not a child's crayon scribble. Charming and consistent, but 'wobbly and scribbled' needs stronger wording (heavy waxy strokes, uneven fills, off-the-line coloring)."
+      },
+      "photoReference": "Simplify to a doodle: hair as a scribble in the photo's color, glasses as two circles, big smile. Never copy facial structure.",
+      "card": {
+        "typography": {
+          "display": [
+            "Patrick Hand",
+            "Gochi Hand",
+            "Chewy (embedded)"
+          ],
+          "body": [
+            "Figtree 600"
+          ],
+          "notes": "Hand-printed fonts in marker colors; keep to 2 colors."
+        },
+        "layout": "Doodle in the middle, floating objects around.",
+        "textSafeZone": "A blank paper corner or band for the added caption."
+      },
+      "print": {
+        "bleed": "Textured paper to the edge; use uncoated stock.",
+        "inkCoverage": "Medium.",
+        "foilAndSpot": "None."
+      },
+      "bestFor": [
+        "Kids' birthdays",
+        "Father's Day from kids",
+        "Teacher thank-you",
+        "Toddler books"
+      ],
+      "avoidFor": [
+        "Elegant occasions",
+        "Strong likeness requirement",
+        "Adult sympathy"
+      ],
+      "tags": [
+        "crayon",
+        "pencil",
+        "colored pencil",
+        "doodle",
+        "kid drawing",
+        "scribble",
+        "homemade",
+        "naive"
+      ],
+      "synonyms": [
+        "kid-drawn",
+        "child's drawing",
+        "scribbly",
+        "doodle",
+        "wobbly",
+        "marker"
+      ],
+      "ipSafeAliases": [],
+      "risks": {
+        "ip": "Low.",
+        "uncanny": "None.",
+        "age": "0 to 7."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FBF6EE",
+        "accentColor": "#EE5A36"
+      },
+      "thumbnail": {
+        "file": "crayon_pencil.jpg",
+        "rendered": true,
+        "note": "Rendered 2026-10-11 at 1K. Fair: reads as tidy colored pencil, not wobbly crayon."
+      }
+    },
+    {
+      "id": "wonky_ink_cartoon",
+      "name": "Wonky Ink Cartoon",
+      "category": "sketchy-homemade",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "4-7",
+        "8-10"
+      ],
+      "occasions": [
+        "birthday",
+        "fathers_day",
+        "get_well",
+        "congratulations",
+        "just_because",
+        "retirement"
+      ],
+      "tones": [
+        "silly",
+        "bold"
+      ],
+      "description": "Scratchy ink drawing with bendy shapes and bright patches of color. Goofy and a bit wild.",
+      "whyThisOne": "Goofy, bendy and wild, for the funniest cards and books.",
+      "popularity": {
+        "rating": "medium",
+        "sources": [
+          "R13",
+          "R14",
+          "R05"
+        ],
+        "summary": "Humor and punny cartoon animals lead card sales (R13, R14); whimsical bright cartoon is common in picture books (R05)."
+      },
+      "look": {
+        "medium": "Dip-pen and brush-pen ink with flat watercolor and marker color patches",
+        "technique": "Scratchy line, shapes drawn slightly crooked on purpose, color patches offset from the line",
+        "line": "Spiky, loose, thin-to-thick ink line",
+        "palette": "Bright inconsistent: mango, pink, aqua, lime, with white paper",
+        "composition": "Asymmetric, bendy silhouettes, silly props, scribbled patterns",
+        "mood": "Goofy, cheeky, chaotic",
+        "era": "Contemporary"
+      },
+      "styleString": "Wonky scratchy ink cartoon illustration, loose spiky pen line with slightly crooked shapes drawn on purpose, bright flat patches of color offset from the line, mango, pink, aqua and lime on white paper, characters with bendy bodies, big noses and silly expressions, playful scribbled patterns and goofy props - not photorealistic, no 3D render, no gradients, no neat vector perfection.",
+      "avoid": [
+        "neat vector lines",
+        "photorealism",
+        "3D render",
+        "gradients",
+        "text in the picture",
+        "characters that match any known book"
+      ],
+      "swatches": [
+        {
+          "hex": "#FF9F1C",
+          "name": "mango"
+        },
+        {
+          "hex": "#F25CA2",
+          "name": "silly pink"
+        },
+        {
+          "hex": "#2EC4B6",
+          "name": "aqua"
+        },
+        {
+          "hex": "#A3D940",
+          "name": "lime"
+        },
+        {
+          "hex": "#222222",
+          "name": "scratch ink"
+        }
+      ],
+      "consistency": {
+        "bookRating": 3,
+        "cardRating": 5,
+        "notes": "Messiness hides drift in faces; but characters can morph into each other in busy scenes.",
+        "tips": [
+          "Give each character an exaggerated nose or hair",
+          "Limit to two characters per page",
+          "Restate outfit color patches"
+        ],
+        "renderNotes": "Not rendered in the sample run (budget). Ratings are estimates from the Eye Story lessons and the rendered styles, not measurements."
+      },
+      "photoReference": "Caricature with exaggerated hair, nose and smile, always affectionate. Bendy limbs; flat color patches for skin.",
+      "card": {
+        "typography": {
+          "display": [
+            "Gochi Hand",
+            "Caveat Brush",
+            "Bangers"
+          ],
+          "body": [
+            "Figtree 600"
+          ],
+          "notes": "Marker-style display text; keep to a short punchline."
+        },
+        "layout": "Off-center subject with doodled props.",
+        "textSafeZone": "A white paper area (top or bottom 30 percent) for the added headline."
+      },
+      "print": {
+        "bleed": "White paper background: extend line art only to the trim, not the bleed.",
+        "inkCoverage": "Low to medium.",
+        "foilAndSpot": "None."
+      },
+      "bestFor": [
+        "Funny birthdays",
+        "Retirement jokes",
+        "Get well with humor",
+        "Books for ages 4 to 8 who like silly"
+      ],
+      "avoidFor": [
+        "Tender moments",
+        "Sympathy",
+        "Anything formal"
+      ],
+      "tags": [
+        "wonky",
+        "ink",
+        "scratchy",
+        "goofy",
+        "silly",
+        "crazy",
+        "bendy",
+        "zany",
+        "funny",
+        "doodle"
+      ],
+      "synonyms": [
+        "zany",
+        "whacky",
+        "wild",
+        "silly and crazy",
+        "kooky",
+        "nonsense"
+      ],
+      "ipSafeAliases": [
+        "dr seuss",
+        "seussian",
+        "dr. seuss",
+        "cat in the hat",
+        "grinch style"
+      ],
+      "risks": {
+        "ip": "High if asked for rhyme, striped hats or fuzzy creatures; keep original characters and avoid named props.",
+        "uncanny": "None.",
+        "age": "4 to 10."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FBF6EE",
+        "accentColor": "#EE5A36"
+      },
+      "thumbnail": {
+        "file": "wonky_ink_cartoon.jpg",
+        "rendered": false,
+        "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      }
+    },
+    {
+      "id": "soft_3d_animated",
+      "name": "Soft 3D Animated",
+      "category": "movie-bright",
+      "status": "stable",
+      "legacyIds": [
+        "storybook_3d"
+      ],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "4-7",
+        "8-10"
+      ],
+      "occasions": [
+        "birthday",
+        "adventure",
+        "christmas",
+        "graduation",
+        "congratulations",
+        "new_home",
+        "just_because"
+      ],
+      "tones": [
+        "adventurous",
+        "silly",
+        "tender"
+      ],
+      "description": "Glowy, rounded characters with big eyes and cinematic light, like a modern animated movie.",
+      "whyThisOne": "Glowy and cinematic, the closest thing to a movie poster of your family.",
+      "popularity": {
+        "rating": "high",
+        "sources": [
+          "R09",
+          "R10",
+          "R12",
+          "R05"
+        ],
+        "summary": "The leading AI-book competitors sell a 3D animated or cinematic look (R09, R10, R12); 3D is suited to action (R05). Our nearest generic equivalent."
+      },
+      "look": {
+        "medium": "Digital 3D-rendered animated-film look with soft clay-like forms",
+        "technique": "Subsurface-soft skin, rounded forms, rim lighting, shallow depth of field, gentle color grading",
+        "line": "None; shape and light define form",
+        "palette": "Warm saturated with teal-orange cinematic contrast",
+        "composition": "Hero framing, depth layers, cinematic backlight, bokeh background",
+        "mood": "Warm, wondrous, high-energy",
+        "era": "Contemporary animation"
+      },
+      "styleString": "Soft cozy 3D-rendered animated-film look, rounded clay-like forms, warm cinematic lighting with gentle rim light, shallow depth of field, gentle color grading, stylized cartoon characters with large expressive eyes, smooth simplified skin and softly sculpted hair - not photorealistic, no realistic skin pores, no hyperreal textures.",
+      "avoid": [
+        "photorealism",
+        "realistic skin pores",
+        "scary expressions",
+        "text in the picture",
+        "hair or outfits resembling known films"
+      ],
+      "swatches": [
+        {
+          "hex": "#F59E5B",
+          "name": "sunset orange"
+        },
+        {
+          "hex": "#3CA6A6",
+          "name": "cinema teal"
+        },
+        {
+          "hex": "#F7D774",
+          "name": "glow gold"
+        },
+        {
+          "hex": "#6C4AB6",
+          "name": "dusk purple"
+        },
+        {
+          "hex": "#FFF3E2",
+          "name": "warm white"
+        }
+      ],
+      "consistency": {
+        "bookRating": 3,
+        "cardRating": 3,
+        "notes": "Great first-impression quality, but faces re-interpret page to page and the model drifts toward generic movie-cute faces; kids resemble each other. Photo likeness needs the model sheet.",
+        "tips": [
+          "Approve the model sheet before any page",
+          "Describe 3 distinctive facial anchors per person",
+          "Keep hair as a simple sculpted shape",
+          "Avoid scenes with 4 characters at once"
+        ],
+        "renderNotes": "Attractive, warm lighting and a plush fox, but it is a soft painted hybrid rather than a true 3D render: the child's face stays 2D-leaning. Good enough as a safe 'animated film glow' look. Expect face drift page to page; keep the model sheet gate."
+      },
+      "photoReference": "Translate into a stylized 3D character with the photo's hair color/shape, skin tone, glasses and face-shape cue; enlarge eyes modestly; keep skin smooth. Do not preserve the photographic lighting.",
+      "card": {
+        "typography": {
+          "display": [
+            "Baloo 2 ExtraBold",
+            "Fredoka 600"
+          ],
+          "body": [
+            "Figtree 600"
+          ],
+          "notes": "Rounded display with a drop shadow; white on a dark glow area."
+        },
+        "layout": "Hero character mid-frame with depth layers.",
+        "textSafeZone": "Keep the lower third calm for a caption; inside page is plain."
+      },
+      "print": {
+        "bleed": "Full-bleed backgrounds with soft bokeh.",
+        "inkCoverage": "High; glow and saturated teals can band or darken in CMYK, proof.",
+        "foilAndSpot": "Spot gloss over highlights is a good upgrade; not simulated."
+      },
+      "bestFor": [
+        "Birthday adventure books",
+        "Ages 4 to 10 'hero of the story'",
+        "Christmas cards for kids"
+      ],
+      "avoidFor": [
+        "Strong likeness",
+        "Elegant",
+        "Photo-based sympathy",
+        "Customers wanting a hand-made look"
+      ],
+      "tags": [
+        "3d",
+        "animated",
+        "movie",
+        "cinematic",
+        "glowy",
+        "rounded",
+        "cgi",
+        "cartoon movie",
+        "bright"
+      ],
+      "synonyms": [
+        "animated movie",
+        "3D cartoon",
+        "cgi",
+        "movie style",
+        "film look",
+        "big-screen"
+      ],
+      "ipSafeAliases": [
+        "pixar",
+        "pixar style",
+        "pixar looking",
+        "pixar-looking",
+        "like a pixar movie",
+        "disney",
+        "disney movie",
+        "like a disney movie",
+        "disney princess",
+        "dreamworks",
+        "frozen style",
+        "frozen-style",
+        "like frozen",
+        "frozen movie",
+        "illumination",
+        "encanto style",
+        "moana style"
+      ],
+      "risks": {
+        "ip": "High. This is the style customers most often ask for by franchise name. Never mention a studio; keep hair, outfits and sidekicks original. Output vision check must stay on.",
+        "uncanny": "Medium; keep eyes stylized and skin smooth.",
+        "age": "4 and up."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FBF6EE",
+        "accentColor": "#EE5A36"
+      },
+      "thumbnail": {
+        "file": "soft_3d_animated.jpg",
+        "rendered": true,
+        "note": "Rendered 2026-10-11 at 1K. Partial: a painterly-3D hybrid, plush fox and smooth child, no real CGI render."
+      }
+    },
+    {
+      "id": "anime_inspired",
+      "name": "Storybook Anime",
+      "category": "movie-bright",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "4-7",
+        "8-10"
+      ],
+      "occasions": [
+        "birthday",
+        "adventure",
+        "graduation",
+        "valentines",
+        "get_well",
+        "just_because"
+      ],
+      "tones": [
+        "adventurous",
+        "tender",
+        "bold"
+      ],
+      "description": "Hand-painted animation-style look: big expressive eyes, glowing skies and detailed painted backgrounds.",
+      "whyThisOne": "Big-eyed and dreamy with painted skies, like a hand-drawn animated film.",
+      "popularity": {
+        "rating": "high",
+        "sources": [
+          "R04",
+          "R09",
+          "R12"
+        ],
+        "summary": "Big-eyed, emotion-led character design is named a major 2026 influence (R04); an anime option is on the leading AI-book menu (R09)."
+      },
+      "look": {
+        "medium": "Hand-painted 2D animation cel and painted background look",
+        "technique": "Clean thin line, cel-shaded color, soft airbrushed skies, detailed painted nature",
+        "line": "Thin precise colored lineart",
+        "palette": "Fresh: sky blue, leaf green, warm skin tones, sunset pink",
+        "composition": "Wide painted backgrounds, small characters in big landscapes, wind and light",
+        "mood": "Dreamy, earnest, adventurous",
+        "era": "Contemporary 2D animation"
+      },
+      "styleString": "Hand-painted 2D animation-style illustration, thin clean colored lineart with flat cel-shaded color and one soft shadow tone, very large glossy eyes with bright highlights and simplified small noses and mouths, light smooth hair strands with highlights, soft detailed painted backgrounds with luminous skies and clouds, fresh palette of sky blue, leaf green, warm skin tones and sunset pink, gentle wind and light, serene storybook mood - not photorealistic, no 3D render, not a copy of any existing animated film.",
+      "avoid": [
+        "photorealism",
+        "3D render",
+        "sexualized proportions",
+        "characters resembling any known film",
+        "text in the picture",
+        "chibi extremes"
+      ],
+      "swatches": [
+        {
+          "hex": "#8EC9EA",
+          "name": "sky blue"
+        },
+        {
+          "hex": "#6DB36B",
+          "name": "leaf green"
+        },
+        {
+          "hex": "#F4C6A8",
+          "name": "warm skin"
+        },
+        {
+          "hex": "#F28FA3",
+          "name": "sunset pink"
+        },
+        {
+          "hex": "#2F3E5B",
+          "name": "ink navy"
+        }
+      ],
+      "consistency": {
+        "bookRating": 3,
+        "cardRating": 4,
+        "notes": "Models hold this look very well: consistent eye and hair language. Risk is drifting to generic anime tropes and older proportions.",
+        "tips": [
+          "State age cue (child proportions) explicitly",
+          "Lock hair color and eye color",
+          "Keep clothing everyday and plain"
+        ],
+        "renderNotes": "Did not land: no large glossy eyes, no cel-shaded linework, so it looks like a soft digital storybook. The painted sky is good. The style string was strengthened afterwards (large glossy eyes, thin colored lineart, cel shading) but that revision was NOT re-rendered because the budget was spent."
+      },
+      "photoReference": "Translate with large eyes in the photo's eye color, hair as a few clean shapes, and age-appropriate child proportions; keep faces modest and friendly.",
+      "card": {
+        "typography": {
+          "display": [
+            "Baloo 2 ExtraBold",
+            "Kalam 700"
+          ],
+          "body": [
+            "Figtree 500"
+          ],
+          "notes": "Soft rounded sans; white on sky areas with a faint cocoa shadow."
+        },
+        "layout": "Small figure in a big painted landscape; sky takes the top half.",
+        "textSafeZone": "Open sky occupies the top 35 percent for added type."
+      },
+      "print": {
+        "bleed": "Sky gradients to the edge: banding check.",
+        "inkCoverage": "Medium to high; bright pinks and blues can shift.",
+        "foilAndSpot": "None."
+      },
+      "bestFor": [
+        "Adventure books for ages 6 to 10",
+        "Graduation",
+        "Birthdays for anime fans",
+        "Landscape-heavy scenes"
+      ],
+      "avoidFor": [
+        "Toddlers",
+        "Humor with chaos",
+        "Elegant weddings"
+      ],
+      "tags": [
+        "anime",
+        "manga",
+        "japanese animation",
+        "big eyes",
+        "painted sky",
+        "animated",
+        "2d animated"
+      ],
+      "synonyms": [
+        "anime style",
+        "anime-looking",
+        "japanese cartoon",
+        "manga",
+        "animation cel"
+      ],
+      "ipSafeAliases": [
+        "anime",
+        "studio ghibli",
+        "ghibli",
+        "ghibli-like",
+        "studio ghibli-like",
+        "like studio ghibli",
+        "miyazaki",
+        "my neighbor totoro",
+        "pokemon",
+        "naruto"
+      ],
+      "risks": {
+        "ip": "High. Customers ask by studio name; never include the name. Avoid forest spirits, soot creatures, cat buses and signature costumes.",
+        "uncanny": "Low.",
+        "age": "Keep proportions child-like; no sexualized styling."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FBF6EE",
+        "accentColor": "#EE5A36"
+      },
+      "thumbnail": {
+        "file": "anime_inspired.jpg",
+        "rendered": true,
+        "note": "Rendered 2026-10-11 at 1K. Weak match: reads as a soft Western storybook, few animation-style cues."
+      }
+    },
+    {
+      "id": "painterly_realism",
+      "name": "Painted Portrait",
+      "category": "lifelike",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "book",
+        "card"
+      ],
+      "ageBands": [
+        "8-10"
+      ],
+      "occasions": [
+        "anniversary",
+        "wedding",
+        "sympathy",
+        "mothers_day",
+        "fathers_day",
+        "retirement",
+        "pet",
+        "birthday"
+      ],
+      "tones": [
+        "elegant",
+        "tender"
+      ],
+      "description": "Soft oil-painting realism with warm light, like a gallery portrait. Real-feeling but painted.",
+      "whyThisOne": "Warm and painterly, the most lifelike look that still feels like art.",
+      "popularity": {
+        "rating": "niche",
+        "sources": [
+          "R05",
+          "R09"
+        ],
+        "summary": "Fine-art painterly is favored in European markets (R05); 'soft realism' is on competitor menus (R09). No sales evidence found."
+      },
+      "look": {
+        "medium": "Oil or acrylic painting look on canvas",
+        "technique": "Soft blended edges, visible brush marks in backgrounds, glazing, chiaroscuro-lite light",
+        "line": "None",
+        "palette": "Rich earthy: umber, ochre, deep green, warm skin tones, muted blue",
+        "composition": "Portrait or scene with a clear focal light, painterly background",
+        "mood": "Warm, reflective, dignified",
+        "era": "Classic painting tradition"
+      },
+      "styleString": "Soft painterly storybook realism, oil-painting look with visible brush marks in the background and smooth blended faces, warm directional light with gentle shadows, rich earthy palette of umber, ochre, deep green and muted blue, faces natural but softly idealized with gentle expressions, painterly atmospheric backgrounds - not a photograph, no hyperreal skin pores, no glossy 3D render.",
+      "avoid": [
+        "photograph look",
+        "hyperreal skin",
+        "3D render",
+        "plastic gloss",
+        "text in the picture",
+        "extra fingers"
+      ],
+      "swatches": [
+        {
+          "hex": "#7A4B2A",
+          "name": "umber"
+        },
+        {
+          "hex": "#C58B2C",
+          "name": "ochre"
+        },
+        {
+          "hex": "#365C4A",
+          "name": "deep green"
+        },
+        {
+          "hex": "#E7C7A9",
+          "name": "warm skin"
+        },
+        {
+          "hex": "#5A7EA3",
+          "name": "muted blue"
+        }
+      ],
+      "consistency": {
+        "bookRating": 2,
+        "cardRating": 3,
+        "notes": "Rendered faces change with each page and the uncanny valley sits close; resemblance expectations are high. Better for single images than a 32-page book.",
+        "tips": [
+          "Prefer cards or a short book",
+          "Attach 2 reference photos plus the sheet",
+          "Use soft idealization, not photo likeness",
+          "Re-roll face-drift pages"
+        ],
+        "renderNotes": "Soft oil look with natural light. The child was drawn younger and more idealized than the prompt implied; that is the safe side of the uncanny valley. Likeness from a real photo is untested here."
+      },
+      "photoReference": "Soft idealization of the real face: keep face shape, eye color, hair, glasses; smooth skin; adjust lighting to the painting's single source. Be honest: likeness will be close, not exact.",
+      "card": {
+        "typography": {
+          "display": [
+            "Cormorant Garamond 600",
+            "Playfair Display 600"
+          ],
+          "body": [
+            "Figtree 400"
+          ],
+          "notes": "Classic serif in dark cocoa; names in italic."
+        },
+        "layout": "Portrait-oriented subject with painterly background; vignette edges.",
+        "textSafeZone": "Dark background bottom 30 percent is the type zone."
+      },
+      "print": {
+        "bleed": "Dark painterly edges: bleed matters.",
+        "inkCoverage": "Heavy in dark areas (up to 280 percent); use heavyweight stock.",
+        "foilAndSpot": "None."
+      },
+      "bestFor": [
+        "Anniversary and wedding gifts",
+        "Sympathy and memorial portraits",
+        "Pet portraits",
+        "Older kids' memory books"
+      ],
+      "avoidFor": [
+        "Toddlers",
+        "Silly",
+        "Strong consistency across 32 pages"
+      ],
+      "tags": [
+        "painted",
+        "oil",
+        "portrait",
+        "realistic",
+        "painterly",
+        "classic art",
+        "lifelike",
+        "soft realism"
+      ],
+      "synonyms": [
+        "looks real but painted",
+        "oil painting",
+        "portrait",
+        "realistic painting",
+        "lifelike"
+      ],
+      "ipSafeAliases": [],
+      "risks": {
+        "ip": "Low; avoid naming painters.",
+        "uncanny": "High. Closer to a face, closer to the valley: stay softly idealized.",
+        "age": "Not recommended for 0 to 7 books."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FBF6EE",
+        "accentColor": "#5B2A4B"
+      },
+      "thumbnail": {
+        "file": "painterly_realism.jpg",
+        "rendered": true,
+        "note": "Rendered 2026-10-11 at 1K. Good: soft oil-painting look, no uncanny face."
+      }
+    },
+    {
+      "id": "cinematic_photoreal",
+      "name": "Cinematic Photo Look",
+      "category": "lifelike",
+      "status": "beta",
+      "legacyIds": [],
+      "products": [
+        "card",
+        "book"
+      ],
+      "ageBands": [
+        "8-10"
+      ],
+      "occasions": [
+        "anniversary",
+        "wedding",
+        "graduation",
+        "pet",
+        "retirement",
+        "birthday",
+        "just_because"
+      ],
+      "tones": [
+        "elegant",
+        "bold",
+        "adventurous"
+      ],
+      "description": "Photographic, movie-still lighting. Sharp, real-looking and dramatic. Beta: ask for it deliberately.",
+      "whyThisOne": "Movie-still realism for grown-up moments. Choose this one on purpose.",
+      "popularity": {
+        "rating": "niche",
+        "sources": [
+          "R09",
+          "R10"
+        ],
+        "summary": "'Realistic' and 'cinematic' looks appear on AI-book menus (R09, R10). We found no evidence it sells better than illustrated looks; parent-trust research favors human-looking art (R20)."
+      },
+      "look": {
+        "medium": "Digital cinematic photograph look",
+        "technique": "Shallow depth of field, key and rim lighting, film color grade, subtle grain",
+        "line": "None",
+        "palette": "Cinematic teal and amber, natural skin tones",
+        "composition": "Medium shot, rule of thirds, bokeh background",
+        "mood": "Dramatic, polished, grown-up",
+        "era": "Contemporary film"
+      },
+      "styleString": "Cinematic stylized photographic look, shallow depth of field, soft key light with gentle rim light, film color grade with warm amber and muted teal, fine film grain, natural but softly retouched faces, composed medium shot with bokeh background - invented people only, not a copy of any real photograph, no text, no hyperreal skin pores.",
+      "avoid": [
+        "uncanny hyperreal faces",
+        "extra fingers",
+        "text in the picture",
+        "real celebrities",
+        "children in realistic danger",
+        "logos"
+      ],
+      "swatches": [
+        {
+          "hex": "#D8913A",
+          "name": "amber"
+        },
+        {
+          "hex": "#2E5E6B",
+          "name": "film teal"
+        },
+        {
+          "hex": "#E6C7A9",
+          "name": "natural skin"
+        },
+        {
+          "hex": "#1E1E24",
+          "name": "shadow"
+        },
+        {
+          "hex": "#F2E8D5",
+          "name": "highlight"
+        }
+      ],
+      "consistency": {
+        "bookRating": 1,
+        "cardRating": 3,
+        "notes": "Models can hold a person's likeness best at photo-real, but identity drifts across pages and the uncanny valley is the main risk. Real child likeness in photoreal is privacy-sensitive. Beta: not shown in the default list for kids.",
+        "tips": [
+          "Only for adults and ages 8 to 10 with an adult's consent",
+          "Use one reference photo and the sheet",
+          "Prefer cards over books",
+          "Proof carefully"
+        ],
+        "renderNotes": "Not rendered in the sample run (budget). Ratings are estimates from the Eye Story lessons and the rendered styles, not measurements."
+      },
+      "photoReference": "Closest to the source photo, but still do not copy it: reinterpret pose, clothing and lighting; remove logos and prints; keep skin natural but retouched.",
+      "card": {
+        "typography": {
+          "display": [
+            "Playfair Display 600",
+            "Josefin Sans 600 caps"
+          ],
+          "body": [
+            "Figtree 400"
+          ],
+          "notes": "Elegant serif or spaced caps in white on dark photographic areas."
+        },
+        "layout": "Medium shot, subject on a third, negative space on the other side.",
+        "textSafeZone": "Bokeh negative space on one third is the type zone."
+      },
+      "print": {
+        "bleed": "Full-bleed photo-like image; check dark shadows.",
+        "inkCoverage": "Heavy; use a satin or gloss stock.",
+        "foilAndSpot": "Spot UV on the title is an upgrade."
+      },
+      "bestFor": [
+        "Anniversary",
+        "Pet or memorial portraits",
+        "Grown-up gifts",
+        "Graduation"
+      ],
+      "avoidFor": [
+        "Toddlers and young kids' books",
+        "Humor",
+        "32-page stories needing consistency"
+      ],
+      "tags": [
+        "photo",
+        "photographic",
+        "realistic",
+        "cinematic",
+        "movie still",
+        "film",
+        "photoreal",
+        "lifelike"
+      ],
+      "synonyms": [
+        "photorealistic",
+        "real life",
+        "realistic",
+        "movie look",
+        "like a photo"
+      ],
+      "ipSafeAliases": [],
+      "risks": {
+        "ip": "Medium; lookalike risk with real people and known film stills. Never use names of celebrities.",
+        "uncanny": "High.",
+        "age": "Not recommended under 8 for books; beta."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FBF6EE",
+        "accentColor": "#5B2A4B"
+      },
+      "thumbnail": {
+        "file": "cinematic_photoreal.jpg",
+        "rendered": false,
+        "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      }
+    },
+    {
+      "id": "minimal_line_art",
+      "name": "Minimal Line Art",
+      "category": "clean-simple",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "card",
+        "book"
+      ],
+      "ageBands": [
+        "0-3",
+        "8-10"
+      ],
+      "occasions": [
+        "wedding",
+        "anniversary",
+        "sympathy",
+        "valentines",
+        "thank_you",
+        "new_baby",
+        "just_because",
+        "mothers_day"
+      ],
+      "tones": [
+        "elegant",
+        "tender"
+      ],
+      "description": "A few thin lines on lots of white space. Quiet, modern and a little poetic.",
+      "whyThisOne": "Quiet and modern, saying a lot with very few lines.",
+      "popularity": {
+        "rating": "high",
+        "sources": [
+          "R07",
+          "R06",
+          "R05"
+        ],
+        "summary": "Minimalism and clean lines are named for wedding and sympathy cards (R07); minimalist suits ages 0-3 board books (R05)."
+      },
+      "look": {
+        "medium": "Single-weight pen line with a spot of color",
+        "technique": "Continuous line drawing, tiny accent fill in one color, generous white",
+        "line": "Thin, even, dark ink or colored pen",
+        "palette": "Black or navy line, one soft accent (blush or sage), white paper",
+        "composition": "Subject small and off-center, big negative space",
+        "mood": "Calm, poetic, modern",
+        "era": "Contemporary"
+      },
+      "styleString": "Minimalist continuous-line illustration, single-weight thin dark navy pen line with one small soft blush accent fill, generous warm white space, simple shapes and gesture drawing, delicate and uncluttered, hand-drawn stationery feel, faces reduced to a few lines - not photorealistic, no 3D render, no shading, no gradients.",
+      "avoid": [
+        "shading",
+        "gradients",
+        "clutter",
+        "photorealism",
+        "3D render",
+        "text in the picture"
+      ],
+      "swatches": [
+        {
+          "hex": "#1F2F4D",
+          "name": "navy line"
+        },
+        {
+          "hex": "#F6C9C0",
+          "name": "blush accent"
+        },
+        {
+          "hex": "#B7C9A8",
+          "name": "sage accent"
+        },
+        {
+          "hex": "#FBF6EE",
+          "name": "warm white"
+        },
+        {
+          "hex": "#C9A24B",
+          "name": "gold accent"
+        }
+      ],
+      "consistency": {
+        "bookRating": 3,
+        "cardRating": 5,
+        "notes": "Few lines mean few things to drift, but also little to anchor identity; use hair line and glasses as anchors.",
+        "tips": [
+          "Lock 2 line traits per person",
+          "One accent color per character",
+          "Use for short books or cards"
+        ],
+        "renderNotes": "Nice thin line and white space, but it filled the coat and hair with flat color; not strictly one accent. Good for cards; the extra fills actually help character identity."
+      },
+      "photoReference": "Distill to a gesture: head shape, hair line, glasses; skin left white. Line drawing of two people holding hands conveys relationship more than likeness.",
+      "card": {
+        "typography": {
+          "display": [
+            "Cormorant Garamond 500",
+            "Jost 400 caps"
+          ],
+          "body": [
+            "Figtree 400"
+          ],
+          "notes": "Light serif with spaced small caps; lots of white around the message."
+        },
+        "layout": "Subject small, off-center in the lower half; type above.",
+        "textSafeZone": "Top 45 percent can be fully empty for type."
+      },
+      "print": {
+        "bleed": "White background: no bleed art needed; keep line art inside safe margin.",
+        "inkCoverage": "Very low. Letterpress or foil line works well as an upgrade.",
+        "foilAndSpot": "A foil-stamped line is a lovely upgrade; picture only shows an ink line."
+      },
+      "bestFor": [
+        "Weddings and engagement",
+        "Sympathy",
+        "Anniversary",
+        "Baby board books (ages 0 to 3)"
+      ],
+      "avoidFor": [
+        "Loud humor",
+        "Complex adventures",
+        "Kids' birthdays"
+      ],
+      "tags": [
+        "minimal",
+        "line art",
+        "continuous line",
+        "simple",
+        "modern",
+        "white space",
+        "pen",
+        "elegant"
+      ],
+      "synonyms": [
+        "simple lines",
+        "one line drawing",
+        "clean and simple",
+        "scandi",
+        "modern minimal"
+      ],
+      "ipSafeAliases": [],
+      "risks": {
+        "ip": "Low.",
+        "uncanny": "None.",
+        "age": "All ages."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FFFFFF",
+        "accentColor": "#C8441F"
+      },
+      "thumbnail": {
+        "file": "minimal_line_art.jpg",
+        "rendered": true,
+        "note": "Rendered 2026-10-11 at 1K. Fair: line-led but with more color fills than minimal."
+      }
+    },
+    {
+      "id": "botanical_gouache",
+      "name": "Botanical Garden",
+      "category": "clean-simple",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "card"
+      ],
+      "ageBands": [
+        "4-7",
+        "8-10"
+      ],
+      "occasions": [
+        "mothers_day",
+        "thank_you",
+        "birthday",
+        "wedding",
+        "sympathy",
+        "get_well",
+        "anniversary"
+      ],
+      "tones": [
+        "tender",
+        "elegant"
+      ],
+      "description": "Hand-painted flowers, leaves and little garden creatures. Fresh, pretty and easy to love.",
+      "whyThisOne": "Pretty, fresh and garden-y, a safe pick for Mom, Grandma and teachers.",
+      "popularity": {
+        "rating": "high",
+        "sources": [
+          "R06",
+          "R07",
+          "R08",
+          "R14"
+        ],
+        "summary": "Botanical illustration pairs with earthy palettes (R06); watercolor greenery and florals are common holiday card motifs (R08); strong on Etsy (R14)."
+      },
+      "look": {
+        "medium": "Gouache and watercolor botanicals with fine ink details",
+        "technique": "Layered petals, visible brush marks, flat leaf shapes with vein details",
+        "line": "Fine ink details or none",
+        "palette": "Sage, rose, peony pink, buttery yellow, soft blue, cream",
+        "composition": "Bouquet or wreath, centered with breathing room",
+        "mood": "Fresh, graceful, warm",
+        "era": "Timeless"
+      },
+      "styleString": "Hand-painted botanical illustration in gouache and watercolor, layered petals and flat leaf shapes with fine ink vein details, visible brush marks, fresh palette of sage, peony pink, buttery yellow, soft blue on warm cream paper, loose balanced bouquet composition with breathing room, optional small friendly garden creature - not photorealistic, no 3D render, no gradients on petals.",
+      "avoid": [
+        "photorealism",
+        "3D render",
+        "dense clutter",
+        "text in the picture",
+        "neon",
+        "stock-photo flowers"
+      ],
+      "swatches": [
+        {
+          "hex": "#B7C9A8",
+          "name": "sage"
+        },
+        {
+          "hex": "#E58FA3",
+          "name": "peony pink"
+        },
+        {
+          "hex": "#F2D16B",
+          "name": "butter yellow"
+        },
+        {
+          "hex": "#9DB7D5",
+          "name": "soft blue"
+        },
+        {
+          "hex": "#FBF6EE",
+          "name": "cream"
+        }
+      ],
+      "consistency": {
+        "bookRating": 2,
+        "cardRating": 5,
+        "notes": "Botanicals hold up perfectly for cards because there is no character to drift. For books, characters would be tiny; not offered.",
+        "tips": [
+          "Card-only",
+          "Name the specific flowers for the recipient"
+        ],
+        "renderNotes": "Not rendered in the sample run (budget). Ratings are estimates from the Eye Story lessons and the rendered styles, not measurements."
+      },
+      "photoReference": "No people in the picture. If a pet or person appears, show as a small simple figure among flowers; or name the recipient's favorite flowers instead.",
+      "card": {
+        "typography": {
+          "display": [
+            "Fraunces 600",
+            "Pinyon Script (names only)"
+          ],
+          "body": [
+            "Figtree 400"
+          ],
+          "notes": "Soft serif headline in deep green or cocoa; script only for the recipient's name."
+        },
+        "layout": "Bouquet or wreath at center, open space for message.",
+        "textSafeZone": "Wreath center or bottom 30 percent stays clear for type."
+      },
+      "print": {
+        "bleed": "Cream paper margin, bleed only the background tint if used.",
+        "inkCoverage": "Low to medium.",
+        "foilAndSpot": "Gold foil on one leaf or name is a good upgrade; not simulated."
+      },
+      "bestFor": [
+        "Mother's Day",
+        "Teacher thank-yous",
+        "Get well",
+        "Wedding and sympathy"
+      ],
+      "avoidFor": [
+        "Books",
+        "Funny cards for dads",
+        "Adventure"
+      ],
+      "tags": [
+        "botanical",
+        "floral",
+        "flowers",
+        "garden",
+        "wreath",
+        "leaves",
+        "bouquet",
+        "gouache",
+        "spring"
+      ],
+      "synonyms": [
+        "flowers",
+        "floral",
+        "garden",
+        "bouquet",
+        "wildflowers",
+        "pretty"
+      ],
+      "ipSafeAliases": [],
+      "risks": {
+        "ip": "Low.",
+        "uncanny": "None.",
+        "age": "All ages."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FBF6EE",
+        "accentColor": "#C8441F"
+      },
+      "thumbnail": {
+        "file": "botanical_gouache.jpg",
+        "rendered": false,
+        "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      }
+    },
+    {
+      "id": "hand_lettered_type",
+      "name": "Hand-Lettered Note",
+      "category": "clean-simple",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "card"
+      ],
+      "ageBands": [
+        "4-7",
+        "8-10"
+      ],
+      "occasions": [
+        "thank_you",
+        "anniversary",
+        "birthday",
+        "sympathy",
+        "valentines",
+        "just_because",
+        "mothers_day",
+        "wedding"
+      ],
+      "tones": [
+        "tender",
+        "elegant",
+        "bold"
+      ],
+      "description": "The words are the star: a quiet hand-painted border and lots of room for a heartfelt message.",
+      "whyThisOne": "When the words matter most, we leave them room to shine.",
+      "popularity": {
+        "rating": "high",
+        "sources": [
+          "R06",
+          "R07",
+          "R16",
+          "R15"
+        ],
+        "summary": "The handwritten revival is the first trend in Printed.com's 2026 list (R06); handwriting-style fonts for anniversaries (R07); pen-pal and handwritten letters surge on Pinterest (R16)."
+      },
+      "look": {
+        "medium": "Painted paper texture with a hand-drawn border or pattern",
+        "technique": "Soft textured paper, simple painted leaves or dots as a frame, intentionally blank center",
+        "line": "Fine hand-drawn border lines",
+        "palette": "Soft neutrals with one accent: cream, blush, olive, plum",
+        "composition": "Frame or edge pattern with an empty central area for lettering added by us",
+        "mood": "Personal, sincere",
+        "era": "Contemporary stationery"
+      },
+      "styleString": "Soft textured paper stationery design with a simple hand-painted border of small leaves and dots in olive, blush and plum along the edges, large calm empty center area, fine cream paper grain, gentle warm light, delicate and uncluttered - no lettering of any kind, no text in the picture, not photorealistic, no 3D render.",
+      "avoid": [
+        "any text or letters",
+        "photorealism",
+        "3D render",
+        "dense illustration in the center",
+        "gradients",
+        "logos"
+      ],
+      "swatches": [
+        {
+          "hex": "#F3EADB",
+          "name": "cream"
+        },
+        {
+          "hex": "#F6C9C0",
+          "name": "blush"
+        },
+        {
+          "hex": "#8A9A5B",
+          "name": "olive"
+        },
+        {
+          "hex": "#5B2A4B",
+          "name": "plum"
+        },
+        {
+          "hex": "#2B1E18",
+          "name": "cocoa type"
+        }
+      ],
+      "consistency": {
+        "bookRating": 1,
+        "cardRating": 5,
+        "notes": "No character, no drift. The only job for the model is a frame and a calm center. Never ask it to draw the words.",
+        "tips": [
+          "We add the type with our fonts, never the image model",
+          "Use a plain empty center",
+          "Keep the illustration at the edges"
+        ],
+        "renderNotes": "Not rendered in the sample run (budget). Ratings are estimates from the Eye Story lessons and the rendered styles, not measurements."
+      },
+      "photoReference": "Not applicable: no people are drawn. If the customer wants a small figure, tuck it in a corner as a simple silhouette or switch to another style.",
+      "card": {
+        "typography": {
+          "display": [
+            "Caveat 700",
+            "Pinyon Script",
+            "Fraunces 600"
+          ],
+          "body": [
+            "Figtree 400"
+          ],
+          "notes": "A handwritten script for a short line (names, 'thank you') and a soft serif for the full message. Max 2 families. 20 pt for script, 17 pt for message."
+        },
+        "layout": "Frame at edges, centered message block, message line breaks by phrase.",
+        "textSafeZone": "Center 70 percent of the front is the type zone."
+      },
+      "print": {
+        "bleed": "Border art reaches the bleed; center stays empty.",
+        "inkCoverage": "Low. Letterpress or foil on the lettering is the premium upgrade.",
+        "foilAndSpot": "Foil on the lettering: not simulated."
+      },
+      "bestFor": [
+        "Thank you",
+        "Anniversary",
+        "Sympathy",
+        "Valentine notes",
+        "Heartfelt messages that deserve space"
+      ],
+      "avoidFor": [
+        "Books",
+        "Funny visual jokes",
+        "Kids who want pictures"
+      ],
+      "tags": [
+        "lettering",
+        "handwritten",
+        "script",
+        "type",
+        "message",
+        "note",
+        "stationery",
+        "calligraphy",
+        "border"
+      ],
+      "synonyms": [
+        "handwritten card",
+        "calligraphy",
+        "words only",
+        "text card",
+        "letter",
+        "note card"
+      ],
+      "ipSafeAliases": [],
+      "risks": {
+        "ip": "Low.",
+        "uncanny": "None.",
+        "age": "All ages."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FBF6EE",
+        "accentColor": "#5B2A4B"
+      },
+      "thumbnail": {
+        "file": "hand_lettered_type.jpg",
+        "rendered": false,
+        "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      }
+    },
+    {
+      "id": "foil_luxe",
+      "name": "Gold & Luxe",
+      "category": "fancy-foil",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "card"
+      ],
+      "ageBands": [
+        "8-10"
+      ],
+      "occasions": [
+        "wedding",
+        "anniversary",
+        "christmas",
+        "graduation",
+        "birthday",
+        "valentines",
+        "congratulations"
+      ],
+      "tones": [
+        "elegant",
+        "bold"
+      ],
+      "description": "Rich dark color with gold-look details. Feels special, like premium stationery.",
+      "whyThisOne": "Rich and festive, made for the moments that deserve a little shine.",
+      "popularity": {
+        "rating": "medium",
+        "sources": [
+          "R14",
+          "R17",
+          "R07",
+          "R08"
+        ],
+        "summary": "Gold foil is common in listings (R14) and premium stationery (R17); metallic accents for baby and Valentine (R07); foil used sparingly on holiday cards (R08)."
+      },
+      "look": {
+        "medium": "Dark-ground illustration with metallic gold-look linework (printed ink, not real foil)",
+        "technique": "Gold-colored fine line and shapes on deep color, subtle sparkle",
+        "line": "Fine metallic-look gold line",
+        "palette": "Deep navy, plum, emerald, burgundy with warm gold and cream",
+        "composition": "Centered ornament or wreath, symmetric frame, space for type",
+        "mood": "Festive, luxurious, formal",
+        "era": "Contemporary luxe"
+      },
+      "styleString": "Luxe 2D illustration, deep midnight navy or plum background with fine metallic gold-look linework and small gold shapes, gentle sparkle, centered symmetrical ornamental composition with a calm empty center, rich emerald and burgundy accents, delicate hand-drawn details - not photorealistic, no 3D render, no real text, printed-ink gold look only.",
+      "avoid": [
+        "text in the picture",
+        "photorealism",
+        "3D render",
+        "glittery clutter",
+        "brand logos",
+        "cheap shiny gradients"
+      ],
+      "swatches": [
+        {
+          "hex": "#1B2240",
+          "name": "midnight navy"
+        },
+        {
+          "hex": "#5B2A4B",
+          "name": "plum"
+        },
+        {
+          "hex": "#C9A24B",
+          "name": "gold"
+        },
+        {
+          "hex": "#2F5D4A",
+          "name": "emerald"
+        },
+        {
+          "hex": "#F3EADB",
+          "name": "cream"
+        }
+      ],
+      "consistency": {
+        "bookRating": 1,
+        "cardRating": 5,
+        "notes": "Ornament, no characters. Gold in an RGB render is a yellow-brown with highlights; real foil must be added by the printer.",
+        "tips": [
+          "Card-only",
+          "Explain to customers that gold is shown as printed gold-look, with real foil as an upgrade if offered"
+        ],
+        "renderNotes": "Wreath with fine gold-look linework and an empty center, as wanted. The fox is tiny. This is a color imitation: real foil must come from the printer."
+      },
+      "photoReference": "No people. If a pet or person is needed, a small gold line silhouette inside the frame.",
+      "card": {
+        "typography": {
+          "display": [
+            "Playfair Display 600",
+            "Cormorant Garamond 600 italic"
+          ],
+          "body": [
+            "Figtree 400"
+          ],
+          "notes": "Cream or gold-tone text on dark; at least 18 pt and weight 500 on dark."
+        },
+        "layout": "Symmetric frame with empty center.",
+        "textSafeZone": "Center 60 percent of the front is the type zone."
+      },
+      "print": {
+        "bleed": "Dark backgrounds to the edge: bleed matters.",
+        "inkCoverage": "Very heavy (up to 300 percent); choose heavy stock and expect set-off risk.",
+        "foilAndSpot": "REAL foil is a separate printer finish and is not shown in the picture. Do not promise it unless the printer SKU includes it."
+      },
+      "bestFor": [
+        "Weddings",
+        "Christmas",
+        "Anniversary",
+        "Graduations"
+      ],
+      "avoidFor": [
+        "Kids' books",
+        "Funny cards",
+        "Casual thank-you"
+      ],
+      "tags": [
+        "foil",
+        "gold",
+        "luxe",
+        "metallic",
+        "elegant",
+        "navy",
+        "ornate",
+        "formal"
+      ],
+      "synonyms": [
+        "gold foil",
+        "fancy",
+        "premium",
+        "shiny",
+        "metallic",
+        "sparkly"
+      ],
+      "ipSafeAliases": [],
+      "risks": {
+        "ip": "Low.",
+        "uncanny": "None.",
+        "age": "Adult occasions."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#FBF6EE",
+        "paperColor": "#1B2240",
+        "accentColor": "#F5B83D"
+      },
+      "thumbnail": {
+        "file": "foil_luxe.jpg",
+        "rendered": true,
+        "note": "Rendered 2026-10-11 at 1K (wreath scene). Good: gold-look line on midnight, calm empty center. Gold is printed ink only."
+      }
+    },
+    {
+      "id": "deco_geometric",
+      "name": "Bold Geometric",
+      "category": "fancy-foil",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "card"
+      ],
+      "ageBands": [
+        "8-10"
+      ],
+      "occasions": [
+        "wedding",
+        "anniversary",
+        "graduation",
+        "congratulations",
+        "birthday",
+        "new_home",
+        "christmas"
+      ],
+      "tones": [
+        "bold",
+        "elegant"
+      ],
+      "description": "Crisp shapes, arches and fans in rich colors. Modern, confident and a bit glamorous.",
+      "whyThisOne": "Crisp, confident shapes, for people who like a little drama.",
+      "popularity": {
+        "rating": "medium",
+        "sources": [
+          "R06",
+          "R07",
+          "R16"
+        ],
+        "summary": "Bold geometrics (R06), abstract and geometric art (R07), and 'Neodeco' art deco geometry (R16) are named 2026 trends."
+      },
+      "look": {
+        "medium": "Digital vector with metallic-look accents and subtle paper grain",
+        "technique": "Symmetric geometry, concentric arches and fans, color-blocking",
+        "line": "Crisp thin lines in a contrast color",
+        "palette": "Emerald, burgundy, mustard, midnight, cream, copper accent",
+        "composition": "Symmetric, centered ornament, tight pattern, framing",
+        "mood": "Glamorous, confident",
+        "era": "Art deco revival"
+      },
+      "styleString": "Bold geometric art-deco-inspired illustration, symmetric concentric arches, fans and stripes, crisp thin copper-look lines on color-blocked fields of emerald, burgundy, mustard and midnight with cream, subtle paper grain, clean flat vector precision, optional simple centered motif such as a sun, wreath or monogram shape without letters - not photorealistic, no 3D render, no text.",
+      "avoid": [
+        "text in the picture",
+        "photorealism",
+        "3D render",
+        "gradients",
+        "busy realism",
+        "logos"
+      ],
+      "swatches": [
+        {
+          "hex": "#1F6B57",
+          "name": "emerald"
+        },
+        {
+          "hex": "#7A1F3D",
+          "name": "burgundy"
+        },
+        {
+          "hex": "#E2A82E",
+          "name": "mustard"
+        },
+        {
+          "hex": "#1B2240",
+          "name": "midnight"
+        },
+        {
+          "hex": "#B87333",
+          "name": "copper"
+        }
+      ],
+      "consistency": {
+        "bookRating": 1,
+        "cardRating": 5,
+        "notes": "Pattern, no characters. Models render symmetry well but may drift on exact arches; accept variation.",
+        "tips": [
+          "Card-only",
+          "Name 3 colors",
+          "Ask for a centered motif"
+        ],
+        "renderNotes": "Not rendered in the sample run (budget). Ratings are estimates from the Eye Story lessons and the rendered styles, not measurements."
+      },
+      "photoReference": "Not applicable. A pet or person becomes a flat silhouette inside a geometric frame.",
+      "card": {
+        "typography": {
+          "display": [
+            "Poiret One or Josefin Sans 700 caps",
+            "DM Serif Display"
+          ],
+          "body": [
+            "Figtree 500"
+          ],
+          "notes": "Wide-spaced geometric caps, cream on dark."
+        },
+        "layout": "Symmetric motif; message below.",
+        "textSafeZone": "Bottom 30 percent plain color for type."
+      },
+      "print": {
+        "bleed": "Color-blocked fields to the edge.",
+        "inkCoverage": "High; deep emerald and burgundy shift in CMYK, proof.",
+        "foilAndSpot": "Copper or gold foil on the lines is an upgrade; not simulated."
+      },
+      "bestFor": [
+        "Weddings and anniversary",
+        "Graduation",
+        "Modern holiday",
+        "New home"
+      ],
+      "avoidFor": [
+        "Babies",
+        "Kids' books",
+        "Sentimental portraits"
+      ],
+      "tags": [
+        "art deco",
+        "geometric",
+        "arches",
+        "bold",
+        "pattern",
+        "emerald",
+        "burgundy",
+        "glam",
+        "symmetry"
+      ],
+      "synonyms": [
+        "gatsby",
+        "deco",
+        "geometric pattern",
+        "glam",
+        "modern shapes"
+      ],
+      "ipSafeAliases": [],
+      "risks": {
+        "ip": "Low.",
+        "uncanny": "None.",
+        "age": "Adult occasions."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#FBF6EE",
+        "paperColor": "#1B2240",
+        "accentColor": "#F5B83D"
+      },
+      "thumbnail": {
+        "file": "deco_geometric.jpg",
+        "rendered": false,
+        "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      }
+    },
+    {
+      "id": "maximalist_pattern",
+      "name": "Party Pattern",
+      "category": "fancy-foil",
+      "status": "stable",
+      "legacyIds": [],
+      "products": [
+        "card"
+      ],
+      "ageBands": [
+        "4-7",
+        "8-10"
+      ],
+      "occasions": [
+        "birthday",
+        "congratulations",
+        "graduation",
+        "christmas",
+        "new_home",
+        "thank_you"
+      ],
+      "tones": [
+        "bold",
+        "silly"
+      ],
+      "description": "Busy, happy pattern: bright colors, flowers and shapes everywhere. A visual party.",
+      "whyThisOne": "More is more! A busy burst of color for the people who love a party.",
+      "popularity": {
+        "rating": "emerging",
+        "sources": [
+          "R07",
+          "R08",
+          "R16"
+        ],
+        "summary": "Maximalism for congratulations and holidays (R07); bold and colorful is one of the biggest 2026 shifts (R08); coverage headlined 'loud, done with minimalism' (R16)."
+      },
+      "look": {
+        "medium": "Digital gouache pattern collage",
+        "technique": "Dense repeating motifs, overlapping flowers, stars and confetti, strong contrast",
+        "line": "Thin dark line or none",
+        "palette": "Hot pink, cobalt, sunshine yellow, emerald, tangerine, cream",
+        "composition": "All-over pattern with a calm central badge or window for the message",
+        "mood": "Joyful, loud, festive",
+        "era": "Contemporary maximalism"
+      },
+      "styleString": "Maximalist all-over pattern illustration in digital gouache, dense overlapping flowers, stars, confetti and swirls, hot pink, cobalt blue, sunshine yellow, emerald and tangerine on cream, strong contrast and joyful energy, a calm open round or arched window in the center for text, flat hand-painted shapes - not photorealistic, no 3D render, no text, no logos.",
+      "avoid": [
+        "text in the picture",
+        "photorealism",
+        "3D render",
+        "muted colors",
+        "logos",
+        "faces"
+      ],
+      "swatches": [
+        {
+          "hex": "#E8408A",
+          "name": "hot pink"
+        },
+        {
+          "hex": "#2A4DB0",
+          "name": "cobalt"
+        },
+        {
+          "hex": "#FFD23F",
+          "name": "sunshine"
+        },
+        {
+          "hex": "#1F8F5F",
+          "name": "emerald"
+        },
+        {
+          "hex": "#FF7A2F",
+          "name": "tangerine"
+        }
+      ],
+      "consistency": {
+        "bookRating": 1,
+        "cardRating": 5,
+        "notes": "Pattern only; models love this. Faces avoided.",
+        "tips": [
+          "Card-only",
+          "Keep a defined empty window for message"
+        ],
+        "renderNotes": "Not rendered in the sample run (budget). Ratings are estimates from the Eye Story lessons and the rendered styles, not measurements."
+      },
+      "photoReference": "Not applicable. Names and age numbers are added as type, never drawn.",
+      "card": {
+        "typography": {
+          "display": [
+            "Shrikhand or Lilita One",
+            "Baloo 2 ExtraBold"
+          ],
+          "body": [
+            "Figtree 700"
+          ],
+          "notes": "One bold color-contrast headline inside the window (dark navy on cream)."
+        },
+        "layout": "All-over pattern, central window.",
+        "textSafeZone": "The central window holds all type; keep at least a 2.5 in circle clear."
+      },
+      "print": {
+        "bleed": "Pattern to the edge.",
+        "inkCoverage": "Very heavy and saturated; proof strongly.",
+        "foilAndSpot": "Sparkle foil for confetti is an upgrade; not simulated."
+      },
+      "bestFor": [
+        "Big birthdays",
+        "Congratulations",
+        "Holiday party cards",
+        "Graduations"
+      ],
+      "avoidFor": [
+        "Sympathy",
+        "Elegant weddings",
+        "Books"
+      ],
+      "tags": [
+        "maximalist",
+        "pattern",
+        "colorful",
+        "floral",
+        "confetti",
+        "party",
+        "busy",
+        "bright",
+        "joyful"
+      ],
+      "synonyms": [
+        "busy",
+        "colorful",
+        "all over",
+        "party",
+        "loud colors",
+        "fiesta"
+      ],
+      "ipSafeAliases": [],
+      "risks": {
+        "ip": "Low.",
+        "uncanny": "None.",
+        "age": "All ages."
+      },
+      "brandKit": {
+        "fonts": {
+          "display": "Bricolage Grotesque 700",
+          "body": "Figtree 400"
+        },
+        "textColor": "#2B1E18",
+        "paperColor": "#FBF6EE",
+        "accentColor": "#EE5A36"
+      },
+      "thumbnail": {
+        "file": "maximalist_pattern.jpg",
+        "rendered": false,
+        "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      }
+    }
+  ]
+}
