@@ -1,4 +1,4 @@
-import { ART_STYLE_IDS, CardBriefSchema, OCCASIONS, TONES, type ArtStyleId, type CardBrief } from "@greethub/shared";
+import { ArtStyleField, CardBriefSchema, OCCASIONS, TONES, type ArtStyleId, type CardBrief } from "@greethub/shared";
 import { z } from "zod";
 import {
   LIMITS, NAME_PATTERN, OCCASION_LABELS, QUESTIONS, REQUIRED_COUNT, REQUIRED_FIELDS,
@@ -36,7 +36,7 @@ export const CardDraftSchema = z.object({
   occasion: z.enum(OCCASIONS).optional(),
   occasionOther: str(LIMITS.occasionOther[1]).optional(),
   tone: z.enum(TONES).optional(),
-  artStyle: z.enum(ART_STYLE_IDS).optional(),
+  artStyle: ArtStyleField.optional(),
   idea: str(LIMITS.idea[1]).optional(),
   message: str(LIMITS.message[1]).optional(),
   insideJokes: str(LIMITS.insideJokes[1]).optional(),

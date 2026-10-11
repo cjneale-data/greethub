@@ -5,7 +5,7 @@ import {
   type Occasion, type RequiredField, type Tone,
 } from "./fields";
 import { fillTemplate, getKnowledgeBase } from "./knowledge/bm25";
-import { ART_STYLE_IDS } from "@greethub/shared";
+import { findStyleInText } from "./knowledge/styles/find-style";
 import { quickRepliesFor } from "./quick-replies";
 
 /** Deterministic Greet Guide used in mock mode and as the fallback when a live call fails. No network. */
@@ -41,14 +41,6 @@ const TONE_WORDS: [RegExp, Tone][] = [
   [/\b(funny|hilarious|joke|silly|humou?r|laugh)\b/i, "funny"],
   [/\b(heartfelt|sweet|sentimental|warm|touching|sincere|loving)\b/i, "heartfelt"],
   [/\b(adventur\w*)\b/i, "adventurous"],
-];
-const STYLE_WORDS: [RegExp, string][] = [
-  [/water\s?colou?r/i, "watercolor"],
-  [/\b(bold|cartoon|pop)\b/i, "bold_flat"],
-  [/\b(cozy|storybook|gouache)\b/i, "storybook_3d"],
-  [/\bpaper\b/i, "paper_cut"],
-  [/\b(ink|wash)\b/i, "storybook_ink"],
-  [/\b(crayon|pencil)\b/i, "crayon"],
 ];
 
 const STOPNAMES = new Set(["my", "the", "a", "an", "for", "is", "it", "its", "to", "and", "mum", "mom", "dad", "birthday", "card", "make", "need", "want"]);
@@ -95,7 +87,10 @@ export function extractPatch(input: string, next: RequiredField | null): Partial
   if (toneChip) patch.tone = toneChip[0];
   else for (const [re, t] of TONE_WORDS) if (re.test(text)) { patch.tone = t; break; }
   if (styleChip) patch.artStyle = styleChip.id;
-  else for (const [re, s] of STYLE_WORDS) if (re.test(text) && (next === "artStyle" || /\b(style|look)\b/i.test(text))) { patch.artStyle = s as (typeof ART_STYLE_IDS)[number]; break; }
+  else if (next === "artStyle" || /(style|look)/i.test(text)) {
+    const found = findStyleInText(text);
+    if (found) patch.artStyle = found;
+  }
 
   const name = findName(text);
   if (name) patch.recipientName = name;

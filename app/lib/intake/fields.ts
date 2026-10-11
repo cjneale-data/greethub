@@ -1,4 +1,6 @@
-import { ART_STYLES, OCCASIONS, TONES, type ArtStyleId } from "@greethub/shared";
+import { OCCASIONS, STYLE_NAMES, TONES, resolveArtStyleId, type ArtStyleId } from "@greethub/shared";
+import { PICKER_STYLES } from "./knowledge/styles/picker.generated";
+import { recommendFrom } from "./knowledge/styles/recommend-core";
 
 export type Occasion = (typeof OCCASIONS)[number];
 export type Tone = (typeof TONES)[number];
@@ -35,25 +37,21 @@ export const OCCASION_LABELS: Record<Occasion, string> = {
 
 export const TONE_LABELS: Record<Tone, string> = { funny: "Funny", heartfelt: "Heartfelt", adventurous: "Adventurous" };
 
-/** Display data for the style picker. `swatch` entries are brand token names, not hex values. */
-export const STYLE_CARDS: { id: ArtStyleId; label: string; hint: string; swatch: [string, string, string] }[] = [
-  { id: "watercolor", label: "Soft Watercolor", hint: "Warm, gentle, picture-book soft", swatch: ["--gh-blush", "--gh-cream", "--gh-persimmon-tint"] },
-  { id: "bold_flat", label: "Bold Cartoon Pop", hint: "Thick lines, bright flat color", swatch: ["--gh-marigold", "--gh-persimmon", "--gh-plum"] },
-  { id: "storybook_3d", label: "Cozy Storybook", hint: "Lamplit, rich and rounded", swatch: ["--gh-plum", "--gh-marigold", "--gh-cream"] },
-  { id: "paper_cut", label: "Paper Cut Collage", hint: "Layered shapes, mid-century", swatch: ["--gh-persimmon", "--gh-marigold", "--gh-blush"] },
-  { id: "storybook_ink", label: "Ink and Wash", hint: "Fine lines, loose color, calm", swatch: ["--gh-twine", "--gh-blush", "--gh-cocoa-40"] },
-  { id: "crayon", label: "Crayon and Pencil", hint: "Homemade, wobbly and joyful", swatch: ["--gh-marigold", "--gh-blush", "--gh-twine"] },
-];
-export const styleLabel = (id?: ArtStyleId) => (id ? (STYLE_CARDS.find((s) => s.id === id)?.label ?? ART_STYLES[id]?.label ?? "") : "");
+/** Card styles for chips and lists. Generated data (docs/design/style-library.json); swatch holds hex values. */
+export const STYLE_CARDS: { id: ArtStyleId; label: string; hint: string; swatch: string[] }[] = PICKER_STYLES.filter((s) => s.products.includes("card") && s.status === "stable").map((s) => ({
+  id: s.id,
+  label: s.name,
+  hint: s.description,
+  swatch: s.swatches.slice(0, 3),
+}));
+export const styleLabel = (id?: ArtStyleId | string) => {
+  const canon = resolveArtStyleId(id);
+  return canon ? (STYLE_NAMES[canon] ?? "") : "";
+};
 
-/** docs/cmo/templates.md "defaults by occasion and tone", mapped onto the schema's style ids. */
+/** The picker's first suggestion for a card, from the style library's occasion and tone fit (docs/design/03-selection-guide.md). */
 export function defaultStyle(occasion?: Occasion, tone?: Tone): ArtStyleId {
-  if (occasion === "birthday" && tone === "funny") return "bold_flat";
-  if (occasion === "wedding" || occasion === "anniversary" || occasion === "sympathy") return "storybook_ink";
-  if (occasion === "christmas" || tone === "adventurous") return "storybook_3d";
-  if (occasion === "thank_you" || occasion === "graduation") return "paper_cut";
-  if (occasion === "get_well" && tone === "funny") return "bold_flat";
-  return "watercolor";
+  return (recommendFrom(PICKER_STYLES, { product: "card", occasion, tone, limit: 1 })[0]?.styleId ?? "watercolor_wash") as ArtStyleId;
 }
 
 /** Exact question wording from the CMO question bank. */

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ART_STYLE_IDS } from "@greethub/shared";
+import { ArtStyleField } from "@greethub/shared";
 import type { BriefForm } from "./types";
 
 const str = (max: number) => z.string().max(max).default("");
@@ -12,7 +12,7 @@ export const BriefFormSchema: z.ZodType<BriefForm> = z.object({
   tone: str(20),
   readingAge: str(10),
   pageCount: z.union([z.literal(24), z.literal(32)]).default(24),
-  artStyle: z.union([z.enum(ART_STYLE_IDS), z.literal("")]).default(""),
+  artStyle: z.union([ArtStyleField, z.literal("")]).default(""),
   storyIdea: str(2000),
   settingDetails: str(800),
   dedication: str(300),

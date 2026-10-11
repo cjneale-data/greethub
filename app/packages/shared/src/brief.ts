@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { ART_STYLE_IDS } from "./styles";
+import { ART_STYLE_INPUT_IDS, resolveArtStyleId, type ArtStyleId } from "./styles";
+
+/** Accepts current and legacy style ids; the parsed value is always the canonical id. */
+export const ArtStyleField = z.enum(ART_STYLE_INPUT_IDS).transform((v) => resolveArtStyleId(v) as ArtStyleId);
 
 /* ---------- structured fields (chips, pickers, forms) ---------- */
 
@@ -66,7 +69,7 @@ const CommonShape = {
   occasionOther: text(80).optional(),
   recipient: RecipientSchema,
   tone: z.enum(TONES),
-  artStyle: z.enum(ART_STYLE_IDS),
+  artStyle: ArtStyleField,
   characters: z.array(CharacterSchema).max(MAX_CHARACTERS).default([]),
   /** Optional pet, kept apart from the 1-4 human main characters so limits stay clear. */
   pet: CharacterSchema.optional(),

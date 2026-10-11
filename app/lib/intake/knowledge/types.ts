@@ -8,6 +8,10 @@ export type KbDoc = {
   occasion?: string;
   tone?: string;
   styleId?: string;
+  /** Style docs list several occasions, tones and products; the single fields above serve tips and messages. */
+  occasions?: string[];
+  tones?: string[];
+  products?: string[];
 };
 
 export type KbHit = { doc: KbDoc; score: number };
@@ -18,6 +22,8 @@ export type SearchOptions = {
   /** Boost docs tagged with this occasion. Not a hard filter, so general docs can still surface. */
   occasion?: string;
   tone?: string;
+  /** Hard filter for docs that declare products (style docs). */
+  product?: string;
 };
 
 /**

@@ -1,19 +1,18 @@
 import type { ArtStyleId } from "@greethub/shared";
 
 /** Brand-palette placeholder art for mock mode: a watermarked 600x840 SVG data URL. No network, no cost. */
-const PALETTES: Record<ArtStyleId, [string, string, string, string]> = {
-  watercolor: ["#FBF6EE", "#F6C9C0", "#FDE3D8", "#C8441F"],
-  bold_flat: ["#F5B83D", "#EE5A36", "#5B2A4B", "#FBF6EE"],
-  storybook_3d: ["#5B2A4B", "#F5B83D", "#F3EADB", "#EE5A36"],
-  paper_cut: ["#5B2A4B", "#EE5A36", "#F5B83D", "#F6C9C0"],
-  storybook_ink: ["#FBF6EE", "#E6CFDD", "#F6C9C0", "#2B1E18"],
-  crayon: ["#F3EADB", "#F5B83D", "#F6C9C0", "#EE5A36"],
+import { PICKER_STYLES } from "./knowledge/styles/picker.generated";
+
+/** Placeholder palette per style, taken from the style library swatches. */
+const paletteFor = (id: ArtStyleId): [string, string, string, string] => {
+  const sw = PICKER_STYLES.find((s) => s.id === id)?.swatches ?? ["#FBF6EE", "#F6C9C0", "#FDE3D8", "#C8441F", "#2B1E18"];
+  return [sw[3] ?? sw[0], sw[0], sw[1], sw[4] ?? sw[2]];
 };
 
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
 export function mockFrontArt(style: ArtStyleId, caption: string): string {
-  const [bg, a, b, ink] = PALETTES[style];
+  const [bg, a, b, ink] = paletteFor(style);
   const marks: string[] = [];
   for (let y = 100; y < 840; y += 170) {
     for (let x = -40; x < 600; x += 280) {

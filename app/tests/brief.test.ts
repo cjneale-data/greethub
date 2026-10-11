@@ -96,7 +96,7 @@ describe("CreationBrief", () => {
     expect(plannedRenders(CreationBriefSchema.parse({ ...book, pageCount: 32 })).total).toBe(18);
   });
 
-  it("every style preset carries a non-photoreal prompt", () => {
-    for (const s of Object.values(ART_STYLES)) expect(s.prompt.toLowerCase()).toContain("not photorealistic");
+  it("every style preset carries an explicit not-a-photograph clause", () => {
+    for (const s of Object.values(ART_STYLES)) expect(s.prompt.toLowerCase()).toMatch(/not photorealistic|not a photograph|not a real photograph|not a copy of any real photograph/);
   });
 });

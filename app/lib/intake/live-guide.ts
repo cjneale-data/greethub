@@ -1,4 +1,5 @@
-import { ART_STYLE_IDS, OCCASIONS, TONES } from "@greethub/shared";
+import { OCCASIONS, TONES } from "@greethub/shared";
+import { PICKER_STYLES } from "./knowledge/styles/picker.generated";
 import { TEXT_MODEL, openRouterKey, redact } from "./config";
 import { CardDraftSchema, describeOccasion, type CardDraft, nextField } from "./draft";
 import { QUESTIONS, type RequiredField } from "./fields";
@@ -24,7 +25,7 @@ const TOOLS = [
           occasion: { type: "string", enum: [...OCCASIONS] },
           occasionOther: { type: "string", description: "Only when occasion is other" },
           tone: { type: "string", enum: [...TONES] },
-          artStyle: { type: "string", enum: [...ART_STYLE_IDS] },
+          artStyle: { type: "string", enum: PICKER_STYLES.filter((s) => s.products.includes("card") && s.status === "stable").map((s) => s.id) },
           idea: { type: "string", description: "What the front picture should show, 5-500 chars" },
           message: { type: "string", description: "Inside message, max 400 chars, about 60 words" },
           insideJokes: { type: "string" },

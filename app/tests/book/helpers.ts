@@ -39,7 +39,7 @@ export function validBrief(overrides: Partial<BriefForm> = {}): BriefForm {
     tone: "adventurous",
     readingAge: "3-5",
     pageCount: 24,
-    artStyle: "watercolor",
+    artStyle: "watercolor_wash",
     storyIdea: "Three cousins sneak out at night with flashlights to explore the woods.",
     settingDetails: "",
     dedication: "For Lee",

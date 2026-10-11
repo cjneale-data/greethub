@@ -1,4 +1,5 @@
 import type { KbDoc } from "./types";
+import { STYLE_KB_DOCS } from "./styles/docs.generated";
 
 /**
  * Seed knowledge base for the Greet Guide: occasion tips, sample messages, style presets, format constraints.
@@ -42,17 +43,13 @@ export const KB_DOCS: KbDoc[] = [
   { id: "msg-just_because-heartfelt", kind: "sample_message", occasion: "just_because", tone: "heartfelt", title: "Just because, heartfelt", text: "{name}, no reason, I just wanted you to know I'm thinking of you and I'm glad you're in my life." },
   { id: "msg-just_because-funny", kind: "sample_message", occasion: "just_because", tone: "funny", title: "Just because, funny", text: "{name}, this card has no occasion. I'm just that kind of person. You're welcome." },
 
-  /* ---- style presets (from docs/cmo/templates.md) ---- */
-  { id: "style-watercolor", kind: "style_preset", styleId: "watercolor", title: "Soft Watercolor", text: "Soft watercolor and gouache, warm natural light, gentle paper grain, rounded friendly shapes, peach cream and sage palette. Best for new baby, birthdays, heartfelt cards, family." },
-  { id: "style-bold_flat", kind: "style_preset", styleId: "bold_flat", title: "Bold Cartoon Pop", text: "Bold cartoon with thick outlines, flat saturated color, playful proportions, coral sunny yellow and teal. Best for funny birthdays, kids, congratulations, get well with humor." },
-  { id: "style-storybook_3d", kind: "style_preset", styleId: "storybook_3d", title: "Cozy Storybook", text: "Cozy rounded storybook look with warm lamplit light, plum amber and cream. Best for Christmas, adventures and bedtime moods." },
-  { id: "style-paper_cut", kind: "style_preset", styleId: "paper_cut", title: "Paper Cut Collage", text: "Layered paper-cut collage with subtle shadows, torn edges, persimmon mustard blush and plum. Best for thank you, teachers, graduation, modern and graphic cards." },
-  { id: "style-storybook_ink", kind: "style_preset", styleId: "storybook_ink", title: "Ink and Wash", text: "Fine pen line with loose translucent washes, generous white space, dusty rose sage and gold. Best for weddings, anniversaries, sympathy and grown-up cards." },
-  { id: "style-crayon", kind: "style_preset", styleId: "crayon", title: "Crayon and Pencil", text: "Hand-drawn crayon and colored pencil on textured paper, wobbly joyful lines, saturated childlike color. Best for kids, silly cards and homemade charm." },
 
   /* ---- format, print and guardrail constraints ---- */
   { id: "fmt-size", kind: "format", title: "Card size and message length", text: "The card is a folded 5 by 7 inch card with the illustration on the front and the message inside. The inside message fits about 60 words at default type size; over 400 characters is too long. A short message of two or three sentences reads best." },
   { id: "fmt-art", kind: "format", title: "What the picture can show", text: "The picture can show a memory, a place, an animal, an object or a scene. It never contains words or letters, since typography is added separately. Guest cards are text-only: no photos of people." },
   { id: "fmt-guardrail", kind: "format", title: "Characters and public figures", text: "Copyrighted characters and brands are rewritten to generic descriptions: a friendly raccoon instead of a named cartoon raccoon. Real public figures are not drawn; describe what you like about them instead." },
   { id: "fmt-delivery", kind: "format", title: "Mailed or digital", text: "Cards can be mailed to the buyer, mailed straight to the recipient, or sent as a digital card. Delivery and address are collected at checkout, after the preview." },
+
+  /* ---- art styles: generated from docs/design/style-library.json by docs/design/tools/build-knowledge.mjs ---- */
+  ...STYLE_KB_DOCS,
 ];

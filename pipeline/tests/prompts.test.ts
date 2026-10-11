@@ -37,3 +37,24 @@ describe("white border QA", () => {
     expect(await hasWhiteBorder(art)).toBe(false);
   });
 });
+
+describe("style library in the pipeline", () => {
+  const brief = (artStyle: string) => ({ artStyle }) as never;
+
+  it("reads the style string by id from the shared style library, for new and legacy ids", async () => {
+    const { styleOf } = await import("../src/stages/identity.js");
+    const { STYLE_STRINGS } = await import("@greethub/shared");
+    expect(styleOf(brief("felt_thread"))).toBe(STYLE_STRINGS.felt_thread);
+    expect(styleOf(brief("bold_flat"))).toBe(STYLE_STRINGS.bold_cartoon_pop);
+    expect(styleOf(brief("watercolor"))).toBe(STYLE_STRINGS.watercolor_wash);
+    expect(() => styleOf(brief("not_a_style"))).toThrow();
+  });
+
+  it("the IP-safety hardening lines are still appended to every page, whatever the style", async () => {
+    const { IMAGE_HARDENING_LINES } = await import("../src/safety/index.js");
+    const { STYLE_IDS } = await import("@greethub/shared");
+    const g = guardLines({ id: "p", kind: "spread", scene: "s", characters: ["Sam"] });
+    for (const line of IMAGE_HARDENING_LINES) expect(g).toContain(line);
+    expect(STYLE_IDS.length).toBeGreaterThanOrEqual(20);
+  });
+});

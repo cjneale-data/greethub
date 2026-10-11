@@ -23,7 +23,7 @@ describe("knowledge retrieval (BM25)", () => {
 
   it("surfaces style presets for style questions", async () => {
     const hits = await kb.search("elegant wedding fine line wash", { kinds: ["style_preset"], k: 1 });
-    expect(hits[0].doc.styleId).toBe("storybook_ink");
+    expect(hits[0].doc.styleId).toBe("ink_wash");
   });
 
   it("returns nothing for gibberish and is deterministic", async () => {

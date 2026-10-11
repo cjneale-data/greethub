@@ -19,7 +19,7 @@ describe("mock Greet Guide", () => {
     }
     expect(isComplete(d)).toBe(true);
     expect(d.message).toContain("Sam");
-    expect(d.artStyle).toBe("bold_flat");
+    expect(d.artStyle).toBe("bold_cartoon_pop");
   });
 
   it("re-asks with the validation wording when the answer does not parse", async () => {

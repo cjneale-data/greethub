@@ -10,7 +10,7 @@ const [briefFile, outDir, cap] = process.argv.slice(2);
 const root = resolve(process.cwd());
 const src = (p) => pathToFileURL(join(root, "src", p)).href;
 
-const { ART_STYLES } = await import(pathToFileURL(join(root, "..", "app", "packages", "shared", "src", "index.ts")).href);
+const { styleStringFor } = await import(pathToFileURL(join(root, "..", "app", "packages", "shared", "src", "index.ts")).href);
 const { OpenRouterClient } = await import(src("openrouter.ts"));
 const { FileLedger } = await import(src("ledger.ts"));
 const { guardLines } = await import(src("stages/prompts.ts"));
@@ -35,7 +35,7 @@ try {
     `Scene: ${sanitizeImagePrompt(String(brief.storyIdea ?? ""), [brief.recipient?.name ?? ""]).text}`,
     brief.include?.length ? `Include: ${sanitizeImagePrompt(brief.include.join("; "), []).text}.` : "",
     brief.avoid?.length ? `Leave out: ${sanitizeImagePrompt(brief.avoid.join("; "), []).text}.` : "",
-    `GLOBAL STYLE: ${ART_STYLES[brief.artStyle].prompt}`,
+    `GLOBAL STYLE: ${styleStringFor(brief.artStyle)}`,
     "Keep the subject centered with calm space around it.",
     guardLines({ id: "front", kind: "card_front", scene: "", characters: [] }),
   ]

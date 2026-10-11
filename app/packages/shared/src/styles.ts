@@ -1,36 +1,36 @@
-/** Curated art-style presets. `prompt` is the global medium/style string restated verbatim in every image prompt. */
-export const ART_STYLES = {
-  watercolor: {
-    label: "Soft watercolor",
-    prompt:
-      "Soft 2D watercolor and gouache illustration, classic children's picture book style, gentle hand-drawn ink outlines, warm inviting palette, soft diffuse lighting, whimsical cozy atmosphere. Cartoon characters with soft round proportions and oversized expressive eyes - not photorealistic, no realistic skin texture, no sharp photographic shadows.",
-  },
-  storybook_ink: {
-    label: "Ink and wash",
-    prompt:
-      "Vintage storybook ink-and-wash illustration, confident pen linework with loose watercolor tints, cream paper texture, muted warm palette, gentle humor. Cartoon characters with expressive faces - not photorealistic, no realistic skin texture.",
-  },
-  paper_cut: {
-    label: "Paper cut-out",
-    prompt:
-      "Layered paper cut-out collage illustration, flat shapes with soft drop shadows between layers, bright playful palette, subtle paper grain. Cartoon characters built from simple shapes - not photorealistic.",
-  },
-  bold_flat: {
-    label: "Bold and flat",
-    prompt:
-      "Modern flat vector-style children's illustration, bold clean shapes, limited vivid palette, thick friendly outlines, minimal texture, cheerful and graphic. Cartoon characters - not photorealistic.",
-  },
-  crayon: {
-    label: "Crayon and pencil",
-    prompt:
-      "Hand-drawn crayon and colored-pencil illustration on textured paper, wobbly joyful lines, saturated childlike colors, warm and homemade. Cartoon characters - not photorealistic.",
-  },
-  storybook_3d: {
-    label: "Cozy 3D",
-    prompt:
-      "Soft cozy 3D-rendered animated-film look, rounded clay-like forms, warm cinematic lighting, shallow depth of field, gentle color grading. Stylized cartoon characters - not photorealistic, no realistic skin pores.",
-  },
-} as const;
+import { LEGACY_STYLE_MAP, STYLE_IDS, STYLE_NAMES, STYLE_STRINGS, type LegacyStyleId, type StyleId } from "./styles.generated";
 
-export type ArtStyleId = keyof typeof ART_STYLES;
-export const ART_STYLE_IDS = Object.keys(ART_STYLES) as [ArtStyleId, ...ArtStyleId[]];
+/**
+ * Art styles. The data (ids, names, style strings) is generated from docs/design/style-library.json by
+ * docs/design/tools/build-knowledge.mjs. `style` strings are passed to the image model; the pipeline appends the
+ * shared page rules and the IP-safety hardening lines separately.
+ *
+ * Backward compatibility: the first shared schema used six ids (watercolor, storybook_ink, paper_cut, bold_flat,
+ * crayon, storybook_3d) and the CMO templates used five preset ids (soft_watercolor, bold_pop, cozy_gouache,
+ * paper_collage, ink_wash). All still validate and resolve to a canonical id (LEGACY_STYLE_MAP).
+ */
+export { STYLE_IDS, STYLE_NAMES, STYLE_STRINGS, LEGACY_STYLE_MAP };
+export type { StyleId, LegacyStyleId };
+
+export type ArtStyleId = StyleId;
+export const ART_STYLE_IDS = STYLE_IDS as unknown as [ArtStyleId, ...ArtStyleId[]];
+export const LEGACY_ART_STYLE_IDS = Object.keys(LEGACY_STYLE_MAP) as LegacyStyleId[];
+/** Every id a stored draft or an old client may still send. */
+export const ART_STYLE_INPUT_IDS = [...STYLE_IDS, ...LEGACY_ART_STYLE_IDS] as unknown as [string, ...string[]];
+
+/** Canonical id for a current or legacy id, or undefined when unknown. */
+export function resolveArtStyleId(id: string | undefined | null): ArtStyleId | undefined {
+  if (!id) return undefined;
+  if ((STYLE_IDS as readonly string[]).includes(id)) return id as ArtStyleId;
+  return (LEGACY_STYLE_MAP as Record<string, ArtStyleId>)[id];
+}
+
+/** The style string for an id (current or legacy). Throws on an unknown id so a typo never silently renders unstyled. */
+export function styleStringFor(id: string): string {
+  const canon = resolveArtStyleId(id);
+  if (!canon) throw new Error(`Unknown art style: ${id}`);
+  return STYLE_STRINGS[canon];
+}
+
+/** Compatibility view used by older code: label plus the style string. */
+export const ART_STYLES = Object.fromEntries(STYLE_IDS.map((id) => [id, { label: STYLE_NAMES[id], prompt: STYLE_STRINGS[id] }])) as Record<ArtStyleId, { label: string; prompt: string }>;

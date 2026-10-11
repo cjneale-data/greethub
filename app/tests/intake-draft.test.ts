@@ -7,7 +7,7 @@ const full: CardDraft = {
   recipientName: "Rosa",
   occasion: "birthday",
   tone: "heartfelt",
-  artStyle: "watercolor",
+  artStyle: "watercolor_wash",
   idea: "Her garden at golden hour",
   message: "Happy birthday, Rosa. Love you.",
 };

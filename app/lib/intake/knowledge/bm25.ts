@@ -37,12 +37,18 @@ export class Bm25KnowledgeBase implements KnowledgeBase {
   }
 
   async search(query: string, opts: SearchOptions = {}): Promise<KbHit[]> {
-    const { k = 3, kinds, occasion, tone } = opts;
+    return this.searchSync(query, opts);
+  }
+
+  /** Same as search(), without the promise: the scoring is in-process and synchronous. */
+  searchSync(query: string, opts: SearchOptions = {}): KbHit[] {
+    const { k = 3, kinds, occasion, tone, product } = opts;
     const q = tokenize(query);
     const N = this.docs.length;
     const hits: KbHit[] = [];
     for (const d of this.docs) {
       if (kinds && !kinds.includes(d.doc.kind)) continue;
+      if (product && d.doc.products && !d.doc.products.includes(product)) continue;
       let score = 0;
       for (const t of q) {
         const f = d.tf.get(t);
@@ -51,8 +57,8 @@ export class Bm25KnowledgeBase implements KnowledgeBase {
         const idf = Math.log(1 + (N - n + 0.5) / (n + 0.5));
         score += (idf * f * (this.k1 + 1)) / (f + this.k1 * (1 - this.b + (this.b * d.len) / this.avgLen));
       }
-      if (occasion && d.doc.occasion === occasion) score += 2 + score * 0.5;
-      if (tone && d.doc.tone === tone && score > 0) score += 0.75;
+      if (occasion && (d.doc.occasion === occasion || d.doc.occasions?.includes(occasion))) score += 2 + score * 0.5;
+      if (tone && (d.doc.tone === tone || d.doc.tones?.includes(tone)) && score > 0) score += 0.75;
       if (score > 0) hits.push({ doc: d.doc, score });
     }
     return hits.sort((a, b) => b.score - a.score || a.doc.id.localeCompare(b.doc.id)).slice(0, k);

@@ -1,6 +1,6 @@
 import { writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
-import { ART_STYLES, type Character } from "@greethub/shared";
+import { styleStringFor, type Character } from "@greethub/shared";
 import type { ContentPart } from "../openrouter.js";
 import { photoPart } from "../imageutil.js";
 import type { Ctx } from "../types.js";
@@ -51,4 +51,5 @@ export async function identitySheet(ctx: Ctx): Promise<string> {
   return sheet;
 }
 
-export const styleOf = (brief: Ctx["brief"]) => ART_STYLES[brief.artStyle].prompt;
+/** The style string for the brief's style id (current or legacy), read from the generated style library. The IP-safety hardening lines are appended separately by guardLines(). */
+export const styleOf = (brief: Ctx["brief"]) => styleStringFor(brief.artStyle);
