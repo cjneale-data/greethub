@@ -1,0 +1,50 @@
+month,competitor,category,metric,value,unit,source_url,date_read,confidence,notes
+2026-10,Wonderbly,book_template,trustpilot_score,4.5,stars,https://uk.trustpilot.com/review/wonderbly.com?page=6,2026-10-11,S,snippet
+2026-10,Wonderbly,book_template,trustpilot_count,84000,reviews,https://uk.trustpilot.com/review/wonderbly.com?page=6,2026-10-11,S,approx; varies by regional site
+2026-10,Wonderbly,book_template,entry_price_home,29.99,usd,https://www.wonderbly.com/,2026-10-11,V,Together at Christmas from
+2026-10,Wonderbly,book_template,hardcover_price_8x10,44.99,usd,https://greenlitcontent.com/resources/wonderbly-review,2026-10-11,S,third-party guide
+2026-10,Wonderbly,book_template,us_shipping,5,usd,https://greenlitcontent.com/resources/wonderbly-review,2026-10-11,S,single source; primary page 404
+2026-10,Wonderbly,book_template,delivery_days_observed,11,days,https://wetried.it/wonderbly-review/,2026-10-11,S,review
+2026-10,Wonderbly,book_template,promo,BOGO50 and $5 off first order,text,https://www.wonderbly.com/,2026-10-11,V,
+2026-10,Wonderbly,book_template,ownership,Penguin Random House (2025-06-04),text,https://www.shelf-awareness.com/theshelf/2025-06-05/penguin_random_house_acquires_wonderbly.html,2026-10-11,S,
+2026-10,Hooray Heroes,book_template,trustpilot_score,4.3,stars,https://www.trustpilot.com/review/hoorayheroes.com/product/the-fun-tastic-five-6a04c603dc49fee91862a75c,2026-10-11,S,
+2026-10,Hooray Heroes,book_template,trustpilot_count,7500,reviews,https://www.trustpilot.com/review/hoorayheroes.com/product/the-fun-tastic-five-6a04c603dc49fee91862a75c,2026-10-11,S,approx
+2026-10,Hooray Heroes,book_template,shown_price,39.99,usd,https://www.hoorayheroes.com/,2026-10-11,V,list 59.99
+2026-10,Hooray Heroes,book_template,list_price,59.99,usd,https://www.hoorayheroes.com/,2026-10-11,V,
+2026-10,Hooray Heroes,book_template,shipping,not found,text,https://www.hoorayheroes.com/,2026-10-11,V,at checkout
+2026-10,Hooray Heroes,book_template,status_note,migrating to new website; some books unavailable,text,https://www.hoorayheroes.com/,2026-10-11,V,
+2026-10,I See Me,book_template,google_rating,4.7,stars,https://www.iseeme.com/,2026-10-11,V,site display
+2026-10,I See Me,book_template,google_count,1970,reviews,https://www.iseeme.com/,2026-10-11,V,
+2026-10,I See Me,book_template,featured_price_low,29.99,usd,https://www.iseeme.com/,2026-10-11,V,
+2026-10,I See Me,book_template,featured_price_high,34.99,usd,https://www.iseeme.com/,2026-10-11,V,
+2026-10,I See Me,book_template,promo,EARLY25 25% off to 2026-10-31 US only,text,https://www.iseeme.com/,2026-10-11,V,
+2026-10,Imagitime,book_photo_ai,hardcover_price,54.99,usd,https://www.imagitime.com/,2026-10-11,V,US 8.5x8.5
+2026-10,Imagitime,book_photo_ai,paperback_price,39.99,usd,https://www.imagitime.com/,2026-10-11,V,
+2026-10,Imagitime,book_photo_ai,shipping,9.99,usd,https://www.imagitime.com/,2026-10-11,V,US
+2026-10,Imagitime,book_photo_ai,delivery_days,8-13,days,https://www.imagitime.com/,2026-10-11,V,US
+2026-10,Imagitime,book_photo_ai,trustpilot_score,4.8,stars,https://ie.trustpilot.com/review/imagitime.com?page=5,2026-10-11,S,
+2026-10,Imagitime,book_photo_ai,trustpilot_count,3640,reviews,https://ie.trustpilot.com/review/imagitime.com?page=5,2026-10-11,S,approx
+2026-10,Imagitime,book_photo_ai,photo_retention,12 months saved / 24h unsaved,text,https://www.imagitime.com/,2026-10-11,V,
+2026-10,ToonyStory,ai_generator,sub_low,9.99,usd_per_month,https://toonystory.com/ai-childrens-book,2026-10-11,V,
+2026-10,ToonyStory,ai_generator,sub_high,19.99,usd_per_month,https://toonystory.com/ai-childrens-book,2026-10-11,V,
+2026-10,ToonyStory,ai_generator,print_from,29.99,usd,https://toonystory.com/ai-childrens-book,2026-10-11,V,
+2026-10,Childbook.ai,ai_generator,plans,19/29/99,usd_per_month,https://www.childbook.ai/,2026-10-11,V,print extra
+2026-10,Magic Story,ai_generator,rating_self,4.9,stars,https://www.magicstory.com/,2026-10-11,V,count inconsistent on page
+2026-10,Gemini Storybook,ai_generator,price,0,usd,https://gemini.google/overview/storybook/,2026-10-11,V,price not listed; free per press
+2026-10,Gemini Storybook,ai_generator,pages,10,pages,https://gemini.google/overview/storybook/,2026-10-11,V,
+2026-10,Gemini Storybook,ai_generator,print_ordering,no (browser print only),text,https://gemini.google/overview/storybook/,2026-10-11,V,
+2026-10,Hallmark,card_incumbent,mail_for_you_fee,0,usd,https://www.hallmark.com/shipping-and-delivery,2026-10-11,V,Sign & Send First-Class no tracking
+2026-10,Hallmark,card_incumbent,card_price_retail,5.99,usd,https://www.walmart.com/c/kp/hallmark-cards,2026-10-11,S,Walmart listing range 4.98-5.99
+2026-10,Moonpig US,card_incumbent,shipping,0,usd,https://www.moonpig.com/us/,2026-10-11,V,free shipping same-day dispatch
+2026-10,Moonpig US,card_incumbent,card_price,5,usd,https://purewow.com/family/mothers-day-personalized-cards-moonpig,2026-10-11,S,undated
+2026-10,Postable,card_mailed,card_price,3.99,usd,https://zapier.com/blog/best-greeting-card-apps/,2026-10-11,S,2023 article
+2026-10,Postable,card_mailed,postage,0.82,usd,https://www.postable.com/,2026-10-11,V,envelope card
+2026-10,Cardwise,card_ai,physical_card,6.99,usd,https://getcardwise.com/,2026-10-11,V,Free plan; Gold 6.99/mo ships included
+2026-10,Shutterfly,card_photo,promo,50% off cards ends 2026-10-11; SHIP99,text,https://www.shutterfly.com/greeting-cards/,2026-10-11,V,
+2026-10,Moonpig Group,card_incumbent,fy26_revenue,373.0,gbp_m,https://www.investegate.co.uk/announcement/rns/moonpig-group--moon/final-results/9635380,2026-10-11,S,FY to 2026-04-30
+2026-10,GreetHub,ours,book_24pp_all_in,44.99,usd,finance/README.md,2026-10-11,V,39+5.99
+2026-10,GreetHub,ours,book_32pp_all_in,54.99,usd,finance/README.md,2026-10-11,V,49+5.99
+2026-10,GreetHub,ours,card_mailed_all_in,10.98,usd,finance/README.md,2026-10-11,V,7.99+2.99
+2026-10,GreetHub,ours,digital_book,19.99,usd,finance/README.md,2026-10-11,V,
+2026-10,Benchmark,channel,google_gifts_cpc,4.14,usd,https://www.wemakeitlab.com/en/downloadable-guide/google-ads-benchmarks-2026,2026-10-11,S,vendor blog citing WordStream
+2026-10,Benchmark,channel,meta_ecom_cpc,0.87,usd,https://www.webtonic.io/blog/e-commerce-facebook-ads-statistics,2026-10-11,S,vendor blog
