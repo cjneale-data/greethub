@@ -72,7 +72,7 @@ outputs["app/lib/intake/knowledge/styles/docs.generated.ts"] =
 let stale = 0;
 for (const [rel, content] of Object.entries(outputs)) {
   const p = join(root, rel);
-  const same = existsSync(p) && readFileSync(p, "utf8") === content;
+  const same = existsSync(p) && readFileSync(p, "utf8").replaceAll("\r\n", "\n") === content;
   if (check) {
     if (!same) { console.error(`out of date: ${rel}`); stale++; }
   } else if (!same) {

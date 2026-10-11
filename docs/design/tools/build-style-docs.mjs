@@ -56,7 +56,7 @@ mkdirSync(outDir, { recursive: true });
 let stale = 0;
 for (const [name, content] of Object.entries(files)) {
   const p = join(outDir, name);
-  const same = existsSync(p) && readFileSync(p, "utf8") === content;
+  const same = existsSync(p) && readFileSync(p, "utf8").replaceAll("\r\n", "\n") === content;
   if (check) { if (!same) { console.error(`out of date: docs/design/styles/${name}`); stale++; } }
   else if (!same) writeFileSync(p, content, "utf8");
 }
