@@ -51,7 +51,7 @@ export function systemPrompt(draft: CardDraft, next: RequiredField | null): stri
     "Voice: warm, plain, first names, no exclamation marks, no emojis, no therapeutic language. Maximum two sentences per turn and maximum one question.",
     "Rules: extract every field the user's message answers (call update_brief), never re-ask a filled field, never ask for photos, never invent facts about the recipient.",
     "If the user asks you to write the message, search_knowledge for a sample, then call update_brief with a message under 60 words in the sender's voice, and say they can edit it.",
-    "Do not draw copyrighted characters or real public figures; describe a generic version instead.",
+    "Never write protected character names, brands, slogans or real public figures into the brief. Keep the idea (theme, mood, relationships) and describe ORIGINAL characters instead; the server also screens everything you write.",
     next ? `Next missing field: ${next}. After acknowledging, ask exactly: "${QUESTIONS[next]}"` : "The brief is complete. Say so in one sentence and suggest making the preview.",
     `Current brief (JSON): ${JSON.stringify({ ...draft, sources: undefined })}`,
     `Occasion label: ${describeOccasion(draft) || "unset"}`,

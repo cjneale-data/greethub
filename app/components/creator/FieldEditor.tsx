@@ -41,9 +41,9 @@ export function FieldEditor({ field, draft, onPatch, error, onWriteMessage, writ
         {guard && guard.kind === "copyright" && (
           <div className="gc-actions" style={{ justifyContent: "flex-start" }}>
             <Button variant="secondary" size="sm" onClick={() => onPatch({ [key]: guard.rewritten })}>
-              Yes, do that
+              Use this version
             </Button>
-            <span className="gc-hint">Use the generic version instead.</span>
+            <span className="gc-hint">Original characters inspired by your idea. Edit it any time.</span>
           </div>
         )}
       </div>

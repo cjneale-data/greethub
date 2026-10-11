@@ -1,0 +1,1959 @@
+{
+  "version": 2,
+  "doc": "Data for the free first-pass IP screen (docs/legal/07-ip-safety-design.md). Edit this file, not the code. Rule: every replacement keeps the THEME and changes the identity-defining combination of name, hair/body colour and style, costume silhouette and palette, signature props, sidekicks and setting. A replacement must never be 'the same character, slightly changed'. An attorney should review this list.",
+  "familyCues": [
+    "my niece",
+    "my nephew",
+    "my daughter",
+    "my son",
+    "my granddaughter",
+    "my grandson",
+    "my grandma",
+    "my grandmother",
+    "my mum",
+    "my mom",
+    "my aunt",
+    "my uncle",
+    "my cousin",
+    "my friend",
+    "my neighbour",
+    "my neighbor",
+    "my wife",
+    "my girlfriend",
+    "my sister",
+    "my brother",
+    "my teacher",
+    "our daughter",
+    "our son",
+    "our dog",
+    "our cat",
+    "named",
+    "called",
+    "aunt",
+    "auntie",
+    "uncle",
+    "grandma",
+    "grandpa",
+    "nana",
+    "little",
+    "dear",
+    "dearest",
+    "happy birthday",
+    "love you",
+    "to my",
+    "for my",
+    "my dog",
+    "my cat",
+    "my puppy",
+    "my kitten",
+    "my hamster",
+    "my pet",
+    "name is",
+    "names",
+    "my nieces",
+    "my daughters",
+    "my kids",
+    "my twins",
+    "my girls",
+    "my boys",
+    "my grandkids",
+    "my grandchildren",
+    "our neighbour",
+    "our neighbor",
+    "our friend",
+    "our teacher",
+    "our cousin",
+    "our niece",
+    "our nephew"
+  ],
+  "franchises": [
+    {
+      "id": "frozen",
+      "names": [
+        "frozen"
+      ],
+      "caseSensitiveName": "Frozen",
+      "cues": [
+        "arendelle",
+        "disney",
+        "let it go",
+        "ice palace",
+        "snow queen",
+        "ice queen",
+        "kristoff",
+        "sven",
+        "olaf",
+        "elsa",
+        "anna",
+        "oaken",
+        "hans",
+        "die eiskonigin",
+        "la reine des neiges",
+        "frozen 2",
+        "reino del hielo",
+        "anna to yuki"
+      ],
+      "contextWords": [
+        "party",
+        "theme",
+        "themed",
+        "movie",
+        "film",
+        "birthday",
+        "cake",
+        "characters",
+        "character",
+        "princess",
+        "sisters",
+        "costume",
+        "dress",
+        "castle",
+        "fan",
+        "style",
+        "inspired",
+        "vibe",
+        "2",
+        "ii",
+        "outfit",
+        "songs",
+        "soundtrack"
+      ],
+      "replacement": "an icy winter-magic",
+      "note": "the icy winter magic",
+      "theme": [
+        "two sisters",
+        "icy winter magic",
+        "snowy castle",
+        "sparkle"
+      ]
+    },
+    {
+      "id": "disney",
+      "names": [
+        "disney",
+        "walt disney",
+        "disneyland",
+        "disney world",
+        "disneyworld"
+      ],
+      "replacement": "a storybook",
+      "note": "the storybook feel",
+      "theme": [
+        "storybook magic"
+      ]
+    },
+    {
+      "id": "pixar",
+      "names": [
+        "pixar",
+        "dreamworks",
+        "illumination"
+      ],
+      "replacement": "a warm animated-film",
+      "note": "the animated-film warmth",
+      "theme": [
+        "animated-film warmth"
+      ]
+    },
+    {
+      "id": "marvel",
+      "names": [
+        "marvel",
+        "avengers",
+        "marvel cinematic universe",
+        "mcu",
+        "x-men",
+        "xmen",
+        "justice league"
+      ],
+      "replacement": "a team-of-heroes",
+      "note": "the team-of-heroes idea",
+      "theme": [
+        "team of heroes"
+      ]
+    },
+    {
+      "id": "dc",
+      "names": [
+        "dc comics"
+      ],
+      "replacement": "a comic-book hero",
+      "note": "the comic-book hero idea",
+      "theme": [
+        "comic-book hero"
+      ]
+    },
+    {
+      "id": "starwars",
+      "names": [
+        "star wars",
+        "starwars",
+        "the mandalorian",
+        "mandalorian",
+        "jedi",
+        "sith",
+        "death star",
+        "millennium falcon",
+        "lightsaber",
+        "light saber",
+        "stormtrooper",
+        "luke skywalker",
+        "han solo",
+        "princess leia",
+        "chewbacca",
+        "r2-d2",
+        "r2d2",
+        "c-3po",
+        "obi-wan",
+        "kenobi"
+      ],
+      "replacement": "a far-away space-adventure",
+      "note": "the far-away space adventure",
+      "theme": [
+        "space adventure",
+        "glowing blades of light"
+      ]
+    },
+    {
+      "id": "potter",
+      "names": [
+        "hogwarts",
+        "hermione",
+        "dumbledore",
+        "voldemort",
+        "quidditch",
+        "gryffindor",
+        "slytherin",
+        "hufflepuff",
+        "ravenclaw",
+        "diagon alley",
+        "hagrid",
+        "j.k. rowling",
+        "jk rowling"
+      ],
+      "replacement": "a wizard-school",
+      "note": "the wizard-school magic",
+      "theme": [
+        "wizard school",
+        "castle",
+        "friendly magic"
+      ]
+    },
+    {
+      "id": "pokemon",
+      "names": [
+        "pokemon",
+        "pokémon",
+        "poke ball",
+        "pokeball",
+        "charizard",
+        "charmander",
+        "bulbasaur",
+        "squirtle",
+        "jigglypuff",
+        "eevee",
+        "snorlax",
+        "mewtwo"
+      ],
+      "replacement": "a pocket-creature",
+      "note": "the pocket-creature adventure",
+      "theme": [
+        "pocket creatures",
+        "friendly rivals"
+      ]
+    },
+    {
+      "id": "nintendo",
+      "names": [
+        "nintendo",
+        "super mario bros",
+        "mario kart",
+        "zelda",
+        "legend of zelda",
+        "donkey kong",
+        "yoshi",
+        "bowser",
+        "princess peach",
+        "animal crossing",
+        "splatoon"
+      ],
+      "replacement": "a video-game adventure",
+      "note": "the video-game adventure",
+      "theme": [
+        "video-game adventure"
+      ]
+    },
+    {
+      "id": "minecraft",
+      "names": [
+        "minecraft",
+        "roblox",
+        "fortnite",
+        "among us",
+        "genshin impact",
+        "five nights at freddy's",
+        "fnaf"
+      ],
+      "replacement": "a blocky-world",
+      "note": "the blocky-world adventure",
+      "theme": [
+        "blocky world",
+        "building"
+      ]
+    },
+    {
+      "id": "lego",
+      "names": [
+        "lego",
+        "legos",
+        "duplo"
+      ],
+      "replacement": "a toy-brick",
+      "note": "the toy-brick building",
+      "theme": [
+        "building bricks"
+      ]
+    },
+    {
+      "id": "ghibli",
+      "names": [
+        "studio ghibli",
+        "ghibli",
+        "totoro",
+        "spirited away",
+        "hayao miyazaki",
+        "miyazaki",
+        "kiki's delivery service"
+      ],
+      "replacement": "a gentle hand-painted countryside",
+      "note": "the gentle countryside mood",
+      "theme": [
+        "gentle countryside",
+        "forest spirits"
+      ]
+    },
+    {
+      "id": "sesame",
+      "names": [
+        "sesame street",
+        "the muppets",
+        "kermit",
+        "miss piggy",
+        "fozzie"
+      ],
+      "replacement": "a puppet-street",
+      "note": "the puppet-street fun",
+      "theme": [
+        "puppet friends"
+      ]
+    },
+    {
+      "id": "ninja",
+      "names": [
+        "teenage mutant ninja turtles",
+        "ninja turtles",
+        "tmnt",
+        "leonardo donatello"
+      ],
+      "replacement": "a team-of-turtle-heroes",
+      "note": "the team idea",
+      "theme": [
+        "team of heroes"
+      ]
+    },
+    {
+      "id": "hp_style",
+      "names": [
+        "the wizarding world",
+        "wizarding world"
+      ],
+      "replacement": "a wizard-school",
+      "note": "the wizard-school magic",
+      "theme": [
+        "wizard school"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "elsa",
+      "franchise": "frozen",
+      "names": [
+        "elsa",
+        "queen elsa",
+        "snow queen elsa",
+        "elza",
+        "els4",
+        "elsa the snow queen",
+        "エルサ",
+        "艾莎"
+      ],
+      "ambiguous": true,
+      "newName": "Wren",
+      "design": "a winter-sprite woman with short black curls, a mustard-yellow wool coat and a tall pine-green bobble hat, who sparkles frost from a carved wooden lantern",
+      "note": "the icy winter magic",
+      "theme": [
+        "icy winter magic",
+        "sparkle"
+      ],
+      "descriptors": [
+        "ice queen with (a )?(long )?(platinum|white|blonde?) (braid|hair)",
+        "queen who (freezes|makes ice)",
+        "princess who (freezes|makes ice)",
+        "snow queen (with|who)"
+      ],
+      "strong": [
+        "queen elsa",
+        "snow queen elsa",
+        "elsa the snow queen",
+        "エルサ",
+        "艾莎"
+      ]
+    },
+    {
+      "id": "anna",
+      "franchise": "frozen",
+      "names": [
+        "anna of arendelle",
+        "princess anna",
+        "anna",
+        "アナ"
+      ],
+      "ambiguous": true,
+      "newName": "Juniper",
+      "design": "a girl with a chestnut bob, round glasses, a plum puffer jacket and striped mittens, always carrying a tin of cocoa",
+      "note": "the icy-sisters winter magic",
+      "theme": [
+        "two sisters"
+      ],
+      "descriptors": [],
+      "strong": [
+        "princess anna",
+        "anna of arendelle"
+      ]
+    },
+    {
+      "id": "olaf",
+      "franchise": "frozen",
+      "names": [
+        "olaf",
+        "olaf the snowman",
+        "オラフ"
+      ],
+      "ambiguous": true,
+      "newName": "Biscuit",
+      "design": "a round little frost-fox spirit with huge ears, a fluffy white tail and a tiny knitted scarf",
+      "note": "a friendly winter companion",
+      "theme": [
+        "friendly winter companion"
+      ],
+      "descriptors": [
+        "snowman who (loves|likes|gives) (warm )?hugs",
+        "talking snowman",
+        "snowman (with|who) (a )?(carrot|twig)"
+      ],
+      "strong": [
+        "olaf the snowman"
+      ]
+    },
+    {
+      "id": "kristoff",
+      "franchise": "frozen",
+      "names": [
+        "kristoff",
+        "sven"
+      ],
+      "ambiguous": true,
+      "newName": "Alder",
+      "design": "a broad-shouldered woodcutter with a red beard, a rust-coloured hooded cloak and a bell-collared pack mule",
+      "note": "a snowy-mountain helper",
+      "theme": [
+        "snowy mountain helper"
+      ],
+      "descriptors": [],
+      "strong": []
+    },
+    {
+      "id": "mickey",
+      "franchise": "disney",
+      "names": [
+        "mickey mouse",
+        "mikey mouse",
+        "micky mouse",
+        "mickey maus",
+        "raton mickey",
+        "topolino",
+        "ミッキー",
+        "mickey"
+      ],
+      "ambiguous": true,
+      "fuzzy": true,
+      "newName": "Pip",
+      "design": "a tall skinny field mouse with a long curly tail, oval ears, patchy brown-and-cream fur, a mustard raincoat and a tiny leather satchel",
+      "note": "a cheerful cartoon mouse",
+      "theme": [
+        "cheerful cartoon mouse"
+      ],
+      "descriptors": [
+        "cartoon mouse (in|with) red (shorts|pants)"
+      ],
+      "strong": [
+        "mickey mouse",
+        "mikey mouse",
+        "micky mouse",
+        "mickey maus",
+        "raton mickey",
+        "topolino",
+        "ミッキー"
+      ]
+    },
+    {
+      "id": "minnie",
+      "franchise": "disney",
+      "names": [
+        "minnie mouse",
+        "minnie"
+      ],
+      "ambiguous": true,
+      "newName": "Posy",
+      "design": "a small dormouse with a lavender scarf and a straw sun hat with a daisy",
+      "note": "a cheerful cartoon mouse",
+      "theme": [
+        "cheerful cartoon mouse"
+      ],
+      "descriptors": [],
+      "strong": [
+        "minnie mouse"
+      ]
+    },
+    {
+      "id": "donald",
+      "franchise": "disney",
+      "names": [
+        "donald duck",
+        "daisy duck",
+        "scrooge mcduck"
+      ],
+      "ambiguous": false,
+      "newName": "Mallow",
+      "design": "a plump grey-green goose in a patched fisherman's jersey and a floppy knitted cap",
+      "note": "a grumpy-but-lovable duck",
+      "theme": [
+        "lovable grumpy bird"
+      ],
+      "descriptors": []
+    },
+    {
+      "id": "stitch",
+      "franchise": "disney",
+      "names": [
+        "lilo and stitch",
+        "lilo & stitch",
+        "stitch"
+      ],
+      "ambiguous": true,
+      "newName": "Nubbin",
+      "design": "a stubby orange-and-cream critter with a long wobbly tail, tiny horns and a pocketful of buttons",
+      "note": "a mischievous space critter",
+      "theme": [
+        "mischievous critter",
+        "found family"
+      ],
+      "descriptors": [],
+      "strong": [
+        "lilo and stitch",
+        "lilo & stitch"
+      ],
+      "bare": false
+    },
+    {
+      "id": "moana",
+      "franchise": "disney",
+      "names": [
+        "moana",
+        "maui",
+        "hei hei",
+        "heihei"
+      ],
+      "ambiguous": true,
+      "newName": "Kai",
+      "design": "a young navigator with a shaved-side dark pixie cut, a sand-coloured tunic with sea-green trim, a small patched sloop and a pet crab",
+      "note": "the brave voyage across the sea",
+      "theme": [
+        "voyage across the sea"
+      ],
+      "descriptors": [
+        "island girl who sails"
+      ],
+      "strong": []
+    },
+    {
+      "id": "simba",
+      "franchise": "disney",
+      "names": [
+        "simba",
+        "mufasa",
+        "nala",
+        "timon and pumbaa",
+        "pumbaa",
+        "hakuna matata"
+      ],
+      "ambiguous": true,
+      "newName": "Tamsin",
+      "design": "a long-legged maned-wolf pup with a rust coat and one white sock, napping on a termite mound",
+      "note": "the savanna cub adventure",
+      "theme": [
+        "savanna cub adventure"
+      ],
+      "descriptors": [
+        "young lion cub (who|that) (will be|becomes) king",
+        "lion king"
+      ],
+      "strong": [
+        "hakuna matata",
+        "timon and pumbaa",
+        "pumbaa",
+        "mufasa"
+      ]
+    },
+    {
+      "id": "mulan",
+      "franchise": "disney",
+      "names": [
+        "mulan",
+        "fa mulan"
+      ],
+      "ambiguous": true,
+      "newName": "Sorrel",
+      "design": "a brave messenger-rider with a short wavy brown crop, a forest-green riding coat and a dappled grey pony",
+      "note": "the brave-young-rider idea",
+      "theme": [
+        "brave young rider"
+      ],
+      "descriptors": [],
+      "strong": [
+        "fa mulan"
+      ]
+    },
+    {
+      "id": "rapunzel",
+      "franchise": "disney",
+      "names": [
+        "rapunzel",
+        "tangled"
+      ],
+      "ambiguous": false,
+      "newName": "Marigold",
+      "design": "a rooftop gardener with a cropped black curl cut, rust-coloured overalls and a copper watering can",
+      "note": "the tower-garden idea",
+      "theme": [
+        "tower garden"
+      ],
+      "descriptors": [
+        "princess with (impossibly |very |incredibly )?long (golden|blonde?) hair",
+        "(girl|princess|woman) with (impossibly |very |incredibly )?long (golden|blonde?) hair (in|locked in|trapped in|inside) a tower"
+      ]
+    },
+    {
+      "id": "cinderella",
+      "franchise": "disney",
+      "names": [
+        "cinderella",
+        "cenicienta",
+        "cendrillon"
+      ],
+      "ambiguous": false,
+      "newName": "Ember",
+      "design": "a cheerful girl in a handmade patchwork gown of mismatched silver squares, with a lantern and a ginger cat",
+      "note": "the rags-to-ball-gown idea",
+      "theme": [
+        "rags to ball gown"
+      ],
+      "descriptors": [
+        "glass slippers"
+      ]
+    },
+    {
+      "id": "ariel",
+      "franchise": "disney",
+      "names": [
+        "the little mermaid",
+        "little mermaid",
+        "ariel",
+        "sebastian the crab"
+      ],
+      "ambiguous": true,
+      "newName": "Coral Finch",
+      "design": "a young sea-diver with a dark topknot, a mustard diving jacket, brass goggles and a pet seahorse",
+      "note": "the under-the-sea adventure",
+      "theme": [
+        "under the sea"
+      ],
+      "descriptors": [
+        "mermaid with (bright )?red hair"
+      ],
+      "strong": [
+        "the little mermaid",
+        "little mermaid"
+      ]
+    },
+    {
+      "id": "belle",
+      "franchise": "disney",
+      "names": [
+        "beauty and the beast",
+        "belle"
+      ],
+      "ambiguous": true,
+      "newName": "Hazel",
+      "design": "a bookish girl with a short auburn afro, a teal waistcoat and a stack of library books beside a shaggy grey wolfhound",
+      "note": "the book-loving friendship story",
+      "theme": [
+        "book-loving friendship"
+      ],
+      "descriptors": [],
+      "strong": [
+        "beauty and the beast"
+      ]
+    },
+    {
+      "id": "aladdin",
+      "franchise": "disney",
+      "names": [
+        "aladdin",
+        "princess jasmine",
+        "jasmine and aladdin"
+      ],
+      "ambiguous": false,
+      "newName": "Idris",
+      "design": "a barefoot market runner with a green scarf, a patched waistcoat and a pet monkey-sized lemur",
+      "note": "the market-and-magic-carpet adventure",
+      "theme": [
+        "market adventure",
+        "flying carpet"
+      ],
+      "descriptors": []
+    },
+    {
+      "id": "peterpan",
+      "franchise": "disney",
+      "names": [
+        "peter pan",
+        "tinker bell",
+        "tinkerbell",
+        "captain hook",
+        "neverland"
+      ],
+      "ambiguous": false,
+      "newName": "Finn",
+      "design": "a barefoot sky-boy with messy sandy hair, a patchwork tunic and a kite shaped like a heron",
+      "note": "the never-grow-up adventure",
+      "theme": [
+        "flying children adventure"
+      ],
+      "descriptors": [
+        "boy who never grows up"
+      ]
+    },
+    {
+      "id": "woody",
+      "franchise": "pixar",
+      "names": [
+        "buzz lightyear",
+        "woody",
+        "toy story",
+        "jessie the cowgirl",
+        "mr potato head",
+        "bo peep"
+      ],
+      "ambiguous": true,
+      "newName": "Dusty",
+      "design": "a patched-up felt scarecrow doll with a straw hat and a pocketful of marbles, riding a toy rocking horse",
+      "note": "the toys-come-alive idea",
+      "theme": [
+        "toys come alive"
+      ],
+      "descriptors": [
+        "toys that come alive"
+      ],
+      "strong": [
+        "buzz lightyear",
+        "toy story",
+        "mr potato head"
+      ],
+      "bare": false
+    },
+    {
+      "id": "nemo",
+      "franchise": "pixar",
+      "names": [
+        "finding nemo",
+        "finding dory",
+        "nemo",
+        "dory",
+        "marlin"
+      ],
+      "ambiguous": true,
+      "newName": "Pebble",
+      "design": "a small striped blue-and-gold reef fish with one oversized fin, swimming beside a forgetful green sea turtle",
+      "note": "the ocean search adventure",
+      "theme": [
+        "ocean search adventure"
+      ],
+      "descriptors": [
+        "clownfish"
+      ],
+      "strong": [
+        "finding nemo",
+        "finding dory"
+      ],
+      "bare": false
+    },
+    {
+      "id": "shrek",
+      "franchise": "pixar",
+      "names": [
+        "shrek",
+        "donkey from shrek",
+        "puss in boots"
+      ],
+      "ambiguous": false,
+      "newName": "Grumble",
+      "design": "a big, mossy-brown swamp troll with a lumpy nose, a patched leather vest and a pet owl",
+      "note": "the grumpy-swamp-hero idea",
+      "theme": [
+        "grumpy swamp hero"
+      ],
+      "descriptors": [
+        "green ogre"
+      ]
+    },
+    {
+      "id": "minions",
+      "franchise": "pixar",
+      "names": [
+        "minions",
+        "minion",
+        "despicable me"
+      ],
+      "ambiguous": true,
+      "newName": "Gizmo",
+      "design": "a crew of tall, thin, grey-green helper creatures with single big monocles and tool belts",
+      "note": "the cheeky-helpers idea",
+      "theme": [
+        "cheeky helpers"
+      ],
+      "descriptors": [
+        "little yellow (helpers|henchmen) in (blue )?overalls"
+      ],
+      "strong": [
+        "despicable me"
+      ],
+      "bare": false
+    },
+    {
+      "id": "spiderman",
+      "franchise": "marvel",
+      "names": [
+        "spider-man",
+        "spiderman",
+        "spider man",
+        "spidey",
+        "spiderverse",
+        "spider-verse",
+        "miles morales",
+        "peter parker",
+        "spinnenmann",
+        "hombre arana",
+        "スパイダーマン"
+      ],
+      "ambiguous": false,
+      "fuzzy": true,
+      "newName": "Rook",
+      "design": "a nimble rooftop acrobat in a forest-green hooded jumpsuit with goggles and a patchwork scarf, swinging between chimneys on a rope",
+      "note": "the rooftop-hero idea",
+      "theme": [
+        "rooftop hero"
+      ],
+      "descriptors": [
+        "superhero (who|that) (shoots|swings on) webs",
+        "bitten by a (radioactive )?spider"
+      ]
+    },
+    {
+      "id": "batman",
+      "franchise": "dc",
+      "names": [
+        "batman",
+        "bruce wayne",
+        "dark knight",
+        "gotham",
+        "robin the boy wonder",
+        "catwoman",
+        "bat man",
+        "bat-man"
+      ],
+      "ambiguous": false,
+      "fuzzy": true,
+      "newName": "Lamplighter",
+      "design": "a night-time lighthouse keeper in a long mustard slicker and a wide-brimmed hat, carrying a glowing lantern",
+      "note": "the night-watch hero idea",
+      "theme": [
+        "night-watch hero"
+      ],
+      "descriptors": [
+        "hero (in|with) (a )?(black )?bat (mask|cowl|costume)",
+        "billionaire (vigilante|hero)",
+        "billionaire in a bat (costume|suit|mask|cowl)",
+        "(man|hero) in a bat (costume|suit|mask|cowl)"
+      ]
+    },
+    {
+      "id": "superman",
+      "franchise": "dc",
+      "names": [
+        "superman",
+        "clark kent",
+        "supergirl",
+        "kal-el",
+        "man of steel"
+      ],
+      "ambiguous": false,
+      "fuzzy": true,
+      "newName": "Skipper",
+      "design": "a sky courier with a leather flight cap, round goggles and a coral scarf, carrying a satchel of letters",
+      "note": "the flying-hero idea",
+      "theme": [
+        "flying hero"
+      ],
+      "descriptors": [
+        "hero in a (blue )?suit with a red cape"
+      ]
+    },
+    {
+      "id": "wonderwoman",
+      "franchise": "dc",
+      "names": [
+        "wonder woman",
+        "aquaman",
+        "the flash",
+        "green lantern",
+        "harley quinn"
+      ],
+      "ambiguous": false,
+      "newName": "Sable",
+      "design": "a tall explorer with a silver crop of hair, an olive tunic, leather wrist-guards and a coil of climbing rope",
+      "note": "the fearless-explorer idea",
+      "theme": [
+        "fearless explorer"
+      ],
+      "descriptors": [
+        "warrior (princess|woman) with (a )?(golden|magic) lasso"
+      ]
+    },
+    {
+      "id": "ironman",
+      "franchise": "marvel",
+      "names": [
+        "iron man",
+        "ironman",
+        "tony stark",
+        "captain america",
+        "thor",
+        "black panther",
+        "black widow",
+        "hawkeye",
+        "doctor strange",
+        "deadpool",
+        "wolverine",
+        "thanos"
+      ],
+      "ambiguous": true,
+      "newName": "Tinker",
+      "design": "an inventor in a patched brass-and-teal clockwork flying suit built from kettles and pipes",
+      "note": "the inventor-hero idea",
+      "theme": [
+        "inventor hero"
+      ],
+      "descriptors": [
+        "hero in (a )?red and gold (armou?red )?suit"
+      ],
+      "strong": [
+        "iron man",
+        "ironman",
+        "tony stark",
+        "captain america",
+        "doctor strange",
+        "deadpool",
+        "thanos"
+      ],
+      "bare": false
+    },
+    {
+      "id": "hulk",
+      "franchise": "marvel",
+      "names": [
+        "the hulk",
+        "hulk",
+        "incredible hulk"
+      ],
+      "ambiguous": false,
+      "newName": "Bram",
+      "design": "a broad, tall farmer with a ginger beard, patched dungarees and heavy boots, who lifts hay bales with a grin",
+      "note": "the gentle-strongman idea",
+      "theme": [
+        "gentle strongman"
+      ],
+      "descriptors": [
+        "big green (strongman|monster|man)"
+      ]
+    },
+    {
+      "id": "mario",
+      "franchise": "nintendo",
+      "names": [
+        "super mario",
+        "mario",
+        "luigi",
+        "mario and luigi",
+        "wario",
+        "waluigi",
+        "マリオ"
+      ],
+      "ambiguous": true,
+      "newName": "Pasquale",
+      "design": "a stocky baker with a round grey beard, a flat cap and a flour-dusted green apron, carrying a basket of loaves",
+      "note": "the cheerful-tradesman adventure",
+      "theme": [
+        "cheerful tradesman adventure"
+      ],
+      "descriptors": [
+        "plumber (in|with) (a )?red (cap|hat|overalls)",
+        "italian plumber"
+      ],
+      "strong": [
+        "super mario",
+        "wario",
+        "waluigi",
+        "マリオ",
+        "mario and luigi"
+      ]
+    },
+    {
+      "id": "link",
+      "franchise": "nintendo",
+      "names": [
+        "link from zelda",
+        "princess zelda",
+        "link and zelda",
+        "ganon"
+      ],
+      "ambiguous": false,
+      "newName": "Teasel",
+      "design": "a lanky shepherd with a copper ponytail, a moss-green smock and a hand-carved flute",
+      "note": "the quest-through-meadows idea",
+      "theme": [
+        "quest through meadows"
+      ],
+      "descriptors": []
+    },
+    {
+      "id": "pikachu",
+      "franchise": "pokemon",
+      "names": [
+        "pikachu",
+        "pikachoo",
+        "pika chu",
+        "pikachuu",
+        "ピカチュウ",
+        "皮卡丘"
+      ],
+      "ambiguous": false,
+      "fuzzy": true,
+      "newName": "Murmur",
+      "design": "a plump pocket-sized storm-cloud creature with silver fur, stubby wings and a spiral tail",
+      "note": "a tiny storm-cloud friend",
+      "theme": [
+        "tiny storm-cloud friend"
+      ],
+      "descriptors": [
+        "(small |little )?yellow (electric )?mouse",
+        "yellow mouse with (red|rosy) cheeks"
+      ]
+    },
+    {
+      "id": "sonic",
+      "franchise": "nintendo",
+      "names": [
+        "sonic the hedgehog",
+        "sonic hedgehog",
+        "tails and knuckles",
+        "sonic"
+      ],
+      "ambiguous": true,
+      "newName": "Dash",
+      "design": "a lanky brown hare with long ears and a yellow neckerchief who leaves swirls of dust behind",
+      "note": "the speedy-hero idea",
+      "theme": [
+        "speedy hero"
+      ],
+      "descriptors": [
+        "blue hedgehog"
+      ],
+      "strong": [
+        "sonic the hedgehog",
+        "sonic hedgehog"
+      ],
+      "bare": false
+    },
+    {
+      "id": "darthvader",
+      "franchise": "starwars",
+      "names": [
+        "darth vader",
+        "vader",
+        "kylo ren",
+        "yoda",
+        "baby yoda",
+        "grogu",
+        "the child from the mandalorian"
+      ],
+      "ambiguous": false,
+      "newName": "Warden",
+      "design": "a tall mountain-pass guard in a long rust-coloured coat and fur hood, with a tiny moss-covered tortoise sage riding in a satchel",
+      "note": "the wise-little-mentor idea",
+      "theme": [
+        "wise little mentor"
+      ],
+      "descriptors": [
+        "tiny green (alien|creature|baby)( baby)? with (big|huge|large) ears",
+        "(tiny|little|small) green (alien|creature|baby)( baby)? with (big|huge|large) ears"
+      ]
+    },
+    {
+      "id": "harrypotter",
+      "franchise": "potter",
+      "names": [
+        "harry potter",
+        "harry potter and the",
+        "hary poter",
+        "harry p0tter",
+        "h4rry p0tter",
+        "the boy who lived",
+        "ron weasley",
+        "hermione granger"
+      ],
+      "ambiguous": false,
+      "fuzzy": true,
+      "newName": "Tobias Quill",
+      "design": "a young spell-student with a messy ginger-brown crop, a patchwork scarf and a crooked wooden wand",
+      "note": "the young-wizard school adventure",
+      "theme": [
+        "young wizard school adventure"
+      ],
+      "descriptors": [
+        "boy wizard with (round )?glasses",
+        "wizard (boy )?with a lightning (bolt )?scar"
+      ]
+    },
+    {
+      "id": "barbie",
+      "franchise": "toy",
+      "names": [
+        "barbie",
+        "ken doll",
+        "barbie doll"
+      ],
+      "ambiguous": false,
+      "newName": "Tallulah",
+      "design": "a stylish girl with a teal curly bob and a tailored mustard jumpsuit",
+      "note": "the fashion-fun idea",
+      "theme": [
+        "fashion fun"
+      ],
+      "descriptors": []
+    },
+    {
+      "id": "hellokitty",
+      "franchise": "toy",
+      "names": [
+        "hello kitty",
+        "sanrio",
+        "kuromi",
+        "my melody",
+        "cinnamoroll",
+        "ハローキティ"
+      ],
+      "ambiguous": false,
+      "newName": "Mochi",
+      "design": "a round grey tabby kitten with a yellow neckerchief and a tiny teapot",
+      "note": "the sweet-kitten idea",
+      "theme": [
+        "sweet kitten"
+      ],
+      "descriptors": [
+        "white (kitten|cat) with (a )?red bow"
+      ]
+    },
+    {
+      "id": "pooh",
+      "franchise": "disney",
+      "names": [
+        "winnie the pooh",
+        "winnie-the-pooh",
+        "winnie pooh",
+        "pooh bear",
+        "pooh",
+        "tigger",
+        "eeyore",
+        "piglet",
+        "christopher robin"
+      ],
+      "ambiguous": false,
+      "newName": "Marmalade",
+      "design": "a sleepy brown wombat in a green knitted vest, carrying a jar of jam",
+      "note": "the honey-and-friends idea",
+      "theme": [
+        "woodland friends"
+      ],
+      "descriptors": [
+        "honey[- ]loving (teddy )?bear"
+      ]
+    },
+    {
+      "id": "peppa",
+      "franchise": "tv",
+      "names": [
+        "peppa pig",
+        "peppa",
+        "george pig",
+        "daddy pig",
+        "mummy pig"
+      ],
+      "ambiguous": true,
+      "newName": "Tilly",
+      "design": "a bouncy goat kid in a yellow raincoat and polka-dot boots, jumping in puddles",
+      "note": "the muddy-puddle-fun idea",
+      "theme": [
+        "muddy puddle fun"
+      ],
+      "descriptors": [
+        "little pig (in|with) (a )?red dress"
+      ],
+      "strong": [
+        "peppa pig",
+        "george pig",
+        "daddy pig",
+        "mummy pig"
+      ]
+    },
+    {
+      "id": "bluey",
+      "franchise": "tv",
+      "names": [
+        "bluey",
+        "bingo heeler",
+        "bluey heeler",
+        "bluey and bingo"
+      ],
+      "ambiguous": true,
+      "newName": "Scamp",
+      "design": "a scruffy tan terrier pup with one floppy ear and a red bandana",
+      "note": "the playful-pup family fun",
+      "theme": [
+        "playful pup family"
+      ],
+      "descriptors": [
+        "blue (heeler|puppy) (cartoon|family)"
+      ],
+      "strong": [
+        "bingo heeler",
+        "bluey heeler",
+        "bluey and bingo"
+      ]
+    },
+    {
+      "id": "pawpatrol",
+      "franchise": "tv",
+      "names": [
+        "paw patrol",
+        "paw patrol pups",
+        "chase and marshall",
+        "skye and rubble"
+      ],
+      "ambiguous": false,
+      "newName": "the Button Brigade",
+      "design": "a crew of helper pups in mismatched patchwork vests who share a rickety clubhouse",
+      "note": "the rescue-pups idea",
+      "theme": [
+        "rescue pups"
+      ],
+      "descriptors": [
+        "rescue pups? (with|in) (a )?(tower|lookout)"
+      ]
+    },
+    {
+      "id": "spongebob",
+      "franchise": "tv",
+      "names": [
+        "spongebob",
+        "sponge bob",
+        "spongebob squarepants",
+        "patrick star",
+        "squidward",
+        "bikini bottom"
+      ],
+      "ambiguous": false,
+      "fuzzy": true,
+      "newName": "Bubbles",
+      "design": "a round coral-pink sea creature with a bucket hat and a bubble wand",
+      "note": "the silly-under-the-sea idea",
+      "theme": [
+        "silly under the sea"
+      ],
+      "descriptors": [
+        "yellow (sea )?sponge"
+      ]
+    },
+    {
+      "id": "snoopy",
+      "franchise": "tv",
+      "names": [
+        "snoopy",
+        "charlie brown",
+        "peanuts gang",
+        "woodstock the bird"
+      ],
+      "ambiguous": false,
+      "newName": "Lanky",
+      "design": "a lanky grey greyhound who naps on a haystack and writes letters with a feather",
+      "note": "the daydreaming-dog idea",
+      "theme": [
+        "daydreaming dog"
+      ],
+      "descriptors": [
+        "beagle (on|who sleeps on) (his|a) (red )?doghouse"
+      ]
+    },
+    {
+      "id": "dora",
+      "franchise": "tv",
+      "names": [
+        "dora the explorer",
+        "dora and boots",
+        "dora",
+        "swiper"
+      ],
+      "ambiguous": true,
+      "newName": "Zuri",
+      "design": "a young trekker with afro puffs, a mustard poncho, a brass compass and a toucan friend",
+      "note": "the young-explorer adventure",
+      "theme": [
+        "young explorer adventure"
+      ],
+      "descriptors": [
+        "little girl (explorer )?with a (purple )?backpack and (a )?monkey"
+      ],
+      "strong": [
+        "dora the explorer",
+        "dora and boots"
+      ]
+    },
+    {
+      "id": "elmo",
+      "franchise": "sesame",
+      "names": [
+        "elmo",
+        "cookie monster",
+        "big bird",
+        "oscar the grouch",
+        "bert and ernie"
+      ],
+      "ambiguous": true,
+      "newName": "Fuzzwick",
+      "design": "a shaggy teal-and-orange striped monster with one tooth and a baking apron",
+      "note": "the fuzzy-monster friend",
+      "theme": [
+        "fuzzy monster friend"
+      ],
+      "descriptors": [
+        "fuzzy red (puppet )?monster",
+        "blue monster who (loves|eats) cookies"
+      ],
+      "strong": [
+        "cookie monster",
+        "big bird",
+        "oscar the grouch",
+        "bert and ernie"
+      ]
+    },
+    {
+      "id": "thomas",
+      "franchise": "tv",
+      "names": [
+        "thomas the tank engine",
+        "thomas the tank",
+        "thomas and friends",
+        "thomas & friends"
+      ],
+      "ambiguous": false,
+      "newName": "Pennywhistle",
+      "design": "a round mustard-coloured steam engine with a tall funnel and a friendly smile",
+      "note": "the friendly-steam-engine idea",
+      "theme": [
+        "friendly steam engine"
+      ],
+      "descriptors": [
+        "blue (steam )?(tank )?engine with a face"
+      ]
+    },
+    {
+      "id": "bugs",
+      "franchise": "looney",
+      "names": [
+        "bugs bunny",
+        "daffy duck",
+        "porky pig",
+        "looney tunes",
+        "road runner",
+        "wile e coyote",
+        "wile e. coyote",
+        "tweety",
+        "sylvester the cat",
+        "that's all folks",
+        "what's up doc",
+        "whats up doc"
+      ],
+      "ambiguous": false,
+      "newName": "Clover",
+      "design": "a sandy-coloured hare with a patched waistcoat and a crooked grin, munching a stalk of wheat",
+      "note": "the wisecracking-trickster idea",
+      "theme": [
+        "wisecracking trickster"
+      ],
+      "descriptors": [
+        "wisecracking (gray|grey) rabbit"
+      ]
+    },
+    {
+      "id": "homer",
+      "franchise": "tv",
+      "names": [
+        "homer simpson",
+        "bart simpson",
+        "the simpsons",
+        "lisa simpson",
+        "marge simpson"
+      ],
+      "ambiguous": false,
+      "newName": "Gus",
+      "design": "a cheerful round-bellied dad in a plaid shirt with a sandy beard and a toolbox",
+      "note": "the goofy-dad idea",
+      "theme": [
+        "goofy dad"
+      ],
+      "descriptors": [
+        "yellow cartoon (dad|family)"
+      ]
+    },
+    {
+      "id": "scooby",
+      "franchise": "tv",
+      "names": [
+        "scooby-doo",
+        "scooby doo",
+        "scooby",
+        "shaggy and scooby",
+        "tom and jerry",
+        "garfield"
+      ],
+      "ambiguous": false,
+      "newName": "Mystery Mutt",
+      "design": "a lanky spotted hound in a knitted jumper who solves puzzles with a team of friends in a patched-up caravan",
+      "note": "the mystery-solving pals idea",
+      "theme": [
+        "mystery-solving pals"
+      ],
+      "descriptors": [
+        "great dane (who|that) solves mysteries"
+      ]
+    },
+    {
+      "id": "baby_shark",
+      "franchise": "tv",
+      "names": [
+        "baby shark",
+        "cocomelon",
+        "pinkfong",
+        "jj from cocomelon"
+      ],
+      "ambiguous": false,
+      "newName": "Little Fin",
+      "design": "a tiny teal shark pup with a sunhat and a bucket of seashells",
+      "note": "the singalong-sea idea",
+      "theme": [
+        "singalong sea"
+      ],
+      "descriptors": []
+    }
+  ],
+  "brands": [
+    "nike",
+    "adidas",
+    "puma",
+    "reebok",
+    "under armour",
+    "gucci",
+    "louis vuitton",
+    "chanel",
+    "prada",
+    "versace",
+    "rolex",
+    "coca-cola",
+    "coca cola",
+    "pepsi",
+    "red bull",
+    "monster energy",
+    "mcdonald's",
+    "mcdonalds",
+    "burger king",
+    "kfc",
+    "wendy's",
+    "starbucks",
+    "dunkin",
+    "apple logo",
+    "iphone",
+    "off-white",
+    "north face",
+    "lululemon",
+    "nutella",
+    "oreo",
+    "kitkat",
+    "kit kat",
+    "snapchat",
+    "tiktok",
+    "instagram",
+    "facebook",
+    "twitter",
+    "youtube",
+    "netflix",
+    "spotify",
+    "microsoft",
+    "playstation",
+    "xbox",
+    "tesla",
+    "ferrari",
+    "lamborghini",
+    "porsche",
+    "harley-davidson",
+    "harley davidson",
+    "ikea",
+    "walmart",
+    "nfl",
+    "nba",
+    "mlb",
+    "nhl",
+    "fifa",
+    "olympic rings",
+    "real madrid",
+    "manchester united",
+    "yankees",
+    "lakers",
+    "hot wheels",
+    "barbie dreamhouse",
+    "build-a-bear",
+    "build a bear",
+    "crayola",
+    "play-doh",
+    "playdoh",
+    "hershey",
+    "m&m",
+    "m&ms",
+    "skittles",
+    "cheerios",
+    "lays",
+    "pringles",
+    "subway restaurant"
+  ],
+  "brandNotes": "Brand names are removed from the idea. They are never replaced by a look-alike mark.",
+  "publicFigures": [
+    {
+      "names": [
+        "donald trump",
+        "joe biden",
+        "barack obama",
+        "kamala harris",
+        "vladimir putin",
+        "taylor swift",
+        "kim kardashian",
+        "elon musk",
+        "jeff bezos",
+        "mark zuckerberg",
+        "lionel messi",
+        "cristiano ronaldo",
+        "lebron james",
+        "pope francis",
+        "pope leo",
+        "king charles",
+        "queen elizabeth",
+        "justin bieber",
+        "ariana grande",
+        "michael jackson",
+        "tom cruise",
+        "brad pitt",
+        "kanye west",
+        "beyonce",
+        "oprah",
+        "oprah winfrey",
+        "elvis presley",
+        "marilyn monroe",
+        "the pope",
+        "the queen",
+        "mr beast",
+        "mrbeast",
+        "zendaya",
+        "dua lipa",
+        "bad bunny",
+        "rihanna",
+        "adele",
+        "lady gaga",
+        "keanu reeves",
+        "dwayne johnson",
+        "the rock johnson",
+        "emma watson",
+        "angelina jolie",
+        "will smith",
+        "morgan freeman",
+        "jennifer lopez",
+        "selena gomez",
+        "billie eilish",
+        "harry styles",
+        "ed sheeran",
+        "bts"
+      ]
+    },
+    {
+      "names": [
+        "trump",
+        "biden",
+        "obama",
+        "putin",
+        "messi",
+        "ronaldo",
+        "kanye",
+        "elvis",
+        "drake",
+        "beyonce",
+        "oprah"
+      ],
+      "ambiguous": true,
+      "not": [
+        "trump card",
+        "trump cards",
+        "to trump",
+        "trumped"
+      ]
+    }
+  ],
+  "slogans": [
+    {
+      "text": "just do it",
+      "common": true,
+      "sentiment": "encouragement to get going",
+      "alt": "go on, take the first step"
+    },
+    {
+      "text": "i'm lovin' it",
+      "sentiment": "enjoyment",
+      "alt": "I can't stop smiling about this"
+    },
+    {
+      "text": "think different",
+      "common": true,
+      "sentiment": "be original",
+      "alt": "see it your own way"
+    },
+    {
+      "text": "the happiest place on earth",
+      "sentiment": "a joyful place",
+      "alt": "the place that makes you happiest"
+    },
+    {
+      "text": "to infinity and beyond",
+      "sentiment": "going far",
+      "alt": "all the way to the farthest star"
+    },
+    {
+      "text": "may the force be with you",
+      "sentiment": "good luck",
+      "alt": "wishing you luck on the way"
+    },
+    {
+      "text": "let it go",
+      "common": true,
+      "sentiment": "release worries",
+      "alt": "set it down and breathe"
+    },
+    {
+      "text": "do you want to build a snowman",
+      "sentiment": "an invitation to play",
+      "alt": "come out and play in the snow"
+    },
+    {
+      "text": "hakuna matata",
+      "sentiment": "no worries",
+      "alt": "no worries, friend"
+    },
+    {
+      "text": "i'll be back",
+      "common": true,
+      "sentiment": "returning soon",
+      "alt": "see you again soon"
+    },
+    {
+      "text": "live long and prosper",
+      "sentiment": "long happy life",
+      "alt": "here's to a long, happy life"
+    },
+    {
+      "text": "yabba dabba doo",
+      "sentiment": "joyful cheer",
+      "alt": "hooray, what a day"
+    },
+    {
+      "text": "have it your way",
+      "common": true,
+      "sentiment": "your choice",
+      "alt": "do it just the way you like"
+    },
+    {
+      "text": "finger lickin good",
+      "sentiment": "delicious",
+      "alt": "so tasty you'll want seconds"
+    },
+    {
+      "text": "taste the rainbow",
+      "sentiment": "colourful treats",
+      "alt": "enjoy every colour"
+    },
+    {
+      "text": "because you're worth it",
+      "common": true,
+      "sentiment": "you deserve it",
+      "alt": "you've earned this"
+    },
+    {
+      "text": "the best a man can get",
+      "sentiment": "the best",
+      "alt": "the very best there is"
+    },
+    {
+      "text": "melts in your mouth, not in your hand",
+      "sentiment": "treat",
+      "alt": "sweet from the first bite"
+    },
+    {
+      "text": "breakfast of champions",
+      "sentiment": "a strong start",
+      "alt": "a champion's start to the day"
+    },
+    {
+      "text": "i'm a barbie girl",
+      "sentiment": "playful",
+      "alt": "I'm a dreamer in a dreamer's world"
+    },
+    {
+      "text": "the force is strong with this one",
+      "sentiment": "talented",
+      "alt": "this one has real talent"
+    },
+    {
+      "text": "you shall not pass",
+      "sentiment": "stop here",
+      "alt": "this is where the line is drawn"
+    },
+    {
+      "text": "with great power comes great responsibility",
+      "sentiment": "responsibility",
+      "alt": "being strong means being kind"
+    },
+    {
+      "text": "gotta catch em all",
+      "sentiment": "collecting",
+      "alt": "keep collecting, keep exploring"
+    },
+    {
+      "text": "it's a me mario",
+      "sentiment": "greeting",
+      "alt": "it's me, hello"
+    },
+    {
+      "text": "avengers assemble",
+      "sentiment": "gather the team",
+      "alt": "everyone gather round"
+    },
+    {
+      "text": "i am your father",
+      "sentiment": "reveal",
+      "alt": "I have something to tell you"
+    },
+    {
+      "text": "hasta la vista baby",
+      "sentiment": "farewell",
+      "alt": "see you later, friend"
+    },
+    {
+      "text": "magically delicious",
+      "sentiment": "delicious",
+      "alt": "wonderfully tasty"
+    },
+    {
+      "text": "snap crackle pop",
+      "sentiment": "crunchy fun",
+      "alt": "crunch and giggle"
+    },
+    {
+      "text": "impossible is nothing",
+      "common": true,
+      "sentiment": "believe",
+      "alt": "anything can happen"
+    },
+    {
+      "text": "i want to be a part of your world",
+      "sentiment": "longing",
+      "alt": "I want to share your world"
+    },
+    {
+      "text": "just keep swimming",
+      "common": true,
+      "sentiment": "keep going",
+      "alt": "keep paddling along"
+    },
+    {
+      "text": "ohana means family",
+      "sentiment": "family",
+      "alt": "family means nobody gets left behind"
+    },
+    {
+      "text": "what happens in vegas stays in vegas",
+      "sentiment": "secrets",
+      "alt": "what happens here stays here"
+    },
+    {
+      "text": "like a boss",
+      "common": true,
+      "sentiment": "confident",
+      "alt": "with total confidence"
+    },
+    {
+      "text": "live laugh love",
+      "common": true,
+      "sentiment": "enjoy life",
+      "alt": "laugh often and love well"
+    },
+    {
+      "text": "the real thing",
+      "common": true,
+      "sentiment": "genuine",
+      "alt": "the genuine article"
+    },
+    {
+      "text": "can you feel the love tonight",
+      "sentiment": "romance",
+      "alt": "I feel the warmth tonight"
+    },
+    {
+      "text": "let's get ready to rumble",
+      "sentiment": "excitement",
+      "alt": "here we go, let's begin"
+    },
+    {
+      "text": "houston we have a problem",
+      "sentiment": "trouble",
+      "alt": "we have a little situation"
+    },
+    {
+      "text": "to be continued",
+      "common": true,
+      "sentiment": "continues",
+      "alt": "more to come"
+    }
+  ],
+  "styleOfKnown": [
+    "disney",
+    "pixar",
+    "ghibli",
+    "studio ghibli",
+    "dreamworks",
+    "marvel",
+    "dc",
+    "anime",
+    "simpsons",
+    "the simpsons",
+    "south park",
+    "looney tunes",
+    "hello kitty",
+    "sanrio",
+    "lego",
+    "minecraft",
+    "pokemon",
+    "nintendo",
+    "star wars",
+    "hanna-barbera",
+    "cartoon network",
+    "nickelodeon",
+    "peanuts",
+    "dr seuss",
+    "eric carle",
+    "tim burton",
+    "wes anderson",
+    "banksy",
+    "kusama",
+    "mary blair",
+    "quentin blake",
+    "maurice sendak",
+    "richard scarry",
+    "pixar's",
+    "disney's"
+  ],
+  "styleOfReplacement": "in a warm hand-drawn storybook style",
+  "weakFamilyCues": [
+    "neighbour",
+    "neighbor",
+    "friend",
+    "teacher",
+    "cousin",
+    "colleague",
+    "coworker",
+    "classmate",
+    "nanny",
+    "babysitter",
+    "granddaughter",
+    "grandson",
+    "niece",
+    "nephew",
+    "daughter",
+    "son",
+    "wife",
+    "husband",
+    "mum",
+    "mom",
+    "dad",
+    "sister",
+    "brother",
+    "aunt",
+    "uncle",
+    "grandma",
+    "grandpa",
+    "grandmother",
+    "grandfather",
+    "girlfriend",
+    "boyfriend",
+    "fiance",
+    "fiancee",
+    "best friend",
+    "pupil",
+    "student",
+    "baby"
+  ]
+}

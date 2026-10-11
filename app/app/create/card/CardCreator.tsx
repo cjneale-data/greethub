@@ -171,6 +171,7 @@ export function CardCreator() {
       const body = await res.json();
       if (!res.ok) throw new Error(body.message ?? GREETING_ERR);
       patchDraft({ message: body.message });
+      if (body.ipNote) setToast({ text: body.ipNote });
     } catch (e) {
       setToast({ text: e instanceof Error ? e.message : GREETING_ERR, retry: () => void writeMessage() });
     } finally {
@@ -195,6 +196,7 @@ export function CardCreator() {
       if (!res.ok) throw new Error(body.message ?? "That one didn't come out. Nothing was charged. Try again?");
       setPct(100);
       setPreview(body.preview);
+      if (body.ipNote) setToast({ text: body.ipNote });
       setPreviewKey(pictureKey(draft));
       setSide("front");
     } catch (e) {

@@ -63,7 +63,7 @@ export async function generateGuestPreview(brief: CardBrief): Promise<PreviewRes
   try {
     const briefFile = join(work, "brief.json");
     writeFileSync(briefFile, JSON.stringify(brief), "utf8");
-    const res = await runPipeline(briefFile, work, 0.15);
+    const res = await runPipeline(briefFile, work, 0.25);
     if (!res.ok || !res.file) throw new PreviewFailed(res.error ?? "render_failed");
     addSpend(res.costUsd ?? GUEST_PREVIEW_COST_ESTIMATE_USD);
     const jpg = readFileSync(res.file);

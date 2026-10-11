@@ -15,6 +15,8 @@ const { OpenRouterClient } = await import(src("openrouter.ts"));
 const { FileLedger } = await import(src("ledger.ts"));
 const { guardLines } = await import(src("stages/prompts.ts"));
 const { guestProof } = await import(src("layout/card.ts"));
+const { visionCheck } = await import(src("stages/qa.ts"));
+const { sanitizeImagePrompt, rerollAddendum, PAGE_BLOCKED_MESSAGE, logOutputFlagged, logOutputRerolled } = await import(src("safety/index.ts"));
 
 try {
   const brief = JSON.parse(readFileSync(briefFile, "utf8"));
@@ -30,17 +32,31 @@ try {
   const occasion = brief.occasion === "other" ? brief.occasionOther : String(brief.occasion).replaceAll("_", " ");
   const prompt = [
     `A ${brief.tone} greeting card front illustration for a ${occasion}. 3:4 portrait.`,
-    `Scene: ${brief.storyIdea}`,
-    brief.include?.length ? `Include: ${brief.include.join("; ")}.` : "",
-    brief.avoid?.length ? `Leave out: ${brief.avoid.join("; ")}.` : "",
+    `Scene: ${sanitizeImagePrompt(String(brief.storyIdea ?? ""), [brief.recipient?.name ?? ""]).text}`,
+    brief.include?.length ? `Include: ${sanitizeImagePrompt(brief.include.join("; "), []).text}.` : "",
+    brief.avoid?.length ? `Leave out: ${sanitizeImagePrompt(brief.avoid.join("; "), []).text}.` : "",
     `GLOBAL STYLE: ${ART_STYLES[brief.artStyle].prompt}`,
     "Keep the subject centered with calm space around it.",
     guardLines({ id: "front", kind: "card_front", scene: "", characters: [] }),
   ]
     .filter(Boolean)
     .join("\n");
-  const img = await client.image({ content: [{ type: "text", text: prompt }], stage: "render", label: "guest_front", size: "1K", aspectRatio: "3:4" });
-  if (!img) throw new Error("render_failed");
+  // Render, run the output IP check, re-roll once with a hardened prompt that names the problem, then block (docs/legal/07).
+  let img = null;
+  let flaggedFirst = [];
+  let addendum = "";
+  for (let roll = 1; roll <= 2; roll++) {
+    img = await client.image({ content: [{ type: "text", text: addendum ? prompt + "\n\n" + addendum : prompt }], stage: "render", label: roll === 1 ? "guest_front" : "guest_front#reroll", size: "1K", aspectRatio: "3:4" });
+    if (!img) throw new Error("render_failed");
+    const v = await visionCheck(client, img.data, roll === 1 ? "qa_guest_front" : "qa_guest_front#reroll", 0, []);
+    const flags = v?.ip.flags ?? [];
+    if (roll === 2 && flaggedFirst.length) logOutputRerolled({ pageId: "guest_front", flags: flaggedFirst, passedAfterReroll: flags.length === 0 });
+    if (!flags.length) break;
+    logOutputFlagged({ pageId: "guest_front", flags, lookalikeRisk: v.ip.lookalikeRisk, isFinal: roll === 2 });
+    if (roll === 2) throw new Error("ip_blocked: " + PAGE_BLOCKED_MESSAGE);
+    flaggedFirst = flags;
+    addendum = rerollAddendum(flags, v.ip.recognizableProtectedCharacter);
+  }
   const jpg = await guestProof(img.data);
   const file = join(outDir, "guest_proof.jpg");
   writeFileSync(file, jpg);

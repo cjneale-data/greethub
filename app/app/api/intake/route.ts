@@ -2,17 +2,18 @@ import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 import { isMockAi } from "@/lib/intake/config";
 import { CardDraftSchema, applyPatch, missingRequired, nextField, progress, type CardDraft } from "@/lib/intake/draft";
-import { REWRITE_CHIPS, checkDraft, checkText, cleanText } from "@/lib/intake/guardrails";
+import { DRAFT_IP_FIELD, NAME_LIKE_FIELDS, REWRITE_CHIPS, checkDraft, checkSensitive, cleanText, knownNamesOf, type DraftField } from "@/lib/intake/guardrails";
 import { liveGuideTurn, polish } from "@/lib/intake/live-guide";
 import { mockGuideTurn } from "@/lib/intake/mock-guide";
 import { quickRepliesFor } from "@/lib/intake/quick-replies";
 import { QUESTIONS } from "@/lib/intake/fields";
 import { allow } from "@/lib/intake/rate-limit";
+import { screenField, screenFields } from "@/lib/safety/server";
 
 const Body = z.object({
   messages: z.array(z.object({ role: z.enum(["user", "assistant"]), content: z.string().max(2000) })).min(1).max(40),
   draft: CardDraftSchema,
-  /** Replaces the last user message for processing (used when the user accepts a generic rewrite). */
+  /** Replaces the last user message for processing (kept for older clients). */
   override: z.string().max(2000).optional(),
 });
 
@@ -42,24 +43,29 @@ export async function POST(req: NextRequest) {
     });
   };
 
-  // Guardrails run before any model sees the text.
-  const verdict = checkText(userText);
-  if (!verdict.ok) {
-    const base = respond(verdict.message, draft);
-    if (verdict.kind === "copyright") {
-      const body = await base.json();
-      return NextResponse.json({ ...body, quickReplies: [...REWRITE_CHIPS], guardrail: { kind: "copyright", rewritten: verdict.rewritten } });
-    }
-    const body = await base.json();
-    return NextResponse.json({ ...body, quickReplies: [], guardrail: { kind: verdict.kind } });
+  // Guardrails run before any model sees the text: sensitive content first, then the IP screen (rules, plus a model call when live).
+  const sens = checkSensitive(userText);
+  if (!sens.ok) {
+    const body = await respond(sens.message, draft).json();
+    return NextResponse.json({ ...body, quickReplies: [], guardrail: { kind: sens.kind } });
   }
+  const known = knownNamesOf(draft);
+  const earlier = messages.filter((m) => m.role === "user").slice(0, -1).map((m) => m.content);
+  const screened = await screenField(userText, "chat", { knownNames: known, history: earlier });
+  if (screened.verdict === "blocked") {
+    const body = await respond(screened.userNote, draft).json();
+    return NextResponse.json({ ...body, quickReplies: [], guardrail: { kind: "public_figure" } });
+  }
+  // A rewrite is applied right away: original characters inspired by the idea. The customer sees a note and can rephrase.
+  const text = screened.verdict === "rewritten" ? screened.safeText : userText;
+  let ipNote = screened.verdict === "rewritten" ? screened.userNote : "";
 
   let reply = "";
   let patch: Partial<CardDraft> = {};
   let usedFallback = false;
   if (!isMockAi()) {
     try {
-      const out = await liveGuideTurn(messages.map((m, i) => (i === messages.length - 1 && override ? { ...m, content: userText } : m)), draft);
+      const out = await liveGuideTurn(messages.map((m, i) => (i === messages.length - 1 && (override || screened.verdict === "rewritten") ? { ...m, content: text } : m)), draft);
       patch = out.patch;
       // The server owns which question comes next: keep the model's acknowledgement, replace its question.
       const after = nextField(applyPatch(draft, patch, "chat"));
@@ -70,19 +76,41 @@ export async function POST(req: NextRequest) {
     }
   }
   if (isMockAi() || usedFallback) {
-    const t = await mockGuideTurn(userText, draft);
+    const t = await mockGuideTurn(text, draft);
     reply = t.reply;
     patch = t.patch;
+  }
+
+  // Screen what the model wrote into the brief too: its output can name protected things as well.
+  const patchRec = patch as Record<string, unknown>;
+  const toScreen = (Object.keys(patchRec) as DraftField[]).filter((k) => k in DRAFT_IP_FIELD && typeof patchRec[k] === "string" && patchRec[k] && !NAME_LIKE_FIELDS.includes(k));
+  if (toScreen.length) {
+    const outs = await screenFields(toScreen.map((k) => ({ text: String(patchRec[k]), field: DRAFT_IP_FIELD[k], knownNames: known })));
+    toScreen.forEach((k, i) => {
+      const r = outs[i];
+      if (r.verdict === "rewritten") {
+        patchRec[k] = r.safeText;
+        ipNote ||= r.userNote;
+      } else if (r.verdict === "blocked") delete patchRec[k];
+    });
   }
 
   // Validate model output: drop any patched field that fails the guardrails.
   const merged = applyPatch(draft, patch, "chat");
   const check = checkDraft(merged);
   let final = merged;
-  if (!check.ok) {
+  if (!check.ok && check.verdict.kind !== "copyright") {
     final = { ...merged, [check.field]: draft[check.field] };
     reply = check.verdict.message;
+  } else if (!check.ok && check.verdict.kind === "copyright") {
+    // Rules still found something the first screen missed: apply the rewrite instead of refusing.
+    final = { ...merged, [check.field]: check.verdict.rewritten };
+    ipNote ||= check.verdict.message;
   }
   if (!reply) reply = nextField(final) ? QUESTIONS[nextField(final)!] : "That's everything I need. Check the card, then make your preview.";
+  if (ipNote) {
+    const body = await respond(`${ipNote} ${reply}`.trim(), final, usedFallback ? { degraded: true } : {}).json();
+    return NextResponse.json({ ...body, quickReplies: [...REWRITE_CHIPS, ...(body.quickReplies ?? [])], ipNote });
+  }
   return respond(reply, final, usedFallback ? { degraded: true } : {});
 }

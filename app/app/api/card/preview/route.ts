@@ -5,6 +5,7 @@ import { CardDraftSchema, toCardBrief, type CardDraft } from "@/lib/intake/draft
 import { checkDraft, guestPhotoViolation } from "@/lib/intake/guardrails";
 import { PreviewFailed, generateGuestPreview, underDailyCap } from "@/lib/intake/preview";
 import { allow } from "@/lib/intake/rate-limit";
+import { screenDraft } from "@/lib/safety/draft";
 
 export const maxDuration = 180;
 
@@ -33,9 +34,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "rate_limited", message: "A lot of cards are being made right now. We're getting to yours." }, { status: 429 });
   }
 
-  const draft = parsed.data.draft as CardDraft;
+  // IP screen on every free-text field (rules + live model), then the sensitive-content rules. Rewrites are applied, not refused.
+  const screened = await screenDraft(parsed.data.draft as CardDraft);
+  if (!screened.ok) return NextResponse.json({ error: "guardrail", field: screened.field, message: screened.message, kind: "public_figure" }, { status: 422 });
+  const draft = screened.draft;
   const guard = checkDraft(draft);
-  if (!guard.ok) return NextResponse.json({ error: "guardrail", field: guard.field, message: guard.verdict.message, kind: guard.verdict.kind }, { status: 422 });
+  if (!guard.ok && guard.verdict.kind !== "copyright") return NextResponse.json({ error: "guardrail", field: guard.field, message: guard.verdict.message, kind: guard.verdict.kind }, { status: 422 });
 
   const built = toCardBrief(draft);
   if (!built.ok) {
@@ -44,11 +48,14 @@ export async function POST(req: NextRequest) {
 
   try {
     const preview = await generateGuestPreview(built.brief);
-    const res = NextResponse.json({ preview: { ...preview, createdAt: new Date().toISOString() } });
+    const res = NextResponse.json({ preview: { ...preview, createdAt: new Date().toISOString() }, ...(screened.notes.length ? { ipNote: screened.notes[0] } : {}) });
     if (session.isGuest) res.cookies.set(GUEST_COOKIE, "1", { httpOnly: true, sameSite: "lax", maxAge: 60 * 60 * 24 * 365, path: "/" });
     return res;
   } catch (e) {
     const code = e instanceof PreviewFailed ? e.message : "render_failed";
+    if (code.startsWith("ip_blocked")) {
+      return NextResponse.json({ error: "ip_blocked", code, message: "That picture kept coming out too close to something that already exists, so we stopped it. Nothing was charged. Want to try a different direction?" }, { status: 422 });
+    }
     return NextResponse.json({ error: "render_failed", code, message: "That one didn't come out. Nothing was charged. Try again?" }, { status: 502 });
   }
 }
