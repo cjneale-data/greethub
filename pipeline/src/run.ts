@@ -6,6 +6,7 @@ import { modelSheet } from "./stages/modelsheet.js";
 import { writeCardCopy, writeStory } from "./stages/copy.js";
 import { pagePrompts } from "./stages/prompts.js";
 import { renderPage } from "./stages/render.js";
+import { IpBlockedError, PAGE_BLOCKED_MESSAGE } from "./safety/index.js";
 import { layoutBook, type BookLayoutReport } from "./layout/book.js";
 import { layoutCard, type CardLayoutReport } from "./layout/card.js";
 import type { Ctx, PagePlan, RenderResult } from "./types.js";
@@ -34,6 +35,7 @@ async function renderAll(ctx: Ctx, pages: PagePlan[], prompts: Record<string, st
   for (const p of pages) {
     const r = await renderPage(ctx, p, prompts[p.id], sheet, { visionQa: opts.visionQa });
     if (!r) throw new Error(`Render failed for ${p.id} on every model`);
+    if (r.ipBlocked) throw new IpBlockedError(PAGE_BLOCKED_MESSAGE);
     out.push(r);
   }
   return out;

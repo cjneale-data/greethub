@@ -17,7 +17,14 @@ export async function fakeArt(w = 256, h = 256): Promise<Buffer> {
   return sharp(raw, { raw: { width: w, height: h, channels: 3 } }).png().toBuffer();
 }
 
-export type MockOpts = { qaCount?: (n: number) => number; imageCost?: number };
+export type MockOpts = {
+  qaCount?: (n: number) => number;
+  imageCost?: number;
+  /** Extra fields for the vision QA reply on the nth QA call (IP flags). */
+  qaIp?: (n: number) => Record<string, unknown>;
+  /** Override the story JSON (to test output screening). */
+  story?: (spreads: number) => Record<string, unknown>;
+};
 
 /** Routes by prompt content, mimicking OpenRouter responses including usage.cost. */
 export function mockFetch(calls: { model: string; text: string }[] = [], o: MockOpts = {}): FetchLike {
@@ -40,14 +47,14 @@ export function mockFetch(calls: { model: string; text: string }[] = [], o: Mock
     if (text.startsWith("Picture-book illustration QA")) {
       qaN++;
       const expected = Number(/cast that must appear: (\d+)/.exec(text)![1]);
-      return ok({ content: JSON.stringify({ character_count: o.qaCount ? o.qaCount(qaN) : expected, text_in_image: false, notes: "ok" }) }, 0.003);
+      return ok({ content: JSON.stringify({ character_count: o.qaCount ? o.qaCount(qaN) : expected, text_in_image: false, recognizable_protected_character: null, logo_or_brand_mark: false, slogan_or_trademarked_text: false, licensed_merch_on_clothing: false, character_lookalike_risk: 1, notes: "ok", ...(o.qaIp?.(qaN) ?? {}) }) }, 0.003);
     }
     if (text.startsWith("You are the art director")) return ok({ content: "MADISON: anchors... uniform yellow." }, 0.02);
     if (text.startsWith("Write a") && text.includes("picture book")) {
       const n = Number(/exactly (\d+) spreads/.exec(text)![1]);
       return ok(
         {
-          content: JSON.stringify({
+          content: JSON.stringify(o.story?.(n) ?? {
             title: "The Test Story",
             blurb: "A test blurb.",
             cover_scene: "cover scene",

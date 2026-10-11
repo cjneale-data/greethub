@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { extractJson } from "../imageutil.js";
 import { GUIDELINES } from "../guidelines.js";
 import { cast, styleOf } from "./identity.js";
+import { IMAGE_HARDENING_LINES, sanitizeImagePrompt } from "../safety/index.js";
 import type { Ctx, PagePlan } from "../types.js";
 
 /** Lines that code (not the LLM) appends to every page prompt. These are the Eye Story lessons: image models
@@ -20,6 +21,7 @@ export function guardLines(page: PagePlan): string {
     count,
     "OUTFIT: each character wears exactly their locked outfit from the model sheet, identical to every other page - same colours, same cut, no added stripes, patterns, buttons or pockets. Smiles show the same teeth as the model sheet (a full row of teeth stays a full row, never a gap).",
     "No text, letters, numbers or words anywhere in the image.",
+    ...IMAGE_HARDENING_LINES,
   ].join("\n");
 }
 
@@ -53,7 +55,9 @@ export async function pagePrompts(ctx: Ctx, identity: string, pages: PagePlan[])
   for (const p of pages) {
     const base = body[p.id];
     if (!base) throw new Error(`No prompt returned for page ${p.id}`);
-    out[p.id] = `${base.trim()}\n\n${guardLines(p)}`;
+    // Last-mile sanitiser: nothing the model wrote reaches the image model with a protected name, brand or slogan in it.
+    const safeBase = sanitizeImagePrompt(base.trim(), [...cast(ctx.brief).map((c) => c.name), ctx.brief.recipient.name]).text;
+    out[p.id] = `${safeBase}\n\n${guardLines(p)}`;
   }
   writeFileSync(join(ctx.workDir, "prompts.json"), JSON.stringify(out, null, 2), "utf8");
   return out;
