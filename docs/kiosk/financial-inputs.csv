@@ -1,0 +1,287 @@
+section,item,detail,low,base,high,unit,confidence,note
+assumption,blended_daily_rate_engineering_design,all phases,850,1000,1200,USD/day (8h),U,"blended contractor rate: software, mechanical, ID, PM"
+assumption,field_service_day_rate,P2 installs/visits,450,600,750,USD/day,U,
+assumption,days_multiplier_vs_base,all phases,0.7,1.0,1.5,x,U,low=off-the-shelf only; high=full custom fold+envelope automation
+rd_phase_labor,P0,Concept validation (26 base days + 0 field days),15470.0,26000.0,46800.0,USD,U,3 months starting M1
+rd_phase_nonlabor,P0_prototype_hw,Concept validation,2500,3500,5000,USD,U,
+rd_phase_nonlabor,P0_pilot_ops,Concept validation,300,600,1000,USD,U,
+rd_phase_nonlabor,P0_legal,Concept validation,0,0,2000,USD,U,
+rd_phase_nonlabor,P0_certs,Concept validation,0,0,0,USD,U,
+rd_phase_nonlabor,P0_tooling,Concept validation,0,0,0,USD,U,
+rd_phase_nonlabor,P0_other,Concept validation,0,0,0,USD,U,
+rd_phase_contingency,P0,Concept validation,1827.0,4515.0,10960.0,USD,U,
+rd_phase_total,P0,Concept validation,20097.0,34615.0,65760.0,USD,U,labor + non-labor + contingency
+rd_phase_labor,P1,Pilot prototype (187 base days + 0 field days),111265.0,187000.0,336600.0,USD,U,5 months starting M5
+rd_phase_nonlabor,P1_prototype_hw,Pilot prototype,7000,19000,50000,USD,U,
+rd_phase_nonlabor,P1_pilot_ops,Pilot prototype,0,0,0,USD,U,
+rd_phase_nonlabor,P1_legal,Pilot prototype,0,0,0,USD,U,
+rd_phase_nonlabor,P1_certs,Pilot prototype,0,4000,8000,USD,U,
+rd_phase_nonlabor,P1_tooling,Pilot prototype,2000,15000,35000,USD,U,
+rd_phase_nonlabor,P1_other,Pilot prototype,100,300,600,USD,U,
+rd_phase_contingency,P1,Pilot prototype,18054.75,45060.0,107550.0,USD,U,
+rd_phase_total,P1,Pilot prototype,138419.75,270360.0,537750.0,USD,U,labor + non-labor + contingency
+rd_phase_labor,P2,Field pilot 1-3 sites (77 base days + 36 field days),57155.0,98600.0,179100.0,USD,U,6 months starting M11
+rd_phase_nonlabor,P2_prototype_hw,Field pilot 1-3 sites,10500,15000,36000,USD,U,
+rd_phase_nonlabor,P2_pilot_ops,Field pilot 1-3 sites,4500,7200,11700,USD,U,
+rd_phase_nonlabor,P2_legal,Field pilot 1-3 sites,6000,12000,25000,USD,U,
+rd_phase_nonlabor,P2_certs,Field pilot 1-3 sites,0,7500,18000,USD,U,
+rd_phase_nonlabor,P2_tooling,Field pilot 1-3 sites,0,0,0,USD,U,
+rd_phase_nonlabor,P2_other,Field pilot 1-3 sites,2000,4200,9000,USD,U,
+rd_phase_contingency,P2,Field pilot 1-3 sites,12023.25,28900.0,69700.0,USD,U,
+rd_phase_total,P2,Field pilot 1-3 sites,92178.25,173400.0,348500.0,USD,U,labor + non-labor + contingency
+rd_phase_labor,P3,Productized small batch (200 base days + 0 field days),119000.0,200000.0,360000.0,USD,U,6 months starting M18
+rd_phase_nonlabor,P3_prototype_hw,Productized small batch,0,0,0,USD,U,
+rd_phase_nonlabor,P3_pilot_ops,Productized small batch,0,0,0,USD,U,
+rd_phase_nonlabor,P3_legal,Productized small batch,8000,15000,30000,USD,U,
+rd_phase_nonlabor,P3_certs,Productized small batch,12000,30000,60000,USD,U,
+rd_phase_nonlabor,P3_tooling,Productized small batch,15000,45000,110000,USD,U,
+rd_phase_nonlabor,P3_other,Productized small batch,8000,16000,30000,USD,U,
+rd_phase_contingency,P3,Productized small batch,24300.0,61200.0,177000.0,USD,U,
+rd_phase_total,P3,Productized small batch,186300.0,367200.0,767000.0,USD,U,labor + non-labor + contingency
+rd_phase_labor,P4,Scale (sustaining R&D) (160 base days + 0 field days),95200.0,160000.0,288000.0,USD,U,12 months starting M25
+rd_phase_nonlabor,P4_prototype_hw,Scale (sustaining R&D),0,0,0,USD,U,
+rd_phase_nonlabor,P4_pilot_ops,Scale (sustaining R&D),0,0,0,USD,U,
+rd_phase_nonlabor,P4_legal,Scale (sustaining R&D),3000,8000,20000,USD,U,
+rd_phase_nonlabor,P4_certs,Scale (sustaining R&D),0,5000,15000,USD,U,
+rd_phase_nonlabor,P4_tooling,Scale (sustaining R&D),10000,40000,100000,USD,U,
+rd_phase_nonlabor,P4_other,Scale (sustaining R&D),0,0,0,USD,U,
+rd_phase_contingency,P4,Scale (sustaining R&D),16230.0,42600.0,105750.0,USD,U,
+rd_phase_total,P4,Scale (sustaining R&D),124430.0,255600.0,528750.0,USD,U,labor + non-labor + contingency
+rd_total,P0-P4 (36 months),,561425.0,1101175.0,2247760.0,USD,U,excludes deployable fleet capex
+monthly_rd_cash,M01,P0,5622.0667,9769.6667,18792.0,USD,U,
+monthly_rd_cash,M02,P0,8578.8167,14398.4167,26532.0,USD,U,
+monthly_rd_cash,M03,P0,5896.1167,10446.9167,20436.0,USD,U,
+monthly_rd_cash,M04,gate,0.0,0.0,0.0,USD,U,
+monthly_rd_cash,M05,P1,24439.57,42867.2,80346.0,USD,U,
+monthly_rd_cash,M06,P1,33245.045,66373.2,141101.0,USD,U,
+monthly_rd_cash,M07,P1,24439.57,42867.2,80346.0,USD,U,
+monthly_rd_cash,M08,P1,28147.7825,59126.2,117978.5,USD,U,
+monthly_rd_cash,M09,P1,28147.7825,59126.2,117978.5,USD,U,
+monthly_rd_cash,M10,gate,0.0,0.0,0.0,USD,U,
+monthly_rd_cash,M11,P2,12811.4917,23223.3333,44436.6667,USD,U,
+monthly_rd_cash,M12,P2,24513.8167,41113.3333,87406.6667,USD,U,
+monthly_rd_cash,M13,P2,12811.4917,23223.3333,44436.6667,USD,U,
+monthly_rd_cash,M14,P2,12811.4917,23223.3333,44436.6667,USD,U,
+monthly_rd_cash,M15,P2,14614.9792,31308.3333,63891.6667,USD,U,
+monthly_rd_cash,M16,P2,14614.9792,31308.3333,63891.6667,USD,U,
+monthly_rd_cash,M17,gate,0.0,0.0,0.0,USD,U,
+monthly_rd_cash,M18,P3,24930.0,44620.0,87700.0,USD,U,
+monthly_rd_cash,M19,P3,27360.0,50740.0,105400.0,USD,U,
+monthly_rd_cash,M20,P3,24930.0,44620.0,87700.0,USD,U,
+monthly_rd_cash,M21,P3,24930.0,44620.0,87700.0,USD,U,
+monthly_rd_cash,M22,P3,42075.0,91300.0,199250.0,USD,U,
+monthly_rd_cash,M23,P3,42075.0,91300.0,199250.0,USD,U,
+monthly_rd_cash,M24,gate,0.0,0.0,0.0,USD,U,
+monthly_rd_cash,M25,P4,8994.8333,16130.0,30954.1667,USD,U,
+monthly_rd_cash,M26,P4,10617.8333,20390.0,41529.1667,USD,U,
+monthly_rd_cash,M27,P4,8994.8333,16130.0,30954.1667,USD,U,
+monthly_rd_cash,M28,P4,8994.8333,16130.0,30954.1667,USD,U,
+monthly_rd_cash,M29,P4,8994.8333,16130.0,30954.1667,USD,U,
+monthly_rd_cash,M30,P4,8994.8333,16130.0,30954.1667,USD,U,
+monthly_rd_cash,M31,P4,8994.8333,16130.0,30954.1667,USD,U,
+monthly_rd_cash,M32,P4,8994.8333,16130.0,30954.1667,USD,U,
+monthly_rd_cash,M33,P4,8994.8333,16130.0,30954.1667,USD,U,
+monthly_rd_cash,M34,P4,8994.8333,16130.0,30954.1667,USD,U,
+monthly_rd_cash,M35,P4,16429.3333,45020.0,104316.6667,USD,U,
+monthly_rd_cash,M36,P4,16429.3333,45020.0,104316.6667,USD,U,
+bom_line,Tier A: tablet 10-12in (iPad/Android) in kiosk mode,cols low/base/high = qty 1 / qty 10 / qty 100,520,480,420,USD per unit,U,O=off-the-shelf C=custom L=labor; type O
+bom_line,Tier A: dye-sub photo printer 5x7 capable (DNP DS620A class; B&H $995 S),cols low/base/high = qty 1 / qty 10 / qty 100,1050,995,900,USD per unit,U,O=off-the-shelf C=custom L=labor; type O
+bom_line,"Tier A: stand/enclosure, printer shroud, lock, cable lock",cols low/base/high = qty 1 / qty 10 / qty 100,700,380,220,USD per unit,U,O=off-the-shelf C=custom L=labor; type C
+bom_line,Tier A: card reader (Stripe S700 class; $299 S),cols low/base/high = qty 1 / qty 10 / qty 100,299,299,280,USD per unit,U,O=off-the-shelf C=custom L=labor; type O
+bom_line,"Tier A: networking (wifi, optional LTE dongle)",cols low/base/high = qty 1 / qty 10 / qty 100,120,100,80,USD per unit,U,O=off-the-shelf C=custom L=labor; type O
+bom_line,"Tier A: power/surge, cabling",cols low/base/high = qty 1 / qty 10 / qty 100,40,40,30,USD per unit,U,O=off-the-shelf C=custom L=labor; type O
+bom_line,Tier A: envelope tray + signage,cols low/base/high = qty 1 / qty 10 / qty 100,110,70,45,USD per unit,U,O=off-the-shelf C=custom L=labor; type C
+bom_line,Tier A: assembly and burn-in,cols low/base/high = qty 1 / qty 10 / qty 100,300,120,50,USD per unit,U,O=off-the-shelf C=custom L=labor; type L
+bom_line,Tier A: shipping/crating,cols low/base/high = qty 1 / qty 10 / qty 100,150,90,50,USD per unit,U,O=off-the-shelf C=custom L=labor; type L
+bom_total,Tier A incl 5% spares,cols = qty 1 / qty 10 / qty 100,3453.45,2702.7,2178.75,USD per unit,U,
+bom_line,"Tier B: touchscreen 21.5in commercial capacitive, ADA-angled",cols low/base/high = qty 1 / qty 10 / qty 100,780,650,480,USD per unit,U,O=off-the-shelf C=custom L=labor; type O
+bom_line,"Tier B: compute: mini PC (N100 class), SSD, TPM",cols low/base/high = qty 1 / qty 10 / qty 100,300,250,190,USD per unit,U,O=off-the-shelf C=custom L=labor; type O
+bom_line,Tier B: printer engine: commercial duplex color (laser or pigment inkjet),cols low/base/high = qty 1 / qty 10 / qty 100,1700,1500,1200,USD per unit,U,O=off-the-shelf C=custom L=labor; type O
+bom_line,"Tier B: card-stock feed adaptation (10x7 pre-scored blanks, 200 sheet cassette)",cols low/base/high = qty 1 / qty 10 / qty 100,1200,600,350,USD per unit,U,O=off-the-shelf C=custom L=labor; type C
+bom_line,Tier B: automatic fold module (roller/blade folder),cols low/base/high = qty 1 / qty 10 / qty 100,2500,1200,700,USD per unit,U,O=off-the-shelf C=custom L=labor; type C
+bom_line,Tier B: envelope dispenser (stack pick / slot dispense),cols low/base/high = qty 1 / qty 10 / qty 100,2400,1500,900,USD per unit,U,O=off-the-shelf C=custom L=labor; type C
+bom_line,"Tier B: freestanding steel enclosure, doors, ADA reach layout",cols low/base/high = qty 1 / qty 10 / qty 100,6000,3000,1300,USD per unit,U,O=off-the-shelf C=custom L=labor; type C
+bom_line,"Tier B: cooling, filters, dust seals",cols low/base/high = qty 1 / qty 10 / qty 100,200,150,100,USD per unit,U,O=off-the-shelf C=custom L=labor; type O
+bom_line,"Tier B: security: locks, tamper switch, anchor",cols low/base/high = qty 1 / qty 10 / qty 100,300,200,150,USD per unit,U,O=off-the-shelf C=custom L=labor; type C
+bom_line,Tier B: unattended payment reader (UX700 class; price not found),cols low/base/high = qty 1 / qty 10 / qty 100,650,550,500,USD per unit,U,O=off-the-shelf C=custom L=labor; type O
+bom_line,"Tier B: networking: LTE router + wifi, antennas",cols low/base/high = qty 1 / qty 10 / qty 100,450,350,280,USD per unit,U,O=off-the-shelf C=custom L=labor; type O
+bom_line,Tier B: UPS + remote-reboot PDU,cols low/base/high = qty 1 / qty 10 / qty 100,350,300,200,USD per unit,U,O=off-the-shelf C=custom L=labor; type O
+bom_line,"Tier B: sensors (door, stock, jam, temperature)",cols low/base/high = qty 1 / qty 10 / qty 100,150,100,70,USD per unit,U,O=off-the-shelf C=custom L=labor; type C
+bom_line,"Tier B: accessibility: audio jack, headphones, tactile controls",cols low/base/high = qty 1 / qty 10 / qty 100,300,150,150,USD per unit,U,O=off-the-shelf C=custom L=labor; type C
+bom_line,"Tier B: assembly, calibration, burn-in",cols low/base/high = qty 1 / qty 10 / qty 100,2400,600,350,USD per unit,U,O=off-the-shelf C=custom L=labor; type L
+bom_line,"Tier B: shipping/crating, install kit",cols low/base/high = qty 1 / qty 10 / qty 100,500,300,250,USD per unit,U,O=off-the-shelf C=custom L=labor; type L
+bom_total,Tier B incl 5% spares,cols = qty 1 / qty 10 / qty 100,21189.0,11970.0,7528.5,USD per unit,U,
+bom_line,Tier C: tablet 10-12in + stand,cols low/base/high = qty 1 / qty 10 / qty 100,520,480,420,USD per unit,U,O=off-the-shelf C=custom L=labor; type O
+bom_line,Tier C: counter printer (Fujifilm CX3240 class or pro inkjet; price not found),cols low/base/high = qty 1 / qty 10 / qty 100,3200,2800,2300,USD per unit,U,O=off-the-shelf C=custom L=labor; type O
+bom_line,Tier C: trimmer + manual crease/fold tool,cols low/base/high = qty 1 / qty 10 / qty 100,450,300,220,USD per unit,U,O=off-the-shelf C=custom L=labor; type O
+bom_line,Tier C: card reader (optional; default is pay at retailer till),cols low/base/high = qty 1 / qty 10 / qty 100,0,0,0,USD per unit,U,O=off-the-shelf C=custom L=labor; type O
+bom_line,Tier C: networking (wifi),cols low/base/high = qty 1 / qty 10 / qty 100,100,100,80,USD per unit,U,O=off-the-shelf C=custom L=labor; type O
+bom_line,"Tier C: countertop enclosure/shroud, lock",cols low/base/high = qty 1 / qty 10 / qty 100,700,350,200,USD per unit,U,O=off-the-shelf C=custom L=labor; type C
+bom_line,Tier C: stock tray + envelope tray + signage,cols low/base/high = qty 1 / qty 10 / qty 100,150,100,60,USD per unit,U,O=off-the-shelf C=custom L=labor; type C
+bom_line,Tier C: assembly and burn-in,cols low/base/high = qty 1 / qty 10 / qty 100,300,120,50,USD per unit,U,O=off-the-shelf C=custom L=labor; type L
+bom_line,Tier C: shipping/crating,cols low/base/high = qty 1 / qty 10 / qty 100,150,90,50,USD per unit,U,O=off-the-shelf C=custom L=labor; type L
+bom_total,Tier C incl 5% spares,cols = qty 1 / qty 10 / qty 100,5848.5,4557.0,3549.0,USD per unit,U,
+bom_range_qty10,Tier A,low/base/high at 10 units,1945.944,2702.7,3918.915,USD per unit,U,-28% / +45% (custom parts drift upward)
+bom_range_qty10,Tier B,low/base/high at 10 units,8618.4,11970.0,17356.5,USD per unit,U,-28% / +45% (custom parts drift upward)
+bom_range_qty10,Tier C,low/base/high at 10 units,3281.04,4557.0,6607.65,USD per unit,U,-28% / +45% (custom parts drift upward)
+consumables_line,Tier A: card_media_print,,0.35,0.45,0.6,USD per card,U,
+consumables_line,Tier A: envelope,,0.05,0.08,0.12,USD per card,U,
+consumables_line,Tier A: waste_pct,,0.02,0.03,0.06,fraction,U,
+consumables_per_card,Tier A total incl waste,,0.408,0.5459,0.7632,USD per card,U,
+consumables_line,Tier B: card_blank_scored,,0.12,0.2,0.3,USD per card,U,
+consumables_line,Tier B: toner_or_ink,,0.05,0.09,0.14,USD per card,U,
+consumables_line,Tier B: envelope,,0.05,0.08,0.12,USD per card,U,
+consumables_line,Tier B: waste_pct,,0.04,0.08,0.15,fraction,U,
+consumables_per_card,Tier B total incl waste,,0.2288,0.3996,0.644,USD per card,U,
+consumables_line,Tier C: card_media,,0.15,0.25,0.35,USD per card,U,
+consumables_line,Tier C: ink_toner,,0.06,0.12,0.18,USD per card,U,
+consumables_line,Tier C: envelope,,0.05,0.08,0.12,USD per card,U,
+consumables_line,Tier C: waste_pct,,0.03,0.06,0.12,fraction,U,
+consumables_per_card,Tier C total incl waste,,0.2678,0.477,0.728,USD per card,U,
+model_cost_session,quick_pick (pre-generated art + AI message),,0.01,0.02,0.03,USD,S,measured card_copy $0.0054 x1.055 + moderation
+model_cost_session,personalize (1 render 2K + message),,0.1,0.14,0.2,USD,S,"measured 2K $0.0609, prompts, QA, 20% reroll, 5.5% fee, intake"
+model_cost_session,full_custom (front+inside),,0.28,0.36,0.5,USD,S,measured $0.2479 x1.055 + intake $0.07-0.13
+model_cost_per_card_sold,blended incl abandoned sessions,mix 50/35/15; abandoned sessions cost 0.8x a sold one,0.08,0.2,0.55,USD,U,
+opex_kiosk_month_tierB,connectivity,,0,25,40,USD/month,U,
+opex_kiosk_month_tierB,device_mgmt_monitoring,,8,12,20,USD/month,U,
+opex_kiosk_month_tierB,insurance_allocation,,20,40,70,USD/month,U,
+opex_kiosk_month_tierB,service_visits,,60,128,240,USD/month,U,
+opex_kiosk_month_tierB,parts_repairs,,25,47,90,USD/month,U,
+opex_kiosk_month_tierB,software_hosting_alloc,,5,10,20,USD/month,U,
+opex_kiosk_month_tierB_total,"fixed, excl depreciation",,118,262,480,USD/month,U,
+service_visit_cost,per visit incl travel + restock shipping,base 1.3 visits/month tier B,60,100,150,USD,U,
+depreciation_life,kiosk straight-line,,48,36,24,months,U,
+revenue_assumption,price_per_card_incl_envelope,excl sales tax; low/base/high,5.99,6.99,7.99,USD,U,online printed is $7.99 + $2.99 postage
+revenue_assumption,cards_per_kiosk_per_day,mature,2,5,10,cards/day,U,"precedent: Scribbler stores ~3,000 extra cards/yr (~8/day, pgbuzz 2025-01-10)"
+revenue_assumption,location_revenue_share,low case = worst for GreetHub,0.35,0.25,0.15,fraction of net sales,U,no source gave terms
+revenue_assumption,payment_fee_pct,card-present,0.029,0.027,0.027,fraction,S,2.7% + $0.05 per TechRadar (undated)
+revenue_assumption,payment_fee_fixed,,0.3,0.05,0.05,USD,S,
+revenue_assumption,account_signup_rate_of_kiosk_buyers,"upside only, not in base case",0.05,0.15,0.3,fraction,U,
+unit_economics_tierB,price,"low=bad case, high=good case (all levers together)",5.99,6.99,7.99,"USD, or cards (be_* = cards/day)",U,
+unit_economics_tierB,fee,"low=bad case, high=good case (all levers together)",0.4737,0.2387,0.2657,"USD, or cards (be_* = cards/day)",U,
+unit_economics_tierB,loc,"low=bad case, high=good case (all levers together)",2.0965,1.7475,1.1985,"USD, or cards (be_* = cards/day)",U,
+unit_economics_tierB,cons,"low=bad case, high=good case (all levers together)",0.644,0.3996,0.2288,"USD, or cards (be_* = cards/day)",U,
+unit_economics_tierB,mc,"low=bad case, high=good case (all levers together)",0.55,0.2,0.08,"USD, or cards (be_* = cards/day)",U,
+unit_economics_tierB,contrib,"low=bad case, high=good case (all levers together)",2.2258,4.4042,6.217,"USD, or cards (be_* = cards/day)",U,
+unit_economics_tierB,fixed,"low=bad case, high=good case (all levers together)",480,262,118,"USD, or cards (be_* = cards/day)",U,
+unit_economics_tierB,dep,"low=bad case, high=good case (all levers together)",723.1875,332.5,179.55,"USD, or cards (be_* = cards/day)",U,
+unit_economics_tierB,cards_mo,"low=bad case, high=good case (all levers together)",60.8,152.0,304.0,"USD, or cards (be_* = cards/day)",U,
+unit_economics_tierB,mo_cash,"low=bad case, high=good case (all levers together)",-344.672,407.4338,1771.9589,"USD, or cards (be_* = cards/day)",U,
+unit_economics_tierB,mo_net,"low=bad case, high=good case (all levers together)",-1067.8595,74.9338,1592.4089,"USD, or cards (be_* = cards/day)",U,
+unit_economics_tierB,be_cash,"low=bad case, high=good case (all levers together)",7.0939,1.9569,0.6244,"USD, or cards (be_* = cards/day)",U,
+unit_economics_tierB,be_full,"low=bad case, high=good case (all levers together)",17.7818,4.4403,1.5744,"USD, or cards (be_* = cards/day)",U,
+unit_economics_tierB,bom,"low=bad case, high=good case (all levers together)",17356.5,11970.0,8618.4,"USD, or cards (be_* = cards/day)",U,
+fleet_low,M01,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M02,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M03,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M04,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M05,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M06,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M07,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M08,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M09,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M10,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M11,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M12,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M13,units_live=3,109,655.55,411.96,1440,-1196.41,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M14,units_live=3,109,655.55,411.96,1440,-1196.41,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M15,units_live=3,109,655.55,411.96,1440,-1196.41,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M16,units_live=3,109,655.55,411.96,1440,-1196.41,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M17,units_live=3,182,1092.58,686.59,1440,-1034.02,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M18,units_live=3,182,1092.58,686.59,1440,-1034.02,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M19,units_live=3,182,1092.58,686.59,1440,-1034.02,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M20,units_live=3,182,1092.58,686.59,1440,-1034.02,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M21,units_live=3,182,1092.58,686.59,1440,-1034.02,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M22,units_live=3,182,1092.58,686.59,1440,-1034.02,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M23,units_live=3,182,1092.58,686.59,1440,-1034.02,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M24,units_live=13,790,4734.5,2975.23,6240,-4480.74,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=119700.0
+fleet_low,M25,units_live=13,790,4734.5,2975.23,6240,-4480.74,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_low,M26,units_live=19,1155,6919.65,4348.42,9120,-6548.77,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=71820.0
+fleet_low,M27,units_live=25,1520,9104.8,5721.6,12000,-8616.8,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=71820.0
+fleet_low,M28,units_live=33,2006,12018.34,7552.51,15840,-11374.17,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=95760.0
+fleet_low,M29,units_live=42,2554,15296.06,9612.29,20160,-14476.22,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=107730.0
+fleet_low,M30,units_live=50,3040,18209.6,11443.2,24000,-17233.6,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=95760.0
+fleet_low,M31,units_live=58,3526,21123.14,13274.11,27840,-19990.97,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=60228.0
+fleet_low,M32,units_live=67,4074,24400.86,15333.89,32160,-23093.02,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=67756.5
+fleet_low,M33,units_live=75,4560,27314.4,17164.8,36000,-25850.4,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=60228.0
+fleet_low,M34,units_live=83,5046,30227.94,18995.71,39840,-28607.77,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=60228.0
+fleet_low,M35,units_live=92,5594,33505.66,21055.49,44160,-31709.82,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=67756.5
+fleet_low,M36,units_live=100,6080,36419.2,22886.4,48000,-34467.2,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=60228.0
+fleet_base,M01,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M02,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M03,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M04,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M05,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M06,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M07,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M08,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M09,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M10,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M11,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M12,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M13,units_live=3,274,1912.46,707.48,786,418.98,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M14,units_live=3,274,1912.46,707.48,786,418.98,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M15,units_live=3,274,1912.46,707.48,786,418.98,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M16,units_live=3,274,1912.46,707.48,786,418.98,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M17,units_live=3,456,3187.44,1179.14,786,1222.3,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M18,units_live=3,456,3187.44,1179.14,786,1222.3,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M19,units_live=3,456,3187.44,1179.14,786,1222.3,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M20,units_live=3,456,3187.44,1179.14,786,1222.3,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M21,units_live=3,456,3187.44,1179.14,786,1222.3,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M22,units_live=3,456,3187.44,1179.14,786,1222.3,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M23,units_live=3,456,3187.44,1179.14,786,1222.3,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M24,units_live=13,1976,13812.24,5109.6,3406,5296.64,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=119700.0
+fleet_base,M25,units_live=13,1976,13812.24,5109.6,3406,5296.64,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_base,M26,units_live=19,2888,20187.12,7467.88,4978,7741.24,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=71820.0
+fleet_base,M27,units_live=25,3800,26562.0,9826.15,6550,10185.85,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=71820.0
+fleet_base,M28,units_live=33,5016,35061.84,12970.52,8646,13445.32,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=95760.0
+fleet_base,M29,units_live=42,6384,44624.16,16507.94,11004,17112.22,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=107730.0
+fleet_base,M30,units_live=50,7600,53124.0,19652.31,13100,20371.69,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=95760.0
+fleet_base,M31,units_live=58,8816,61623.84,22796.68,15196,23631.16,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=60228.0
+fleet_base,M32,units_live=67,10184,71186.16,26334.09,17554,27298.07,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=67756.5
+fleet_base,M33,units_live=75,11400,79686.0,29478.46,19650,30557.54,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=60228.0
+fleet_base,M34,units_live=83,12616,88185.84,32622.83,21746,33817.01,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=60228.0
+fleet_base,M35,units_live=92,13984,97748.16,36160.25,24104,37483.91,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=67756.5
+fleet_base,M36,units_live=100,15200,106248.0,39304.62,26200,40743.38,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=60228.0
+fleet_high,M01,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M02,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M03,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M04,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M05,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M06,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M07,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M08,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M09,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M10,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M11,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M12,units_live=0,0,0.0,0.0,0,0.0,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M13,units_live=3,547,4372.13,970.2,354,3047.93,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M14,units_live=3,547,4372.13,970.2,354,3047.93,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M15,units_live=3,547,4372.13,970.2,354,3047.93,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M16,units_live=3,547,4372.13,970.2,354,3047.93,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M17,units_live=3,912,7286.88,1617.0,354,5315.88,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M18,units_live=3,912,7286.88,1617.0,354,5315.88,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M19,units_live=3,912,7286.88,1617.0,354,5315.88,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M20,units_live=3,912,7286.88,1617.0,354,5315.88,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M21,units_live=3,912,7286.88,1617.0,354,5315.88,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M22,units_live=3,912,7286.88,1617.0,354,5315.88,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M23,units_live=3,912,7286.88,1617.0,354,5315.88,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M24,units_live=13,3952,31576.48,7007.01,1534,23035.47,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=119700.0
+fleet_high,M25,units_live=13,3952,31576.48,7007.01,1534,23035.47,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=0.0
+fleet_high,M26,units_live=19,5776,46150.24,10241.02,2242,33667.22,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=71820.0
+fleet_high,M27,units_live=25,7600,60724.0,13475.03,2950,44298.97,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=71820.0
+fleet_high,M28,units_live=33,10032,80155.68,17787.04,3894,58474.64,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=95760.0
+fleet_high,M29,units_live=42,12768,102016.32,22638.05,4956,74422.27,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=107730.0
+fleet_high,M30,units_live=50,15200,121448.0,26950.06,5900,88597.94,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=95760.0
+fleet_high,M31,units_live=58,17632,140879.68,31262.06,6844,102773.62,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=60228.0
+fleet_high,M32,units_live=67,20368,162740.32,36113.08,7906,118721.24,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=67756.5
+fleet_high,M33,units_live=75,22800,182172.0,40425.08,8850,132896.92,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=60228.0
+fleet_high,M34,units_live=83,25232,201603.68,44737.09,9794,147072.59,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=60228.0
+fleet_high,M35,units_live=92,27968,223464.32,49588.1,10856,163020.22,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=67756.5
+fleet_high,M36,units_live=100,30400,242896.0,53900.11,11800,177195.89,"cols: cards, revenue, variable_cost, fixed_cost, op_contribution (USD)",U,fleet_capex_USD=60228.0
+cum_cash_36m,low,low R&D with bad revenue; base with base; high R&D with good revenue,-1743394,-1743394,,,,"USD: col1 = M36 cumulative, col2 = trough",U,
+cum_cash_36m,base,low R&D with bad revenue; base with base; high R&D with good revenue,-1756977,-1756977,,,,"USD: col1 = M36 cumulative, col2 = trough",U,
+cum_cash_36m,high,low R&D with bad revenue; base with base; high R&D with good revenue,-1950160,-2082965,,,,"USD: col1 = M36 cumulative, col2 = trough",U,
+cum_cash_36m_baseRD,low,base R&D with this revenue case,-2283144,-2283144,,,,"USD: col1 = M36 cumulative, col2 = trough",U,
+cum_cash_36m_baseRD,base,base R&D with this revenue case,-1756977,-1756977,,,,"USD: col1 = M36 cumulative, col2 = trough",U,
+cum_cash_36m_baseRD,high,base R&D with this revenue case,-803575,-1114270,,,,"USD: col1 = M36 cumulative, col2 = trough",U,
