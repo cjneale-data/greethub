@@ -10,6 +10,7 @@ const LINKS = [
   { label: "Cards", href: "/browse?product=card", match: "/browse" },
   { label: "Picture books", href: "/browse?product=book", match: "/browse" },
   { label: "Pricing", href: "/pricing", match: "/pricing" },
+  { label: "AI assistants", href: "/assistants", match: "/assistants" },
   { label: "FAQ", href: "/faq", match: "/faq" },
 ];
 

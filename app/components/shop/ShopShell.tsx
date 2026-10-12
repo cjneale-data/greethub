@@ -25,6 +25,7 @@ export function Footer() {
           <h4>Help</h4>
           <Link href="/pricing">Pricing</Link>
           <Link href="/faq">FAQ</Link>
+          <Link href="/assistants">Order from your AI assistant</Link>
           <Link href="/orders">Track an order</Link>
         </div>
         <div>

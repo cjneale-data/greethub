@@ -19,6 +19,7 @@ const FAQ: [string, string][] = [
   ["Is the art made by AI?", "Yes. The pictures are drawn by AI image models from your brief and photos, then laid out and printed by us. We say so plainly. You always see it before it prints."],
   ["Can I sell what I make or use it commercially?", "For personal use, it's yours. For business use, email us first."],
   ["Which countries do you ship to?", "We ship to the US to start. More countries soon."],
+  ["Can I order from ChatGPT, Claude or Gemini?", "Not yet. We are building a way to draft a card from your AI assistant, where you still approve and pay on greethub.com. See \"Order from your AI assistant\" in the footer."],
   ["How do I delete my account?", "Account, then Delete account. It removes your profile, saved people, photos, drafts and addresses. You can also download your data first."],
 ];
 

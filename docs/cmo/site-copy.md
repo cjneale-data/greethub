@@ -283,3 +283,9 @@ Sender: GreetHub <hello@greethub.example> (domain TBD). Plain-text friendly, bra
 - Toasts: "Saved." / "Updated." / "Removed." / "You're in. Your card's saved." / "Your card's on its way to {recipient}." / "Your book is ready to look through."
 - Buttons: Start a card; Make a picture book; Make my preview; Looks good; Change something; Add to cart; Checkout; Continue to payment; Track this order.
 - Meta titles: Home "GreetHub: custom cards and picture books"; Cards "Custom greeting cards, drawn and mailed for you"; Books "Custom picture books starring your family".
+
+---
+
+## AI assistant channel (page /assistants, home callout, nav, footer, FAQ entry)
+
+Status wording: "Coming soon" everywhere until the service is live. Cards only (books excluded in phases 1 to 3, digital excluded for ChatGPT, per docs/integrations/02). Source of truth for the page is app/app/(shop)/assistants/page.tsx. When the service ships: drop the badge, name only the assistants that actually work, and re-check the claims about limits, the 24-hour wait and address/photo handling against what was built.

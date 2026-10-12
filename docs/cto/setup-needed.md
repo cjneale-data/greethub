@@ -19,3 +19,18 @@ Also needed:
 - Privacy/COPPA legal review before real children's photos go through the site.
 
 Currently stubbed (TODO adapters, `app/lib/adapters/stubs.ts`): auth (Supabase), payments (Stripe Checkout and webhook), printers (Lulu, Prodigi), private photo storage (Supabase Storage). The home page, brand components and CreationBrief schema are real.
+
+## Agent channel (MCP + agent API), all optional until the channel is built out
+
+Framework is merged dark. See docs/cto/agent-channel-build-order.md. Names only; values go in Vercel env vars, never in the repo.
+
+| Unblocks | Env var(s) | Notes |
+|---|---|---|
+| Turning the channel on at all | `AGENT_CHANNEL_ENABLED=1` | Leave unset in production until persistence and the auth server exist |
+| API keys (headless agents) | `AGENT_KEY_PEPPER` | Long random secret, generate in Vercel; rotating it invalidates all keys |
+| OAuth linking for ChatGPT, Claude, Gemini | `AGENT_AUTH_ISSUER`, `AGENT_JWKS_URL`, `AGENT_MCP_RESOURCE_URL` | Values depend on the AGT-010 decision (Supabase OAuth server vs custom); needs a custom auth domain (for example auth.greethub.com) and mcp.greethub.com on Vercel |
+| Model spend cap for assistants | `AGENT_DAILY_MODEL_BUDGET_USD` | Default 10 (owner to confirm) |
+| Tuning / kill switch | `AGENT_READS_PER_MIN`, `AGENT_WRITES_PER_MIN`, `AGENT_APPROVALS_PER_DAY`, `AGENT_MAX_PREVIEW_WAIT_S`, `AGENT_AUTONOMY_COOLING_OFF_H`, `AGENT_CHANNEL_PAUSED=1` | Optional; defaults in `app/lib/agent/config.ts` |
+| Sandbox deployment only | `GREETHUB_SANDBOX=1` | Never on a deployment holding production secrets |
+
+Hard prerequisites from other work: real Supabase accounts (SEC-18), shared rate limiter (SEC-07), persistent cost ledger (SEC-10).

@@ -69,6 +69,15 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="gs-section">
+        <div className="gs-panel gs-panel--cream gs-stack gs-stack--sm">
+          <div><Badge tone="new">Coming soon</Badge></div>
+          <h2 className="gs-h2">Ask your AI assistant to start a card.</h2>
+          <p className="gs-muted" style={{ margin: 0, maxWidth: 560 }}>Soon you can draft a GreetHub card from the assistant you already use. You approve the card and pay on greethub.com, and you set the limits.</p>
+          <div><Link className="gs-link" href="/assistants">How it will work</Link></div>
+        </div>
+      </section>
+
       <section className="gs-section" id="pricing">
         <h2 className="gs-h2">Simple prices.</h2>
         <p className="gs-lede" style={{ marginBottom: 12 }}>
