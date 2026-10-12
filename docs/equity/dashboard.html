@@ -1,0 +1,491 @@
+<title>GreetHub Equity Ledger</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one calm ledger page. Summary strip, split bar + history, people table, then entry forms and approval queue. */
+:root{
+  --bg:#f6f6f3; --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --muted:#7a7972; --line:#e3e2dc; --grid:#ecebe6;
+  --accent:#184f95; --accent-ink:#ffffff; --warn-bg:#fff3d6; --warn-ink:#6b4700; --good:#0c7a0c; --crit:#b32e2e;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#6250d6;
+  --display:"Fraunces",Georgia,serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121211; --surface:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --muted:#97968c; --line:#34332f; --grid:#2a2926;
+  --accent:#6da7ec; --accent-ink:#0b0b0b; --warn-bg:#3a2d0d; --warn-ink:#f5d58a; --good:#4cc24c; --crit:#ec7a7a;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#9085e9; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121211; --surface:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --muted:#97968c; --line:#34332f; --grid:#2a2926;
+  --accent:#6da7ec; --accent-ink:#0b0b0b; --warn-bg:#3a2d0d; --warn-ink:#f5d58a; --good:#4cc24c; --crit:#ec7a7a;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#9085e9; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 var(--body);padding-inline:16px;padding-block:20px 48px;margin:0}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1{font:600 28px/1.15 var(--display);margin:0;text-wrap:balance}
+h2{font:600 12px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin:0 0 12px}
+.head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:flex-end}
+.head p{margin:4px 0 0;color:var(--ink2);max-width:60ch}
+.banner{background:var(--warn-bg);color:var(--warn-ink);padding:10px 14px;border-radius:6px;font-weight:500}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;min-width:0}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
+.kpis{display:flex;flex-wrap:wrap;gap:24px}
+.kpi b{display:block;font:500 22px var(--mono);font-variant-numeric:tabular-nums}
+.kpi span{color:var(--ink2);font-size:12px}
+.bar{display:flex;height:34px;gap:2px;border-radius:4px;overflow:hidden;background:var(--grid)}
+.bar div{min-width:2px;transition:flex-grow .3s}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:12px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px}
+.legend span{font-variant-numeric:tabular-nums}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th,td{padding:7px 8px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);font-weight:600}
+.scroll{overflow-x:auto}
+.pill{display:inline-block;padding:1px 8px;border-radius:99px;font-size:11px;border:1px solid var(--line);color:var(--ink2)}
+.pill.ok{color:var(--good);border-color:var(--good)} .pill.no{color:var(--crit);border-color:var(--crit)}
+label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--ink2);min-width:0}
+input,select,textarea,button{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:7px 9px;min-width:0}
+button{cursor:pointer;background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+button.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+button.small{padding:3px 10px;font-size:12px}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+form{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;align-items:end}
+form .full{grid-column:1/-1}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.tabs button{background:transparent;color:var(--ink);border-color:var(--line)}
+.tabs button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.as{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.msg{color:var(--crit);min-height:1.2em;font-size:12px}
+.empty{color:var(--muted);padding:12px 0}
+svg text{fill:var(--ink2);font:11px var(--mono)}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:6px 8px;font-size:12px;display:none;z-index:2}
+.rel{position:relative}
+@media (prefers-reduced-motion:reduce){.bar div{transition:none}}
+</style>
+
+<div class="wrap">
+  <div class="head">
+    <div>
+      <h1>GreetHub Equity Ledger</h1>
+      <p>Who has earned what share, recalculated on every approved entry. Slicing Pie method, with a GreetHub idea ledger. Modelling only, not legal or tax advice. Nothing here grants equity.</p>
+    </div>
+    <div class="as"><label for="actor">Acting as<select id="actor"></select></label></div>
+  </div>
+  <div class="banner" id="demoBanner" hidden>DEMO DATA. Every person, rate and amount below is fake. The owner replaces it with real partners; no real figures belong in the repo.</div>
+
+  <div class="panel"><div class="kpis" id="kpis"></div></div>
+
+  <div class="row">
+    <div class="panel">
+      <h2>Current share split</h2>
+      <div class="bar" id="splitBar" role="img" aria-label="Share split"></div>
+      <div class="legend" id="legend"></div>
+      <div class="empty" id="splitEmpty" hidden>No approved entries yet. Log time or cash, then have another partner approve it.</div>
+    </div>
+    <div class="panel rel">
+      <h2>How the split changed</h2>
+      <div id="history"></div>
+      <div class="tip" id="tip"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Contributions by person</h2>
+    <div class="scroll"><table id="people"></table></div>
+  </div>
+
+  <div class="row">
+    <div class="panel">
+      <h2>Add an entry</h2>
+      <div class="tabs" id="tabs">
+        <button type="button" data-tab="time" aria-pressed="true">Time</button>
+        <button type="button" data-tab="cash" aria-pressed="false">Cash</button>
+        <button type="button" data-tab="resource" aria-pressed="false">Resource</button>
+        <button type="button" data-tab="idea" aria-pressed="false">Idea</button>
+      </div>
+      <form id="f-time">
+        <label for="t-date">Date<input id="t-date" type="date" required></label>
+        <label for="t-hours">Hours<input id="t-hours" type="number" min="0.25" step="0.25" required></label>
+        <label for="t-cat">Category<select id="t-cat"><option>build</option><option>design</option><option>research</option><option>marketing</option><option>admin</option><option>legal and finance</option></select></label>
+        <label class="full" for="t-note">Note<input id="t-note" type="text" maxlength="200"></label>
+        <button class="full" type="submit">Log time</button>
+      </form>
+      <form id="f-cash" hidden>
+        <label for="c-date">Date<input id="c-date" type="date" required></label>
+        <label for="c-amt">Amount (USD)<input id="c-amt" type="number" min="1" step="0.01" required></label>
+        <label for="c-kind">Kind<select id="c-kind"><option value="cash">Cash put in</option><option value="expense">Unreimbursed expense</option></select></label>
+        <label class="full" for="c-note">Note and receipt reference<input id="c-note" type="text" maxlength="200"></label>
+        <button class="full" type="submit">Log cash</button>
+      </form>
+      <form id="f-resource" hidden>
+        <label for="r-date">Date<input id="r-date" type="date" required></label>
+        <label for="r-val">Fair value of use (USD)<input id="r-val" type="number" min="1" step="0.01" required></label>
+        <label class="full" for="r-desc">Description (equipment, supplies, IP, facilities)<input id="r-desc" type="text" maxlength="200" required></label>
+        <button class="full" type="submit">Log resource</button>
+      </form>
+      <form id="f-idea" hidden>
+        <label for="i-date">Date<input id="i-date" type="date" required></label>
+        <label for="i-title">Title<input id="i-title" type="text" maxlength="100" required></label>
+        <label class="full" for="i-desc">Description<textarea id="i-desc" rows="2" maxlength="500" required></textarea></label>
+        <button class="full" type="submit">Propose idea</button>
+      </form>
+      <div class="msg" id="msg" role="status"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Approval queue</h2>
+      <div id="queue"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Idea ledger</h2>
+    <div class="scroll"><table id="ideas"></table></div>
+    <p style="color:var(--muted);margin:10px 0 0;font-size:12px" id="rubricNote"></p>
+  </div>
+
+  <div class="panel">
+    <h2>Rules in force</h2>
+    <div id="rules" style="color:var(--ink2)"></div>
+  </div>
+</div>
+
+<script>
+/**
+ * GreetHub dynamic equity ("Grunt Fund", Slicing Pie method) calculation module.
+ * Pure functions, no I/O. Modelling only, not legal or tax advice. See docs/equity/01-model-spec.md.
+ * Only humans are Person records; AI agents never earn slices.
+ */
+const DEFAULT_CONFIG = {
+    nonCashMultiplier: 2,
+    cashMultiplier: 4,
+    ideaCapPerIdea: 5000,
+    ideaCapPerPerson: 20000,
+    ideaWeights: { impact: 0.5, originality: 0.2, evidence: 0.3 },
+    ideaUnlockStatuses: ["adopted", "shipped"],
+    ideaMinScore: 2,
+    // Defaults follow Moyer's published description; the exact treatment is for the attorney. See docs.
+    leaverRules: {
+        none: { nonCashKept: 1, cashMultiplier: 4 },
+        fired_good_reason: { nonCashKept: 0, cashMultiplier: 1 },
+        quit_no_good_reason: { nonCashKept: 0, cashMultiplier: 1 },
+        fired_no_good_reason: { nonCashKept: 1, cashMultiplier: 4 },
+        quit_good_reason: { nonCashKept: 1, cashMultiplier: 4 },
+    },
+};
+const round2 = (n) => Math.round(n * 100) / 100;
+/** Entry counts only if approved by a different, known person. */
+function entryCounts(e, people) {
+    return e.status === "approved" && !!e.approvedBy && e.approvedBy !== e.personId && people.some((p) => p.id === e.approvedBy);
+}
+function ideaScore(scores, cfg = DEFAULT_CONFIG) {
+    const w = cfg.ideaWeights;
+    const sum = w.impact + w.originality + w.evidence;
+    if (sum <= 0)
+        return 0;
+    const clamp = (n) => Math.min(5, Math.max(0, n));
+    return (clamp(scores.impact) * w.impact + clamp(scores.originality) * w.originality + clamp(scores.evidence) * w.evidence) / sum;
+}
+/** Slice award for one idea; 0 until unlocked and reviewed by another person. */
+function ideaAward(idea, people, cfg = DEFAULT_CONFIG) {
+    if (!cfg.ideaUnlockStatuses.includes(idea.status))
+        return 0;
+    if (!idea.scores || !idea.reviewedBy || idea.reviewedBy === idea.authorId)
+        return 0;
+    if (!people.some((p) => p.id === idea.reviewedBy))
+        return 0;
+    const s = ideaScore(idea.scores, cfg);
+    if (s < cfg.ideaMinScore)
+        return 0;
+    return round2(cfg.ideaCapPerIdea * (s / 5));
+}
+function computeSplit(l, cfg = DEFAULT_CONFIG, asOf) {
+    const warnings = [];
+    const inRange = (d) => !asOf || d <= asOf;
+    const byId = new Map();
+    for (const p of l.people) {
+        byId.set(p.id, { personId: p.id, name: p.name, timeSlices: 0, cashSlices: 0, resourceSlices: 0, ideaSlices: 0, total: 0, percent: 0, hours: 0, cashDollars: 0 });
+    }
+    const person = (id) => l.people.find((p) => p.id === id);
+    const rule = (id) => cfg.leaverRules[person(id)?.leaver ?? "none"];
+    for (const e of l.time) {
+        const p = person(e.personId), row = byId.get(e.personId);
+        if (!p || !row) {
+            warnings.push(`time ${e.id}: unknown person`);
+            continue;
+        }
+        if (!inRange(e.date) || !entryCounts(e, l.people))
+            continue;
+        if (e.hours <= 0 || p.hourlyRate < 0) {
+            warnings.push(`time ${e.id}: invalid hours or rate`);
+            continue;
+        }
+        row.hours += e.hours;
+        row.timeSlices += e.hours * p.hourlyRate * cfg.nonCashMultiplier * rule(p.id).nonCashKept;
+    }
+    for (const e of l.cash) {
+        const row = byId.get(e.personId);
+        if (!row) {
+            warnings.push(`cash ${e.id}: unknown person`);
+            continue;
+        }
+        if (!inRange(e.date) || !entryCounts(e, l.people))
+            continue;
+        if (e.amount <= 0) {
+            warnings.push(`cash ${e.id}: invalid amount`);
+            continue;
+        }
+        row.cashDollars += e.amount;
+        const leaverRule = rule(e.personId);
+        // Standard multiplier is cfg.cashMultiplier; a leaver rule can only lower it.
+        row.cashSlices += e.amount * Math.min(cfg.cashMultiplier, leaverRule.cashMultiplier);
+    }
+    for (const e of l.resources) {
+        const row = byId.get(e.personId);
+        if (!row) {
+            warnings.push(`resource ${e.id}: unknown person`);
+            continue;
+        }
+        if (!inRange(e.date) || !entryCounts(e, l.people))
+            continue;
+        if (e.fairValue <= 0) {
+            warnings.push(`resource ${e.id}: invalid value`);
+            continue;
+        }
+        row.resourceSlices += e.fairValue * cfg.nonCashMultiplier * rule(e.personId).nonCashKept;
+    }
+    for (const i of l.ideas) {
+        const row = byId.get(i.authorId);
+        if (!row) {
+            warnings.push(`idea ${i.id}: unknown author`);
+            continue;
+        }
+        if (!inRange(i.date))
+            continue;
+        const award = ideaAward(i, l.people, cfg) * rule(i.authorId).nonCashKept;
+        row.ideaSlices = Math.min(cfg.ideaCapPerPerson, row.ideaSlices + award);
+    }
+    const rows = [...byId.values()];
+    for (const r of rows) {
+        r.timeSlices = round2(r.timeSlices);
+        r.cashSlices = round2(r.cashSlices);
+        r.resourceSlices = round2(r.resourceSlices);
+        r.ideaSlices = round2(r.ideaSlices);
+        r.total = round2(r.timeSlices + r.cashSlices + r.resourceSlices + r.ideaSlices);
+    }
+    const totalSlices = round2(rows.reduce((a, r) => a + r.total, 0));
+    for (const r of rows)
+        r.percent = totalSlices > 0 ? Math.round((r.total / totalSlices) * 10000) / 100 : 0;
+    return { people: rows, totalSlices, warnings };
+}
+/** Split after each distinct contribution date (counted entries only). */
+function computeHistory(l, cfg = DEFAULT_CONFIG) {
+    const dates = new Set();
+    for (const e of [...l.time, ...l.cash, ...l.resources])
+        if (entryCounts(e, l.people))
+            dates.add(e.date);
+    for (const i of l.ideas)
+        if (ideaAward(i, l.people, cfg) > 0)
+            dates.add(i.date);
+    return [...dates].sort().map((date) => {
+        const s = computeSplit(l, cfg, date);
+        return { date, totalSlices: s.totalSlices, percents: Object.fromEntries(s.people.map((p) => [p.personId, p.percent])) };
+    });
+}
+
+</script>
+<script>
+(async function(){
+  const COLORS=["var(--s1)","var(--s2)","var(--s3)","var(--s4)","var(--s5)","var(--s6)"];
+  const cfg=DEFAULT_CONFIG;
+  const $=id=>document.getElementById(id);
+  const st={people:[],time:[],cash:[],resources:[],ideas:[],meta:null,actor:null};
+  const today=new Date().toISOString().slice(0,10);
+  ["t-date","c-date","r-date","i-date"].forEach(i=>$(i).value=today);
+  const fmt=n=>Math.round(n).toLocaleString("en-US");
+  const usd=n=>"$"+Math.round(n).toLocaleString("en-US");
+  const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const pname=id=>(st.people.find(p=>p.id===id)||{}).name||"Unknown";
+  const colorOf=id=>COLORS[Math.max(0,st.people.findIndex(p=>p.id===id))%COLORS.length];
+
+  const db=await window.claude.use("db");
+  const user=await window.claude.use("user");
+  if(!db){document.querySelector(".wrap").insertAdjacentHTML("afterbegin",'<div class="banner">The shared database is not available in this view, so the ledger cannot load or save.</div>');return}
+  let myId=null; try{myId=user&&await user.id()}catch(e){}
+
+  const say=(t)=>{$("msg").textContent=t||""};
+  const uid=p=>p+"_"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+  async function put(coll,id,data){try{await db.collection(coll).doc(id).set(data);say("")}catch(e){say("Could not save: "+(e&&e.message||e.code))}}
+
+  function listen(coll,key){
+    db.collection(coll).onSnapshot(s=>{
+      st[key]=s.docs.map(d=>Object.assign({id:d.id},d.data()));
+      if(key==="people")fillActor();
+      render();
+    },e=>say("Could not read "+coll+": "+(e&&e.message)));
+  }
+  db.doc("meta/main").onSnapshot(s=>{st.meta=s.exists?s.data():null;render()});
+  listen("people","people");listen("time","time");listen("cash","cash");listen("resources","resources");listen("ideas","ideas");
+
+  function fillActor(){
+    const sel=$("actor");const cur=st.actor||sel.value;
+    sel.innerHTML=st.people.map(p=>`<option value="${esc(p.id)}">${esc(p.name)}</option>`).join("");
+    const mine=st.people.find(p=>p.userId&&p.userId===myId);
+    st.actor=(mine&&mine.id)||(st.people.some(p=>p.id===cur)?cur:(st.people[0]&&st.people[0].id));
+    sel.value=st.actor||"";
+  }
+  $("actor").addEventListener("change",e=>{st.actor=e.target.value;render()});
+
+  function ledgers(){return {people:st.people,time:st.time,cash:st.cash,resources:st.resources,ideas:st.ideas}}
+
+  function render(){
+    $("demoBanner").hidden=!(st.meta&&st.meta.demo);
+    const L=ledgers(), split=computeSplit(L,cfg), hist=computeHistory(L,cfg);
+    // KPIs
+    const pend=[...st.time,...st.cash,...st.resources].filter(e=>e.status==="logged").length;
+    const hrs=split.people.reduce((a,p)=>a+p.hours,0), cash=split.people.reduce((a,p)=>a+p.cashDollars,0);
+    $("kpis").innerHTML=[["Total slices",fmt(split.totalSlices)],["Approved hours",fmt(hrs)],["Approved cash",usd(cash)],["Waiting for approval",pend]].map(k=>`<div class="kpi"><b>${k[1]}</b><span>${k[0]}</span></div>`).join("");
+    // split bar
+    const sorted=split.people.filter(p=>p.total>0);
+    $("splitEmpty").hidden=sorted.length>0;
+    $("splitBar").innerHTML=sorted.map(p=>`<div style="flex:${p.percent} 1 0;background:${colorOf(p.personId)}" title="${esc(p.name)} ${p.percent}%"></div>`).join("");
+    $("legend").innerHTML=split.people.map(p=>`<span><i style="background:${colorOf(p.personId)}"></i>${esc(p.name)} <b>${p.percent.toFixed(1)}%</b></span>`).join("");
+    // people table
+    $("people").innerHTML=`<tr><th>Person</th><th>Rate</th><th>Hours</th><th>Time slices</th><th>Cash</th><th>Cash slices</th><th>Resource</th><th>Idea</th><th>Total</th><th>Share</th></tr>`+
+      split.people.map(p=>{const pe=st.people.find(x=>x.id===p.personId)||{};return `<tr><td>${esc(p.name)}${pe.leaver&&pe.leaver!=="none"?` <span class="pill no">${esc(pe.leaver.replace(/_/g," "))}</span>`:""}</td><td>${usd(pe.hourlyRate||0)}/h</td><td>${p.hours}</td><td>${fmt(p.timeSlices)}</td><td>${usd(p.cashDollars)}</td><td>${fmt(p.cashSlices)}</td><td>${fmt(p.resourceSlices)}</td><td>${fmt(p.ideaSlices)}</td><td><b>${fmt(p.total)}</b></td><td><b>${p.percent.toFixed(1)}%</b></td></tr>`}).join("");
+    drawHistory(hist);
+    renderQueue();
+    renderIdeas();
+    $("rules").innerHTML=`Time slices = approved hours x rate x ${cfg.nonCashMultiplier}. Cash slices = dollars x ${cfg.cashMultiplier}. Resources x ${cfg.nonCashMultiplier}. Entries count only after a different partner approves them. Ideas award up to ${fmt(cfg.ideaCapPerIdea)} slices each (${fmt(cfg.ideaCapPerPerson)} per person) once adopted or shipped and scored by another partner. Leaver rules and caps are configurable and flagged for the attorney. Real partner data lives only in this private database.`;
+    $("rubricNote").textContent=`Rubric weights: impact ${cfg.ideaWeights.impact}, originality ${cfg.ideaWeights.originality}, evidence of use ${cfg.ideaWeights.evidence}. Minimum weighted score ${cfg.ideaMinScore} of 5.`;
+  }
+
+  function drawHistory(h){
+    const el=$("history");
+    if(h.length<1||!st.people.length){el.innerHTML='<div class="empty">History appears after the first approved entry.</div>';return}
+    const W=480,H=210,m={l:36,r:12,t:10,b:26};
+    // Add a start point so single-date histories still draw.
+    const pts=h.length===1?[h[0],h[0]]:h;
+    const xs=i=>m.l+(W-m.l-m.r)*(pts.length===1?0:i/(pts.length-1));
+    const ys=v=>m.t+(H-m.t-m.b)*(1-v/100);
+    let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Share percentage over time">`;
+    [0,25,50,75,100].forEach(v=>{s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${ys(v)}" y2="${ys(v)}" stroke="var(--grid)" stroke-width="1"/><text x="${m.l-6}" y="${ys(v)+4}" text-anchor="end">${v}%</text>`});
+    s+=`<text x="${m.l}" y="${H-6}">${esc(h[0].date)}</text><text x="${W-m.r}" y="${H-6}" text-anchor="end">${esc(h[h.length-1].date)}</text>`;
+    st.people.forEach(p=>{
+      const d=pts.map((pt,i)=>`${i?"L":"M"}${xs(i).toFixed(1)},${ys(pt.percents[p.id]||0).toFixed(1)}`).join(" ");
+      s+=`<path d="${d}" fill="none" stroke="${colorOf(p.id)}" stroke-width="2" stroke-linejoin="round"/>`;
+      const last=pts[pts.length-1];s+=`<circle cx="${xs(pts.length-1)}" cy="${ys(last.percents[p.id]||0)}" r="4" fill="${colorOf(p.id)}" stroke="var(--surface)" stroke-width="2"/>`;
+    });
+    s+=`<rect id="hit" x="${m.l}" y="${m.t}" width="${W-m.l-m.r}" height="${H-m.t-m.b}" fill="transparent"/></svg>`;
+    el.innerHTML=s;
+    const hit=el.querySelector("#hit"),tip=$("tip");
+    hit.addEventListener("mousemove",ev=>{
+      const r=hit.getBoundingClientRect();const f=(ev.clientX-r.left)/r.width;
+      const i=Math.max(0,Math.min(h.length-1,Math.round(f*(pts.length-1))));const pt=pts[Math.min(i,pts.length-1)];
+      tip.style.display="block";
+      tip.innerHTML=`<b>${esc(pt.date)}</b><br>`+st.people.map(p=>`${esc(p.name)}: ${(pt.percents[p.id]||0).toFixed(1)}%`).join("<br>");
+      const pr=el.parentElement.getBoundingClientRect();
+      tip.style.left=Math.min(ev.clientX-pr.left+12,pr.width-170)+"px";tip.style.top=(ev.clientY-pr.top+12)+"px";
+    });
+    hit.addEventListener("mouseleave",()=>tip.style.display="none");
+  }
+
+  function pendingItems(){
+    const out=[];
+    st.time.filter(e=>e.status==="logged").forEach(e=>out.push({coll:"time",e,txt:`${e.hours}h ${esc(e.category)}`+(e.note?` &middot; ${esc(e.note)}`:"")}));
+    st.cash.filter(e=>e.status==="logged").forEach(e=>out.push({coll:"cash",e,txt:`${usd(e.amount)} ${e.kind==="expense"?"expense":"cash"}`+(e.note?` &middot; ${esc(e.note)}`:"")}));
+    st.resources.filter(e=>e.status==="logged").forEach(e=>out.push({coll:"resources",e,txt:`${usd(e.fairValue)} resource &middot; ${esc(e.description)}`}));
+    return out.sort((a,b)=>String(a.e.date).localeCompare(String(b.e.date)));
+  }
+  function renderQueue(){
+    const items=pendingItems();
+    $("queue").innerHTML=items.length?`<div class="scroll"><table>`+items.map(it=>{
+      const own=it.e.personId===st.actor;
+      return `<tr><td>${esc(pname(it.e.personId))}<br><span style="color:var(--muted)">${esc(it.e.date)}</span></td><td style="text-align:left;white-space:normal">${it.txt}</td><td>${own?'<span class="pill">needs another partner</span>':`<button class="small" data-act="approve" data-c="${it.coll}" data-id="${esc(it.e.id)}">Approve</button> <button class="small ghost" data-act="reject" data-c="${it.coll}" data-id="${esc(it.e.id)}">Reject</button>`}</td></tr>`}).join("")+`</table></div>`:'<div class="empty">Nothing waiting. Approved entries are already in the split.</div>';
+  }
+  $("queue").addEventListener("click",async ev=>{
+    const b=ev.target.closest("button[data-act]");if(!b||!st.actor)return;
+    const coll=b.dataset.c,id=b.dataset.id;const e=st[coll==="resources"?"resources":coll].find(x=>x.id===id);if(!e)return;
+    if(e.personId===st.actor){say("You cannot approve your own entry.");return}
+    const nxt=Object.assign({},e);delete nxt.id;
+    nxt.status=b.dataset.act==="approve"?"approved":"rejected";nxt.approvedBy=st.actor;nxt.decidedAt=new Date().toISOString();
+    await put(coll,id,nxt);
+    await put("audit",uid("a"),{at:new Date().toISOString(),actor:st.actor,action:nxt.status,target:coll+"/"+id});
+  });
+
+  function renderIdeas(){
+    const rows=st.ideas.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+    if(!rows.length){$("ideas").innerHTML='<tr><td class="empty">No ideas yet.</td></tr>';return}
+    $("ideas").innerHTML=`<tr><th>Idea</th><th>Author</th><th>Status</th><th>Score</th><th>Award</th><th>Actions</th></tr>`+rows.map(i=>{
+      const award=ideaAward(i,st.people,cfg);const sc=i.scores?ideaScore(i.scores,cfg).toFixed(1):"-";
+      const mine=i.authorId===st.actor;let act="";
+      if(!mine){
+        act+=`<button class="small ghost" data-idea="${esc(i.id)}" data-a="score">${i.scores?"Re-score":"Score"}</button> `;
+        if(i.status==="proposed")act+=`<button class="small ghost" data-idea="${esc(i.id)}" data-a="adopted">Adopt</button> `;
+        if(i.status!=="shipped")act+=`<button class="small ghost" data-idea="${esc(i.id)}" data-a="shipped">Mark shipped</button>`;
+      }else act='<span class="pill">author cannot review</span>';
+      return `<tr><td style="text-align:left;white-space:normal;min-width:180px"><b>${esc(i.title)}</b><br><span style="color:var(--muted)">${esc(i.description)}</span>${i.reviewNote?`<br><span style="color:var(--muted)">Review: ${esc(i.reviewNote)}</span>`:""}</td><td>${esc(pname(i.authorId))}</td><td><span class="pill ${i.status==="proposed"?"":"ok"}">${esc(i.status)}</span></td><td>${sc}</td><td>${fmt(award)}</td><td>${act}</td></tr>`}).join("");
+  }
+  $("ideas").addEventListener("click",async ev=>{
+    const b=ev.target.closest("button[data-idea]");if(!b||!st.actor)return;
+    const i=st.ideas.find(x=>x.id===b.dataset.idea);if(!i||i.authorId===st.actor)return;
+    const nxt=Object.assign({},i);delete nxt.id;
+    if(b.dataset.a==="score")return;
+    nxt.status=b.dataset.a;
+    await put("ideas",i.id,nxt);
+    await put("audit",uid("a"),{at:new Date().toISOString(),actor:st.actor,action:b.dataset.a,target:"ideas/"+i.id});
+  });
+  // Inline scoring panel (no dialogs in the viewer).
+  const scorePanel=document.createElement("form");scorePanel.id="scoreForm";scorePanel.hidden=true;scorePanel.className="panel";
+  scorePanel.innerHTML=`<h2 class="full" style="grid-column:1/-1">Score idea</h2>
+    <label for="s-imp">Impact (0-5)<input id="s-imp" type="number" min="0" max="5" step="0.5" required></label>
+    <label for="s-ori">Originality (0-5)<input id="s-ori" type="number" min="0" max="5" step="0.5" required></label>
+    <label for="s-evi">Evidence of use (0-5)<input id="s-evi" type="number" min="0" max="5" step="0.5" required></label>
+    <label class="full" for="s-note">Reason<input id="s-note" type="text" maxlength="200" required></label>
+    <button type="submit">Save score</button><button type="button" class="ghost" id="s-cancel">Cancel</button>`;
+  $("ideas").parentElement.parentElement.appendChild(scorePanel);
+  let scoring=null;
+  // Capture-phase handler replaces the prompt flow above for Score buttons.
+  $("ideas").addEventListener("click",ev=>{
+    const b=ev.target.closest('button[data-a="score"]');if(!b)return;
+    ev.stopImmediatePropagation();
+    scoring=b.dataset.idea;const i=st.ideas.find(x=>x.id===scoring)||{};
+    const sc=i.scores||{impact:"",originality:"",evidence:""};
+    $("s-imp").value=sc.impact;$("s-ori").value=sc.originality;$("s-evi").value=sc.evidence;$("s-note").value="";
+    scorePanel.querySelector("h2").textContent="Score idea: "+(i.title||"");
+    scorePanel.hidden=false;$("s-imp").focus();
+  },true);
+  $("s-cancel").addEventListener("click",()=>{scorePanel.hidden=true});
+  scorePanel.addEventListener("submit",async ev=>{
+    ev.preventDefault();const i=st.ideas.find(x=>x.id===scoring);
+    if(!i||i.authorId===st.actor){say("The author cannot score their own idea.");return}
+    const nxt=Object.assign({},i);delete nxt.id;
+    nxt.scores={impact:+$("s-imp").value,originality:+$("s-ori").value,evidence:+$("s-evi").value};
+    nxt.reviewedBy=st.actor;nxt.reviewNote=$("s-note").value;
+    await put("ideas",i.id,nxt);
+    await put("audit",uid("a"),{at:new Date().toISOString(),actor:st.actor,action:"scored",target:"ideas/"+i.id});
+    scorePanel.hidden=true;
+  });
+
+  // Tabs and forms
+  const forms={time:$("f-time"),cash:$("f-cash"),resource:$("f-resource"),idea:$("f-idea")};
+  $("tabs").addEventListener("click",e=>{
+    const b=e.target.closest("button[data-tab]");if(!b)return;
+    Object.keys(forms).forEach(k=>forms[k].hidden=k!==b.dataset.tab);
+    $("tabs").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));
+  });
+  function needActor(){if(!st.actor){say("Add a partner first, or pick who you are acting as.");return false}return true}
+  const base=(date)=>({personId:st.actor,date,status:"logged",loggedAt:new Date().toISOString()});
+  forms.time.addEventListener("submit",async e=>{e.preventDefault();if(!needActor())return;
+    await put("time",uid("t"),Object.assign(base($("t-date").value),{hours:+$("t-hours").value,category:$("t-cat").value,note:$("t-note").value}));
+    $("t-hours").value="";$("t-note").value=""});
+  forms.cash.addEventListener("submit",async e=>{e.preventDefault();if(!needActor())return;
+    await put("cash",uid("c"),Object.assign(base($("c-date").value),{amount:+$("c-amt").value,kind:$("c-kind").value,note:$("c-note").value}));
+    $("c-amt").value="";$("c-note").value=""});
+  forms.resource.addEventListener("submit",async e=>{e.preventDefault();if(!needActor())return;
+    await put("resources",uid("r"),Object.assign(base($("r-date").value),{fairValue:+$("r-val").value,description:$("r-desc").value}));
+    $("r-val").value="";$("r-desc").value=""});
+  forms.idea.addEventListener("submit",async e=>{e.preventDefault();if(!needActor())return;
+    await put("ideas",uid("i"),{authorId:st.actor,title:$("i-title").value,description:$("i-desc").value,date:$("i-date").value,status:"proposed"});
+    $("i-title").value="";$("i-desc").value=""});
+  render();
+})();
+</script>
