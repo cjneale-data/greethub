@@ -12,10 +12,13 @@
     "eval:ip": "node ../pipeline/node_modules/tsx/dist/cli.mjs scripts/eval-ip.ts"
   },
   "dependencies": {
+    "@pdf-lib/fontkit": "^1.1.1",
     "heic2any": "^0.0.4",
     "next": "16.4.0",
+    "pdf-lib": "^1.17.1",
     "react": "19.3.0",
     "react-dom": "19.3.0",
+    "sharp": "^0.35.5",
     "vitest": "^5.0.3",
     "zod": "^4.6.5"
   },

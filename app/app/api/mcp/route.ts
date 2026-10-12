@@ -5,7 +5,6 @@ import { handleMcpPost } from "@/lib/agent/mcp/protocol";
  * Bearer auth only: this route never reads cookies, so it is exempt from the cookie-origin checks (docs/integrations/06 section 1.3).
  * Hostname mcp.greethub.com maps here at deploy time.
  */
-export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   return handleMcpPost(req);

@@ -28,6 +28,15 @@
       ],
       "@greethub/shared": [
         "./packages/shared/src/index.ts"
+      ],
+      "sharp": [
+        "./node_modules/sharp"
+      ],
+      "pdf-lib": [
+        "./node_modules/pdf-lib"
+      ],
+      "@pdf-lib/fontkit": [
+        "./node_modules/@pdf-lib/fontkit"
       ]
     }
   },

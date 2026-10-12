@@ -1,13 +1,21 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { adminAllowed, listReports } from "@/lib/safety/reports";
 
 export const metadata: Metadata = { title: "Content reports (internal) | GreetHub", robots: { index: false, follow: false } };
-export const dynamic = "force-dynamic";
 
 /** Internal, admin-readable list of content reports. Same gating as /api/dev/outbox, or GREETHUB_ADMIN_TOKEN via header. */
-export default async function Page() {
+export default function Page() {
+  return (
+    <Suspense fallback={null}>
+      <Reports />
+    </Suspense>
+  );
+}
+
+async function Reports() {
   if (!adminAllowed(await headers())) notFound();
   const reports = listReports();
   return (
