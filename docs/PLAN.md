@@ -8,14 +8,15 @@ Decisions already made:
 - **Printing:** print-on-demand APIs (Lulu for books, Prodigi or Gelato for cards).
 - **Location:** new repo at `C:\Users\seejn\greethub`.
 - **"Done":** the full flow works in Stripe test mode and printer sandboxes on a Vercel preview URL.
+- **Access (owner decision, 13 Oct 2026):** you need a free account to make anything. Visitors can browse, see samples and prices, but cannot start the creator. The "cool features" (the AI-assistant MCP connector first, then scheduling, bulk sends, contact lists and digital handwriting) sit behind a **paid monthly membership**. See "Access tiers" below and docs/VISION.md.
 
 The brand kit at `Downloads\GreetHub brand kit\greethub-webkit` is the visual source of truth.
 
 ## Stop condition (definition of done)
 Building stops when a new visitor on the preview URL can do all of the following without help:
-1. Try the creator as a guest (one free card preview, watermarked).
-2. Sign up or log in (email magic link plus Google), and the guest draft carries over to the new account.
-3. Create a **card** through the guided chat, approve it, and see the proof.
+1. Browse the site (samples, occasions, prices) and see that creating needs an account. Trying to open the creator sends them to sign-up and back.
+2. Sign up or log in (email magic link plus Google).
+3. Create a **card** through the guided chat, see the exact preview, approve it, and see the proof.
 4. Create a **picture book** (photos → character sheet approval → story → pages → proof).
 5. Add both to the cart, enter a shipping address, and pay with a Stripe test card.
 6. Receive a confirmation email. The order is submitted to the Lulu and Prodigi sandboxes, and status and tracking show on the account page.
@@ -53,12 +54,28 @@ Sequencing:
   - 1 to 4 main characters from photos, plus an optional pet.
   - About 14 pages of art, a model sheet, and re-rolls.
 
-**Guest vs. account:**
-- **Guest:** chat intake, one card preview (low resolution, watermarked), no saved drafts.
-- **Account:**
-  - Books (they need a photo upload and a consent record).
-  - Saved drafts and saved "People" (reusable character sheets, so Grandma looks the same in every card).
-  - Re-rolls (a monthly allowance), high-resolution proofs, checkout, order tracking, address book, and occasion reminders (a later step).
+**No sale without a preview.** Every card and book is shown to the customer as an exact preview before they pay. This is a founder rule (docs/VISION.md), not a nice-to-have.
+
+## Access tiers
+| | Visitor (no account) | Free account | Member (paid monthly) |
+|---|---|---|---|
+| Browse samples, occasions, prices, FAQ | Yes | Yes | Yes |
+| Create cards and books (chat or forms) | **No**, sign-up first | Yes | Yes |
+| Exact preview before paying | n/a | Yes | Yes |
+| Buy, check out, track orders | No | Yes | Yes |
+| Saved drafts, saved "People", address book | No | Yes | Yes |
+| Re-rolls | n/a | Monthly allowance | Larger allowance (CFO to size) |
+| Occasion reminders (a later step) | No | Yes | Yes |
+| **AI-assistant connector (MCP / agent API)**: create cards from ChatGPT, Claude, Gemini and other assistants, saved to the account | No | No | **Yes** |
+| Scheduled sends, bulk sends, contact lists | No | No | Yes (after the connector) |
+| Digital handwriting (capture your handwriting for notes) | No | No | Yes (later) |
+
+- **Free account** is the whole core product. Books still need a photo upload and a consent record from the signed-in adult.
+- **Membership** is a paid monthly subscription billed through Stripe Billing on GreetHub's own site. Cards and books are still paid for per order; membership pays for features, not product. The price, what (if any) included credits it carries, and the re-roll allowance are the CFO's to model and the owner's to approve.
+- **Membership timing:** not in the launch stop condition below. It follows launch as M8. Launch builds the account system so that a `membership` entitlement can be checked server-side later (one `entitlements` check in front of every member feature, never a client-side flag).
+- **Before membership ships (owner and attorney):**
+  - docs/legal/06 item 40 says no subscriptions at launch without attorney review. Auto-renewal laws need clear terms, express consent, easy online cancel and renewal reminders.
+  - ChatGPT's app rules (docs/integrations/01) forbid subscriptions and "freemium upsells" inside ChatGPT. Selling the membership only on GreetHub's site, and having the connector simply refuse non-members with a plain message, needs checking against those rules before a directory listing. gh-integrations owns that question.
 
 ## Data capture: structured + unstructured
 Everything the user tells the site ends up as a validated **CreationBrief** (JSON schema, Zod). Generation runs only when every required field is filled.
@@ -97,7 +114,7 @@ The pipeline runs as a TypeScript worker. Jobs go through Supabase queues, or In
 4. **Page prompts.** Same as `stage_prompts`, plus the FULL-BLEED, FRAMING and exact-count lines learned on the Eye Story.
 5. **Page renders.** Same as `stage_images`, with the model sheet attached first. Keep the `IMAGE_MODELS` fallback chain and `call()` retry logic (no retry on 400; RequestException retry).
 6. **Automatic QA.** A cheap vision check per page: correct number of characters, no white border, no text in the image. Auto re-roll at most once. The user gets free re-rolls up to their allowance.
-7. **Layout.** Port `layout.py`: trim and bleed boxes, embedded fonts, auto-fit text, and the card layout (5×7 plus bleed). It generates the print PDF, a web preview (page-flip viewer), and a low-resolution watermarked guest proof.
+7. **Layout.** Port `layout.py`: trim and bleed boxes, embedded fonts, auto-fit text, and the card layout (5×7 plus bleed). It generates the print PDF, a web preview (page-flip viewer), and the low-resolution watermarked preview the customer sees before paying.
 
 Every job logs cost per call from OpenRouter usage, so the CFO's token costs are measured, not guessed.
 
@@ -108,8 +125,8 @@ Every job logs cost per call from OpenRouter usage, so the CFO's token costs are
 ## Architecture (CTO)
 - **Front end:** Next.js App Router plus the brand kit's `tokens.css`, `components.css` and components converted to TSX. The fonts are Bricolage Grotesque and Figtree.
 - **Supabase:**
-  - Auth (magic link and Google; the guest session is anonymous and upgrades on sign-up).
-  - Postgres tables: users, people, briefs, creations, renders, carts, orders, addresses, cost_ledger.
+  - Auth (magic link and Google). No anonymous sessions: the creator and every generation route require a signed-in user.
+  - Postgres tables: users, people, briefs, creations, renders, carts, orders, addresses, cost_ledger, and later memberships/entitlements (synced from Stripe Billing webhooks).
   - Storage, with private buckets for photos.
   - pgvector, Realtime, and Edge Functions or a worker.
 - **Payments:** Stripe Checkout with shipping collection, tax, and webhooks. The order is created on `checkout.session.completed`, then submitted to the printer.
@@ -121,14 +138,15 @@ Every job logs cost per call from OpenRouter usage, so the CFO's token costs are
 ## Milestones (each has its own check)
 1. **M1 — Scaffold.** Repo, brand tokens, the home page matching the brand-kit hero, auth, and a Vercel preview.
 2. **M2 — Pipeline.** A script-level card and book from a fixture brief, plus a cost report (sent to the CFO).
-3. **M3 — Intake.** Chat plus form brief builder, RAG knowledge base, guest card preview.
+3. **M3 — Intake.** Chat plus form brief builder, RAG knowledge base, card preview for signed-in users (the creator is behind sign-in).
 4. **M4 — Book flow.** Photo upload with consent, model sheet approval, story editing, page progress, proof viewer, re-roll.
 5. **M5 — Commerce.** Cart, Stripe Checkout, order records, emails.
 6. **M6 — Fulfillment and account.** Printer sandboxes, tracking, account pages, data deletion.
 7. **M7 — Done gate.** The Playwright e2e passes on the preview URL and the CMO does a final QA pass.
+8. **M8 — Membership (after launch, after attorney review).** Stripe Billing subscription, entitlement check, member area, cancel online. First member feature: the AI-assistant connector (docs/integrations/, built in the order of 06-architecture-and-roadmap.md, with every agent call checking the membership entitlement). Then scheduling, bulk sends and contact lists; digital handwriting later.
 
 ## CMO deliverables (`docs/cmo/`)
-- **UX spec:** guest → sign-up → create → approve → cart → checkout → track. A wireframe for each screen, using brand-kit components such as TemplateCard tilt grids, Chips for occasions, Progress for renders, and Toasts.
+- **UX spec:** browse → sign-up → create → preview → approve → cart → checkout → track, plus the membership page and upgrade prompts on member-only features (M8). A wireframe for each screen, using brand-kit components such as TemplateCard tilt grids, Chips for occasions, Progress for renders, and Toasts.
 - **Site copy** in the brand voice ("Your card's on its way to Sam."). That covers home, product pages, pricing, FAQ, and the intake question bank.
 - **12 demo templates** for the browse grid. The Eye Story can be the hero sample book, with the family's OK.
 - **Launch marketing plan:**
@@ -144,16 +162,17 @@ Live formulas throughout, with assumptions in one input sheet so marketing spend
    - Prices per product and format.
    - Monthly marketing budget per channel, with CPC, CTR and CAC per channel.
    - Organic traffic and its growth.
-   - Visitor → sign-up → creator start → purchase conversion rates.
+   - Visitor → sign-up → creator start → purchase conversion rates, and free account → member conversion.
+   - Membership price, monthly churn, and member order frequency versus free accounts.
    - Product mix, units per order, seasonality multipliers (Christmas, Mother's Day, Valentine's).
    - Re-roll rate and refund/reprint rate.
 2. **Unit Economics:** for each SKU, list price minus token cost (renders × $ per render + text tokens, filled from the CTO's measured ledger), print cost (Lulu and Prodigi price sheets), shipping, Stripe fees (2.9% + $0.30) and reprint allowance, giving contribution margin.
-3. **Model Costs:** a per-model price table (OpenRouter $ per image and $ per million tokens), renders per card and per book, and the cost for each guest preview. Guest previews are a cost that brings no revenue, so they need their own line.
+3. **Model Costs:** a per-model price table (OpenRouter $ per image and $ per million tokens), renders per card and per book, and the cost of previews from free accounts that never buy. Those previews bring no revenue, so they need their own line. Agent-connector usage by members gets its own line too.
 4. **Opex:**
    - Vercel, Supabase, Resend, domain, Stripe Tax, monitoring.
    - OpenRouter base spend, design tools, legal and LLC, insurance.
    - Optional contractor or support.
-5. **Forecast (36 months):** paid traffic from budget ÷ CPC, plus organic, then funnel conversions, then orders by SKU, revenue, COGS, gross profit, marketing, opex, net income and cumulative cash.
+5. **Forecast (36 months):** paid traffic from budget ÷ CPC, plus organic, then funnel conversions, then orders by SKU and membership subscriptions, revenue, COGS, gross profit, marketing, opex, net income and cumulative cash.
 6. **Scenarios:** Low, Base and High toggles, break-even month, and CAC vs. LTV (with repeat purchase rate).
 7. **Dashboard:** charts of revenue, profit, cash and orders, plus key KPIs.
 
@@ -178,11 +197,12 @@ The existing OpenRouter key in `book\.env` gets copied into GreetHub's own `.env
 
 ## Risks to watch
 - **Image model rate limits.** Nano Banana was always 429 on the Eye Story. Keep the fallback chain and queue concurrency limits.
-- **Render cost runaway.** Handled by the model sheet gate, re-roll caps, the guest preview at low resolution, and per-user and global daily spend caps.
+- **Render cost runaway.** Handled by requiring an account before any render, the model sheet gate, re-roll caps, low-resolution previews, free-account preview quotas, and per-user and global daily spend caps.
+- **Sign-up friction.** Requiring an account before creating will lose some visitors. Keep sign-up to one step (magic link or Google), show real samples and prices before it, and have the CMO and data team track the visitor → sign-up drop-off.
 - **Children's photos.** Covered by consent, private storage, retention limits and a deletion path. Before going live, the legal pages need a real privacy review (COPPA).
 - **Print color and spec rejections.** Run the printers' file validation APIs before submitting.
 
 ## Verification
 - **Per milestone:** Vitest unit tests, plus a manual walkthrough with the Chrome browser tools on the preview URL, with screenshots.
-- **Done gate:** the Playwright e2e (guest → sign-up → card → book → cart → Stripe test payment → sandbox print orders → tracking on the account page → account deletion) passes against the Vercel preview.
+- **Done gate:** the Playwright e2e (visitor blocked from creator → sign-up → card → book → cart → Stripe test payment → sandbox print orders → tracking on the account page → account deletion) passes against the Vercel preview.
 - **Finance:** the workbook opens in Excel. Changing the marketing budget input moves traffic, orders and profit, and token costs match the CTO's measured `cost_ledger`.

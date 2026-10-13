@@ -42,7 +42,6 @@ These advantages (agent integration, personalization, kiosks) are what the found
 - GreetHub has long-term growth potential, but first the system and models must reliably deliver what we promise the customer.
 - Long term: bring printing and shipping in-house to cut shipping cost, raise margins and scale quickly on internal processes. For now, fulfilment goes through print vendors and US mail.
 
-## Open differences with PLAN.md (owner to decide)
+## Owner decisions since the session
 
-- **Buying without an account.** The vision says cards and books can both be bought without an account. PLAN.md currently has guests limited to one watermarked card preview, with books, checkout and tracking requiring an account. Agents working on accounts, checkout or the book flow should raise this with the owner rather than change either document on their own.
-- **Membership.** PLAN.md does not yet describe a paid monthly membership, the members-only agent integration, scheduling, bulk sends, contact lists or handwriting capture. Treat these as roadmap direction, not launch scope, unless the owner says otherwise.
+- **13 Oct 2026, access tiers.** This replaces "bought without an account" above. You need a free account to make cards and books; visitors can only browse. The AI-assistant connector (MCP) and the other member features (scheduling, bulk sends, contact lists, digital handwriting) need a paid monthly membership. Membership follows launch. PLAN.md ("Access tiers", M8) has the detail.
