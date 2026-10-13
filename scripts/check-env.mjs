@@ -6,8 +6,9 @@
  *   node scripts/check-env.mjs                 uses VERCEL_ENV (production | preview | development), else "development"
  *   node scripts/check-env.mjs --env=production
  *
- * Production: a missing or short SESSION_SECRET fails the build, because sign-in would fail at runtime
- * (app/lib/shop/session.ts). A failed build keeps the last good deployment serving, which is the safer outcome.
+ * Production: a missing or short SESSION_SECRET fails the build when sign-in is the local cookie auth, because sign-in
+ * would fail at runtime (app/lib/shop/session.ts); with Supabase Auth configured it is not used. A Supabase URL with a
+ * path fails any build. A failed build keeps the last good deployment serving, which is the safer outcome.
  * Everything else is a warning so a demo deploy is never blocked by this script. Preview: warnings only.
  * Docs: docs/devops/01-environments.md
  */
@@ -20,10 +21,24 @@ const on = (k) => env[k] === "1" || env[k] === "true";
 const errors = [];
 const warnings = [];
 
+// Same switch as app/lib/adapters/index.ts: with all three, sign-in is Supabase Auth and SESSION_SECRET is unused.
+const supabaseAuth = has("NEXT_PUBLIC_SUPABASE_URL") && has("NEXT_PUBLIC_SUPABASE_ANON_KEY") && has("SUPABASE_SERVICE_ROLE_KEY");
+
+if (has("NEXT_PUBLIC_SUPABASE_URL")) {
+  let u = null;
+  try {
+    u = new URL(env.NEXT_PUBLIC_SUPABASE_URL.trim());
+  } catch {}
+  if (!u || (u.protocol !== "https:" && u.hostname !== "127.0.0.1" && u.hostname !== "localhost")) errors.push("NEXT_PUBLIC_SUPABASE_URL is not a valid https URL.");
+  else if (u.pathname !== "/" || u.search) errors.push("NEXT_PUBLIC_SUPABASE_URL has a path on it. Use the bare project URL (https://<ref>.supabase.co), not the /rest/v1 endpoint.");
+}
+
 if (target === "production" || target === "preview") {
-  const list = target === "production" ? errors : warnings;
-  if (!has("SESSION_SECRET")) list.push("SESSION_SECRET is not set (sign-in fails closed without it).");
-  else if (env.SESSION_SECRET.length < 32) list.push("SESSION_SECRET is shorter than 32 characters (sign-in fails closed).");
+  const list = target === "production" && !supabaseAuth ? errors : warnings;
+  if (!supabaseAuth) {
+    if (!has("SESSION_SECRET")) list.push("SESSION_SECRET is not set (sign-in fails closed without it).");
+    else if (env.SESSION_SECRET.length < 32) list.push("SESSION_SECRET is shorter than 32 characters (sign-in fails closed).");
+  }
 
   if (!has("NEXT_PUBLIC_SITE_URL")) warnings.push("NEXT_PUBLIC_SITE_URL is not set (email links and Stripe return URLs fall back to request headers).");
   if (on("GREETHUB_ALLOW_FAKE")) warnings.push("GREETHUB_ALLOW_FAKE is on (fake sign-in, fake checkout and the dev outbox are reachable).");
