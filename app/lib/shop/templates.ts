@@ -1,6 +1,7 @@
 import { PRICING, formatMoneyShort, OCCASIONS, STYLE_NAMES, type ArtStyleId } from "@greethub/shared";
 
-/** The 12 starter templates from docs/cmo/templates.md. Cover art is generated once and added as static assets later; until then tiles use the brand placeholder. */
+/** The 12 starter templates from docs/cmo/templates.md. Cover art is rendered once by docs/design/tools/render-site-art.mts
+ *  and served from public/templates as <id>-{400,800,1200}.webp (approvals in docs/design/site-art/approval-log.csv). */
 export type Template = {
   id: string;
   title: string;
@@ -15,11 +16,13 @@ export type Template = {
   placeholder: string;
   tile: "blush" | "marigold" | "cream";
   isNew?: boolean;
-  /** Static cover path once the art exists, e.g. /templates/big-birthday.jpg */
+  /** Static cover path, e.g. /templates/big-birthday-800.webp */
   image?: string;
 };
 
-const T = (t: Omit<Template, "styleLabel">): Template => ({ ...t, styleLabel: STYLE_NAMES[t.style] });
+export const templateImage = (id: string, width: 400 | 800 | 1200 = 800) => `/templates/${id}-${width}.webp`;
+
+const T = (t: Omit<Template, "styleLabel" | "image">): Template => ({ ...t, styleLabel: STYLE_NAMES[t.style], image: templateImage(t.id) });
 
 export const TEMPLATES: Template[] = [
   T({ id: "big-birthday", title: "Big Birthday", occasion: "birthday", occasionLabel: "Birthday", product: "card", tone: "funny", style: "bold_cartoon_pop", placeholder: "lopsided cake", tile: "marigold" }),

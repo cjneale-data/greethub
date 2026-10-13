@@ -2,6 +2,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { StyleBrowser } from "@/components/styles/StyleBrowser";
+import { StyleCard } from "@/components/styles/StyleCard";
 import { PICKER_CATEGORIES, PICKER_STYLES } from "@/lib/intake/knowledge/styles/picker.generated";
 
 const render = (props: Partial<Parameters<typeof StyleBrowser>[0]> = {}) =>
@@ -43,9 +44,14 @@ describe("style picker markup", () => {
   it("shows honest thumbnails: a Sample tag only where a render exists, otherwise Colors only", () => {
     const html = render();
     expect(html).toContain("Sample");
-    expect(html).toContain("Colors only");
     expect(html).toContain("/styles/bold_cartoon_pop.jpg");
-    expect(html).not.toContain("/styles/ink_wash.jpg");
+    // Every library style has a render today, so exercise the fallback on an unrendered copy.
+    const base = PICKER_STYLES.find((s) => s.id === "ink_wash")!;
+    const card = (rendered: boolean) =>
+      renderToStaticMarkup(createElement(StyleCard, { style: { ...base, thumbnail: { ...base.thumbnail, rendered } }, selected: false, tabIndex: 0, onSelect: () => undefined }));
+    expect(card(false)).toContain("Colors only");
+    expect(card(false)).not.toContain("/styles/ink_wash.jpg");
+    expect(card(true)).toContain("/styles/ink_wash.jpg");
   });
 
   it("offers the generic style with a one-tap button when a franchise look was asked for", () => {
