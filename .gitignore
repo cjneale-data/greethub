@@ -4,3 +4,9 @@ node_modules/
 .next/
 .vercel/
 *.log
+
+# local tool state
+ruvector.db
+agentdb.rvf
+agentdb.rvf.lock
+finance/.~lock.*

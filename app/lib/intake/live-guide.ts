@@ -20,7 +20,7 @@ const TOOLS = [
       parameters: {
         type: "object",
         properties: {
-          relationship: { type: "string", description: "Who the card is for, e.g. Mum, Friend, Teacher" },
+          relationship: { type: "string", description: "Who the card is for, e.g. Mom, Friend, Teacher" },
           recipientName: { type: "string", description: "Recipient first name or nickname" },
           occasion: { type: "string", enum: [...OCCASIONS] },
           occasionOther: { type: "string", description: "Only when occasion is other" },

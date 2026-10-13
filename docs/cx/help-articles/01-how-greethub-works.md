@@ -8,7 +8,7 @@ You tell us who it's for and what you'd say. We draw it, you check it, we print 
 
 1. **Tell us.** Chat with the Greet Guide or fill in the short form. Who it's for, the occasion, how it should feel, what the picture should show, what to say inside.
 2. **See the preview.** Your first card is free to preview without an account. It has a watermark and it is low resolution, so you can judge the picture and the words.
-3. **Make an account to keep going.** It's free. Your card comes with you. Accounts unlock full-size proofs, re-rolls each month, saved drafts and saved people.
+3. **Make an account to keep going.** It's free. Your card comes with you. Accounts unlock picture books (with 3 page redraws each), full-size proofs, saved drafts and saved people.
 4. **Approve it, pay, and we mail it.** Nothing is charged until you've looked at the proof and said yes.
 
 ## A picture book in six steps

@@ -1,10 +1,14 @@
 import Link from "next/link";
-import type { Metadata } from "next";
 import { ButtonLink } from "@/components/brand";
 import { PRICING, formatMoney, formatMoneyShort } from "@greethub/shared";
 import { PageTitle } from "@/components/shop/ui";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Pricing | GreetHub" };
+export const metadata = pageMetadata({
+  title: "Pricing | GreetHub",
+  description: "Prices for digital cards, mailed 5x7 cards and 8.5x8.5 hardcover picture books in 24 or 32 pages, with postage shown up front.",
+  path: "/pricing",
+});
 
 const s = PRICING.skus;
 const ship = (c: number) => (c ? `${formatMoneyShort(c)} postage` : "No shipping");
@@ -32,7 +36,7 @@ export default function PricingPage() {
       </div>
       <div className="gs-stack" style={{ marginTop: 32, maxWidth: 720 }}>
         <p className="gs-muted" style={{ margin: 0 }}>
-          <strong>Free:</strong> one watermarked card preview, no account. <strong>With a free account:</strong> saved drafts, saved people, monthly re-rolls, full-size proofs, order tracking.
+          <strong>Free:</strong> one watermarked card preview, no account. <strong>With a free account:</strong> saved drafts, saved people, full-size proofs, order tracking. Each picture book comes with 3 page redraws.
         </p>
         <p className="gs-muted gs-small" style={{ margin: 0 }}>
           Prices don&apos;t include tax. Tax is worked out at checkout. Faster shipping is {formatMoney(PRICING.shippingMethods.express.extraCents)} more per order. We ship to the US to start. The art is drawn by AI and you always see it before it prints.

@@ -7,8 +7,8 @@ export async function GET() {
   const adapters = getAdapters();
   const s = await adapters.auth.getSession();
   const user = s.isGuest ? null : await signedIn();
-  const profile = user ? getUser(user.userId) : undefined;
-  const cartCount = getCartItems(s.userId).reduce((n, i) => n + i.quantity, 0);
+  const profile = user ? await getUser(user.userId) : undefined;
+  const cartCount = (await getCartItems(s.userId)).reduce((n, i) => n + i.quantity, 0);
   return json({
     signedIn: !!user,
     isGuest: s.isGuest,

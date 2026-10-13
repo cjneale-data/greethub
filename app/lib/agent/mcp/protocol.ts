@@ -75,34 +75,37 @@ export async function handleMcpPost(req: Request): Promise<Response> {
     if (e instanceof AgentNotReady) return failureResponse(503, toolError("service_busy", "The assistant service is not available yet.", { retryable: true }));
     throw e;
   }
-  // The size cap protects the parser; MCP requests are small.
-  const len = Number(req.headers.get("content-length") ?? 0);
-  if (len > 256_000) return jsonResponse(rpcError(null, -32600, "Request too large"), 413);
+  // The size cap protects the parser; MCP requests are small. Checked on the header and again on the body (a chunked body has no length).
+  const MAX_BODY = 256_000;
+  if (Number(req.headers.get("content-length") ?? 0) > MAX_BODY) return jsonResponse(rpcError(null, -32600, "Request too large"), 413);
 
   const auth = await authenticate(req, deps);
   if (!auth.ok) return failureResponse(auth.status, toolError(auth.code, auth.message, { retryable: auth.status === 503 }), auth.challenge);
 
   let body: unknown;
   try {
-    body = await req.json();
+    const text = await req.text();
+    if (text.length > MAX_BODY) return jsonResponse(rpcError(null, -32600, "Request too large"), 413);
+    body = JSON.parse(text);
   } catch {
     return jsonResponse(rpcError(null, -32700, "Parse error"), 400);
   }
-  const requestId = req.headers.get("x-request-id") ?? crypto.randomUUID();
-  const batch = Array.isArray(body);
-  const msgs = (batch ? body : [body]) as RpcRequest[];
-  if (!msgs.length || msgs.some((m) => !m || m.jsonrpc !== "2.0" || typeof m.method !== "string")) return jsonResponse(rpcError(null, -32600, "Invalid Request"), 400);
+  // Client-supplied ids go into audit rows, so keep them short and plain.
+  const rid = req.headers.get("x-request-id");
+  const requestId = rid && /^[A-Za-z0-9._:-]{1,128}$/.test(rid) ? rid : crypto.randomUUID();
+  // JSON-RPC batching was removed from MCP in 2025-06-18 and both versions we support forbid it. Refusing it also means one HTTP
+  // request can never run several paid tool calls and then lose their results to a later 403 in the same batch.
+  if (Array.isArray(body)) return jsonResponse(rpcError(null, -32600, "Batch requests are not supported"), 400);
+  const m = body as RpcRequest;
+  if (!m || typeof m !== "object" || m.jsonrpc !== "2.0" || typeof m.method !== "string") return jsonResponse(rpcError(null, -32600, "Invalid Request"), 400);
 
-  const results: unknown[] = [];
-  for (const m of msgs) {
-    const r = await handleOne(m, auth.principal, requestId);
-    if (r && typeof r === "object" && "__insufficientScope" in r) {
-      const scope = (r as { __insufficientScope: string }).__insufficientScope;
-      return failureResponse(403, toolError("scope_insufficient", "This connection does not have permission for that action.", { retryable: false }), bearerChallenge({ error: "insufficient_scope", scope: [scope] }));
-    }
-    if (r !== null && m.id !== undefined) results.push(r);
+  const r = await handleOne(m, auth.principal, requestId);
+  if (r && typeof r === "object" && "__insufficientScope" in r) {
+    const scope = (r as { __insufficientScope: string }).__insufficientScope;
+    return failureResponse(403, toolError("scope_insufficient", "This connection does not have permission for that action.", { retryable: false }), bearerChallenge({ error: "insufficient_scope", scope: [scope] }));
   }
-  if (!results.length) return new Response(null, { status: 202, headers: noStore });
-  return jsonResponse(batch ? results : results[0]);
+  // Notifications (no id) get 202 Accepted with no body.
+  if (r === null || m.id === undefined) return new Response(null, { status: 202, headers: noStore });
+  return jsonResponse(r);
 }
 

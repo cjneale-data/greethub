@@ -42,7 +42,7 @@
 .gc-chips--scroll { max-height: 188px; overflow-y: auto; padding: 2px; }
 
 .gc-styles { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
-.gc-style { text-align: left; font-family: var(--gh-font-body); background: #fff; border: 1.5px solid var(--gh-twine); border-radius: var(--gh-r-md); padding: 10px; display: flex; flex-direction: column; gap: 8px; cursor: pointer; color: var(--gh-cocoa); min-height: 44px; }
+.gc-style { text-align: left; font-family: var(--gh-font-body); background: #fff; border: 1.5px solid var(--gh-control-border); border-radius: var(--gh-r-md); padding: 10px; display: flex; flex-direction: column; gap: 8px; cursor: pointer; color: var(--gh-cocoa); min-height: 44px; }
 .gc-style[aria-pressed="true"] { border-color: var(--gh-cocoa); box-shadow: 0 0 0 3px var(--gh-cream); }
 .gc-style:focus-visible, .gh-chip:focus-visible, .gc-check:focus-visible { outline: none; box-shadow: var(--gh-focus-ring); }
 .gc-style__swatch { display: flex; height: 36px; border-radius: var(--gh-r-sm); overflow: hidden; }
@@ -93,7 +93,7 @@
 
 /* Checkbox */
 .gc-check { display: inline-flex; align-items: flex-start; gap: 12px; background: none; border: 0; padding: 4px 0; text-align: left; font: inherit; color: var(--gh-cocoa); cursor: pointer; min-height: 44px; }
-.gc-check__box { flex: none; width: 24px; height: 24px; border: 1.5px solid var(--gh-twine); border-radius: 8px; background: #fff; display: grid; place-items: center; margin-top: 1px; }
+.gc-check__box { flex: none; width: 24px; height: 24px; border: 1.5px solid var(--gh-control-border); border-radius: 8px; background: #fff; display: grid; place-items: center; margin-top: 1px; }
 .gc-check[aria-checked="true"] .gc-check__box { border-color: var(--gh-cocoa); }
 .gc-check__box svg { opacity: 0; } .gc-check[aria-checked="true"] svg { opacity: 1; }
 

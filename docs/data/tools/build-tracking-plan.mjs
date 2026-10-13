@@ -37,7 +37,7 @@ export const CONSENT_TIERS = [
 ];
 
 export const KPIS = {
-  NSM_funnel: "North star: successful orders per week", A1_visitors: "Visitors", A2_channel_mix: "Channel mix and attribution", A3_guest_try_rate: "Guest try rate (CFO Inputs B15)", A3_template_ctr: "Template click-through",
+  NSM_funnel: "North star: successful orders per week", A1_visitors: "Visitors", A2_channel_mix: "Channel mix and attribution", A3_guest_try_rate: "Guest try rate (CFO Inputs B15)", A3_template_ctr: "Template click-through", A4_agent_orders: "Orders and spend through AI assistants (agent API)",
   B1_visitor_to_signup: "Visitor to sign-up (CFO Inputs B12)", B2_signup_to_start: "Sign-up to creator start (CFO Inputs B13)", B3_brief_completion: "Brief completion rate", B4_sheet_approval: "Model sheet approval rate", B5_proof_approval: "Proof approval rate",
   C1_start_to_purchase: "Creator start to purchase (CFO Inputs B14)", C2_proof_to_cart: "Proof to cart", C2_cart_to_checkout: "Cart to checkout", C3_checkout_to_paid: "Checkout to paid", C4_aov: "Average order value", C5_items_per_order: "Items per order (CFO Inputs B9)", C6_mix: "Product mix (CFO SKU table)",
   Q1_first_pass_qa: "First-attempt QA pass rate", Q2_auto_reroll_rate: "Automatic re-roll rate", Q3_reroll_rate: "User re-roll rate (CFO Inputs B34-35)", Q4_sheet_redo_rate: "Model sheet redo rate", Q5_generation_failure: "Generation failure rate", Q6_user_rating: "User rating (thumbs/NPS/CSAT)", Q7_approval_without_reroll: "Proof approved with no re-roll", Q9_intake_friction: "Intake friction", Q10_story_edit_rate: "Story edit rate",

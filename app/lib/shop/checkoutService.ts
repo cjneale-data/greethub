@@ -4,7 +4,8 @@ import { getAdapters, type CheckoutLine } from "../adapters";
 import { earliestDeliveryDate, validateAddress, type AddressErrors } from "./address";
 import { getCartItems } from "./cartService";
 import { POLICY_VERSION } from "./policies";
-import { newId, readDB, updateDB } from "./store";
+import { docs } from "../store";
+import { newId } from "./store";
 import type { PendingCheckout } from "./types";
 
 export const CheckoutInputSchema = z.object({
@@ -36,7 +37,7 @@ export async function startCheckout(user: { userId: string; email: string }, raw
   const parsed = CheckoutInputSchema.safeParse(raw);
   if (!parsed.success) return { ok: false, status: 400, error: parsed.error.issues[0]?.message ?? "Something's missing from the form." };
   const input = parsed.data;
-  const items = getCartItems(user.userId);
+  const items = await getCartItems(user.userId);
   if (items.length === 0) return { ok: false, status: 400, error: "Nothing here yet. Start with a card or a book." };
   if (blockedItems(items).length > 0) return { ok: false, status: 409, error: "Something needs a look before it can print. Open your cart." };
 
@@ -63,8 +64,7 @@ export async function startCheckout(user: { userId: string; email: string }, raw
   }
 
   const totals = computeTotals(items, method);
-  const db = readDB();
-  const user_ = db.users[user.userId];
+  const user_ = await docs().get("users", user.userId);
   const id = newId("co");
   const pending: PendingCheckout = {
     id,
@@ -92,9 +92,7 @@ export async function startCheckout(user: { userId: string; email: string }, raw
       cancelUrl: `${origin}/cart?cancelled=1`,
     });
     pending.sessionId = session.id;
-    updateDB((d) => {
-      d.checkouts[id] = pending;
-    });
+    await docs().insertIfAbsent("checkouts", id, pending);
     return { ok: true, url: session.url, checkoutId: id };
   } catch (err) {
     console.error("could not open payment", err);
@@ -102,6 +100,6 @@ export async function startCheckout(user: { userId: string; email: string }, raw
   }
 }
 
-export function findCheckoutBySession(sessionId: string): PendingCheckout | undefined {
-  return Object.values(readDB().checkouts).find((c) => c.sessionId === sessionId);
+export async function findCheckoutBySession(sessionId: string): Promise<PendingCheckout | undefined> {
+  return (await docs().find("checkouts", { ref: sessionId })).find((c) => c.sessionId === sessionId);
 }

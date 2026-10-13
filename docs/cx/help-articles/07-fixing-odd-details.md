@@ -10,7 +10,7 @@ AI art sometimes gets small things wrong: an extra finger, a blurry hand, teeth 
 2. Choose **Redraw this page**. Add a short note ("hands open, no extra objects").
 3. Look at the new version. Keep it, or redraw again while you have redraws left.
 
-You get {monthly_rerolls} redraws each month, plus free redraws for pages we flagged.
+Each picture book comes with 3 page redraws. A redraw that fails never uses one up. Before any pages are drawn, you also get 2 free redos of the character sheet. Cards don't have redraws once you're signed in; you can try a fresh preview instead.
 
 ## Tips
 
@@ -20,7 +20,7 @@ You get {monthly_rerolls} redraws each month, plus free redraws for pages we fla
 
 ## Out of redraws?
 
-Email {support_email} with your project name and the page. If the problem is clearly a drawing error, we'll fix it for free. This is our call, not a rule, and we're generous about it.
+Email {support_email} with your project name and the page number. A person will look at it. If it's clearly a drawing error, we'll work out a fix with you at no cost. This is our call, not a rule, and we're generous about it.
 
 ## Important
 

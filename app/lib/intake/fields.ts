@@ -15,7 +15,7 @@ export type FieldKey = RequiredField | OptionalField;
 /** `product` is always "card" here and counts as the first of eight required items on the progress bar. */
 export const REQUIRED_COUNT = REQUIRED_FIELDS.length + 1;
 
-export const RELATIONSHIPS = ["Mum", "Dad", "Partner", "Child", "Grandparent", "Friend", "Colleague", "Teacher", "Myself", "Someone else"] as const;
+export const RELATIONSHIPS = ["Mom", "Dad", "Partner", "Child", "Grandparent", "Friend", "Colleague", "Teacher", "Myself", "Someone else"] as const;
 
 export const OCCASION_LABELS: Record<Occasion, string> = {
   birthday: "Birthday",

@@ -8,12 +8,12 @@ Owner: CMO with CTO. Every question maps to one CreationBrief field. The CTO sho
 1. Compute `missing = required_fields - filled_fields` for the current product.
 2. Fill from every source first: template defaults, the user's first message (extract several fields at once), saved People, past briefs (RAG), form edits.
 3. Ask the first item of `missing` in the order below. Never re-ask a field that is filled, even if the user only implied it. Instead confirm in the brief card, not in chat.
-4. If one message answers several fields, acknowledge in one line ("Got it: Rosa, your mum, birthday.") and ask the next missing one.
+4. If one message answers several fields, acknowledge in one line ("Got it: Rosa, your mom, birthday.") and ask the next missing one.
 5. Optional fields are asked once, together, after the required ones: "Anything else I should know?" If the user says no, mark `optional_done = true`.
 6. Maximum one question per turn. Maximum two sentences per turn. No question twice unless validation failed.
 7. A field the user edits on the brief card overrides chat and is never re-asked.
 8. Generation unlocks only when every required field passes validation. The Guide says what is missing: "One more thing: who's it for?"
-9. Retrieval (saved People, past briefs) proposes values as chips ("Rosa (Mum)") and never fills silently.
+9. Retrieval (saved People, past briefs) proposes values as chips ("Rosa (Mom)") and never fills silently.
 
 **Voice for the Guide:** warm, short, first names, no exclamation marks in the intake (reserve the one per screen for the result). No therapeutic words. No emojis.
 
@@ -31,7 +31,7 @@ Owner: CMO with CTO. Every question maps to one CreationBrief field. The CTO sho
 | # | field | Exact question | Control | Options | Validation | If invalid |
 |---|---|---|---|---|---|---|
 | 1 | `product` | "Are we making a card or a picture book?" | ChipGroup | Card, Picture book | One of two | Re-show chips |
-| 2 | `recipient.relationship` | "Who's it for?" | ChipGroup + free text "Someone else" | Mum, Dad, Partner, Child, Grandparent, Friend, Colleague, Teacher, Myself, Someone else | Required; free text 1-40 chars | "Pick one, or tell me who they are." |
+| 2 | `recipient.relationship` | "Who's it for?" | ChipGroup + free text "Someone else" | Mom, Dad, Partner, Child, Grandparent, Friend, Colleague, Teacher, Myself, Someone else | Required; free text 1-40 chars | "Pick one, or tell me who they are." |
 | 3 | `recipient.name` | "What's their first name?" | TextField (+ People chips if account) | n/a | 1-40 chars, letters, spaces, hyphen, apostrophe | "Just a first name or nickname is fine." |
 | 4 | `occasion` | "What's the occasion?" | ChipGroup (scrolls) | Birthday, Thank you, Wedding, Anniversary, New baby, Get well, Congratulations, Sympathy, Mother's Day, Father's Day, Valentine's Day, Christmas, Graduation, Retirement, Just because, Something else | One required; "Something else" asks for free text 1-60 chars | "Tell me the occasion in a few words." |
 | 5 | `tone` | "What should it feel like?" | ChipGroup | Funny, Heartfelt, Adventurous (plus "Sweet and simple" if occasion is New baby or Sympathy) | One required | Re-show chips |

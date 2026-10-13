@@ -21,12 +21,12 @@ export function validateAddress(input: unknown): { ok: true; address: Address } 
   const line2 = String(raw.line2 ?? "");
   const country = String(raw.country ?? "US").toUpperCase();
   const postal = String(raw.postalCode ?? "").trim();
-  if (PO_BOX.test(line1) || PO_BOX.test(line2)) errors.line1 = "Couriers can't deliver to PO boxes. Use a street address.";
+  if (PO_BOX.test(line1) || PO_BOX.test(line2)) errors.line1 = "We can't ship to PO boxes. Use a street address.";
   if (country && !(PRICING.shipCountries as readonly string[]).includes(country) && !errors.country) {
     errors.country = "We ship to the US to start. More countries soon.";
   }
   if (country === "US" && postal && !US_ZIP.test(postal) && !errors.postalCode) {
-    errors.postalCode = "We can't find that address. Check the postcode and street.";
+    errors.postalCode = "We can't find that address. Check the ZIP code and street.";
   }
   if (country === "US" && raw.region && !/^[A-Za-z .'-]{2,}$/.test(String(raw.region)) && !errors.region) errors.region = "Check the state";
   if (Object.keys(errors).length > 0 || !base.success) return { ok: false, errors };

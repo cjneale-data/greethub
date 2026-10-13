@@ -2,7 +2,18 @@
 
 Owner: Kiosk Program Lead. Written 2026-10-11. Tags: [V] verified on a primary page, [S] secondary source, [U] unverified or my estimate. Every cost figure in this folder is a planning estimate unless tagged otherwise; the CSV for the CFO is `financial-inputs.csv`.
 
-## Recommendation
+## Update 2026-10-13: defer P0 behind a start gate
+
+The "GO on P0 now" recommendation below is superseded. The platform assessment (`docs/PLAN.md`, Platform assessment, Kiosk) found:
+
+- **Cash.** The CFO's recommended launch plan ($0 to $2k a month paid, agent-built engineering, new prices) needs about $54k of funding at its low point and breaks even around month 24 only at $0 paid; the base case never breaks even (`finance/README.md`, v3). P0 at $35k base is about two thirds of that need and earns nothing.
+- **The app cannot carry a kiosk yet.** No kiosk code, no signed-in card path, no card print PDF wired to orders, local JSON storage, no hosted job queue, no durable spend ledger, no Stripe Terminal (04 section 14). P0's "reuse the existing app" assumption does not hold until those land.
+- **The differentiator is not built.** This plan's case is the GreetHub brain (guided chat, saved People, styles, accounts). The card has no competitive edge as built (card engineer, PLAN.md), so a kiosk today would sell an ordinary card next to cheaper catalogue cards.
+- **The account upside is smaller than written.** Paid CAC is about $70 against an LTV of about $26 (v3). With paid spend near $0 there is little paid CAC to avoid, so value a kiosk sign-up at its repeat contribution (about 0.7 extra orders x $15.20 = about $11 [U]), not at the CAC.
+
+New sequence: **S0** evidence before spend (after launch, about $100 to $500 cash, no contractors; 07 section 2), then **P0 only if start gate S0 passes and the owner approves it in writing**. In finance workbook v3 the kiosk schedule now starts at M7 (May 2027) and G0 defaults to 0, so only P0 is in the default "Core + Kiosk" numbers. The licensing route (Tier D) stays the cheapest way to a counter; opening it is the owner's call.
+
+## Recommendation (2026-10-11; superseded where the update above differs)
 
 1. **GO on P0 only** (concept validation, about $35k base, 3 months). Borrowed tablet, an off-the-shelf printer, the existing card pipeline. It answers the questions that decide everything else: will people pay about $7 for a card at a counter, does a card print well enough on foldable stock, will a retailer say yes.
 2. **NO-GO on hardware build (P1 and later) until two things are true:** (a) the online business has about 6 months of real data (it is not launched yet; the finance model shows no sustained break-even at the CMO's paid budget, `finance/README.md`), and (b) P0 passes its gate (file 07).
@@ -25,7 +36,7 @@ At the base case a 100-kiosk fleet earns about $41k a month operating contributi
 - sustained **8 or more cards a day** per kiosk across 100 or more units (annual contribution about $970k), or
 - R&D comes in near the **low** case because off-the-shelf tiers are enough, or
 - a host or operator **co-funds** hardware (retailer purchase, operator licence), or
-- kiosk customers become **GreetHub account holders** at a rate that beats the online paid CAC of about $76 (`finance/README.md`). This is the real strategic upside and the least proven number in this plan.
+- kiosk customers become **GreetHub account holders** at a rate that beats the online paid CAC of about $70 (v3; $76 in v2), or, with paid spend near $0, a repeat contribution of about $11 per account [U] (`finance/README.md`). This is the real strategic upside and the least proven number in this plan.
 
 ## Honest risks, ranked
 

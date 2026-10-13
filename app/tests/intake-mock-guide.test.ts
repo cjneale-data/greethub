@@ -5,7 +5,7 @@ import { mockGuideTurn } from "@/lib/intake/mock-guide";
 describe("mock Greet Guide", () => {
   it("fills several fields from one message and asks only the next missing one", async () => {
     const t = await mockGuideTurn("It's for my mum, Rosa, her birthday", emptyDraft());
-    expect(t.draft).toMatchObject({ relationship: "Mum", recipientName: "Rosa", occasion: "birthday" });
+    expect(t.draft).toMatchObject({ relationship: "Mom", recipientName: "Rosa", occasion: "birthday" });
     expect(t.next).toBe("tone");
     expect(t.reply).toContain("Got it");
     expect(t.reply).toContain("What should it feel like?");

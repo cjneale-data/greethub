@@ -2,6 +2,12 @@
 
 Effort: S under 1 day, M 1 to 3 days, L over 3 days. Priority: MUST = before any public URL or launch; AFTER = within 60 days of launch. "Builder" is the agent that implements; gh-security reviews every MUST item and writes tests where listed. Risk ids refer to 00-assessment.md.
 
+## Status, 2026-10-12 (platform assessment; checked against code, not docs)
+
+- Done: SEC-04 (build fix 0cd6c67; admin token timing-safe and required in production builds), SEC-22 (`childProcessEnv`), SEC-23 purge wiring (account delete calls `deleteUserBookData`; CSAM procedure still open). Stripe forged-webhook hole closed (shop engineer, not a ticket here).
+- Partly done: SEC-01 (guest id format checked in fake `getSession` and `upgradeGuest`; cookie still unsigned, `proxy.ts` does not re-mint bad ids). SEC-02 (SESSION_SECRET required in production; `fakeAllowed`/`devSigninAllowed` still honour the flags on `VERCEL_ENV=production`; mock-AI-in-production guard missing). SEC-03 (Google stub refuses outside `fakeAllowed()`; `/api/auth/session` not reviewed). SEC-16 (baseline headers in `next.config.ts`; no full CSP, no origin check, `Secure` added to `gh_guest_card`). SEC-11 (`card/message` now limited per IP, in memory).
+- Not started: SEC-05 to SEC-10, SEC-12 to SEC-15, SEC-17 to SEC-21, SEC-24, SEC-25. No `.github/`, no gitleaks, no `vercel.json` cron.
+
 ## MUST before launch
 
 | ID | Ticket | Risk | Builder | Effort | Acceptance criteria |

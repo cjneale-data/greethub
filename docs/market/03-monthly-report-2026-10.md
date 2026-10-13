@@ -90,6 +90,13 @@ Trend: no prior month. Qualitative shift: the category narrative moved from "mag
 - True consumer WTP for AI-photo books at $45-$65 (no survey; run one).
 - Do Cardwise or others plan mailed illustrated cards with likeness?
 
+## 9a. Corrections and updates (2026-10-12)
+
+- **Opportunity 4 is not available yet.** Saved People stores names only and cards take no photos (CMO, platform assessment in `docs/PLAN.md`, 2026-10-12). It stays a plan, not a claim; Cardwise is at parity with what is built.
+- **Action 2 closed / open question answered:** Lulu lists "Casewrap: 24-800 pages" [V] https://help.lulu.com/en/support/solutions/articles/64000255583 (read 2026-10-12). The 40-page figure was perfect-bound. Cost per unit still needs a sandbox quote (CTO/CFO).
+- **Action 4 partly done:** CFO v2 has a Market-adjusted scenario (card $8.99 postage included, digital book $14.99), off by default; app prices unchanged.
+- **New gap:** the app's default "arrive by" is 7 days, faster than Imagitime's 8-13 [V] with no printer data behind it. Hold any delivery claim in ads until sandbox runs (CX-04).
+
 ## 10. Scorecard (key metrics per competitor, month over month)
 
 Source of truth: `docs/market/scorecard.csv` (long format). Summary view; "Oct" is this baseline, "Nov" blank for next report.

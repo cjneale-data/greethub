@@ -96,6 +96,8 @@ Cumulative cash at M36 with base R&D: -$2.28M (bad revenue), -$1.76M (base), -$0
 
 ## 9. Suggested use in the CFO model
 
+**2026-10-13 change in workbook v3 (kiosk lead):** `Inputs` F183 (G0) = 0, so the default "Core + Kiosk" view is P0 only ($34.6k base; base-case peak funding need $297k core, $332k with P0). Phase start months moved 6 months later (D182:D186 = 7, 11, 17, 24, 31), pilot sales start 19 (B223), scale-out 30 (B224), fleet plan B226:B261 shifted 6 rows. The `Kiosk` row 47 payback flag now requires cumulative cash to have gone negative first (it read "month 1" once spending starts later). With all gates set to 1 the shifted program shows R&D $973k, capex $563k, 50 units and kiosk cash -$1.45M at M36: truncated at the horizon, not cheaper. Recalculated in LibreOffice: 8,811 formulas, 0 errors; core-only results unchanged.
+
 1. Add the kiosk as a separate cost center with off-by-default toggle.
 2. Use the base R&D profile for the funding need if the owner approves P0 only: P0 costs $35k base, the rest conditional on gates; model "P0 only" as a standard line in the online forecast's one-time costs.
 3. Do not add kiosk revenue to the online forecast until P2 data replaces the guesses.

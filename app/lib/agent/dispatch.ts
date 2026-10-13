@@ -22,14 +22,15 @@ export async function callTool(principal: Principal, tool: ToolName, rawArgs: un
   const base = { at: deps.now().toISOString(), grantId: principal.grant.grantId, userId: principal.userId, clientId: principal.clientId, tool, argsDigest: sha256(stableStringify(args)), requestId };
   const ctx: ToolCtx = { principal, deps };
 
-  const decision = await authorize(principal, tool, args, deps, await resolveFacts(ctx, tool, args));
+  const facts = await resolveFacts(ctx, tool, args);
+  const decision = await authorize(principal, tool, args, deps, facts);
   await deps.audit.append({ ...base, decision: decision.decision, reasons: decision.reasons });
   if (decision.decision !== "allow") return { ok: false, error: decision.error };
 
   const run = async (): Promise<{ ok: true; data: Record<string, unknown>; replayed: boolean } | { ok: false; error: ToolError }> => {
     const ref = `${principal.grant.grantId}:${tool}:${crypto.randomUUID()}`;
     if (meta.spendsModelMoney) {
-      const r = await deps.ledger.reserve("agent", 0.25, ref);
+      const r = await deps.ledger.reserve("agent", facts.estimatedModelUsd ?? 0.25, ref); // same estimate the policy checked
       if (!r.ok) return { ok: false, error: toolError("spend_cap_reached", "GreetHub can't start new drafts right now. Please try again later.", { retryable: true }) };
     }
     const result = await (handlers[tool] as (c: ToolCtx, i: unknown) => ReturnType<(typeof handlers)[ToolName]>)(ctx, parsed.data);

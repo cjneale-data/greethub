@@ -136,4 +136,7 @@ export class FileJobStore implements JobStore {
     assertId(id);
     return existsSync(path.join(this.root, "jobs", `${id}.cancel`));
   }
+  async delete(id: string) {
+    rmSync(this.file(id), { force: true });
+  }
 }

@@ -1,12 +1,12 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { buildFakeSessionEvent, signFakeEvent } from "@/lib/adapters/fake/payments";
 import { advanceFakeJob } from "@/lib/adapters/fake/printer";
 import { startCheckout } from "@/lib/shop/checkoutService";
 import { addItem } from "@/lib/shop/cartService";
-import { applyPrinterWebhook, handlePaymentWebhook, refreshOrder } from "@/lib/shop/orderService";
+import { applyPrinterWebhook, handlePaymentWebhook, refreshOrder, refreshOrderIfStale } from "@/lib/shop/orderService";
 import { deleteAccount, exportUserData, getOrder } from "@/lib/shop/accountService";
 import { readDB, updateDB } from "@/lib/shop/store";
 import { validateAddress } from "@/lib/shop/address";
@@ -23,7 +23,7 @@ beforeEach(() => {
 });
 
 async function checkoutWithCard() {
-  addItem(user.userId, { kind: "card", creationId: "c1", title: "Rosa card", recipientName: "Rosa", format: "mailed", mailTo: "recipient" });
+  await addItem(user.userId, { kind: "card", creationId: "c1", title: "Rosa card", recipientName: "Rosa", format: "mailed", mailTo: "recipient" });
   const itemId = readDB().carts[user.userId][0].id;
   const r = await startCheckout(user, { shippingMethod: "standard", proofApproved: true, shipments: { [itemId]: addr } }, "http://localhost:3103");
   if (!r.ok) throw new Error(r.error);
@@ -37,7 +37,7 @@ const pay = (pending: { sessionId?: string; id: string; totals: { totalCents: nu
 describe("checkout validation", () => {
   it("blocks missing proof approval, empty carts and bad addresses", async () => {
     expect((await startCheckout(user, {}, "http://x")).ok).toBe(false);
-    addItem(user.userId, { kind: "card", creationId: "c1", title: "t", format: "mailed" });
+    await addItem(user.userId, { kind: "card", creationId: "c1", title: "t", format: "mailed" });
     const noApproval = await startCheckout(user, { shipments: {} }, "http://x");
     expect(noApproval).toMatchObject({ ok: false, status: 400 });
     const itemId = readDB().carts[user.userId][0].id;
@@ -82,6 +82,21 @@ describe("payment webhook to order", () => {
     expect(db.outbox.filter((m) => m.tag === "order_confirmed")).toHaveLength(1);
   });
 
+  it("accepts a payment where Stripe added automatic tax on top", async () => {
+    const { pending } = await checkoutWithCard();
+    const e = buildFakeSessionEvent({ sessionId: pending.sessionId!, checkoutId: pending.id, email: user.email, amountTotal: pending.totals.totalCents + 87, paid: true, eventId: "evt_tax" });
+    e.data.object.total_details = { amount_tax: 87 };
+    const ev = signFakeEvent(e);
+    const r = await handlePaymentWebhook(ev.body, ev.signature);
+    expect(r.body.mismatch).toBeUndefined();
+    expect(Object.keys(readDB().orders)).toHaveLength(1);
+    // The order records the tax Stripe collected and the amount actually charged (bookkeeping needs both).
+    const order = Object.values(readDB().orders)[0];
+    expect(order.totals.taxCents).toBe(87);
+    expect(order.totals.totalCents).toBe(pending.totals.totalCents + 87);
+    expect(order.totals.subtotalCents).toBe(pending.totals.subtotalCents);
+  });
+
   it("refuses to fulfil when the paid amount does not match", async () => {
     const { pending } = await checkoutWithCard();
     const ev = signFakeEvent(buildFakeSessionEvent({ sessionId: pending.sessionId!, checkoutId: pending.id, email: user.email, amountTotal: 1, paid: true, eventId: "evt_m" }));
@@ -103,16 +118,16 @@ describe("payment webhook to order", () => {
     await handlePaymentWebhook(p.body, p.signature);
     const id = Object.keys(readDB().orders)[0];
     const ext = readDB().orders[id].items[0].fulfillment!.externalId;
-    advanceFakeJob(ext);
+    await advanceFakeJob(ext);
     expect((await refreshOrder(id))!.status).toBe("printing");
-    advanceFakeJob(ext);
+    await advanceFakeJob(ext);
     const shipped = (await refreshOrder(id))!;
     expect(shipped.status).toBe("shipped");
     expect(shipped.items[0].fulfillment?.trackingNumber).toMatch(/^FAKE/);
     expect(readDB().outbox.filter((m) => m.tag === "shipped")).toHaveLength(1);
     await refreshOrder(id);
     expect(readDB().outbox.filter((m) => m.tag === "shipped")).toHaveLength(1);
-    advanceFakeJob(ext);
+    await advanceFakeJob(ext);
     const done = (await refreshOrder(id))!;
     expect(done.status).toBe("delivered");
     expect(done.history.map((h) => h.status)).toEqual(["paid", "preparing", "printing", "shipped", "delivered"]);
@@ -129,7 +144,7 @@ describe("payment webhook to order", () => {
   });
 
   it("flags a print file problem as needs_attention", async () => {
-    addItem(user.userId, { kind: "card", creationId: "c2", title: "needs-fix card", format: "mailed" });
+    await addItem(user.userId, { kind: "card", creationId: "c2", title: "needs-fix card", format: "mailed" });
     const itemId = readDB().carts[user.userId][0].id;
     const r = await startCheckout(user, { proofApproved: true, shipments: { [itemId]: addr } }, "http://x");
     if (!r.ok) throw new Error(r.error);
@@ -140,25 +155,52 @@ describe("payment webhook to order", () => {
   });
 });
 
+describe("production safety", () => {
+  afterEach(() => vi.unstubAllEnvs());
+  it("refuses fake-signed payment events in production without the explicit fake opt-in", async () => {
+    const { pending } = await checkoutWithCard();
+    const { body, signature } = pay(pending, "evt_prod_forged");
+    vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("GREETHUB_ALLOW_FAKE", "");
+    expect((await handlePaymentWebhook(body, signature)).status).toBe(404);
+    expect(Object.keys(readDB().orders)).toHaveLength(0);
+    vi.stubEnv("GREETHUB_ALLOW_FAKE", "1");
+    expect((await handlePaymentWebhook(body, signature)).status).toBe(200);
+  });
+  it("throttles page-view printer polling per order", async () => {
+    const { pending } = await checkoutWithCard();
+    const { body, signature } = pay(pending, "evt_throttle");
+    await handlePaymentWebhook(body, signature);
+    const order = Object.values(readDB().orders)[0];
+    const ext = order.items[0].fulfillment!.externalId;
+    await refreshOrderIfStale(order.id, 60_000, 1_000_000);
+    await advanceFakeJob(ext);
+    await refreshOrderIfStale(order.id, 60_000, 1_030_000);
+    expect(readDB().orders[order.id].items[0].status).toBe("preparing");
+    await refreshOrderIfStale(order.id, 60_000, 1_070_000);
+    expect(readDB().orders[order.id].items[0].status).toBe("printing");
+  });
+});
+
 describe("account data", () => {
   it("exports, then deletes the account but keeps a scrubbed order record", async () => {
     const { pending } = await checkoutWithCard();
     const p = pay(pending, "evt_d");
     await handlePaymentWebhook(p.body, p.signature);
     const id = Object.keys(readDB().orders)[0];
-    const exp = exportUserData(user.userId);
+    const exp = await exportUserData(user.userId);
     expect(exp.orders).toHaveLength(1);
     expect(exp.profile?.email).toBe(user.email);
 
-    deleteAccount(user.userId);
+    await deleteAccount(user.userId);
     const db = readDB();
     expect(db.users[user.userId]).toBeUndefined();
-    expect(getOrder(user.userId, id)?.accountDeleted).toBe(true);
+    expect((await getOrder(user.userId, id))?.accountDeleted).toBe(true);
     // Open order keeps its ship-to until delivered, then it is scrubbed.
     const ext = db.orders[id].items[0].fulfillment!.externalId;
-    advanceFakeJob(ext);
-    advanceFakeJob(ext);
-    advanceFakeJob(ext);
+    await advanceFakeJob(ext);
+    await advanceFakeJob(ext);
+    await advanceFakeJob(ext);
     const done = (await refreshOrder(id))!;
     expect(done.status).toBe("delivered");
     expect(done.scrubbed).toBe(true);

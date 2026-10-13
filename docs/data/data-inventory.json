@@ -422,6 +422,36 @@
       "attorney": "Confirm a random id in a tombstone is not personal data"
     },
     {
+      "id": "agent_access",
+      "name": "AI-assistant grants, OAuth tokens, agent audit log, idempotency keys, spend pool",
+      "where": "app store today (lib/agent); Supabase tables at SEC-18",
+      "cls": "C1 (audit: arg digests only) + secrets (token hashes)",
+      "purpose": "Delegated access, spending limits, abuse review",
+      "tier": "T0",
+      "retention": "Grant: life of grant + 90 days; audit: 12 months; idempotency: 48 hours",
+      "retention_days": 365,
+      "then": "Delete",
+      "access": "CTO; owner",
+      "deletion": "delete_subject must revoke grants and drop audit rows by user (not built)",
+      "vendors": "Supabase",
+      "attorney": "Confirm audit retention for disputed agent purchases"
+    },
+    {
+      "id": "content_reports",
+      "name": "Content and takedown reports (reporter email, who is depicted, description, signature)",
+      "where": "app shop store (lib/safety/reports.ts); Supabase reports table planned",
+      "cls": "C2 + C3 (may describe a child)",
+      "purpose": "Takedown, photo removal, DMCA",
+      "tier": "T0",
+      "retention": "5 years after close (same as takedown tickets)",
+      "retention_days": 1825,
+      "then": "Delete",
+      "access": "Trust and safety; owner (admin token)",
+      "deletion": "Kept under legal hold rules; reporter can ask for deletion after close",
+      "vendors": "Supabase; Resend (report email copy)",
+      "attorney": "DMCA record-keeping period and whether reporter data can be deleted on request"
+    },
+    {
       "id": "printer_data",
       "name": "Printer-held customer data",
       "where": "Lulu, Prodigi",

@@ -5,6 +5,6 @@ export async function DELETE(_req: Request, { params }: { params: Promise<{ id: 
   const u = await signedIn();
   if (!u) return json(NOT_SIGNED_IN, 401);
   const { id } = await params;
-  deletePerson(u.userId, id);
-  return json({ people: getPeople(u.userId) });
+  await deletePerson(u.userId, id);
+  return json({ people: await getPeople(u.userId) });
 }

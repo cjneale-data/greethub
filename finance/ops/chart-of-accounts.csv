@@ -1,0 +1,58 @@
+number,name,type,normal_balance,source_of_entries,maps_to_model_v3,notes
+1000,Operating bank account,Asset,Debit,Bank statement,Forecast r80 (cash),Business account only. No personal spend (liability shield; legal/04).
+1010,Stripe balance (clearing),Asset,Debit,Stripe balance transactions,,Charges in; fees and refunds out; payouts move it to 1000. Should net to Stripe's reported balance at month end.
+1020,OpenRouter prepaid credit,Asset,Debit,OpenRouter credit purchases and usage export,,Credit bought is an asset; usage moves it to 5010-5030. The 5.5% purchase fee goes to 5060.
+1030,Prepaid software and services,Asset,Debit,Vendor invoices,,Annual plans (domain; any yearly SaaS) spread monthly to 6xxx.
+1100,Printer deposits or prepaid balance,Asset,Debit,Lulu and Prodigi account statements,,Only if a printer bills against a prepaid wallet (not verified for either).
+1200,Undeposited and in-transit payouts,Asset,Debit,Stripe payouts not yet in bank,,Payouts created on the last days of a month that land next month.
+2000,Accounts payable - print vendors,Liability,Credit,Lulu and Prodigi invoices,,If printers bill on terms. Card-on-file charges skip AP.
+2010,Accounts payable - other vendors,Liability,Credit,Vendor invoices,,
+2100,Sales tax payable - [state],Liability,Credit,Stripe Tax report by jurisdiction,,One sub-account per registered state (2101 home state; 2102.. added at registration). Never revenue.
+2150,Sales tax collected - not registered,Liability,Credit,Stripe Tax report,,Should stay 0: Stripe Tax should only collect where registered. Any balance is an accountant question.
+2200,Customer refunds and disputes pending,Liability,Credit,Stripe refunds and disputes,,Disputes open at month end; Stripe holds the funds.
+2300,Creator commissions payable,Liability,Credit,Creator attribution report (not built),Forecast r88,10% commission on attributed orders; 30-day clawback window (docs/social/02). Not built in the app yet.
+2400,Accrued expenses,Liability,Credit,Close checklist step,,Usage billed after month end (Vercel overage; Supabase; Resend; printer jobs shipped but not invoiced).
+2500,Deferred revenue - paid not yet shipped,Liability,Credit,Order records (status paid/preparing),,Only if the accountant picks accrual with revenue at shipment. See accountant-questions.md.
+2900,Owner loans to company,Liability,Credit,Bank,,Owner money that is a loan and not equity. The attorney or accountant sets which.
+3000,Owner contributions,Equity,Credit,Bank,,
+3100,Owner draws or distributions,Equity,Debit,Bank,,
+3900,Retained earnings,Equity,Credit,Year-end close,,
+4000,Sales - printed books,Revenue,Credit,Orders (sku book_24 / book_32),Forecast r56-57,Product price only. Tax goes to 2100.
+4010,Sales - printed cards,Revenue,Credit,Orders (sku card mailed),Forecast r54,
+4020,Sales - digital books,Revenue,Credit,Orders (sku book digital),Forecast r55,Separate account because states tax digital goods differently (legal/03).
+4030,Sales - digital cards,Revenue,Credit,Orders (sku card digital),Forecast r53,Separate account for the same reason.
+4100,Shipping and postage charged,Revenue,Credit,Order totals postageCents + methodCents,Forecast r53-57 (incl. postage),Model lumps postage into SKU revenue; keep it separate in the books because some states tax shipping.
+4800,Discounts and promo codes,Contra-revenue,Debit,Orders (no discount field yet),Forecast r88 (discount part),Creator 10% off. Not built.
+4900,Refunds,Contra-revenue,Debit,Stripe refunds,Forecast r59,Product and postage part only; refunded tax reduces 2100.
+4950,Chargebacks lost,Contra-revenue,Debit,Stripe disputes lost,Forecast r69,The $15 dispute fee goes to 5110.
+5000,COGS - print (Lulu books),COGS,Debit,Lulu invoices matched to orders,Forecast r65,Per job: print cost.
+5005,COGS - print (Prodigi cards),COGS,Debit,Prodigi invoices matched to orders,Forecast r65,
+5020,COGS - fulfillment shipping,COGS,Debit,Lulu and Prodigi invoices,Forecast r66,Shipping the printer charges us (not what we charge the customer).
+5030,COGS - reprints and replacements,COGS,Debit,Printer invoices flagged as reprint,Forecast r67,Tag reprints at the printer so they can be split out.
+5040,COGS - printer sales tax paid,COGS,Debit,Printer invoices,,Should be 0 once resale certificates are on file with each printer.
+5100,Payment processing - Stripe fees,COGS,Debit,Stripe balance transactions (fee),Forecast r68,Model treats fees as COGS; keep that so contribution margin matches.
+5105,Payment processing - Stripe Tax fees,COGS,Debit,Stripe invoice,Opex sheet (Stripe Tax),0.5% per Checkout transaction (legal/03). Model has it under Opex; book here and map back.
+5110,Chargeback fees,COGS,Debit,Stripe disputes,Forecast r69,
+5200,Model usage - paid orders (renders and text),COGS,Debit,Cost ledger (not durable yet) and OpenRouter export,Forecast r62,Split by order from the cost ledger once it is durable; until then allocate OpenRouter usage by orders.
+5210,Model usage - guest previews,COGS,Debit,Cost ledger and OpenRouter export,Forecast r63,No revenue. Track separately; it is an acquisition cost in substance.
+5220,Model usage - abandoned drafts and safety screens,COGS,Debit,Cost ledger and OpenRouter export,Forecast r64,
+5230,OpenRouter credit-purchase fees,COGS,Debit,OpenRouter purchase receipts,Inputs B42,5.5% (estimate in the model).
+6000,Hosting - Vercel,Operating expense,Debit,Vercel invoice,Opex sheet,
+6010,Database and storage - Supabase,Operating expense,Debit,Supabase invoice,Opex sheet,
+6020,Email - Resend,Operating expense,Debit,Resend invoice,Opex sheet,
+6030,Domain and DNS,Operating expense,Debit,Registrar invoice,Opex sheet,
+6040,Monitoring and security tools,Operating expense,Debit,Vendor invoices,Opex sheet,
+6050,Design and other software,Operating expense,Debit,Vendor invoices,Opex sheet,
+6060,Model base spend - development and evals,Operating expense,Debit,OpenRouter export (non-customer runs),Opex sheet (OpenRouter base),Dev and eval runs are not COGS.
+6100,Advertising - paid channels,Operating expense,Debit,Ad platform invoices,Forecast r12-18,One sub-account per channel matches the CMO csv.
+6110,Creator gifts and seeding,Operating expense,Debit,Printer invoices for gifted books plus fees,Forecast r74,At cost. 1099 treatment is open (accountant).
+6120,Creator and affiliate commissions,Operating expense,Debit,Creator payout report,Forecast r88,
+6200,Legal and attorney,Operating expense,Debit,Invoices,Opex and one-time,
+6210,Accounting and bookkeeping,Operating expense,Debit,Invoices,Opex sheet,
+6220,Insurance,Operating expense,Debit,Policy invoices,Opex sheet,
+6230,Licenses permits and filing fees,Operating expense,Debit,State and federal fees,One-time,LLC fees; sales tax permits; DMCA agent; trademark.
+6300,Contract labor and support,Operating expense,Debit,Contractor invoices,Opex sheet,1099-NEC candidates.
+6400,Bank and other fees,Operating expense,Debit,Bank statement,,
+6900,Research and development - engineering,Operating expense,Debit,Invoices or owner-approved allocation,Forecast r76 (core launch engineering),Capitalisation or Sec. 174 treatment is the accountant's call.
+7000,Interest and other income,Other income,Credit,Bank,,
+8000,Income tax,Tax,Debit,Accountant,,Not modelled in v3.

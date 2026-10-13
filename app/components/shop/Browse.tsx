@@ -26,7 +26,7 @@ export function Browse({ limit, compact }: { limit?: number; compact?: boolean }
       {!compact && (
         <div className="gs-filters">
           <div className="gs-row gs-row--between">
-            <h2 className="gs-h2" style={{ margin: 0 }}>{product}</h2>
+            <h1 className="gs-h2" style={{ margin: 0 }}>{product}</h1>
             <Segmented options={["Cards", "Picture books"]} value={product} onChange={setProduct} />
           </div>
           <div className="gs-filter-row">

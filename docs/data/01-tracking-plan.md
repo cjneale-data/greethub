@@ -2,7 +2,7 @@
 
 Owner: Head of Data. Machine-readable twin: `tracking-plan.json` (the build script `tools/build-tracking-plan.mjs` generates both this event catalogue and the JSON from `tools/events-a.mjs` and `tools/events-b.mjs`, and fails on any violation of the rules below). Date: 2026-10-10.
 
-Scope: 93 events (90 at launch, 3 after), only 11 fired from the browser. Everything that can be recorded on the server is recorded on the server. This replaces the 13-event list in `docs/cmo/ux-spec.md` section 12 (mapping at the end of this file).
+Scope: 95 events (92 at launch, 3 after), only 11 fired from the browser. Everything that can be recorded on the server is recorded on the server. This replaces the 13-event list in `docs/cmo/ux-spec.md` section 12 (mapping at the end of this file).
 
 ## 1. Principles
 
@@ -1140,7 +1140,7 @@ ATTORNEY: Reminders store a recipient's occasion date; confirm treatment of thir
 
 | Property | Type | Req | Notes |
 |---|---|---|---|
-| `report_type` | enum (photo_removal, copyright, harmful_content, other) | R |  |
+| `report_type` | enum (copyright, likeness, inappropriate, other) | R | Matches app/lib/safety/reports.ts kind |
 | `is_about_minor` | bool | O |  |
 | `source_page` | enum (footer, proof, account, email) | R |  |
 
@@ -1269,6 +1269,31 @@ Note: Recorded in privacy.deletion_log without a subject id; no event row surviv
 | `flags` | string[] | R | Same closed list as ip_output_flagged |
 | `passed_after_reroll` | bool | R |  |
 | `cost_usd` | decimal | O | Extra spend of the re-roll and its check |
+
+### agent
+
+| Event | Source | Class / tier | Owner | Retention | Feeds KPIs | Phase |
+|---|---|---|---|---|---|---|
+| `agent_grant_changed` | server | C1 / T0 | CTO | 395 d | A4_agent_orders | launch |
+| `agent_tool_called` | server | C1 / T0 | CTO | 395 d | A4_agent_orders, U7_spend_vs_cap | launch |
+
+**`agent_grant_changed`** - A user connects, pauses, resumes or revokes an AI assistant's delegated access (OAuth grant).
+
+| Property | Type | Req | Notes |
+|---|---|---|---|
+| `client_kind` | enum (chatgpt, claude, gemini, other) | R | Mapped from the OAuth client id, never the raw id |
+| `action` | enum (connected, paused, resumed, revoked, expired) | R |  |
+| `scopes` | string[] | O | Granted scopes, e.g. cards:read |
+
+**`agent_tool_called`** - Once per agent tool call after the policy decision (same point as the agent AuditLog row). Never the arguments; the audit log keeps only their digest.
+
+| Property | Type | Req | Notes |
+|---|---|---|---|
+| `tool` | enum (search_styles, list_people, add_person, get_quote, get_account_limits, create_card_draft, revise_card_draft, preview_card, list_orders, track_order, request_approval, cancel_order, approve_and_pay, propose_standing_rule, list_standing_rules, pause_standing_rule) | R |  |
+| `client_kind` | enum (chatgpt, claude, gemini, other) | R |  |
+| `decision` | enum (allow, deny, require_approval) | R |  |
+| `reason_codes` | string[] | O | Policy reason codes only |
+| `spend_reserved_usd` | decimal | O | Model spend reserved for this call |
 
 ### Experiments
 

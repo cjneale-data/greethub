@@ -132,6 +132,8 @@ const tail = (norm: Norm, at: number, len: number) => norm.s.slice(Math.max(0, a
 
 const AS_CHARACTER_BEFORE = /(?:^| )(?:as|like|dressed as|dress up as|dressed up as|costume of|cosplay as|cosplaying|draw|drawing|make|picture of|looks like) ?$/u;
 const AS_CHARACTER_AFTER = /^(?: and [^ ]+)? from |^ the (?:snow|ice|frozen|princess|queen|mouse|snowman)/u;
+/** A relation right after the name marks a real person: "Ariel, my niece", "Belle (our daughter)". Not "Elsa my daughter's favourite". */
+const FAMILY_AFTER = /^\s*[,(\-–]?\s*(?:who is |is |aka )?(?:my|our) (?:little |big |baby |younger |older |eldest |youngest )?(?:niece|nephew|daughter|son|granddaughter|grandson|grandma|grandmother|grandpa|grandfather|mum|mom|dad|aunt|auntie|uncle|cousin|friend|best friend|neighbou?r|wife|husband|sister|brother|twin|teacher|dog|cat|puppy|kitten|pet|girl|boy|baby)(?!['’]s)(?![\p{L}])/iu;
 const GENERIC_CUES = ["movie", "film", "cartoon", "disney", "pixar", "nintendo", "marvel", "costume", "cosplay", "fan art", "fanart", "character", "characters", "franchise", "tv show", "video game", "from the", "princess"];
 
 const FROZEN_FOOD_WORDS = new Set(["yogurt", "yoghurt", "pizza", "peas", "pond", "lake", "food", "foods", "dessert", "treat", "treats", "fruit", "berries", "custard", "margarita", "drink", "drinks", "ground", "river", "section", "aisle", "meal", "meals", "waffles", "dinner", "vegetables", "veg", "corn", "shrimp", "fish", "turkey", "tundra", "solid", "toes", "fingers", "hands", "feet", "in", "over", "stiff", "assets", "account", "shoulder"]);
@@ -202,6 +204,7 @@ function detect(input: IpInput, text: string, norm: Norm): { hits: Hit[]; blocke
           const after = norm.s.slice(j, j + 40);
           const asChar = AS_CHARACTER_BEFORE.test(before) || AS_CHARACTER_AFTER.test(after);
           if (c.family.test(tail(norm, i, 40))) continue; // "my niece Elsa"
+          if (!asChar && FAMILY_AFTER.test(text.slice(norm.end[j - 1], norm.end[j - 1] + 40))) continue; // "Ariel, my niece"
           const weakFam = c.weakFamily.test(tail(norm, i, 30));
           const isKnown = known.has(mt.nn) || mm[0].split(" ").every((t) => known.has(t));
           if (isKnown && !asChar) continue;
@@ -274,7 +277,7 @@ function detect(input: IpInput, text: string, norm: Norm): { hits: Hit[]; blocke
   }
 
   // "in the style of X", "X style", "like a X movie"
-  const styleRe = /(?:in|with) the (?:\w+ )?style of ([^,.;!?\n]{2,40})|(?:in|with) (?:an? )?([^,.;!?\n]{2,24}?)[- ]style(?= |$|[,.;!?])|(?:like|as) (?:an? )?([^,.;!?\n]{2,24}?) (?:movie|film|cartoon|show)(?= |$|[,.;!?])|(?:^|[ ,])([\p{L}]{3,20}) style(?= |$|[,.;!?])/giu;
+  const styleRe = /(?:in|with) the (?:\w+ )?style of ([^,.;!?\n]{2,40})|(?:in|with) (?:an? )?([^,.;!?\n]{2,24}?)[- ]style(?= |$|[,.;!?])|(?:like|as) (?:an? )?([^,.;!?\n]{2,24}?) (?:movie|film|cartoon|show|book|illustration|drawing)(?=|$|[,.;!?])|(?:^|[ ,])([\p{L}]{3,20}) style(?= |$|[,.;!?])/giu;
   for (const mm of text.matchAll(styleRe)) {
     const x = (mm[1] ?? mm[2] ?? mm[3] ?? mm[4] ?? "").trim();
     const nx = normName(x);

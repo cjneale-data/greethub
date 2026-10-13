@@ -20,6 +20,8 @@ export interface JobStore {
   /** Cancellation is a separate flag so the worker stays the single writer of the job document. */
   requestCancel(id: string): Promise<void>;
   isCancelRequested(id: string): Promise<boolean>;
+  /** Removes the job document (delete-my-data). A cancel marker, if any, stays so a running worker still stops. */
+  delete(id: string): Promise<void>;
 }
 
 export const ID_PATTERN = /^[a-z]{2,3}_[a-f0-9]{12,32}$/;

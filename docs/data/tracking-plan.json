@@ -310,6 +310,7 @@
     "A2_channel_mix": "Channel mix and attribution",
     "A3_guest_try_rate": "Guest try rate (CFO Inputs B15)",
     "A3_template_ctr": "Template click-through",
+    "A4_agent_orders": "Orders and spend through AI assistants (agent API)",
     "B1_visitor_to_signup": "Visitor to sign-up (CFO Inputs B12)",
     "B2_signup_to_start": "Sign-up to creator start (CFO Inputs B13)",
     "B3_brief_completion": "Brief completion rate",
@@ -6069,13 +6070,13 @@
           "type": "enum",
           "required": true,
           "values": [
-            "photo_removal",
             "copyright",
-            "harmful_content",
+            "likeness",
+            "inappropriate",
             "other"
           ],
           "sensitivity": "C1",
-          "description": ""
+          "description": "Matches app/lib/safety/reports.ts kind"
         },
         {
           "name": "is_about_minor",
@@ -6752,6 +6753,143 @@
           "required": false,
           "sensitivity": "C0",
           "description": "Extra spend of the re-roll and its check"
+        }
+      ]
+    },
+    {
+      "name": "agent_grant_changed",
+      "version": 1,
+      "domain": "agent",
+      "funnel_stage": "account",
+      "phase": "launch",
+      "source": "server",
+      "trigger": "A user connects, pauses, resumes or revokes an AI assistant's delegated access (OAuth grant).",
+      "sensitivity": "C1",
+      "min_consent_tier": "T0",
+      "owner": "CTO",
+      "retention_days": 395,
+      "kpis": [
+        "A4_agent_orders"
+      ],
+      "identity": "anonymous_id until signup, then subject_id",
+      "properties": [
+        {
+          "name": "client_kind",
+          "type": "enum",
+          "required": true,
+          "values": [
+            "chatgpt",
+            "claude",
+            "gemini",
+            "other"
+          ],
+          "sensitivity": "C1",
+          "description": "Mapped from the OAuth client id, never the raw id"
+        },
+        {
+          "name": "action",
+          "type": "enum",
+          "required": true,
+          "values": [
+            "connected",
+            "paused",
+            "resumed",
+            "revoked",
+            "expired"
+          ],
+          "sensitivity": "C1",
+          "description": ""
+        },
+        {
+          "name": "scopes",
+          "type": "string[]",
+          "required": false,
+          "sensitivity": "C1",
+          "description": "Granted scopes, e.g. cards:read"
+        }
+      ]
+    },
+    {
+      "name": "agent_tool_called",
+      "version": 1,
+      "domain": "agent",
+      "funnel_stage": "post",
+      "phase": "launch",
+      "source": "server",
+      "trigger": "Once per agent tool call after the policy decision (same point as the agent AuditLog row). Never the arguments; the audit log keeps only their digest.",
+      "sensitivity": "C1",
+      "min_consent_tier": "T0",
+      "owner": "CTO",
+      "retention_days": 395,
+      "kpis": [
+        "A4_agent_orders",
+        "U7_spend_vs_cap"
+      ],
+      "identity": "anonymous_id until signup, then subject_id",
+      "properties": [
+        {
+          "name": "tool",
+          "type": "enum",
+          "required": true,
+          "values": [
+            "search_styles",
+            "list_people",
+            "add_person",
+            "get_quote",
+            "get_account_limits",
+            "create_card_draft",
+            "revise_card_draft",
+            "preview_card",
+            "list_orders",
+            "track_order",
+            "request_approval",
+            "cancel_order",
+            "approve_and_pay",
+            "propose_standing_rule",
+            "list_standing_rules",
+            "pause_standing_rule"
+          ],
+          "sensitivity": "C1",
+          "description": ""
+        },
+        {
+          "name": "client_kind",
+          "type": "enum",
+          "required": true,
+          "values": [
+            "chatgpt",
+            "claude",
+            "gemini",
+            "other"
+          ],
+          "sensitivity": "C1",
+          "description": ""
+        },
+        {
+          "name": "decision",
+          "type": "enum",
+          "required": true,
+          "values": [
+            "allow",
+            "deny",
+            "require_approval"
+          ],
+          "sensitivity": "C1",
+          "description": ""
+        },
+        {
+          "name": "reason_codes",
+          "type": "string[]",
+          "required": false,
+          "sensitivity": "C1",
+          "description": "Policy reason codes only"
+        },
+        {
+          "name": "spend_reserved_usd",
+          "type": "decimal",
+          "required": false,
+          "sensitivity": "C1",
+          "description": "Model spend reserved for this call"
         }
       ]
     },

@@ -28,7 +28,7 @@ Rating: **high**. Named as the nostalgic default for ages 3-6, still popular for
 - **Technique:** Wet-on-wet washes, a few dry-brush edges, paper white left as highlight
 - **Line:** Thin, soft pencil-and-ink outlines that fade in places
 - **Palette:** Muted warm: peach, cream, sage, dusty blue, a single deeper accent
-- **Composition:** Centered subject, generous calm background, soft vignette inside the picture
+- **Composition:** Centered subject, generous calm background, color carried softly to every edge (no white vignette)
 - **Mood:** Tender, calm, nostalgic
 - **Era:** Classic 20th-century picture book, refreshed
 

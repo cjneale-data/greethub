@@ -5,8 +5,8 @@ export async function DELETE(_req: Request, { params }: { params: Promise<{ id: 
   const u = await signedIn();
   if (!u) return json(NOT_SIGNED_IN, 401);
   const { id } = await params;
-  deleteDraft(u.userId, id);
-  return json({ drafts: getDrafts(u.userId) });
+  await deleteDraft(u.userId, id);
+  return json({ drafts: await getDrafts(u.userId) });
 }
 
 /** POST = duplicate. */
@@ -14,6 +14,6 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
   const u = await signedIn();
   if (!u) return json(NOT_SIGNED_IN, 401);
   const { id } = await params;
-  duplicateDraft(u.userId, id);
-  return json({ drafts: getDrafts(u.userId) });
+  await duplicateDraft(u.userId, id);
+  return json({ drafts: await getDrafts(u.userId) });
 }

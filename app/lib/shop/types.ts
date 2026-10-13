@@ -128,6 +128,8 @@ export type ContentReport = {
   status: "new" | "in_review" | "actioned" | "closed";
   /** 48-hour response target (ISO). */
   dueAt: string;
+  /** Append-only record of status changes with the reviewer's short reason (docs/trust-safety). Older rows have none. */
+  history?: { at: string; from: ContentReport["status"]; to: ContentReport["status"]; note: string }[];
 };
 
 export type DB = {

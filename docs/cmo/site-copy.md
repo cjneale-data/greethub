@@ -6,11 +6,13 @@ Price tokens are filled by the CFO's launch prices: `{card_digital}`, `{card_mai
 
 Placeholders: `{first_name}`, `{recipient}`, `{date}`, `{carrier}`, `{tracking_url}`, `{order_id}`.
 
+**Revised 2026-10-12 to match the build.** Re-rolls are per book (3 page redraws plus 2 free character-sheet redos), not a monthly allowance; cards have no signed-in redraw yet. Saved People holds names and details, not a likeness, and cards take no photos. No real family's book is used as a sample (standing rule 5). US spelling and terms throughout (Mom, ZIP code, personalized). The live app is the source of truth where they differ; this deck is the brief.
+
 ---
 
 ## 1. Home
 
-**Badge (promo, seasonal):** "Mother's Day ships free until May 4" (swap per calendar; hide if none)
+**Badge (promo, seasonal):** none at launch. Show a promo only from a dated config that hides it after its end date (CX-03). Example: "Order by {date} for Christmas" once the printer cut-off is known.
 
 **H1:** Cards that sound like *you.* (accent on "you.")
 **Subhead:** Tell us who it's for and what you'd say. We draw it, write it with you, print it and mail it.
@@ -20,20 +22,20 @@ Placeholders: `{first_name}`, `{recipient}`, `{date}`, `{carrier}`, `{tracking_u
 **Section: Pick an occasion** (H2: "Who are we celebrating?")
 Chips: Birthday, Thank you, Wedding, New baby, Get well, Just because. Link: "See all occasions".
 
-**Section: How it works** (H2: "Three steps. About ten minutes.")
+**Section: How it works** (H2: "Three steps. A card takes about ten minutes.") Books take longer: pages draw in 10-15 minutes.
 1. **Tell us.** Chat with the Greet Guide or fill a short form. Who it's for, what to say, how it should feel.
 2. **Check the look.** See your card or your characters before anything is final. Change what's off.
 3. **We print and mail.** Real paper, real postage. To you, or straight to them.
 
 **Section: Picture books** (H2: "Make the book your family keeps.")
-Body: Add a few photos. We draw everyone as characters that stay the same on every page, you approve them, then we build the story around your memory. Hardcover, 8.5 by 8.5 inches, printed to order.
-CTA: See a sample book
-Caption on sample: "The Eye Story, made for a real family."
+Body: Tell us the memory and add a few photos. We write the story with you, draw everyone once for you to approve, then draw every page from that approved sheet. Hardcover, 8.5 by 8.5 inches, printed to order.
+CTA: See a sample book (only once the fictional sample book exists; templates.md section 3)
+Caption on sample: "A sample book with an invented family. Yours stars your people."
 
 **Section: Cards people keep** (H2: "Cards that sound like you.")
 Three proof lines (no testimonials until real ones exist):
 - "Say it your way. Our Guide asks one question at a time, and nothing is made until you say yes."
-- "Same face every time. Save Grandma once and she looks like Grandma in every card."
+- "Approve the look first. On a book, you see everyone drawn before a single page is."
 - "Nothing's final until you've seen it. Look at the proof first."
 
 **Section: Pricing strip** (H2: "Simple prices.") Card {card_digital} digital, {card_mailed} mailed. Picture book from {book_24}. Link: "See pricing".
@@ -103,8 +105,8 @@ Three proof lines (no testimonials until real ones exist):
 | Shipping | n/a | {shipping_card} | {shipping_book} | {shipping_book} |
 
 **Free:** "One watermarked card preview, no account."
-**With a free account:** saved drafts, saved people, monthly re-rolls, full-size proofs, order tracking.
-**Re-rolls:** "Every account gets a few re-rolls each month. Need more? Add them at checkout." (Confirm the allowance and any paid pack with the CFO before publishing.)
+**With a free account:** saved drafts, saved people, full-size proofs, order tracking. Each picture book comes with 3 page redraws.
+**Redraws:** "Each picture book comes with 3 page redraws and 2 free redos of the character sheet. A drawing that fails never uses one up." (Matches `lib/book/constants.ts`. Card redraws and any paid pack: CFO to set before publishing.)
 **Fine print line:** "Prices don't include tax. Tax is worked out at checkout."
 **Guarantee (H3: "If it's not right"):** "If something arrives damaged or printed wrong, tell us within 30 days and we'll reprint it or refund it. If it's just not to your taste, we'll help you fix it before it prints." (Policy must be confirmed by CEO and CFO.)
 
@@ -113,7 +115,7 @@ Three proof lines (no testimonials until real ones exist):
 ## 5. FAQ
 
 **Do I need an account?**
-Not to try one card. You get one free preview as a guest. A free account unlocks picture books, saved drafts, saved people, re-rolls, full-size proofs, checkout and order tracking.
+Not to try one card. You get one free preview as a guest. A free account unlocks picture books, saved drafts, saved people, page redraws on books, full-size proofs, checkout and order tracking. Accounts are for adults, 18 and over.
 
 **How does the card get made?**
 You tell the Greet Guide who it's for, the occasion and what you'd say. We draw it and show you a preview. You change what you like, then approve.
@@ -134,13 +136,13 @@ No. We can't use copyrighted characters or real public figures. We'll offer a lo
 You approve the character sheet before any page is drawn, so you see how everyone looks first. If something's off, you redo it.
 
 **What if a picture comes out wrong?**
-Use a re-roll to redraw it. Accounts get re-rolls every month.
+Redraw it. Each picture book comes with 3 page redraws and 2 free redos of the character sheet, and a drawing that fails never uses one up.
 
 **How long does delivery take?**
 We'll show an estimated date at checkout once you've entered the address. Cards and books are printed to order.
 
 **Can you mail it straight to the person?**
-Yes. Pick "send it to them" at checkout and add the address. We don't put prices on anything we send.
+Yes. Pick "To someone else" at checkout and add the address. We don't put prices on anything we send.
 
 **Can I change it after I pay?**
 Not once it's printing. Look closely at the proof first. If you spot a problem right away, contact us and we'll do what we can.
@@ -167,13 +169,13 @@ Account, then Delete account. It removes your profile, saved people, photos, dra
 | Screen | Copy | Button |
 |---|---|---|
 | Drafts | Nothing saved yet. Start a card and we'll keep it here. | Start a card |
-| People | No one saved yet. Add Grandma once and she looks the same in every card. | Add a person |
+| People | No one saved yet. Add Grandma once and skip the typing next time. | Add a person |
 | Orders | No orders yet. Your first one will show up here. | Start a card |
 | Addresses | No saved addresses. We'll offer to save one at checkout. | Add an address |
 | Cart | Nothing here yet. Start with a card or a book. | Start a card / Make a picture book |
 | Templates (no filter match) | Nothing for that mix yet. Try fewer filters, or start from a blank page. | Start from a blank page |
 | Greet Guide, first turn | Hi, I'm your Greet Guide. What are we making: a card or a picture book? | (chips) |
-| Re-rolls used up | No re-rolls left this month. They come back on {date}. | Get more at checkout (if offered) |
+| Redraws used up (book) | No redraws left on this book. You can still edit the words. | OK |
 | Upcoming occasions | No dates saved yet. Tell us a birthday and we'll remind you. (later step) | Add a date |
 | Proofs in progress | Nothing drawing right now. | Start a card |
 
@@ -181,7 +183,7 @@ Account, then Delete account. It removes your profile, saved people, photos, dra
 
 ## 7. Emails
 
-Sender: GreetHub <hello@greethub.example> (domain TBD). Plain-text friendly, brand header with the Logo mark only, one primary button per email (persimmon-ink), no exclamation marks beyond one.
+Sender: GreetHub <hello@{domain}> (owner to supply the domain; `greethub.example` cannot receive mail, CX-31). Plain-text friendly, brand header with the Logo mark only, one primary button per email (persimmon-ink), no exclamation marks beyond one.
 
 ### 7.1 Order confirmed
 **Subject:** Thanks, {first_name}. We've got it.
@@ -191,7 +193,7 @@ Sender: GreetHub <hello@greethub.example> (domain TBD). Plain-text friendly, bra
 >
 > Thanks for your order. Here's what's on its way:
 >
-> {line items: "Rosa's card, mailed" / "The Eye Story, hardcover, 24 pages"}
+> {line items: "Rosa's card, mailed" / "The Night the Moon Came Down, hardcover, 24 pages"}
 >
 > Sending to: {recipient}, {city}
 > Total paid: {total}
@@ -214,11 +216,11 @@ Sender: GreetHub <hello@greethub.example> (domain TBD). Plain-text friendly, bra
 >
 > [See your proof]
 >
-> Not quite right? Redraw anything that's off. Your re-rolls are in your account.
+> Not quite right? Redraw a page that's off. Your book comes with 3 redraws.
 >
 > The GreetHub team
 
-(Variant for books: "Your book is ready to flip through. Take your time with each page.")
+(Variant for books: "Your book is ready to flip through. Take your time with each page.") Not built yet: no proof-ready template exists in `lib/shop/mail.ts` (shop engineer).
 
 ### 7.3 Shipped
 **Subject:** Your card's on its way to {recipient}.
@@ -261,11 +263,11 @@ Sender: GreetHub <hello@greethub.example> (domain TBD). Plain-text friendly, bra
 | Real public figure | I can't draw real public figures. What do you like about them? I can draw someone inspired by that. | Rephrase |
 | Content blocked | That's not something I can make. Want to try a different idea? | Rephrase |
 | Message too long | That message is a little long for the card. Trim it, or we can shrink the type. | Trim / Shrink |
-| Out of re-rolls | No re-rolls left this month. They come back on {date}. | OK |
+| Out of redraws (book) | No redraws left on this book. | OK |
 | Rate limit | A lot of cards are being made right now. We're getting to yours. | Wait |
 | Guest limit reached | That's your free preview. Make a free account to keep going. Your card comes with you. | Make a free account |
-| Address invalid | We can't find that address. Check the postcode and street. | Edit |
-| PO box | Couriers can't deliver to PO boxes. Use a street address. | Edit |
+| Address invalid | We can't find that address. Check the ZIP code and street. | Edit |
+| PO box | We can't ship to PO boxes. Use a street address. | Edit |
 | Delivery date too soon | Earliest we can do is {date}. | Use {date} |
 | Payment didn't open | We couldn't open payment. Nothing was charged. | Try again |
 | Payment declined | Your card was declined. Try another card, or check the details. | Try again |

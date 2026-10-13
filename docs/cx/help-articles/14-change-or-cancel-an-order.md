@@ -4,9 +4,9 @@
 
 ## Cancel
 
-From **Account, Orders**, open the order and choose **Cancel order**. You can cancel until the status says "In production". You get a full refund to your original payment method within 7 business days.
+Email {support_email} with your order number, or use **Ask us about this order** on the order page. Orders go to our print shop soon after you pay, so write as soon as you can. If printing hasn't started, we cancel it and refund you in full to your original payment method within 7 business days.
 
-After printing starts we can't cancel, because the book is already being made for you. Write to {support_email} and we'll see what we can do.
+After printing starts we can't cancel, because it's already being made for you. Write to us anyway and we'll see what we can do.
 
 ## Change the address
 

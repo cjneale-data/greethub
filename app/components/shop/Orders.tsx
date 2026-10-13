@@ -114,7 +114,7 @@ export function OrderDetail({ id }: { id: string }) {
           </div>
           <Badge tone={badgeTone(order.status)}>{STATUS_LABEL[order.status]}</Badge>
         </div>
-        {attention && <ErrorBox message="Something needs fixing before we print. We've emailed you what to do." />}
+        {attention && <ErrorBox message="We hit a snag before printing. It's on our side and a person is looking at it. We'll email you with what happens next." />}
         {closed && <div className="gs-banner">This order was {STATUS_LABEL[order.status].toLowerCase()}.</div>}
         <section className="gs-panel" aria-label="Order status">
           <ol className="gs-timeline">

@@ -12,6 +12,8 @@ Limits of this pass: I could not use the Meta Ad Library, Google Keyword Planner
 
 Book 24pp hardcover 8.5x8.5 $39 + $5.99 postage; 32pp $49 + $5.99; digital book $19.99. Card 5x7 printed $7.99 + $2.99 postage; digital card $3.99. Source: `finance/README.md`. Known weaknesses: no real artwork yet, placeholder legal text, unproven delivery dates, adult-only uploads (`docs/cx/00-assessment.md`, `docs/legal/00-summary.md`).
 
+**Build reality check (added 2026-10-12, from the platform assessment in `docs/PLAN.md`):** prices above match `app/packages/shared/src/pricing.ts` exactly (plus an $8.99 Express surcharge marked PLACEHOLDER, not benchmarked). What is *not* built changes the comparison: cards take no photos (the card is a brief-to-illustration product, so its nearest rival is Cardwise's AI Card Maker, not a photo-card maker); Saved People stores names only, so no likeness carries across cards and books; signed-in users cannot finish a card; a book takes 10-15 minutes to render versus Imagitime's about 2-minute preview; the app's default "arrive by" is 7 days from order, faster than every printed-book competitor measured (8-13 days) and not backed by printer data. **Lulu 24pp hardcover is confirmed:** Lulu lists "Casewrap: 24-800 pages" [V] https://help.lulu.com/en/support/solutions/articles/64000255583 (read 2026-10-12), and sells an 8.5 x 8.5 square hardcover [S] https://www.lulu.com/create/photo-books (search snippet, 2026-10-12). The earlier 40-page claim was for perfect-bound paperbacks.
+
 ## Part A. Personalized children's books
 
 ### A1. Wonderbly (incl. Lost My Name) - the category leader

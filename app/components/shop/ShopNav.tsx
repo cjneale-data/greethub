@@ -32,7 +32,7 @@ export function ShopNav() {
   return (
     <header className="gs-nav">
       <nav className="gs-nav__in" aria-label="Main">
-        <Link href="/" aria-label="GreetHub home" style={{ textDecoration: "none", flex: "none" }}>
+        <Link href="/" title="GreetHub home" style={{ textDecoration: "none", flex: "none" }}>
           <Logo size={24} />
         </Link>
         <div className="gs-nav__links">

@@ -1,0 +1,127 @@
+# GreetHub CI. Runs on every push and pull request. No secrets, no paid model calls (GREETHUB_MOCK_AI=1).
+# Runbook: docs/devops/02-release-and-rollback.md
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 6 * * 1" # weekly full-history secret scan and audit, Mondays 06:23 UTC
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GREETHUB_MOCK_AI: "1"
+  NEXT_TELEMETRY_DISABLED: "1"
+  CI: "true"
+
+jobs:
+  app:
+    name: App (lint, typecheck, test, IP eval, build)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            app/package-lock.json
+            pipeline/package-lock.json
+      # The app imports pipeline sources, and eval:ip runs pipeline's tsx, so install both.
+      - name: Install pipeline
+        run: npm ci --no-audit --no-fund
+        working-directory: pipeline
+      - name: Install app
+        run: npm ci --no-audit --no-fund
+        working-directory: app
+      - name: Lint
+        run: npm run lint
+        working-directory: app
+      - name: Typecheck
+        run: npm run typecheck
+        working-directory: app
+      - name: Unit tests
+        run: npm test
+        working-directory: app
+      - name: IP-safety eval (rules only, free)
+        run: npm run eval:ip -- --mock
+        working-directory: app
+      - name: Production build
+        run: npm run build
+        working-directory: app
+
+  pipeline:
+    name: Pipeline (typecheck, test)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            app/package-lock.json
+            pipeline/package-lock.json
+      # Pipeline typecheck resolves zod through app/packages/shared, so the app's deps must be installed too.
+      - run: npm ci --no-audit --no-fund
+        working-directory: pipeline
+      - run: npm ci --no-audit --no-fund
+        working-directory: app
+      - run: npm run typecheck
+        working-directory: pipeline
+      - run: npm test
+        working-directory: pipeline
+
+  audit:
+    name: Dependency audit (runtime deps, high and above)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: npm audit app
+        run: npm audit --omit=dev --audit-level=high
+        working-directory: app
+      - name: npm audit pipeline
+        run: npm audit --omit=dev --audit-level=high
+        working-directory: pipeline
+
+  secrets:
+    name: Secret scan (gitleaks)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GITLEAKS_VERSION: "8.21.2"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      # The CLI is used instead of gitleaks-action, which needs a paid licence on organisation accounts.
+      - name: Install gitleaks
+        run: |
+          curl -sSfL -o gitleaks.tgz "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          tar -xzf gitleaks.tgz gitleaks
+          rm gitleaks.tgz
+      # --redact keeps any match out of the job log. Full history on the weekly run, otherwise only the pushed range.
+      - name: Scan
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            ./gitleaks git . --redact --no-banner --config .github/gitleaks.toml
+          elif [ "${{ github.event_name }}" = "pull_request" ]; then
+            ./gitleaks git . --redact --no-banner --config .github/gitleaks.toml --log-opts="${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}"
+          elif [ "${{ github.event.before }}" = "0000000000000000000000000000000000000000" ]; then
+            ./gitleaks git . --redact --no-banner --config .github/gitleaks.toml
+          else
+            ./gitleaks git . --redact --no-banner --config .github/gitleaks.toml --log-opts="${{ github.event.before }}..${{ github.sha }}"
+          fi

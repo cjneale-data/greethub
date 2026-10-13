@@ -9,3 +9,6 @@ export const DELETION_VENDORS = [
   { name: "Payments (Stripe)", how: "Kept for tax and accounting. We can't remove payment records." },
   { name: "Print shops (Lulu, Prodigi)", how: "Open orders still print and ship; names and addresses are cleared after delivery." },
 ] as const;
+
+/** Fake payments, printer stepping and the dev outbox are for local and explicitly enabled previews only. Real money never flows through them. */
+export const fakeAllowed = () => process.env.NODE_ENV !== "production" || process.env.GREETHUB_ALLOW_FAKE === "1";

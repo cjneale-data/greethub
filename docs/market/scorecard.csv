@@ -48,3 +48,7 @@ month,competitor,category,metric,value,unit,source_url,date_read,confidence,note
 2026-10,GreetHub,ours,digital_book,19.99,usd,finance/README.md,2026-10-11,V,
 2026-10,Benchmark,channel,google_gifts_cpc,4.14,usd,https://www.wemakeitlab.com/en/downloadable-guide/google-ads-benchmarks-2026,2026-10-11,S,vendor blog citing WordStream
 2026-10,Benchmark,channel,meta_ecom_cpc,0.87,usd,https://www.webtonic.io/blog/e-commerce-facebook-ads-statistics,2026-10-11,S,vendor blog
+2026-10,Lulu,print_vendor,casewrap_page_range,24-800,pages,https://help.lulu.com/en/support/solutions/articles/64000255583,2026-10-12,V,hardcover; perfect bound is 32-800; 24pp SKU is feasible
+2026-10,Lulu,print_vendor,square_8.5x8.5_hardcover,yes,text,https://www.lulu.com/create/photo-books,2026-10-12,S,search snippet; matches pod package 0850X0850FCPREMCW080CW444GXX in code
+2026-10,GreetHub,ours,express_surcharge,8.99,usd,app/packages/shared/src/pricing.ts,2026-10-12,V,PLACEHOLDER in code; not in CFO model
+2026-10,GreetHub,ours,default_arrive_by_days,7,days,app/packages/shared/src/pricing.ts,2026-10-12,V,estimate; no printer data; competitors 8-13

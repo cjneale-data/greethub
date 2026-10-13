@@ -23,7 +23,7 @@ export async function actor(): Promise<Session> {
 export async function signedIn(): Promise<{ userId: string; email: string; firstName?: string } | null> {
   const s = await getAdapters().auth.getSession();
   if (s.isGuest || !s.email) return null;
-  return { userId: s.userId, email: s.email, firstName: getUser(s.userId)?.firstName };
+  return { userId: s.userId, email: s.email, firstName: (await getUser(s.userId))?.firstName };
 }
 
 export function originOf(req: Request): string {
@@ -33,5 +33,4 @@ export function originOf(req: Request): string {
   return host ? `${proto}://${host}` : process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 }
 
-/** Fake payments, printer stepping and the dev outbox are for local and explicitly enabled previews only. Real money never flows through them. */
-export const fakeAllowed = () => process.env.NODE_ENV !== "production" || process.env.GREETHUB_ALLOW_FAKE === "1";
+export { fakeAllowed } from "./policies";

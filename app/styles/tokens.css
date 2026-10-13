@@ -3,7 +3,7 @@
   --gh-persimmon:#EE5A36; --gh-persimmon-ink:#C8441F; --gh-persimmon-deep:#9E3115; --gh-persimmon-tint:#FDE3D8;
   --gh-marigold:#F5B83D; --gh-blush:#F6C9C0; --gh-plum:#5B2A4B; --gh-plum-tint:#E6CFDD;
   /* neutrals */
-  --gh-cocoa:#2B1E18; --gh-cocoa-70:#6B5A50; --gh-cocoa-40:#A99888; --gh-twine:#D9CBB6; --gh-line:#E8DCC8;
+  --gh-cocoa:#2B1E18; --gh-cocoa-70:#6B5A50; --gh-cocoa-40:#A99888; --gh-twine:#D9CBB6; --gh-control-border:#8C7B6E; --gh-line:#E8DCC8;
   --gh-cream:#F3EADB; --gh-paper:#FBF6EE; --gh-white:#FFFFFF;
   /* type */
   --gh-font-display:'Bricolage Grotesque',system-ui,sans-serif;
@@ -20,4 +20,4 @@
   --gh-ease:cubic-bezier(.2,.8,.2,1);
 }
 html,body{background:var(--gh-paper);color:var(--gh-cocoa);font-family:var(--gh-font-body);-webkit-font-smoothing:antialiased}
-a{color:var(--gh-persimmon-ink)}a:hover{color:var(--gh-persimmon-deep)}
+a{color:var(--gh-persimmon-deep)}a:hover{color:var(--gh-cocoa)}

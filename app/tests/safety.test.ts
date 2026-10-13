@@ -4,7 +4,7 @@ import { createLiveIpSafety, createMockIpSafety, mergeResults, polishNote } from
 import { clearSafetyEvents, logInputResult, recordedSafetyEvents } from "@/lib/safety/events";
 import { IMAGE_HARDENING_LINES, rerollAddendum } from "@/lib/safety/hardening";
 import { interpret, moderatePhoto } from "@/lib/book/moderation";
-import { ReportSchema, createReport, listReports } from "@/lib/safety/reports";
+import { ReportSchema, createReport, listReports, reportOverdue, setReportStatus } from "@/lib/safety/reports";
 import { resetDB, readDB } from "@/lib/shop/store";
 import { addPhoto, createProject, saveStory, rerollPage, generateStory, recordConsent, confirmPhotos, approveStory, generateSheet, approveSheet, startRender, BookError } from "@/lib/book/service";
 import { fakeJpeg, makeDeps, USER, validBrief } from "./book/helpers";
@@ -148,14 +148,32 @@ describe("report and takedown", () => {
   it("stores the report, emails the reporter and the inbox, sets a 48 hour due time", async () => {
     const r = await createReport(ReportSchema.parse({ kind: "likeness", what: "A photo of my child is on a card", where: "order 123", contactEmail: "mum@example.com", depicted: "my daughter" }), new Date("2026-10-10T10:00:00Z"));
     expect(r.dueAt).toBe("2026-10-12T10:00:00.000Z");
-    expect(listReports()[0].id).toBe(r.id);
+    expect((await listReports())[0].id).toBe(r.id);
     const tags = readDB().outbox.map((m) => m.tag);
     expect(tags).toContain("report_confirmation");
     expect(tags).toContain("report_notice");
   });
+  it("keeps an append-only status history and flags overdue open reports", async () => {
+    const r = await createReport(ReportSchema.parse({ kind: "other", what: "Something odd on my proof page", where: "order 9", contactEmail: "a@b.co" }), new Date("2026-10-10T10:00:00Z"));
+    expect(reportOverdue(r, new Date("2026-10-12T09:00:00Z"))).toBe(false);
+    expect(reportOverdue(r, new Date("2026-10-12T11:00:00Z"))).toBe(true);
+    expect(await setReportStatus(r.id, "in_review", "", new Date("2026-10-10T12:00:00Z"))).toBe(true);
+    expect(await setReportStatus(r.id, "closed", "No GreetHub content found at that link", new Date("2026-10-11T12:00:00Z"))).toBe(true);
+    const saved = (await listReports())[0];
+    expect(saved.history?.map((h) => `${h.from}>${h.to}`)).toEqual(["new>in_review", "in_review>closed"]);
+    expect(saved.history?.[1].note).toBe("No GreetHub content found at that link");
+    expect(reportOverdue(saved, new Date("2026-10-13T00:00:00Z"))).toBe(false);
+    expect(await setReportStatus("rep_missing", "closed", "x")).toBe(false);
+  });
 });
 
 describe("book service wiring", () => {
+  it("blocks sensitive content in book text before any screen call (AUP rules 1-4), but allows grief", async () => {
+    const d = makeDeps();
+    await expect(createProject(d, USER, validBrief({ storyIdea: "A story where they kill him with a bomb at the party" }))).rejects.toMatchObject({ status: 422, code: "content_blocked", extra: { field: "storyIdea" } });
+    await expect(createProject(d, USER, validBrief({ dedication: "Some naked photos for you" }))).rejects.toMatchObject({ code: "content_blocked", extra: { field: "dedication" } });
+    await expect(createProject(d, USER, validBrief({ storyIdea: "Remembering Grandpa, who passed away last spring, and his garden." }))).resolves.toBeTruthy();
+  });
   it("rewrites a protected character in the story idea, keeps the family name, returns a note", async () => {
     const d = makeDeps();
     const v = await createProject(d, USER, validBrief({ storyIdea: "Madison and her grandpa meet Pikachu and Elsa from Frozen in the woods at night." }));

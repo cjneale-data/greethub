@@ -1,0 +1,28 @@
+# Weekly dependency updates (SEC-33). Minor and patch bumps are grouped to keep PR noise low.
+# Next.js and React majors stay manual: this Next version is newer than most tooling expects (app/AGENTS.md).
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /app
+    schedule: { interval: weekly, day: monday }
+    open-pull-requests-limit: 5
+    groups:
+      app-minor-patch:
+        update-types: [minor, patch]
+    ignore:
+      - dependency-name: next
+        update-types: [version-update:semver-major]
+      - dependency-name: react
+        update-types: [version-update:semver-major]
+      - dependency-name: react-dom
+        update-types: [version-update:semver-major]
+  - package-ecosystem: npm
+    directory: /pipeline
+    schedule: { interval: weekly, day: monday }
+    open-pull-requests-limit: 3
+    groups:
+      pipeline-minor-patch:
+        update-types: [minor, patch]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: monthly }

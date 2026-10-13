@@ -20,8 +20,8 @@
 .gs-row--end { justify-content: flex-end; }
 .gs-scroll-x { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 6px; scrollbar-width: none; }
 .gs-scroll-x::-webkit-scrollbar { display: none; }
-.gs-link { color: var(--gh-persimmon-ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; background: none; border: none; padding: 0; cursor: pointer; font: inherit; font-weight: 600; }
-.gs-link:hover { color: var(--gh-persimmon-deep); }
+.gs-link { color: var(--gh-persimmon-deep); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; background: none; border: none; padding: 0; cursor: pointer; font: inherit; font-weight: 600; }
+.gs-link:hover { color: var(--gh-cocoa); }
 .gs-link--plain { color: inherit; text-decoration: none; }
 .gs-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: none; box-shadow: var(--gh-focus-ring); border-radius: var(--gh-r-sm); }
@@ -71,10 +71,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .gs-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .gs-form-grid > .gs-span2 { grid-column: 1 / -1; }
 @media (max-width: 560px) { .gs-form-grid { grid-template-columns: 1fr; } }
-.gs-select { height: 48px; padding: 0 12px; font-family: var(--gh-font-body); font-size: 16px; color: var(--gh-cocoa); background: var(--gh-paper); border: 1.5px solid var(--gh-twine); border-radius: var(--gh-r-md); }
+.gs-select { height: 48px; padding: 0 12px; font-family: var(--gh-font-body); font-size: 16px; color: var(--gh-cocoa); background: var(--gh-paper); border: 1.5px solid var(--gh-control-border); border-radius: var(--gh-r-md); }
 .gs-select:focus { border-color: var(--gh-persimmon-ink); box-shadow: var(--gh-focus-ring); background: #fff; outline: none; }
 .gs-check { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; font-size: 15px; line-height: 1.4; min-height: 44px; padding: 8px 0; }
-.gs-check input { appearance: none; flex: none; width: 24px; height: 24px; margin: 0; border: 1.5px solid var(--gh-twine); border-radius: var(--gh-r-sm); background: #fff; display: grid; place-content: center; cursor: pointer; }
+.gs-check input { appearance: none; flex: none; width: 24px; height: 24px; margin: 0; border: 1.5px solid var(--gh-control-border); border-radius: var(--gh-r-sm); background: #fff; display: grid; place-content: center; cursor: pointer; }
 .gs-check input:checked { background: var(--gh-persimmon-ink); border-color: var(--gh-persimmon-ink); }
 .gs-check input:checked::after { content: ""; width: 6px; height: 11px; border: solid #fff; border-width: 0 2.5px 2.5px 0; transform: rotate(45deg) translate(-1px, -1px); }
 .gs-divider { display: flex; align-items: center; gap: 12px; color: var(--gh-cocoa-70); font-size: 14px; }
@@ -158,14 +158,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .gs-line__thumb .gh-card__meta { display: none; }
 .gs-line__price { font-weight: 700; text-align: right; white-space: nowrap; }
 @media (max-width: 560px) { .gs-line { grid-template-columns: 72px 1fr; } .gs-line__thumb { width: 72px; } .gs-line__price { grid-column: 2; text-align: left; } }
-.gs-qty { display: inline-flex; align-items: center; border: 1.5px solid var(--gh-twine); border-radius: 999px; background: #fff; }
+.gs-qty { display: inline-flex; align-items: center; border: 1.5px solid var(--gh-control-border); border-radius: 999px; background: #fff; }
 .gs-qty button { width: 44px; height: 44px; border: none; background: none; font-size: 20px; font-weight: 700; cursor: pointer; border-radius: 999px; color: var(--gh-cocoa); }
 .gs-qty button:disabled { color: var(--gh-cocoa-40); cursor: default; }
 .gs-qty output { min-width: 24px; text-align: center; font-weight: 700; }
 .gs-sum { display: flex; flex-direction: column; gap: 10px; }
 .gs-sum__row { display: flex; justify-content: space-between; gap: 12px; font-size: 15px; }
 .gs-sum__row--total { font-weight: 800; font-size: 20px; padding-top: 12px; border-top: 1px solid var(--gh-line); font-family: var(--gh-font-display); }
-.gs-radio { display: flex; gap: 12px; align-items: flex-start; border: 1.5px solid var(--gh-twine); border-radius: var(--gh-r-md); padding: 14px; background: #fff; cursor: pointer; min-height: 44px; }
+.gs-radio { display: flex; gap: 12px; align-items: flex-start; border: 1.5px solid var(--gh-control-border); border-radius: var(--gh-r-md); padding: 14px; background: #fff; cursor: pointer; min-height: 44px; }
 .gs-radio:has(input:checked) { border-color: var(--gh-cocoa); box-shadow: inset 0 0 0 1px var(--gh-cocoa); }
 .gs-radio input { margin-top: 3px; width: 18px; height: 18px; accent-color: var(--gh-cocoa); }
 .gs-addr-block { display: flex; flex-direction: column; gap: 14px; }
@@ -184,7 +184,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 li[data-state=done] .gs-dot { background: var(--gh-cocoa); border-color: var(--gh-cocoa); color: var(--gh-paper); }
 li[data-state=current] .gs-dot { border-color: var(--gh-cocoa); background: var(--gh-marigold); }
 .gs-timeline__label { font-weight: 700; }
-li[data-state=todo] .gs-timeline__label { color: var(--gh-cocoa-40); font-weight: 600; }
+li[data-state=todo] .gs-timeline__label { color: var(--gh-cocoa-70); font-weight: 600; }
 .gs-timeline__when { font-size: 14px; color: var(--gh-cocoa-70); }
 
 /* account */
@@ -208,6 +208,7 @@ li[data-state=todo] .gs-timeline__label { color: var(--gh-cocoa-40); font-weight
 /* legal */
 .gs-legal h2 { margin-top: 28px; font-family: var(--gh-font-display); font-size: 22px; letter-spacing: -0.02em; }
 .gs-legal p, .gs-legal li { color: var(--gh-cocoa-70); }
+.gs-legal .gs-banner { color: var(--gh-cocoa); } /* cocoa-70 on marigold is 3.68:1; the banner needs full cocoa */
 .gs-banner { background: var(--gh-marigold); color: var(--gh-cocoa); border-radius: var(--gh-r-md); padding: 12px 16px; font-weight: 600; font-size: 15px; }
 
 .gs-footer__legal { max-width: 1200px; margin: 0 auto; padding: 0 28px 40px; font-size: 13px; color: var(--gh-cocoa-70); }

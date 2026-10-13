@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
-import { Avatar, Badge, Button, ButtonLink, ChipGroup, Progress, TemplateCard, TextField, Toggle } from "@/components/brand";
+import { Avatar, Badge, Button, ButtonLink, ChipGroup, TemplateCard, TextField, Toggle } from "@/components/brand";
 import type { Address } from "@greethub/shared";
 import { DELETION_VENDORS } from "@/lib/shop/policies";
 import type { Draft, Person, SavedAddress, UserRecord } from "@/lib/shop/types";
@@ -32,7 +32,7 @@ export function AccountFrame({ children }: { children: ReactNode }) {
         <nav className="gs-subnav" aria-label="Account">{items}</nav>
         <nav className="gs-subnav-m" aria-label="Account">
           {NAV.map((n) => (
-            <Link key={n.href} href={n.href} className="gh-chip" aria-pressed={path === n.href} style={{ display: "inline-flex", alignItems: "center", textDecoration: "none" }}>
+            <Link key={n.href} href={n.href} className="gh-chip" aria-current={path === n.href ? "page" : undefined} style={{ display: "inline-flex", alignItems: "center", textDecoration: "none" }}>
               {n.label}
             </Link>
           ))}
@@ -97,7 +97,6 @@ export function ProfilePage() {
   useEffect(() => {
     if (sp.get("signedin")) toast("You're in. Your card's saved.");
   }, [sp, toast]);
-  const left = data?.profile?.rerolls;
 
   async function save() {
     setBusy(true);
@@ -118,7 +117,7 @@ export function ProfilePage() {
           <div className="gs-span2"><TextField label="Email" value={data?.email ?? ""} readOnly /></div>
         </div>
         <Toggle checked onChange={() => undefined}>Email me when a proof is ready (always on)</Toggle>
-        {left && <Progress value={(left.left / left.allowance) * 100} label={`Re-rolls: ${left.left} of ${left.allowance} left this month`} />}
+        <p className="gs-small gs-muted" style={{ margin: 0 }}>Each picture book comes with 3 page redraws and 2 free redos of the character sheet. A drawing that fails never uses one up.</p>
         {data?.profile?.acceptance && <p className="gs-small gs-muted" style={{ margin: 0 }}>Terms and Privacy accepted {new Date(data.profile.acceptance.at).toLocaleDateString("en-US")} (version {data.profile.acceptance.termsVersion}).</p>}
         <div className="gs-row">
           <Button type="submit" disabled={busy}>Save changes</Button>
@@ -355,14 +354,14 @@ export function DeletePage() {
   return (
     <Shell title="Delete your account" error={orders.error} reload={orders.reload} ready={!!orders.data}>
       <div className="gs-panel gs-stack">
-        <p style={{ margin: 0 }}>This removes your profile, saved people, photos, drafts and addresses. Orders already in production still ship. Order records are kept for tax and accounting, with your name and address removed after fulfilment.</p>
+        <p style={{ margin: 0 }}>This removes your profile, saved people, photos, drafts and addresses. Orders already in production still ship. Order records are kept for tax and accounting, with your name and address removed after fulfillment.</p>
         <div>
           <h2 className="gs-h3">Where your data lives</h2>
           <ul className="gs-small gs-muted" style={{ margin: 0, paddingLeft: 18 }}>
             {DELETION_VENDORS.map((v) => <li key={v.name}><strong>{v.name}:</strong> {v.how}</li>)}
           </ul>
         </div>
-        <p style={{ margin: 0 }}><a className="gs-link" href="/api/account/export" download>Download my data</a> (a JSON file of your profile, addresses, drafts, people and orders)</p>
+        <p style={{ margin: 0 }}><a className="gs-link" href="/api/account/export" download>Download my data</a> (a JSON file of your profile, addresses, drafts, people, orders, and your books with the photo consent you gave)</p>
       </div>
       {sent ? (
         <div className="gs-panel gs-stack" role="status">

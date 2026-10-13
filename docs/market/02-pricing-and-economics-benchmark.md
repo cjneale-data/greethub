@@ -2,6 +2,8 @@
 
 Owner: Head of Market Intelligence. 2026-10-11. Competitor facts and URLs are in `00-landscape.md` (cited "00"). Tags [V]/[S]/[U] as in 00. GreetHub prices from `finance/README.md`; CPC/CAC assumptions from `docs/cmo/channel-assumptions.csv`.
 
+**Status 2026-10-12.** Competitor prices are one day old; no refresh needed. Checked against the build: the live SKUs in `app/packages/shared/src/pricing.ts` still match the plan ($39/$49 + $5.99, card $7.99 + $2.99, digital card $3.99, digital book $19.99). The CFO's v2 model added a "Market-adjusted" scenario (card $8.99 postage included, digital book $14.99, Google CPC $4.14), but it is off by default and the app is unchanged; $14.99 is still above the $9.99-or-bundle line in section 1. Two build items not benchmarked before: an $8.99 Express surcharge (PLACEHOLDER in code; no competitor express price collected yet) and a default "arrive by" of 7 days (`earliestDeliveryDays`), which beats every printed-book competitor in section 2 without printer evidence. Lulu 24pp is confirmed (section 4 item 6).
+
 ## 1. Price comparison
 
 ### Printed picture books (all-in = price + shipping where known; US)
@@ -104,5 +106,5 @@ Owner: Head of Market Intelligence. 2026-10-11. Competitor facts and URLs are in
 3. Blended contribution about $15.20 against any plausible paid CAC means paid acquisition does not pay back in the first order; model **first-order payback only for organic/referral** and treat paid as a test budget. The CFO's own finding (break-even month 7 with no paid) is consistent with this.
 4. Model the card price change (postage included, $8.99 test) and digital book price as scenarios; digital volumes in the model should be low.
 5. Add a first-order discount line (competitors run 10-25% codes; $5 off at Wonderbly).
-6. Print cost: verify Lulu pricing and 24pp availability. I could not find a published Lulu price for 8.5x8.5 casewrap 24pp (Lulu's API is free; costs per job are print cost + shipping + fulfilment fee) [S] https://help.api.lulu.com/en/support/solutions/articles/64000254631-are-there-fees-to-use-lulu-s-print-api- . A forum snippet claims a 40-page minimum for hardcover [U]. If true the 24pp SKU does not exist and the price ladder changes.
+6. Print cost: verify Lulu pricing. I could not find a published Lulu price for 8.5x8.5 casewrap 24pp (Lulu's API is free; costs per job are print cost + shipping + fulfilment fee) [S] https://help.api.lulu.com/en/support/solutions/articles/64000254631-are-there-fees-to-use-lulu-s-print-api- . **Resolved 2026-10-12:** 24pp hardcover exists. Lulu's help centre lists "Casewrap: 24-800 pages" and "Perfect Bound: 32-800 pages" [V] https://help.lulu.com/en/support/solutions/articles/64000255583 (read 2026-10-12); the 40-page figure in the earlier forum snippet was for paperbacks. The price ladder stands; the per-unit cost still needs a sandbox quote.
 7. Add a competitor-parity check each month (files 03/04): Imagitime $54.99/$9.99 and Wonderbly shipping are the two inputs most likely to move your price ceiling.

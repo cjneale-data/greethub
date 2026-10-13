@@ -114,7 +114,7 @@ export const STYLE_LIBRARY: StyleEntry[] = [
       "technique": "Wet-on-wet washes, a few dry-brush edges, paper white left as highlight",
       "line": "Thin, soft pencil-and-ink outlines that fade in places",
       "palette": "Muted warm: peach, cream, sage, dusty blue, a single deeper accent",
-      "composition": "Centered subject, generous calm background, soft vignette inside the picture",
+      "composition": "Centered subject, generous calm background, color carried softly to every edge (no white vignette)",
       "mood": "Tender, calm, nostalgic",
       "era": "Classic 20th-century picture book, refreshed"
     },
@@ -1759,11 +1759,11 @@ export const STYLE_LIBRARY: StyleEntry[] = [
       "technique": "Layered felt pieces sewn on with visible thread, soft fuzzy edges and small shadows",
       "line": "Sewn thread edges and thread outlines in a contrasting color",
       "palette": "Warm brights: red, mustard, sage, cream linen, denim blue",
-      "composition": "Centered scene on linen, patch-like shapes, a sewn border",
+      "composition": "Centered scene on linen, patch-like shapes, hand-sewn outlines on each shape",
       "mood": "Sweet, snug, handmade",
       "era": "Timeless craft"
     },
-    "styleString": "Handmade felt appliqué and embroidery illustration on natural linen, layered cut felt shapes with soft fuzzy edges and tiny shadows, visible sewn thread borders in contrasting color, warm palette of red, mustard, sage and denim blue, simple rounded characters with button eyes and sewn smiles, flat tabletop view - not photorealistic, no 3D render, not a photograph of real felt.",
+    "styleString": "Handmade felt appliqué and embroidery illustration on natural linen, layered cut felt shapes with soft fuzzy edges and tiny shadows, visible hand-sewn outlines in contrasting thread on each shape, warm palette of red, mustard, sage and denim blue, simple rounded characters with button eyes and sewn smiles, flat tabletop view - not photorealistic, no 3D render, not a photograph of real felt.",
     "avoid": [
       "photographs of real objects",
       "3D render",
@@ -2234,11 +2234,11 @@ export const STYLE_LIBRARY: StyleEntry[] = [
       "technique": "Carved line, flat ink areas with rough edges and tiny speckles, 2 or 3 color layers offset slightly",
       "line": "Thick carved white lines inside dark shapes",
       "palette": "Forest green, terracotta, mustard, indigo, cream",
-      "composition": "Bold framed scenes, symmetrical or patterned, folk motifs",
+      "composition": "Bold scenes that fill the picture to every edge, symmetrical or patterned, folk motifs",
       "mood": "Earthy, warm, folk-tale",
       "era": "Timeless folk print"
     },
-    "styleString": "Hand-carved linocut block print illustration, bold flat ink shapes with carved white lines and rough ink speckle, two or three offset color layers, limited earthy palette of forest green, terracotta, mustard and indigo on cream paper, folk-art motifs, characters with simple carved faces and strong silhouettes, framed composition - not photorealistic, no 3D render, no gradients.",
+    "styleString": "Hand-carved linocut block print illustration, bold flat ink shapes with carved white lines and rough ink speckle, two or three offset color layers, limited earthy palette of forest green, terracotta, mustard and indigo on cream paper, folk-art motifs, characters with simple carved faces and strong silhouettes, bold composition that fills the picture to every edge - not photorealistic, no 3D render, no gradients.",
     "avoid": [
       "gradients",
       "photorealism",

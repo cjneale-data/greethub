@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { CONSENT_TEXT, consentCovers, consentHash, consentValid, evaluateConsentGate } from "../../lib/book/consent";
-import { photosExpiringSoon, purgeExpiredPhotos, deleteUserBookData } from "../../lib/book/privacy";
+import { cronAuthorized, photosExpiringSoon, purgeExpiredPhotos, deleteUserBookData } from "../../lib/book/privacy";
 import { addPhoto, confirmPhotos, createProject, generateStory, recordConsent, withdrawConsent } from "../../lib/book/service";
 import { fakeJpeg, makeDeps, USER, validBrief } from "./helpers";
 
@@ -143,5 +143,31 @@ describe("retention and delete-my-data", () => {
     expect(await d.projects.get(id)).toBeNull();
     expect(existsSync(path)).toBe(false);
     expect(await d.projects.get(other.id)).not.toBeNull();
+  });
+
+  it("delete-my-data also removes the user's job documents (they hold names and story text)", async () => {
+    const { d, id } = await withPhotos();
+    await addPhoto(d, USER, id, { characterId: grandpa.id, data: fakeJpeg(900, 900) });
+    await confirmPhotos(d, USER, id);
+    await generateStory(d, USER, id);
+    const jobIds = (await d.jobs.listByProject(id)).map((j) => j.id);
+    expect(jobIds.length).toBeGreaterThan(0);
+    await deleteUserBookData(d, USER);
+    expect(await d.jobs.listByProject(id)).toEqual([]);
+    for (const j of jobIds) expect(await d.jobs.get(j)).toBeNull();
+  });
+
+  it("lets the purge cron in only with the right secret", () => {
+    const h = (o: Record<string, string>) => new Headers(o);
+    const prod = { NODE_ENV: "production" } as NodeJS.ProcessEnv;
+    expect(cronAuthorized(h({}), prod)).toBe(false);
+    expect(cronAuthorized(h({}), { NODE_ENV: "development" } as NodeJS.ProcessEnv)).toBe(true);
+    const vercel = { ...prod, CRON_SECRET: "s3cret-value" };
+    expect(cronAuthorized(h({ authorization: "Bearer s3cret-value" }), vercel)).toBe(true);
+    expect(cronAuthorized(h({ authorization: "Bearer wrong" }), vercel)).toBe(false);
+    expect(cronAuthorized(h({}), vercel)).toBe(false);
+    const own = { ...prod, GREETHUB_CRON_SECRET: "other-value" };
+    expect(cronAuthorized(h({ "x-cron-secret": "other-value" }), own)).toBe(true);
+    expect(cronAuthorized(h({ authorization: "Bearer other-value" }), own)).toBe(false);
   });
 });

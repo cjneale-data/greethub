@@ -15,7 +15,7 @@ A better photo helps more than a better description: see [Photos that work best]
 
 ## After the pages are drawn
 
-You can redraw single pages from the proof. You get {monthly_rerolls} redraws each month. A redraw uses the approved character sheet, so the face won't change much. If the sheet itself was off, tell us at {support_email} before you approve.
+You can redraw single pages from the proof. Each book has 3 page redraws, and the character sheet gets 2 free redos before any pages are drawn. A redraw uses the approved character sheet, so the face won't change much. If the sheet itself was off, tell us at {support_email} before you approve.
 
 ## After you approve
 

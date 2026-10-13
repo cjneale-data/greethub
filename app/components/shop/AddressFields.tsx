@@ -11,8 +11,8 @@ const REQUIRED: (keyof Address)[] = ["name", "line1", "city", "region", "postalC
 export function quickErrors(a: AddressDraft): Record<string, string> {
   const e: Record<string, string> = {};
   for (const k of REQUIRED) if (!a[k]?.trim()) e[k] = "Required";
-  if (a.line1 && /\bp\.?\s*o\.?\s*box\b/i.test(a.line1)) e.line1 = "Couriers can't deliver to PO boxes. Use a street address.";
-  if ((a.country || "US") === "US" && a.postalCode?.trim() && !/^\d{5}(-\d{4})?$/.test(a.postalCode.trim())) e.postalCode = "We can't find that address. Check the postcode and street.";
+  if (a.line1 && /\bp\.?\s*o\.?\s*box\b/i.test(a.line1)) e.line1 = "We can't ship to PO boxes. Use a street address.";
+  if ((a.country || "US") === "US" && a.postalCode?.trim() && !/^\d{5}(-\d{4})?$/.test(a.postalCode.trim())) e.postalCode = "We can't find that address. Check the ZIP code and street.";
   return e;
 }
 
@@ -28,7 +28,7 @@ export function AddressFields({ value, onChange, errors = {}, prefix }: { value:
       <div className="gs-span2">{f("line2", "Address line 2 (optional)", { autoComplete: "address-line2" })}</div>
       {f("city", "City", { autoComplete: "address-level2" })}
       {f("region", "State", { autoComplete: "address-level1" })}
-      {f("postalCode", "Postcode", { autoComplete: "postal-code", inputMode: "numeric" })}
+      {f("postalCode", "ZIP code", { autoComplete: "postal-code", inputMode: "numeric" })}
       <label className="gh-field">
         <span className="gh-field__label">Country</span>
         <select className="gs-select" value={value.country ?? "US"} onChange={set("country")} aria-invalid={!!errors.country}>

@@ -24,8 +24,18 @@ interface BaseEntry {
   approvedBy?: string; // person id, must differ from personId
   note?: string;
 }
-export interface TimeEntry extends BaseEntry { hours: number; category: string }
-export interface CashEntry extends BaseEntry { amount: number; kind: "cash" | "expense" }
+export interface TimeEntry extends BaseEntry {
+  hours: number;
+  category: string;
+  /** Cash pay the person received for these hours (USD). Only the unpaid part earns slices. Default 0. */
+  paidAmount?: number;
+}
+export interface CashEntry extends BaseEntry {
+  amount: number;
+  kind: "cash" | "expense";
+  /** Amount later repaid to the person (USD). Repaid cash earns no slices. Default 0. */
+  reimbursed?: number;
+}
 /** Equipment, supplies, IP, facilities contributed without cash. Value is fair market value of use. */
 export interface ResourceEntry extends BaseEntry { fairValue: number; description: string }
 
@@ -37,6 +47,8 @@ export interface Idea {
   description: string;
   date: string;
   status: IdeaStatus;
+  /** Date the idea was adopted or shipped; the award is dated here (falls back to `date`). */
+  unlockedDate?: string;
   scores?: IdeaScores;
   reviewedBy?: string; // person id, must differ from authorId
   reviewNote?: string;
@@ -107,6 +119,7 @@ export interface PersonSlices {
 export interface Split { people: PersonSlices[]; totalSlices: number; warnings: string[] }
 
 const round2 = (n: number) => Math.round(n * 100) / 100;
+const finite = (n: unknown): n is number => typeof n === "number" && Number.isFinite(n);
 
 /** Entry counts only if approved by a different, known person. */
 export function entryCounts(e: BaseEntry, people: Person[]): boolean {
@@ -133,6 +146,14 @@ export function ideaAward(idea: Idea, people: Person[], cfg: EquityConfig = DEFA
 
 export function computeSplit(l: Ledgers, cfg: EquityConfig = DEFAULT_CONFIG, asOf?: string): Split {
   const warnings: string[] = [];
+  const seen = new Set<string>();
+  for (const [kind, list] of [["time", l.time], ["cash", l.cash], ["resource", l.resources], ["idea", l.ideas]] as const) {
+    for (const e of list) {
+      const key = `${kind}:${e.id}`;
+      if (seen.has(key)) warnings.push(`${kind} ${e.id}: duplicate id`);
+      seen.add(key);
+    }
+  }
   const inRange = (d: string) => !asOf || d <= asOf;
   const byId = new Map<string, PersonSlices>();
   for (const p of l.people) {
@@ -145,31 +166,37 @@ export function computeSplit(l: Ledgers, cfg: EquityConfig = DEFAULT_CONFIG, asO
     const p = person(e.personId), row = byId.get(e.personId);
     if (!p || !row) { warnings.push(`time ${e.id}: unknown person`); continue; }
     if (!inRange(e.date) || !entryCounts(e, l.people)) continue;
-    if (e.hours <= 0 || p.hourlyRate < 0) { warnings.push(`time ${e.id}: invalid hours or rate`); continue; }
+    const paid = e.paidAmount ?? 0;
+    if (!finite(e.hours) || e.hours <= 0 || !finite(p.hourlyRate) || p.hourlyRate < 0 || !finite(paid) || paid < 0) {
+      warnings.push(`time ${e.id}: invalid hours, rate or pay`); continue;
+    }
     row.hours += e.hours;
-    row.timeSlices += e.hours * p.hourlyRate * cfg.nonCashMultiplier * rule(p.id).nonCashKept;
+    const unpaid = Math.max(0, e.hours * p.hourlyRate - paid);
+    row.timeSlices += unpaid * cfg.nonCashMultiplier * rule(p.id).nonCashKept;
   }
   for (const e of l.cash) {
     const row = byId.get(e.personId);
     if (!row) { warnings.push(`cash ${e.id}: unknown person`); continue; }
     if (!inRange(e.date) || !entryCounts(e, l.people)) continue;
-    if (e.amount <= 0) { warnings.push(`cash ${e.id}: invalid amount`); continue; }
-    row.cashDollars += e.amount;
+    const repaid = e.reimbursed ?? 0;
+    if (!finite(e.amount) || e.amount <= 0 || !finite(repaid) || repaid < 0) { warnings.push(`cash ${e.id}: invalid amount`); continue; }
+    const net = Math.max(0, e.amount - repaid);
+    row.cashDollars += net;
     const leaverRule = rule(e.personId);
     // Standard multiplier is cfg.cashMultiplier; a leaver rule can only lower it.
-    row.cashSlices += e.amount * Math.min(cfg.cashMultiplier, leaverRule.cashMultiplier);
+    row.cashSlices += net * Math.min(cfg.cashMultiplier, leaverRule.cashMultiplier);
   }
   for (const e of l.resources) {
     const row = byId.get(e.personId);
     if (!row) { warnings.push(`resource ${e.id}: unknown person`); continue; }
     if (!inRange(e.date) || !entryCounts(e, l.people)) continue;
-    if (e.fairValue <= 0) { warnings.push(`resource ${e.id}: invalid value`); continue; }
+    if (!finite(e.fairValue) || e.fairValue <= 0) { warnings.push(`resource ${e.id}: invalid value`); continue; }
     row.resourceSlices += e.fairValue * cfg.nonCashMultiplier * rule(e.personId).nonCashKept;
   }
   for (const i of l.ideas) {
     const row = byId.get(i.authorId);
     if (!row) { warnings.push(`idea ${i.id}: unknown author`); continue; }
-    if (!inRange(i.date)) continue;
+    if (!inRange(i.unlockedDate ?? i.date)) continue;
     const award = ideaAward(i, l.people, cfg) * rule(i.authorId).nonCashKept;
     row.ideaSlices = Math.min(cfg.ideaCapPerPerson, row.ideaSlices + award);
   }
@@ -191,7 +218,7 @@ export interface HistoryPoint { date: string; totalSlices: number; percents: Rec
 export function computeHistory(l: Ledgers, cfg: EquityConfig = DEFAULT_CONFIG): HistoryPoint[] {
   const dates = new Set<string>();
   for (const e of [...l.time, ...l.cash, ...l.resources]) if (entryCounts(e, l.people)) dates.add(e.date);
-  for (const i of l.ideas) if (ideaAward(i, l.people, cfg) > 0) dates.add(i.date);
+  for (const i of l.ideas) if (ideaAward(i, l.people, cfg) > 0) dates.add(i.unlockedDate ?? i.date);
   return [...dates].sort().map((date) => {
     const s = computeSplit(l, cfg, date);
     return { date, totalSlices: s.totalSlices, percents: Object.fromEntries(s.people.map((p) => [p.personId, p.percent])) };

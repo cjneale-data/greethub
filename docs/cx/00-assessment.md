@@ -212,3 +212,9 @@ Fix: header collapses to logo + menu on every page; sticky bottom action bar for
 ## Top-line priorities
 
 Must fix before launch (details in 05-backlog.md): F-01, F-02, F-03, F-04, F-05, F-08, F-11, F-12, F-19, F-20, F-21, F-30, F-38, F-39, plus F-06 and F-35. Everything else can follow in the first month.
+
+## Re-check, 2026-10-12
+
+I walked the app again in mock mode at 1280 and 390 px. I ran QA's `launch-flow`, `card-flow`, `shop-walk` and `a11y` scripts, and all of them pass. Ticket status is in `05-backlog.md` under "Status". What changed since 10-10:
+- Fixed today: skip link; branded 404 (`screens/recheck-1012-mobile-404-before.png` and `-after.png`); link and ghost-button contrast; WCAG 2.5.3 label mismatches; the cookie notice no longer drops focus to `<body>`; the two scroll regions can be reached by keyboard; `/browse` has an h1; the stale promo is gone; "Make a free account" opens sign-up, not sign-in; "ZIP code"; the confirmation no longer greets the customer by email handle (`screens/recheck-1012-mobile-confirmation-before.png` shows the old greeting).
+- Still true and still S1: F-01 (no real art), F-02 (`[PLACEHOLDER]` company and DMCA text on every page), F-04, F-05, F-11, F-38 (no help or contact page; every contact path is a `mailto:` to a `.example` domain). Synthetic test data only in screenshots.

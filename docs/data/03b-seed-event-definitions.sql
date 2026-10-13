@@ -93,6 +93,8 @@ values
   ('ip_input_blocked', 1, 'safety', 'C0', 'T0', 'server', 365, 'CTO', array['P5_moderation_rate','Q9_intake_friction']),
   ('ip_output_flagged', 1, 'safety', 'C0', 'T0', 'worker', 365, 'CTO', array['P5_moderation_rate','Q1_first_pass_qa']),
   ('ip_output_rerolled', 1, 'safety', 'C0', 'T0', 'worker', 365, 'CTO', array['P5_moderation_rate','Q2_auto_reroll_rate']),
+  ('agent_grant_changed', 1, 'agent', 'C1', 'T0', 'server', 395, 'CTO', array['A4_agent_orders']),
+  ('agent_tool_called', 1, 'agent', 'C1', 'T0', 'server', 395, 'CTO', array['A4_agent_orders','U7_spend_vs_cap']),
   ('experiment_assigned', 1, 'experiment', 'C1', 'T0', 'server', 395, 'Data', array['Q1_first_pass_qa','B3_brief_completion'])
 on conflict (event_name) do update set schema_version = excluded.schema_version, domain = excluded.domain, max_sensitivity = excluded.max_sensitivity,
   min_tier = excluded.min_tier, source = excluded.source, retention_days = excluded.retention_days, owner = excluded.owner, kpis = excluded.kpis, deprecated_at = null;

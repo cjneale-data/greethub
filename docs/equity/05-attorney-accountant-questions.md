@@ -21,3 +21,14 @@ We give research and modelling, not legal or tax advice.
 4. Capital contributions versus loans: if a partner's cash is later repaid, how is it reversed in the ledger and the books?
 5. Bookkeeping: how to record non-cash contributions (time, equipment use) in the books, if at all.
 6. State and payroll implications if partners later move from slices to pay.
+
+## Added 2026-10-12 (platform assessment)
+Attorney:
+11. Funding the ~$54k peak cash need (finance/README.md): if partners fund it, is 4x cash in the pie appropriate, or should it be a loan or note outside the pie? If an outside investor funds it, is that a trigger event that freezes the pie, and what instrument (priced round, SAFE, note) works with a frozen ledger?
+12. Work produced by AI agents under a partner's direction: who owns it, and does the IP assignment need to cover agent output a partner commissions?
+13. Partly paid partners: is "only the unpaid part of fair-market pay earns slices" the right rule, and what written record is needed?
+14. Vesting after the freeze: should converted shares carry a vesting schedule or repurchase right for partners who keep working?
+
+Accountant:
+7. Partners who pay model, hosting or tool bills personally: capital contribution, loan or reimbursable expense, and what receipts are needed?
+8. At 10x contributors: does tracking slices create payroll, 1099 or partnership-allocation obligations before a trigger event?

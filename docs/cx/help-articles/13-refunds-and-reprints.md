@@ -6,11 +6,11 @@ Every card and book is made just for you, so we check it with you before it prin
 
 ## Before you pay
 
-Preview, edit and redraw within your allowance. Nothing prints until you approve the proof.
+Preview, edit, and use your book's 3 page redraws. Nothing prints until you approve the proof.
 
 ## Cancel before printing starts
 
-Full refund. Cancel from your order page until the status says "In production". Refunds go back to your card within 7 business days.
+Full refund. Email {support_email} with your order number as soon as you can. Orders go to our print shop soon after you pay, and once printing starts we can't stop it. Refunds go back to your card within 7 business days.
 
 ## We'll reprint or refund, your choice, if
 

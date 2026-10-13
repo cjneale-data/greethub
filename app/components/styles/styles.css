@@ -1,6 +1,6 @@
 /* Style browser (card and book creators). Brand tokens only; see docs/cx/01-ux-ui-standards.md. */
 .sb { display: flex; flex-direction: column; gap: var(--gh-s-4); min-width: 0; }
-.sb__section-title { font-family: var(--gh-font-display); font-weight: 700; font-size: 17px; margin: 0; letter-spacing: -0.01em; }
+.sb__section-title { font-family: var(--gh-font-display); font-weight: 700; font-size: 20px; line-height: 1.25; margin: 0; letter-spacing: -0.01em; }
 .sb__hint { margin: 0; font-size: 14px; color: var(--gh-cocoa-70); line-height: 1.4; }
 .sb__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gh-s-3); }
 .sb__filters { display: flex; flex-wrap: wrap; gap: var(--gh-s-2); }

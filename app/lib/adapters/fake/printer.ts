@@ -1,5 +1,5 @@
 import type { PrinterAdapter } from "../types";
-import { readDB, updateDB } from "../../shop/store";
+import { docs } from "../../store";
 
 /** Fake print lifecycle. Each call to `advanceFakeJob` moves one step; real printers do this on their own schedule. */
 export const FAKE_STAGES = ["submitted", "in_production", "shipped", "delivered"] as const;
@@ -17,13 +17,11 @@ export function fakePrinter(name: PrinterAdapter["name"]): PrinterAdapter {
     },
     async submit(job) {
       const externalId = `FAKE-${label[name]}-${job.orderId.slice(-6).toUpperCase()}-${job.lineId.slice(-4).toUpperCase()}`;
-      updateDB((db) => {
-        db.fakePrinterJobs[externalId] = db.fakePrinterJobs[externalId] ?? { stage: 0, printer: name };
-      });
+      await docs().insertIfAbsent("fake_printer_jobs", externalId, { stage: 0, printer: name });
       return { externalId };
     },
     async status(externalId) {
-      const job = readDB().fakePrinterJobs[externalId];
+      const job = await docs().get("fake_printer_jobs", externalId);
       if (!job) return { state: "error" };
       const state = FAKE_STAGES[Math.min(job.stage, FAKE_STAGES.length - 1)];
       if (state === "shipped" || state === "delivered") {
@@ -35,9 +33,6 @@ export function fakePrinter(name: PrinterAdapter["name"]): PrinterAdapter {
   };
 }
 
-export function advanceFakeJob(externalId: string): void {
-  updateDB((db) => {
-    const j = db.fakePrinterJobs[externalId];
-    if (j && j.stage < FAKE_STAGES.length - 1) j.stage += 1;
-  });
+export async function advanceFakeJob(externalId: string): Promise<void> {
+  await docs().mutate("fake_printer_jobs", externalId, (j) => j && { ...j, stage: Math.min(j.stage + 1, FAKE_STAGES.length - 1) });
 }

@@ -34,6 +34,8 @@ export function CookieNotice() {
       localStorage.setItem(KEY, v);
     } catch {}
     setShow(false);
+    // The focused button is about to unmount; send focus to the page content instead of <body>.
+    document.getElementById("main")?.focus({ preventScroll: true });
   };
   return (
     <div className="gs-cookie" role="region" aria-label="Cookie choices">

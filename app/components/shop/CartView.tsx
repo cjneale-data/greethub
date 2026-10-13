@@ -66,7 +66,7 @@ export function CartView() {
   }
   async function addDemo() {
     await api("/api/cart", { method: "POST", json: { kind: "card", creationId: "demo-card-rosa", title: "Rosa's card", recipientName: "Rosa", format: "mailed", mailTo: "recipient" } });
-    await api("/api/cart", { method: "POST", json: { kind: "book", creationId: "demo-book-eye", title: "The Eye Story", pageCount: 24, mailTo: "buyer" } });
+    await api("/api/cart", { method: "POST", json: { kind: "book", creationId: "demo-book-eye", title: "The Night the Moon Came Down", pageCount: 24, mailTo: "buyer" } });
     await load();
   }
 

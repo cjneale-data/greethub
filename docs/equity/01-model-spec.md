@@ -21,8 +21,8 @@ Only humans named as partners. AI agents (Claude, any tool) never earn slices an
 
 Let `Mn` = non-cash multiplier (default 2), `Mc` = cash multiplier (default 4).
 
-- Time slices = approved hours x person's hourly fair-market base rate x Mn.
-- Cash slices = approved dollars (cash spent or unreimbursed expense) x Mc.
+- Time slices = max(0, approved hours x person's hourly fair-market base rate - cash pay received for those hours) x Mn. Optional `paidAmount` on the time entry, default 0. This is a GreetHub rule so paid work is not counted twice; Moyer's own wording on partly paid time was not found on the pages read (2026-10-12) and should be checked in the handbook.
+- Cash slices = approved dollars (cash spent or unreimbursed expense) less any later repayment (`reimbursed`, default 0) x Mc. Moyer: cash counts "when spent" (magic-of-multipliers page above). The module counts cash when approved, so partners should log cash when it is spent, not when it is parked in the account.
 - Resource slices (equipment, supplies, IP, facilities, no cash) = fair value of use x Mn.
 - Idea slices = see section 5.
 - Person total = sum of the above. Share % = person total / sum of all totals x 100. Zero total gives 0% for everyone (no divide by zero).
@@ -72,9 +72,19 @@ Demo Alex rate $50/h, Demo Blake $100/h, Demo Casey $40/h.
 4. Alex quits for no good reason. Alex time slices 0; any Alex cash counts at 1x. Total becomes 3,000: Blake 33.3%, Casey 66.7%.
 5. Idea shipped, scores 5/5/5, reviewed by a partner: award 5,000 x 5/5 = 5,000 slices.
 
-## 9. Known limits
+## 9. Agent-built work and the funding plan (added 2026-10-12)
+
+- Agent output is not a contribution by anyone. The CFO prices launch engineering at $600 a day; that figure must never be logged as a human's hours. A human earns only for the hours they actually spent briefing, reviewing and directing agents, at their own rate.
+- Model, hosting and tool bills a partner pays personally and is not repaid are unreimbursed expenses (cash, 4x). Bills the company pays from its own account earn no slices.
+- The CFO's no-paid-ads plan needs about $54k of peak cash (finance/README.md). If partners fund it, that is up to $216k of cash slices at 4x, which can outweigh a year of part-time founder hours. If an outside investor funds it, the investor is not a partner in the pie; a priced round or similar is a trigger event (section 7) and freezes the split. Which applies is an owner and attorney decision.
+- If some engineering is paid in cash (the CFO's "25% cash" case), record the pay as `paidAmount` so only the unpaid part earns slices.
+
+## 10. Known limits
 
 - One rate per person (see section 3).
+- A leaver rule applies to the person's whole history, so the history chart is rewritten when someone leaves. Freeze a dated copy of the split before applying a leaver rule.
+- The dashboard uses the built-in `DEFAULT_CONFIG`; it does not read the `config` collection yet. Changing caps or multipliers means editing the module and regenerating the dashboard copy (a test fails if they drift).
+- Idea awards are dated at `unlockedDate` (set by the dashboard on first adopt or ship; older records fall back to the proposal date). Status is the current one, so an as-of split cannot tell if an idea was later un-adopted.
 - Ideas cap is per idea and per person, not a percentage of the pie.
-- Cash repayment and recoupment are not modelled.
+- Repayment is modelled only as a `reimbursed` amount on the cash entry; interest, loans and recoupment from profits are not modelled.
 - Time spent is the person's honest log, verified only by partner approval.

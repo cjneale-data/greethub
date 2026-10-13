@@ -78,12 +78,16 @@ A "sexual content involving a minor" result stops processing: the upload is not 
 
 ## 6. Report and takedown
 
-`/report` is a real form: what, where (order number or link), who is shown, contact email, and for copyright the good-faith statement and a typed signature. The API stores the report in the shop store (Supabase table later), emails the reporter a confirmation and the team inbox (`report@greethub.example`, or `REPORT_INBOX_EMAIL`) through the email adapter (fake locally, Resend when keyed), and shows a 48-hour target. An admin-readable list is at `/internal/reports` and `/api/admin/reports`, open only under the existing dev gating (non-production or `GREETHUB_ALLOW_FAKE=1`) or with `GREETHUB_ADMIN_TOKEN`. The footer shows the DMCA designated-agent block with a visible PLACEHOLDER marker until the owner registers an agent (01 section 3 item 7). **Owner action:** register the agent, then fill `DMCA_AGENT` in `app/components/shop/DmcaAgentBlock.tsx` and set `registered: true`.
+`/report` is a real form: what, where (order number or link), who is shown, contact email, and for copyright the good-faith statement and a typed signature. The API stores the report in the shop store (Supabase table later), emails the reporter a confirmation and the team inbox (`report@greethub.example`, or `REPORT_INBOX_EMAIL`) through the email adapter (fake locally, Resend when keyed), and shows a 48-hour target. An admin-readable list is at `/internal/reports` and `/api/admin/reports`, open in local dev only; every production build, Vercel previews included, needs `GREETHUB_ADMIN_TOKEN` in the `x-admin-token` header (timing-safe compare). `GREETHUB_ALLOW_FAKE=1` no longer opens it (changed 2026-10-12: the list holds reporters' emails and descriptions of children). The footer shows the DMCA designated-agent block with a visible PLACEHOLDER marker until the owner registers an agent (01 section 3 item 7). **Owner action:** register the agent, then fill `DMCA_AGENT` in `app/components/shop/DmcaAgentBlock.tsx` and set `registered: true`.
 
 Not built: a takedown workflow (removing an order's art and stopping a print job), counter-notice handling and a repeat-infringer log. The list has a status field; actions are manual.
 
 ## 7. Known residual risks and what is NOT guaranteed
 
+- **The output vision check fails open (found 2026-10-12).** If the vision call errors or returns unreadable JSON, `qaPage` passes the page ("QA call failed; not blocking") and the guest preview runner treats it as no flags. A page that was never IP-checked can reach the proof and the printer. Fix (pipeline owner): record an IP verdict per page and require one before proof approval and print; retry the check, never pass on a missing verdict.
+- **The character model sheet is not IP-checked (found 2026-10-12).** `modelsheet.ts` gets no hardening lines, no prompt sanitiser on the identity text and no vision check, yet every page copies it. A look-alike sheet makes every page fail, re-roll and block. One vision check on the sheet (about $0.01) is cheaper than that.
+- **App-side screen spend is uncapped.** `lib/safety/server.ts` counts live Sonnet screen spend in memory only; it is not in the cost ledger or the daily guest cap. Every chat turn and draft save pays for it.
+- **Cyrillic is folded as look-alike Latin, not transliterated.** Names in Cyrillic match only when the table lists the Cyrillic spelling. Transliteration conflicts with the homoglyph defence and needs a per-word script check.
 - **No guarantee of non-infringement.** An output can still resemble a protected character, trade dress or a living artist's work. The look-alike score is a model's opinion; it will miss things and will sometimes over-flag.
 - **The first-pass table is finite.** 48 characters and 15 franchises are listed; everything else relies on the live Sonnet screen and the output vision check. Mock mode (CI, local dev) has only the table. A new franchise will not be caught by the rules until added.
 - **Recall numbers are on our own set.** The 197 red-team cases were written by the same team that tuned the rules, so rules recall on them is optimistic. Treat live recall as an upper bound, and grow the set from real traffic.
@@ -107,6 +111,17 @@ Set: 197 cases in `app/tests/fixtures/ip-redteam.json` (franchise names, misspel
 Rules misses that the live model caught: a descriptive nickname ("the Mouse House's famous mascot"), "the Caped Crusader", two descriptions without names, Spanish/French/Russian titles that are not in the table ("Bob l'éponge", "Тополино"), an unlisted real person, an obfuscated ("backwards") name and a reference to an earlier turn. Live false positives: "A super man who loves cooking pancakes" and "Because you are worth it, here is a card." (an ordinary sentence containing a slogan; defensible either way).
 
 A first live run had 12 degraded calls (response truncated at 3000 tokens); the cap was raised to 8000 and the run repeated with 0 degraded. To limit spend, cases the rules already rewrite or block keep the rules result in the live run. Reproduce: `cd app && npm run eval:ip -- --mock` (free), `npm run eval:ip -- --skip-rules-hits --cap 0.16` (live, about $0.14).
+
+### Rerun 2026-10-12 (mock only; no live calls)
+
+Added 18 cases from an offline evasion probe (misspellings, other languages, descriptions, look-alike public-figure names, and benign family cases such as "Ariel my niece", "Luca", "Coco the cat", "Olaf, our grandfather"). Rule changes: a relation after the name ("Ariel, my niece") now marks a real person; "like a <known style> book/illustration/drawing" is a style request; added Pato Donald, Paperino, Bob Esponja, Bob l'éponge, Pepa Pig, Тополино, Человек-паук; the ice-queen descriptor accepts "with the long ... braid".
+
+| Run | Precision | Recall | False-positive rate | Exact verdict |
+|---|---|---|---|---|
+| Free rules only, 215 cases | 100% (136/136) | 90.7% (136/150) | 0% (0/65) | 93.5% |
+| Free rules only, the original 197 cases | 100% | 94.2% (131/139) | 0% (0/58) | |
+
+The 6 new cases the rules miss have not been run live (no budget given). Live numbers above are from 2026-10-11 and do not cover them.
 
 ## 9. Live image validation (2026-10-11)
 

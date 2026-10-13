@@ -14,7 +14,7 @@ const DEFAULT_LINKS: NavLink[] = [
 export function SiteNav({ links = DEFAULT_LINKS }: { links?: NavLink[] }) {
   return (
     <nav className="gh-nav" aria-label="Main">
-      <Link href="/" aria-label="GreetHub home" style={{ textDecoration: "none" }}>
+      <Link href="/" title="GreetHub home" style={{ textDecoration: "none" }}>
         <Logo size={24} />
       </Link>
       <div className="gh-nav__links">

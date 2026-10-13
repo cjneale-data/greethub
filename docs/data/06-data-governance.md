@@ -46,6 +46,8 @@ Classes: C0 system, C1 pseudonymous behaviour, C2 personal identifiers, C3 user 
 | BI caches and CSV extracts | Metabase host, laptops | C1 | Reporting | T0 | named users | BI host |
 | Database and storage backups | Supabase | all | Recovery | T0 | owner | Supabase |
 | Deletion log and tombstones | privacy.deletion_log, deletion_tombstones | C0 (random ids, counts) | Audit and anti-resurrection | T0 | privacy_admin | Supabase |
+| AI-assistant grants, OAuth tokens, agent audit log, idempotency keys, spend pool | app store today (lib/agent); Supabase tables at SEC-18 | C1 (audit: arg digests only) + secrets (token hashes) | Delegated access, spending limits, abuse review | T0 | CTO; owner | Supabase |
+| Content and takedown reports (reporter email, who is depicted, description, signature) | app shop store (lib/safety/reports.ts); Supabase reports table planned | C2 + C3 (may describe a child) | Takedown, photo removal, DMCA | T0 | Trust and safety; owner (admin token) | Supabase; Resend (report email copy) |
 | Printer-held customer data | Lulu, Prodigi | C2 + C4 | Fulfilment | T0 | n/a | Lulu, Prodigi |
 <!-- END INVENTORY -->
 
@@ -99,6 +101,8 @@ Aligned to 02 s7. Everything beyond the legal docs' table (analytics, ledger, ti
 | BI caches and CSV extracts | Cache 24 hours; extracts deleted within 30 days | Delete | cache TTL; policy |
 | Database and storage backups | Provider window (Pro daily backups, about 7 days; CONFIRM); published in the Privacy Policy | Expire | expire; after any restore run privacy.replay_tombstones() |
 | Deletion log and tombstones | Log: indefinite. Tombstones: 24 months (longer than any backup or export) | Delete tombstone | none: contains no personal data |
+| AI-assistant grants, OAuth tokens, agent audit log, idempotency keys, spend pool | Grant: life of grant + 90 days; audit: 12 months; idempotency: 48 hours | Delete | delete_subject must revoke grants and drop audit rows by user (not built) |
+| Content and takedown reports (reporter email, who is depicted, description, signature) | 5 years after close (same as takedown tickets) | Delete | Kept under legal hold rules; reporter can ask for deletion after close |
 | Printer-held customer data | Per DPA; request deletion after fulfilment where not required | Per vendor | delete_subject task `lulu_prodigi` |
 <!-- END RETENTION -->
 

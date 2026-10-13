@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
   try {
     const preview = await generateGuestPreview(built.brief);
     const res = NextResponse.json({ preview: { ...preview, createdAt: new Date().toISOString() }, ...(screened.notes.length ? { ipNote: screened.notes[0] } : {}) });
-    if (session.isGuest) res.cookies.set(GUEST_COOKIE, "1", { httpOnly: true, sameSite: "lax", maxAge: 60 * 60 * 24 * 365, path: "/" });
+    if (session.isGuest) res.cookies.set(GUEST_COOKIE, "1", { httpOnly: true, sameSite: "lax", maxAge: 60 * 60 * 24 * 365, path: "/", secure: process.env.NODE_ENV === "production" });
     return res;
   } catch (e) {
     const code = e instanceof PreviewFailed ? e.message : "render_failed";

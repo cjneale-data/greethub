@@ -8,13 +8,14 @@ export interface AuthAdapter {
   getSession(): Promise<Session>;
   /** Sends a sign-in link. The fake provider also returns the link so local dev needs no inbox. */
   sendMagicLink(email: string, redirectTo: string, opts?: { accepted?: boolean }): Promise<{ devLink?: string }>;
-  /** Exchanges a magic-link token for a user. Returns null if it is expired, used or unknown. */
-  verifyMagicLink(token: string): Promise<{ userId: string; email: string; next: string; accepted?: boolean } | null>;
+  /**
+   * Finishes sign-in on /api/auth/callback from its query string (a local token, or Supabase's code / token_hash) and
+   * starts the session. Returns null if the link is expired, used or unknown.
+   */
+  verifyCallback(params: URLSearchParams): Promise<{ userId: string; email: string; next: string; accepted?: boolean } | null>;
   signInWithGoogle(redirectTo: string, opts?: { accepted?: boolean }): Promise<{ url: string }>;
   /** Carries the guest draft and cart over to the account after sign-up. */
   upgradeGuest(guestUserId: string, newUserId: string): Promise<void>;
-  /** Writes the signed-in cookie. Route handlers only. */
-  startSession(user: { userId: string; email: string }): Promise<void>;
   signOut(): Promise<void>;
 }
 
@@ -41,6 +42,8 @@ export type PaymentEvent = {
   /** "paid" | "unpaid" | "no_payment_required" for Stripe. */
   paymentStatus?: string;
   amountTotalCents?: number;
+  /** Tax the provider added on its own (Stripe automatic tax). Our cart totals do not include it. */
+  amountTaxCents?: number;
   paymentIntentId?: string;
   email?: string;
 };

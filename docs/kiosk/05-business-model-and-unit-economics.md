@@ -1,6 +1,6 @@
 # 05. Business model and unit economics
 
-All figures are planning estimates [U] unless tagged. Full table: `financial-inputs.csv`. Online reference: printed card $7.99 + $2.99 postage, contribution $2.9 to $4.1 a card, paid CAC about $76, LTV about $26 (`finance/README.md`).
+All figures are planning estimates [U] unless tagged. Full table: `financial-inputs.csv`. Online reference: printed card $7.99 + $2.99 postage, contribution $2.9 to $4.1 a card, paid CAC about $70, LTV about $26 (`finance/README.md` v3, 2026-10-12; $76 in v2).
 
 ## 1. Who buys and who hosts
 
@@ -80,8 +80,16 @@ Tier A and C are cheaper per unit but earn less per card (Tier A consumables $0.
 
 ## 7. Strategic value that is not in the base case
 
-Kiosk buyers who join GreetHub (saved People, reminders) are cheaper than paid ads (online paid CAC about $76 and LTV about $26, so paid ads do not pay back at the CMO's assumptions, `finance/README.md`). At 150 cards a month per kiosk and a 15% signup rate [U guess], a kiosk adds about 22 accounts a month. If each is worth even a third of the paid CAC avoided, the kiosk looks much better. This is the most valuable thing the pilot can measure; the base financials give it zero credit.
+Kiosk buyers who join GreetHub (saved People, reminders) are cheaper than paid ads (online paid CAC about $70 and LTV about $26, so paid ads do not pay back at the CMO's assumptions, `finance/README.md`). At 150 cards a month per kiosk and a 15% signup rate [U guess], a kiosk adds about 22 accounts a month. If each is worth even a third of the paid CAC avoided, the kiosk looks much better. This is the most valuable thing the pilot can measure; the base financials give it zero credit.
+
+Correction 2026-10-13: avoided CAC is cash only if paid spend is actually cut, and the CFO's recommended launch plan spends $0 to $2k a month. A fairer value is the repeat contribution a kiosk sign-up brings: about 0.7 extra orders x $15.20 = about $11 per account [U], so 22 accounts a month is worth about $230 a month per kiosk. Real, but it does not change the program total.
 
 ## 8. Risks specific to the model
 
 Seasonality (peaks in Dec, Feb, May, June); hosts that close the shop (card unreachable); revenue-share dispute; unattended machine downtime hurting the brand; chargebacks on card-present are rarer but exist [U]; insurance (06).
+
+## 9. Scale: what changes at 10 and 100 kiosks (added 2026-10-13, all [U])
+
+- **10 kiosks:** about $1.3k a month of service visits and $2.6k of fixed cost in total. One contractor technician on call, pre-packed refill kits restocked by host staff, and remote stock and jam alerts so visits are planned, not reactive. A monthly host statement (sales, share, refunds) and a payout process (finance ops; 1099s for hosts). Sales tax registration in every kiosk state, plus personal property tax where the unit sits. Per-device spend caps in the cloud ledger (SEC-10), not the per-IP limits the web uses.
+- **100 kiosks:** fleet capex of about $0.56M to $0.94M is beyond the company's means; only placement under model B (lease), C (host purchase) or D (operator licence) is fundable. A route-based field-service partner, a spares depot and two approved reader models (the WisePOS E is reported to end in early 2027, 04 section 7). Consumables on an annual supply contract. Host share negotiated per chain, capped at 25% (07 section 8).
+- **What to change now:** plan P3 and P4 around models B, C or D, not GreetHub-owned units; treat model A (GreetHub owns, host shares) as pilot-only.

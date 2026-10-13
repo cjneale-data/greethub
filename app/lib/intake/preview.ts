@@ -3,6 +3,7 @@ import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "no
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import type { CardBrief } from "@greethub/shared";
+import { childProcessEnv } from "../env";
 import { GUEST_PREVIEW_COST_ESTIMATE_USD, dailySpendCapUsd, isMockAi, mockDelayMs, redact } from "./config";
 import { mockFrontArt } from "./mock-art";
 
@@ -32,8 +33,8 @@ function runPipeline(briefFile: string, outDir: string, cap: number): Promise<{ 
   const runner = resolve(process.cwd(), "lib", "intake", "pipeline-runner.mjs");
   if (!existsSync(tsx)) return Promise.resolve({ ok: false, error: "pipeline_not_installed" });
   return new Promise((done) => {
-    // The child inherits env (including the OpenRouter key). Nothing from it is logged.
-    const child = spawn(process.execPath, [tsx, runner, briefFile, outDir, String(cap)], { cwd: dir, env: process.env, stdio: ["ignore", "pipe", "pipe"] });
+    // The child gets an allow-listed env (OS basics, GREETHUB_* settings, the OpenRouter key). Nothing from it is logged.
+    const child = spawn(process.execPath, [tsx, runner, briefFile, outDir, String(cap)], { cwd: dir, env: childProcessEnv(), stdio: ["ignore", "pipe", "pipe"] });
     let out = "";
     child.stdout.on("data", (b) => (out += b));
     const timer = setTimeout(() => child.kill(), 180_000);

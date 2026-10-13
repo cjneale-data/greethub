@@ -110,6 +110,8 @@ export type BookProject = {
   brief: BriefForm;
   photos: PhotoRecord[];
   consent?: ConsentRecord;
+  /** Earlier consent records for this book (re-consent after a withdrawal or a wording change), oldest first (legal req 4, 27). */
+  consentHistory?: ConsentRecord[];
   photosConfirmed: boolean;
   story?: StoryState;
   sheet: SheetState;
@@ -134,6 +136,8 @@ export type JobStatus = "queued" | "running" | "succeeded" | "failed" | "cancell
 
 export type JobInput = {
   brief: BriefForm;
+  /** The consent record the photos in this job were uploaded under (legal req 4). */
+  consentId?: string;
   /** Characters with the photo ids the pipeline reads. */
   photoPaths: Record<string, string>;
   characters: { id: string; name: string; ageBand: string; role: string; pronouns: string; isPet: boolean; photoIds: string[] }[];
@@ -185,7 +189,7 @@ export type Job = {
 
 export type PublicJob = Pick<Job, "id" | "kind" | "status" | "progress" | "pages" | "error" | "updatedAt" | "mock">;
 
-export type ProjectView = Omit<BookProject, "userId" | "photos" | "mergedJobIds" | "consent"> & {
+export type ProjectView = Omit<BookProject, "userId" | "photos" | "mergedJobIds" | "consent" | "consentHistory"> & {
   consent?: Omit<ConsentRecord, "ip" | "userAgent">;
   photos: Pick<PhotoRecord, "id" | "characterId" | "width" | "height">[];
   job?: PublicJob;

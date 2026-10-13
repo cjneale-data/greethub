@@ -1,5 +1,5 @@
 import { addToCart, computeTotals, describeItem, priceLine, removeItem, setQuantity, type CartItem, type NewCartItem, type ShippingMethodId } from "@greethub/shared";
-import { readDB, updateDB } from "./store";
+import { docs } from "../store";
 
 export type CartView = {
   items: (CartItem & { description: string; unitCents: number; lineCents: number; postageCents: number })[];
@@ -16,29 +16,19 @@ export function viewCart(items: CartItem[], method: ShippingMethodId = "standard
   };
 }
 
-export const getCartItems = (userId: string): CartItem[] => readDB().carts[userId] ?? [];
+export const getCartItems = async (userId: string): Promise<CartItem[]> => (await docs().get("carts", userId)) ?? [];
 
-export function addItem(userId: string, input: NewCartItem): CartItem[] {
-  return updateDB((db) => (db.carts[userId] = addToCart(db.carts[userId] ?? [], input)));
-}
+const editCart = async (userId: string, fn: (cart: CartItem[]) => CartItem[]): Promise<CartItem[]> =>
+  (await docs().mutate("carts", userId, (cur) => fn(cur ?? []))) ?? [];
 
-export function changeQuantity(userId: string, id: string, quantity: number): CartItem[] {
-  return updateDB((db) => (db.carts[userId] = setQuantity(db.carts[userId] ?? [], id, quantity)));
-}
+export const addItem = (userId: string, input: NewCartItem) => editCart(userId, (cart) => addToCart(cart, input));
 
-export function removeLine(userId: string, id: string): CartItem[] {
-  return updateDB((db) => (db.carts[userId] = removeItem(db.carts[userId] ?? [], id)));
-}
+export const changeQuantity = (userId: string, id: string, quantity: number) => editCart(userId, (cart) => setQuantity(cart, id, quantity));
+
+export const removeLine = (userId: string, id: string) => editCart(userId, (cart) => removeItem(cart, id));
 
 /** Puts a removed line back (the Undo on the "Removed." toast). */
-export function restoreLine(userId: string, item: CartItem): CartItem[] {
-  return updateDB((db) => {
-    const cart = db.carts[userId] ?? [];
-    if (!cart.some((i) => i.id === item.id)) cart.push(item);
-    return (db.carts[userId] = cart);
-  });
-}
+export const restoreLine = (userId: string, item: CartItem) => editCart(userId, (cart) => (cart.some((i) => i.id === item.id) ? cart : [...cart, item]));
 
-export function setMailTo(userId: string, id: string, mailTo: "buyer" | "recipient"): CartItem[] {
-  return updateDB((db) => (db.carts[userId] = (db.carts[userId] ?? []).map((i) => (i.id === id ? { ...i, mailTo } : i))));
-}
+export const setMailTo = (userId: string, id: string, mailTo: "buyer" | "recipient") =>
+  editCart(userId, (cart) => cart.map((i) => (i.id === id ? { ...i, mailTo } : i)));

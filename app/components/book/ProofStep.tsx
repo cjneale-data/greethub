@@ -106,7 +106,7 @@ export function ProofStep({ project, run, busy, notify, onAdded }: StepProps & {
         </div>
 
         <div className="gb-pager">
-          <Button variant="secondary" size="sm" onClick={() => go(-1)} disabled={idx === 0} aria-label="Previous page" data-testid="prev">
+          <Button variant="secondary" size="sm" onClick={() => go(-1)} disabled={idx === 0} aria-label="Back to the previous page" data-testid="prev">
             ‹ Back
           </Button>
           <span className="gb-small" data-testid="spread-count">
@@ -171,6 +171,10 @@ export function ProofStep({ project, run, busy, notify, onAdded }: StepProps & {
             {layoutFailed && <Notice>Something needs a fix before we can print. We&apos;re on it. Try again in a moment.</Notice>}
           </>
         )}
+        {/* docs/legal/06 req 22: the report channel is linked on every proof page. */}
+        <p className="gb-small">
+          See something that shouldn&apos;t be here? <a href="/report">Report it</a>.
+        </p>
       </aside>
 
       {rerollOpen && (

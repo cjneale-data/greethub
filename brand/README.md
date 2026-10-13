@@ -29,7 +29,8 @@ import { Logo, Button, TemplateCard /* … */ } from './greethub-webkit/src';
 | cocoa | #2B1E18 | primary text, dark buttons, toasts |
 | cocoa-70 | #6B5A50 | secondary text |
 | cocoa-40 | #A99888 | placeholder, disabled text, inactive icons |
-| twine | #D9CBB6 | input & chip borders |
+| twine | #D9CBB6 | hairlines and decorative edges (was input & chip borders; see control-border) |
+| control-border | #8C7B6E | `--gh-control-border`: borders of inputs, selects, chips, checkboxes, switch track, dropzone, radio cards, stepper, style tiles. GreetHub deviation from the kit (CX-19, Head of Design 2026-10-13): twine fails WCAG 1.4.11 at 1.3–1.6:1; this is 4.06:1 on white. |
 | line | #E8DCC8 | hairlines |
 | cream | #F3EADB | alt surface, tracks |
 | paper | #FBF6EE | page background |
@@ -65,8 +66,8 @@ Folded-card mark (rounded square, top-right corner folded, marigold flap) + lowe
 ## Components (src/components)
 - **Logo / LogoMark** — `size`, `theme: light|plum|persimmon`, `mark`.
 - **Button** — `variant: primary|secondary|ghost|dark|sunny`, `size: sm(36)|md(48)|lg(52)`. Pill, Figtree 700. Disabled = cream bg, cocoa-40 text.
-- **TextField** — label 13/600 above; 48px input (textarea via `multiline`), radius 14, 1.5px twine border, paper fill; focus = persimmon-ink border + tint ring + white fill; `error` swaps hint to persimmon-ink.
-- **Chip / ChipGroup** — 36px pill, white + twine border; selected = cocoa fill, paper text. Single select.
+- **TextField** — label 13/600 above; 48px input (textarea via `multiline`), radius 14, 1.5px control-border border, paper fill; focus = persimmon-ink border + tint ring + white fill; `error` swaps hint to persimmon-ink.
+- **Chip / ChipGroup** — 36px pill, white + control-border border; selected = cocoa fill, paper text. Single select.
 - **Toggle** — 48×28 track, 22px thumb, on = persimmon-ink. role=switch.
 - **Segmented** — cream track, selected item white with small shadow.
 - **Badge** — `tone: new(marigold) | draft(blush/plum) | sent(cocoa) | promo`.

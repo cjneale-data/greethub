@@ -120,6 +120,32 @@ const splitList = (v?: string) =>
     .filter(Boolean)
     .slice(0, 20);
 
+/** What goes inside the card: the message, then the sign-off on its own line unless the message already ends with it. */
+export function insideText(d: CardDraft): string {
+  const msg = (d.message ?? "").trim();
+  const sign = (d.signoff ?? "").trim();
+  if (!msg || !sign) return msg;
+  if (msg.replace(/[.!,\s]+$/, "").toLowerCase().endsWith(sign.toLowerCase())) return msg;
+  return `${msg}\n\n${sign}`;
+}
+
+/**
+ * Merge a guide reply into the live draft. `sent` is the draft the request carried, `cur` is the draft now (form edits may
+ * have happened while the guide was thinking). Only fields the server actually changed overwrite `cur`.
+ */
+export function mergeServerDraft(sent: CardDraft, cur: CardDraft, server: CardDraft): CardDraft {
+  const next: CardDraft = { ...cur, sources: { ...(cur.sources ?? {}) } };
+  const keys = new Set([...Object.keys(sent), ...Object.keys(server)].filter((k) => k !== "sources")) as Set<keyof CardDraft>;
+  for (const k of keys) {
+    if (JSON.stringify(server[k]) === JSON.stringify(sent[k])) continue;
+    if (server[k] === undefined) delete next[k];
+    else (next as Record<string, unknown>)[k] = server[k];
+    const src = server.sources?.[k as FieldKey];
+    if (src) next.sources![k as FieldKey] = src;
+  }
+  return next;
+}
+
 /** Preview-time brief: delivery defaults to an e-card. Mailed delivery and ship-to are collected at checkout. */
 export function toCardBrief(d: CardDraft): { ok: true; brief: CardBrief } | { ok: false; missing: MissingItem[] } {
   const missing = missingRequired(d);
@@ -132,7 +158,7 @@ export function toCardBrief(d: CardDraft): { ok: true; brief: CardBrief } | { ok
     tone: d.tone,
     artStyle: d.artStyle,
     storyIdea: d.idea,
-    messageWording: d.message,
+    messageWording: insideText(d),
     insideJokes: d.insideJokes || undefined,
     include: splitList(d.include),
     avoid: splitList(d.avoid),

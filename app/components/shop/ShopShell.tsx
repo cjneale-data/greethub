@@ -40,7 +40,8 @@ export function Footer() {
           <a href="mailto:hello@greethub.example">Contact</a>
         </div>
       </div>
-      <p className="gs-footer__legal"><DmcaAgentBlock compact /></p>
+      {/* div, not p: <address> inside <p> is invalid HTML and caused a hydration error on every shop page */}
+      <div className="gs-footer__legal"><DmcaAgentBlock compact /></div>
       <p className="gs-footer__legal">
         {/* TODO(owner): company legal name and postal address (docs/legal 06, req. 50). */}
         GreetHub, [company legal name], [postal address]. Art is AI-illustrated. For adults 18 and over.
@@ -56,7 +57,9 @@ export function ShopShell({ children }: { children: ReactNode }) {
       <Suspense fallback={<div className="gs-nav" style={{ minHeight: 65 }} />}>
         <ShopNav />
       </Suspense>
-      <main className="gs-main">{children}</main>
+      <main id="main" tabIndex={-1} className="gs-main">
+        {children}
+      </main>
       <Footer />
       <Suspense>
         <MobileTabs />

@@ -84,4 +84,36 @@ describe("equity", () => {
     const l = empty(); l.time.push(t("1", "zzz", 1, "a"), t("2", "a", -1, "b"));
     expect(computeSplit(l).warnings.length).toBe(2);
   });
+  it("only the unpaid part of time earns slices, and repaid cash earns none", () => {
+    const l = empty();
+    l.time.push({ ...t("1", "a", 10, "b"), paidAmount: 125 }); // 10h x $50 = $500, $125 paid -> 375 x 2
+    l.time.push({ ...t("2", "b", 1, "a"), paidAmount: 500 }); // paid more than value -> 0, never negative
+    l.cash.push({ id: "c1", personId: "c", date: "2026-01-02", amount: 1000, reimbursed: 400, kind: "expense", status: "approved", approvedBy: "a" });
+    const s = computeSplit(l);
+    expect(s.people[0].timeSlices).toBe(750);
+    expect(s.people[1].timeSlices).toBe(0);
+    expect(s.people[2].cashSlices).toBe(2400);
+    expect(s.people[2].cashDollars).toBe(600);
+  });
+  it("NaN or non-finite values are rejected, not summed", () => {
+    const l = empty(); l.time.push(t("1", "a", Number.NaN, "b"));
+    l.cash.push({ id: "c1", personId: "c", date: "2026-01-02", amount: Number.POSITIVE_INFINITY, kind: "cash", status: "approved", approvedBy: "a" });
+    const s = computeSplit(l);
+    expect(s.totalSlices).toBe(0);
+    expect(s.warnings.length).toBe(2);
+  });
+  it("duplicate entry ids are flagged", () => {
+    const l = empty(); l.time.push(t("1", "a", 1, "b"), t("1", "a", 1, "b"));
+    expect(computeSplit(l).warnings).toContain("time 1: duplicate id");
+  });
+  it("idea award is dated at unlock, not at proposal", () => {
+    const l = empty();
+    l.time.push(t("1", "b", 10, "a", "2026-01-01"));
+    l.ideas.push({ id: "i", authorId: "a", title: "x", description: "x", date: "2026-01-01", unlockedDate: "2026-03-01",
+      status: "shipped", scores: { impact: 5, originality: 5, evidence: 5 }, reviewedBy: "b" });
+    const h = computeHistory(l);
+    expect(h.map((p) => p.date)).toEqual(["2026-01-01", "2026-03-01"]);
+    expect(h[0].percents.a).toBe(0);
+    expect(h[1].percents.a).toBeGreaterThan(0);
+  });
 });

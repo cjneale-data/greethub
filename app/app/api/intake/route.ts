@@ -7,7 +7,9 @@ import { liveGuideTurn, polish } from "@/lib/intake/live-guide";
 import { mockGuideTurn } from "@/lib/intake/mock-guide";
 import { quickRepliesFor } from "@/lib/intake/quick-replies";
 import { QUESTIONS } from "@/lib/intake/fields";
+import { addSpend, spendToday } from "@/lib/intake/preview";
 import { allow } from "@/lib/intake/rate-limit";
+import { dailySpendCapUsd } from "@/lib/intake/config";
 import { screenField, screenFields } from "@/lib/safety/server";
 
 const Body = z.object({
@@ -65,10 +67,13 @@ export async function POST(req: NextRequest) {
   let reply = "";
   let patch: Partial<CardDraft> = {};
   let usedFallback = false;
-  if (!isMockAi()) {
+  // Over the shared daily cap the free rule-based guide answers instead (it still fills the brief).
+  const live = !isMockAi() && spendToday() < dailySpendCapUsd();
+  if (live) {
     try {
       const out = await liveGuideTurn(messages.map((m, i) => (i === messages.length - 1 && (override || screened.verdict === "rewritten") ? { ...m, content: text } : m)), draft);
       patch = out.patch;
+      addSpend(out.costUsd);
       // The server owns which question comes next: keep the model's acknowledgement, replace its question.
       const after = nextField(applyPatch(draft, patch, "chat"));
       const ack = polish(out.reply).split(/(?<=[.?])\s+/).filter((x) => x && !x.includes("?")).slice(0, 1).join(" ");
@@ -77,7 +82,7 @@ export async function POST(req: NextRequest) {
       usedFallback = true;
     }
   }
-  if (isMockAi() || usedFallback) {
+  if (!live || usedFallback) {
     const t = await mockGuideTurn(text, draft);
     reply = t.reply;
     patch = t.patch;

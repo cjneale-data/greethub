@@ -1,6 +1,7 @@
 import { ART_STYLES, STYLE_IDS, PRICING, computeTotals, toolError, type CartItem, type ToolError, type ToolInput, type ToolName } from "@greethub/shared";
 import type { Principal } from "./auth";
 import type { AgentDeps } from "./deps";
+import { agentConfig } from "./config";
 import type { PolicyFacts } from "./policy";
 import { fastScreen } from "../safety/fastpass";
 
@@ -51,7 +52,10 @@ export const handlers: { [N in ToolName]: Handler<N> } = {
 
   async get_account_limits(ctx) {
     const { grant } = ctx.principal;
-    const u = await ctx.deps.usage.snapshot(grant.grantId, ctx.deps.now());
+    const now = ctx.deps.now();
+    const u = await ctx.deps.usage.snapshot(grant.grantId, now);
+    const ks = await ctx.deps.killSwitches.read(ctx.principal.userId);
+    const cooled = !!grant.autonomyEnabledAt && now.getTime() - new Date(grant.autonomyEnabledAt).getTime() >= agentConfig().autonomyCoolingOffHours * 3600_000;
     return {
       ok: true,
       data: {
@@ -63,8 +67,9 @@ export const handlers: { [N in ToolName]: Handler<N> } = {
         cardsThisMonth: u.cardsThisMonth,
         maxCardsPerMonth: grant.limits.maxCardsPerMonth,
         draftsLeftToday: Math.max(0, grant.limits.maxDraftsPerDay - u.draftsToday),
-        paused: false,
-        autonomyEnabled: grant.mode === "autonomous" && !!grant.autonomyEnabledAt,
+        paused: ks.userPaused,
+        // Matches policy.ts: autonomy only counts once the cooling-off period has passed.
+        autonomyEnabled: grant.mode === "autonomous" && cooled,
       },
     };
   },

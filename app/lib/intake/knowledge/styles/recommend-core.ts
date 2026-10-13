@@ -107,7 +107,7 @@ export function scoreStyle(s: Scorable, b: StyleBrief): { score: number; reasons
     if (b.needsConsistency !== false) {
       const d = (s.consistency.bookRating - 3) * 0.9;
       score += d;
-      if (s.consistency.bookRating >= 4) reasons.push("keeps characters recognisable page to page");
+      if (s.consistency.bookRating >= 4) reasons.push("keeps characters recognizable page to page");
     }
   } else score += (s.consistency.cardRating - 3) * 0.2;
   const pop = typeof s.popularity === "string" ? s.popularity : s.popularity.rating;

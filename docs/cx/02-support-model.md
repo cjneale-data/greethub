@@ -60,7 +60,7 @@ Refund timing promised to customers: refund issued within 7 business days of app
 
 **Refund and reprint authority (agent can do without approval):**
 - Reprint or refund per policy up to $60 per order.
-- Goodwill: up to one free redraw allowance top-up (5) or a 20 percent discount code, or one free reprint when the cause is ours.
+- Goodwill: a 20 percent discount code, or one free reprint when the cause is ours. (A redraw top-up was listed here, but books have a fixed 3 page redraws plus 2 sheet redos and no tool can add more; support note 2026-10-12, docs/support/macros.md.)
 - Above $60, a repeat claimant (third remedy in 12 months), or any claim involving suspected fraud: owner approves.
 
 ## 6. Escalation rules
@@ -123,6 +123,8 @@ Other small costs for the CFO:
 Voice: warm, plain, first names, no jargon, no more than one exclamation mark per message. Variables in {braces}. Every reply states the fix or the next step in the first two lines. Replace {sign} with the agent's first name. Where a remedy is offered, the macro says "your choice" and gives both options.
 
 Standard opener: "Hi {first_name}," Standard closer: "{sign}, GreetHub".
+
+**Support note 2026-10-12:** macros 2, 3, 4, 5, 13, 16 and 17 promise actions nobody can do yet (redraw top-ups, pausing an order, sending a delete link). Use the corrected versions and the holiday replies in `docs/support/macros.md` until the admin actions in section 11 exist.
 
 ### 1. Render stuck or failed
 

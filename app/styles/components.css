@@ -4,24 +4,24 @@
 .gh-btn--sm{height:36px;padding:0 16px;font-size:14px}.gh-btn--md{height:48px;padding:0 24px;font-size:16px}.gh-btn--lg{height:52px;padding:0 26px;font-size:16px}
 .gh-btn--primary{background:var(--gh-persimmon-ink);color:#fff;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18)}.gh-btn--primary:hover{background:var(--gh-persimmon-deep)}
 .gh-btn--secondary{background:transparent;color:var(--gh-cocoa);box-shadow:inset 0 0 0 1.5px var(--gh-cocoa)}.gh-btn--secondary:hover{background:var(--gh-cream)}
-.gh-btn--ghost{background:transparent;color:var(--gh-persimmon-ink)}.gh-btn--ghost:hover{background:var(--gh-persimmon-tint)}
+.gh-btn--ghost{background:transparent;color:var(--gh-persimmon-deep)}.gh-btn--ghost:hover{background:var(--gh-persimmon-tint)}
 .gh-btn--dark{background:var(--gh-cocoa);color:var(--gh-paper)}.gh-btn--dark:hover{background:#000}
 .gh-btn--sunny{background:var(--gh-marigold);color:var(--gh-cocoa)}.gh-btn--sunny:hover{background:#E9A925}
 .gh-btn:disabled{background:var(--gh-cream);color:var(--gh-cocoa-40);box-shadow:none;cursor:not-allowed}
 .gh-field{display:flex;flex-direction:column;gap:6px}
 .gh-field__label{font-size:13px;font-weight:600}
-.gh-field__hint{font-size:13px;color:var(--gh-cocoa-70)}.gh-field__hint--error{color:var(--gh-persimmon-ink)}
-.gh-input{font-family:var(--gh-font-body);font-size:16px;color:var(--gh-cocoa);background:var(--gh-paper);border:1.5px solid var(--gh-twine);border-radius:var(--gh-r-md);outline:none;transition:border-color .15s,box-shadow .15s,background .15s}
+.gh-field__hint{font-size:13px;color:var(--gh-cocoa-70)}.gh-field__hint--error{color:var(--gh-persimmon-deep)}
+.gh-input{font-family:var(--gh-font-body);font-size:16px;color:var(--gh-cocoa);background:var(--gh-paper);border:1.5px solid var(--gh-control-border);border-radius:var(--gh-r-md);outline:none;transition:border-color .15s,box-shadow .15s,background .15s}
 input.gh-input{height:48px;padding:0 16px}textarea.gh-input{padding:12px 16px;line-height:1.5;resize:vertical}
-.gh-input::placeholder{color:var(--gh-cocoa-40)}
+.gh-input::placeholder{color:var(--gh-cocoa-70)}
 .gh-input:focus{border-color:var(--gh-persimmon-ink);box-shadow:var(--gh-focus-ring);background:#fff}
 .gh-input[aria-invalid=true]{border-color:var(--gh-persimmon-ink)}
-.gh-chip{white-space:nowrap;flex:none;font-family:var(--gh-font-body);font-weight:600;font-size:14px;height:36px;padding:0 14px;border-radius:var(--gh-r-pill);border:1.5px solid var(--gh-twine);background:#fff;color:var(--gh-cocoa);cursor:pointer}
-.gh-chip[aria-pressed=true]{background:var(--gh-cocoa);border-color:var(--gh-cocoa);color:var(--gh-paper)}
+.gh-chip{white-space:nowrap;flex:none;font-family:var(--gh-font-body);font-weight:600;font-size:14px;height:36px;padding:0 14px;border-radius:var(--gh-r-pill);border:1.5px solid var(--gh-control-border);background:#fff;color:var(--gh-cocoa);cursor:pointer}
+.gh-chip[aria-pressed=true],.gh-chip[aria-current=page]{background:var(--gh-cocoa);border-color:var(--gh-cocoa);color:var(--gh-paper)}
 .gh-badge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:var(--gh-r-pill);display:inline-block}
 .gh-badge--new{background:var(--gh-marigold);color:var(--gh-cocoa)}.gh-badge--draft{background:var(--gh-blush);color:var(--gh-plum)}.gh-badge--sent{background:var(--gh-cocoa);color:var(--gh-paper)}.gh-badge--promo{background:var(--gh-blush);color:var(--gh-plum);font-size:13px;padding:6px 12px}
 .gh-toggle{display:inline-flex;align-items:center;gap:10px;background:none;border:none;padding:0;cursor:pointer;font:inherit;font-size:15px;color:var(--gh-cocoa)}
-.gh-toggle__track{width:48px;height:28px;border-radius:999px;background:var(--gh-twine);padding:3px;display:flex;transition:background .2s var(--gh-ease)}
+.gh-toggle__track{width:48px;height:28px;border-radius:999px;background:var(--gh-control-border);padding:3px;display:flex;transition:background .2s var(--gh-ease)}
 .gh-toggle__thumb{width:22px;height:22px;border-radius:999px;background:#fff;box-shadow:0 1px 3px rgba(43,30,24,.3);transition:transform .2s var(--gh-ease)}
 .gh-toggle[aria-checked=true] .gh-toggle__track{background:var(--gh-persimmon-ink)}.gh-toggle[aria-checked=true] .gh-toggle__thumb{transform:translateX(20px)}
 .gh-seg{display:inline-flex;background:var(--gh-cream);border-radius:999px;padding:4px;gap:4px}

@@ -2,7 +2,9 @@
 
 This is research to brief a business owner and to hand to a licensed attorney. It is not legal advice. Sources are cited with URLs in files 01 to 04; all pages were read on 2026-10-10. Tags: [V] verified on the primary page, [S] secondary source, [U] unverified or my estimate. Where I could not verify something, the files say so.
 
-Files: 01 IP and AI output · 02 children's photos and privacy · 03 e-commerce, tax, consumer · 04 business setup and costs · 05 draft policies · 06 product requirements.
+Files: 01 IP and AI output · 02 children's photos and privacy · 03 e-commerce, tax, consumer · 04 business setup and costs · 05 draft policies · 06 product requirements · 07 IP safety design · **`attorney-brief-2026-10.md`: the single, deduplicated list of every open attorney question in the repo (44 questions, 33 before launch). Take that file to the attorney, not the scattered lists.**
+
+**Status 2026-10-13:** The build has not taken a live payment and has no production database. The Eye Story is withdrawn as a sample (standing rule 5: no real people in samples), so owner question 7 and the Eye Story items below are closed. The live policy pages are stubs. Section 1 of the brief lists published or drafted statements the product does not honor yet.
 
 ## Top risks, ranked
 
@@ -87,7 +89,7 @@ Insurance first year about $2,500 to $8,000. Full lines for the CFO are in 04 s7
 4. Is the product US-only for at least a year?
 5. Are gift cards, subscriptions or SMS planned in year one?
 6. Will photos of customers' children ever be used in ads or samples (requires separate releases)?
-7. Who are the Eye Story family and will they sign releases?
+7. ~~Who are the Eye Story family and will they sign releases?~~ Closed 2026-10-13: the sample book is fictional (rule 5).
 8. What is the legal budget and insurance budget you will commit?
 9. Do you want arbitration and a class-action waiver in the Terms?
 10. Do you want to contract with Anthropic and/or Google Cloud directly to obtain an IP indemnity?

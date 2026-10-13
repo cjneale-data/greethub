@@ -251,7 +251,7 @@ export function BookCreator() {
         <div className="gb-stack" style={{ gap: "var(--gh-s-2)" }}>
           {renderingScreen ? <span className="gb-steplabel">{stepLabel(step)}</span> : <Progress value={((idx + 1) / STEPS.length) * 100} label={stepLabel(step)} />}
         </div>
-        <nav className="gb-stepnav" aria-label="Steps">
+        <nav className="gb-stepnav" aria-label="Steps" tabIndex={0}>
           {STEPS.map((s) => {
             const open = s === "brief" || canEnter(s, stepperInput);
             return (

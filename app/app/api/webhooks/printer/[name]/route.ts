@@ -33,6 +33,13 @@ export async function POST(req: Request, { params }: { params: Promise<{ name: s
   } else if (name === "prodigi" && body.data) {
     externalId = body.data.order?.id ?? body.data.id;
     state = body.data.order?.status?.stage ?? body.data.status?.stage ?? body.type;
+    // Prodigi keeps the stage at InProgress until the whole order is Complete; a shipment with tracking means it shipped
+    // (same rule as the polling adapter in lib/adapters/real/prodigi.ts).
+    const ship = (body.data.order?.shipments as { carrier?: { name?: string }; tracking?: { number?: string; url?: string } }[] | undefined)?.find((s) => s.tracking?.number || s.tracking?.url);
+    if (ship) {
+      state = "shipped";
+      tracking = { trackingUrl: ship.tracking?.url, trackingNumber: ship.tracking?.number, carrier: ship.carrier?.name };
+    }
   } else {
     externalId = body.externalId;
     state = body.state;

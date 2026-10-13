@@ -58,7 +58,7 @@ export async function authorize(principal: Principal, tool: ToolName, args: Reco
   // 4. Spend: model money. The service must call deps.ledger.reserve() with this amount before the model call (atomic); here we only
   // refuse early when the pool is clearly exhausted so the caller gets spend_cap_reached instead of a late failure.
   if (meta.spendsModelMoney) {
-    const probe = `probe:${grant.grantId}:${now.getTime()}`;
+    const probe = `probe:${grant.grantId}:${crypto.randomUUID()}`; // unique, so parallel calls never release each other's probe
     const r = await deps.ledger.reserve("agent", facts.estimatedModelUsd ?? 0.25, probe);
     await deps.ledger.release(probe);
     if (!r.ok) return deny("model_budget", toolError("spend_cap_reached", "GreetHub can't start new drafts right now. Please try again later.", { retryable: true }));

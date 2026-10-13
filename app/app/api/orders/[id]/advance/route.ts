@@ -10,9 +10,9 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
   const user = await signedIn();
   if (!user) return json(NOT_SIGNED_IN, 401);
   const { id } = await params;
-  const order = getOrder(user.userId, id);
+  const order = await getOrder(user.userId, id);
   if (!order) return json({ error: "We couldn't find that order." }, 404);
-  for (const i of order.items) if (i.fulfillment) advanceFakeJob(i.fulfillment.externalId);
+  for (const i of order.items) if (i.fulfillment) await advanceFakeJob(i.fulfillment.externalId);
   await refreshOrder(id);
-  return json({ order: getOrder(user.userId, id) });
+  return json({ order: await getOrder(user.userId, id) });
 }

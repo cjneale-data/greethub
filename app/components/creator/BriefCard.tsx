@@ -70,7 +70,7 @@ export function BriefCard({
               {v ? (f === "message" || f === "idea" ? v : v) : "—"}
               {note && v ? <span className="gc-hint" style={{ display: "block", textAlign: "left" }}>{note}</span> : null}
             </span>
-            <Button variant="ghost" size="sm" className="gc-brief__editbtn" aria-expanded={isOpen} aria-label={`${isOpen ? "Done editing" : "Edit"} ${FIELD_LABELS[f].toLowerCase()}`} onClick={() => setOpen(isOpen ? null : f)}>
+            <Button variant="ghost" size="sm" className="gc-brief__editbtn" aria-expanded={isOpen} aria-label={`${isOpen ? "Done" : v ? "Edit" : "Add"} ${FIELD_LABELS[f].toLowerCase()}`} onClick={() => setOpen(isOpen ? null : f)}>
               {isOpen ? "Done" : v ? "Edit" : "Add"}
             </Button>
             {isOpen && (

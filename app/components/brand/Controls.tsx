@@ -52,7 +52,7 @@ export function Progress({ value, label }: { value: number; label?: string }) {
         <span style={{ fontWeight: 600 }}>{label}</span>
         <span style={{ color: "var(--gh-cocoa-70)" }}>{Math.round(value)}%</span>
       </div>
-      <div className="gh-progress__track" role="progressbar" aria-valuenow={value} aria-valuemin={0} aria-valuemax={100}>
+      <div className="gh-progress__track" role="progressbar" aria-label={label || "Progress"} aria-valuenow={Math.round(value)} aria-valuemin={0} aria-valuemax={100}>
         <div className="gh-progress__bar" style={{ width: value + "%" }} />
       </div>
     </div>

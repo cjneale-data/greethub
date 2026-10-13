@@ -200,7 +200,7 @@ ev("support_ticket_resolved", "support", {
 });
 ev("content_report_submitted", "support", {
   stage: "post", src: "server", cls: "C1", tier: "T0", owner: "CX", ret: 365, phase: "launch",
-  trigger: "'Report content / remove a photo of me or my child' form submitted (legal 06 req 22).", props: ["report_type|enum(photo_removal,copyright,harmful_content,other)|R|", "is_about_minor|bool|O|", "source_page|enum(footer,proof,account,email)|R|"], kpis: ["P5_moderation_rate", "P1_deletion_sla"],
+  trigger: "'Report content / remove a photo of me or my child' form submitted (legal 06 req 22).", props: ["report_type|enum(copyright,likeness,inappropriate,other)|R|Matches app/lib/safety/reports.ts kind", "is_about_minor|bool|O|", "source_page|enum(footer,proof,account,email)|R|"], kpis: ["P5_moderation_rate", "P1_deletion_sla"],
   attorney: "Takedown/removal SLA (48 h target) and evidence handling."
 });
 
@@ -252,6 +252,16 @@ ev("ip_output_flagged", "safety", {
 ev("ip_output_rerolled", "safety", {
   stage: "qa", src: "worker", cls: "C0", tier: "T0", owner: "CTO", ret: 365, phase: "launch",
   trigger: "A flagged page was automatically re-rolled once with a hardened prompt.", props: ["page_id|string|R|", "flags|string[]|R|Same closed list as ip_output_flagged", "passed_after_reroll|bool|R|", "cost_usd|decimal|O|Extra spend of the re-roll and its check"], kpis: ["P5_moderation_rate", "Q2_auto_reroll_rate"]
+});
+
+/* ---------------- AGENT API (app/lib/agent, MCP and REST) ---------------- */
+ev("agent_grant_changed", "agent", {
+  stage: "account", src: "server", cls: "C1", tier: "T0", owner: "CTO", ret: D, phase: "launch",
+  trigger: "A user connects, pauses, resumes or revokes an AI assistant's delegated access (OAuth grant).", props: ["client_kind|enum(chatgpt,claude,gemini,other)|R|Mapped from the OAuth client id, never the raw id", "action|enum(connected,paused,resumed,revoked,expired)|R|", "scopes|string[]|O|Granted scopes, e.g. cards:read"], kpis: ["A4_agent_orders"]
+});
+ev("agent_tool_called", "agent", {
+  stage: "post", src: "server", cls: "C1", tier: "T0", owner: "CTO", ret: D, phase: "launch",
+  trigger: "Once per agent tool call after the policy decision (same point as the agent AuditLog row). Never the arguments; the audit log keeps only their digest.", props: ["tool|enum(search_styles,list_people,add_person,get_quote,get_account_limits,create_card_draft,revise_card_draft,preview_card,list_orders,track_order,request_approval,cancel_order,approve_and_pay,propose_standing_rule,list_standing_rules,pause_standing_rule)|R|", "client_kind|enum(chatgpt,claude,gemini,other)|R|", "decision|enum(allow,deny,require_approval)|R|", "reason_codes|string[]|O|Policy reason codes only", "spend_reserved_usd|decimal|O|Model spend reserved for this call"], kpis: ["A4_agent_orders", "U7_spend_vs_cap"]
 });
 
 /* ---------------- EXPERIMENTS ---------------- */

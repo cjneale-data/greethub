@@ -43,7 +43,7 @@ Kit components used: SiteNav, TabBar, Button (primary / secondary / ghost / dark
 | Photos of people | Locked | "Photos of people stay private, so we need an account. Make a free account to add photos." |
 | Save draft | Locked | "Want to come back to this? Make a free account and we'll keep it." |
 | Saved People | Locked | "Save Grandma once and she looks the same in every card. Make a free account to save people." |
-| Re-roll | Locked | "Not quite right? Accounts get re-rolls every month. Make a free account." |
+| Re-roll | Locked | "Not quite right? Make a free account to redraw it." |
 | Full-size proof | Locked (watermark stays) | "Make a free account to see the full-size proof." |
 | Cart, checkout, order tracking | Locked | "Make a free account to check out and track your order." |
 
@@ -59,7 +59,7 @@ Upgrade prompt pattern: Modal with primary Button "Make a free account" and ghos
 +------------------------------------------------------------------+
 | [logo]  Cards  Picture books  Occasions  Pricing   Sign in [Start]|  SiteNav
 +------------------------------------------------------------------+
-| (promo Badge) Mother's Day ships free until May 4                |
+| (promo Badge) Order by {date} for Christmas (dated)             |
 |                                                                  |
 |  Cards that sound like  [you.]<-P         ,-------.  ,-------.   |
 |  Describe it, we draw it, we mail it.    /  -6deg  \/  +5deg  \  |
@@ -71,7 +71,7 @@ Upgrade prompt pattern: Modal with primary Button "Make a free account" and ghos
 +------------------------------------------------------------------+
 | How it works: 1 Tell us  2 Approve the look  3 We print and mail |
 +------------------------------------------------------------------+
-| Sample book: The Eye Story (flip viewer teaser)  [See inside]    |
+| Sample book: fictional family (flip teaser)      [See inside]    |
 +------------------------------------------------------------------+
 | Pricing strip | FAQ top 4 | footer (Terms, Privacy, Contact)     |
 +------------------------------------------------------------------+
@@ -138,8 +138,8 @@ ChipGroup tone:     Any | Funny | Heartfelt | Adventurous
 +-----------------------------+-----------------------------------+
 | Segmented [Chat | Form]      | Brief card (live, editable)       |
 | (guide) Who's the card for? |  Product    Card                  |
-| [Mum][Partner][Friend] ...  |  Occasion   Birthday     [edit]   |
-| (you)   My mum, Rosa        |  For        Rosa (Mum)            |
+| [Mom][Partner][Friend] ...  |  Occasion   Birthday     [edit]   |
+| (you)   My mom, Rosa        |  For        Rosa (Mom)            |
 |                             |  Tone       Heartfelt             |
 | TextField "Say anything..." |  Style      Watercolor            |
 | [ + photo ]   [ Send ]      |  Message    (empty)               |
@@ -176,7 +176,7 @@ SiteNav
 ```
 
 - Components: Segmented (Front | Inside; Mailed | Digital), Toggle, TextField, Button primary, Button ghost, Badge draft, Toast.
-- Re-roll text: "Re-roll (2 left this month)". At zero: "No re-rolls left this month. They come back on {date}."
+- Re-roll text: card redraw count is not set yet (CFO, card engineer M3b). Books: "Redraw (2 of 3 left)". At zero: "No redraws left on this book."
 - Text-only edits re-flow the layout without a new render; Toast "Updated."
 - Errors: message too long for the card: "That message is a little long for the card. Trim it, or we can shrink the type." with two ChipGroup choices.
 - Low QA confidence: Badge draft "Check the edges" and a hint line.
@@ -284,7 +284,7 @@ H2  Your cart (2)
 |   mini          | To: Rosa, Leeds                |
 |                 | [edit] [remove]         $X.XX  |
 +-------------------------------------------------+
-| TemplateCard(0) | The Eye Story, 24 pages        |
+| TemplateCard(0) | Moon Came Down, 24 pages       |
 |                 | Ship to: you             $X.XX |
 +-------------------------------------------------+
 TextField Promo code  [Apply]
@@ -307,14 +307,14 @@ H2 Where is it going?
  per mailed item:
   Segmented [To me][To someone else]
   Saved addresses ChipGroup (Home | Rosa | + New)
-  TextFields: Name, Line 1, Line 2, City, Region, Postcode, Country
+  TextFields: Name, Line 1, Line 2, City, State, ZIP code, Country
   Delivery Segmented [As soon as possible][By a date] + date picker
   Toggle "Save this address"
 [ Continue to payment ] [P]
 ```
 - Step 2 is Stripe. Success returns to /orders/{id}. Cancel returns to the cart with Toast "No charge. Your cart is waiting."
 - Components: Progress, Segmented, ChipGroup, TextField, Toggle, Button primary.
-- Validation: required fields, postcode/country format, PO box: "Couriers can't deliver to PO boxes. Use a street address." A date earlier than possible: Toast "Earliest we can do is {date}." with a chip to accept it.
+- Validation: required fields, ZIP code format, PO box: "We can't ship to PO boxes. Use a street address." A date earlier than possible: Toast "Earliest we can do is {date}." with a chip to accept it.
 - Digital-only carts skip step 1, confirm the email, and go to Stripe.
 - Empty: redirect to Cart. Loading: skeleton summary. Error: Toast "We couldn't open payment. Nothing was charged." with Retry.
 - Guest: locked (table).

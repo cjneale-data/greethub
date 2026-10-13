@@ -25,7 +25,7 @@ Rating: **niche**. Felt craft appears as a competitor style (R12); thread and ta
 - **Technique:** Layered felt pieces sewn on with visible thread, soft fuzzy edges and small shadows
 - **Line:** Sewn thread edges and thread outlines in a contrasting color
 - **Palette:** Warm brights: red, mustard, sage, cream linen, denim blue
-- **Composition:** Centered scene on linen, patch-like shapes, a sewn border
+- **Composition:** Centered scene on linen, patch-like shapes, hand-sewn outlines on each shape
 - **Mood:** Sweet, snug, handmade
 - **Era:** Timeless craft
 
@@ -34,7 +34,7 @@ Rating: **niche**. Felt craft appears as a competitor style (R12); thread and ta
 Passed verbatim to the image model. The pipeline appends the page rules and the IP-safety hardening lines separately.
 
 ```text
-Handmade felt appliqué and embroidery illustration on natural linen, layered cut felt shapes with soft fuzzy edges and tiny shadows, visible sewn thread borders in contrasting color, warm palette of red, mustard, sage and denim blue, simple rounded characters with button eyes and sewn smiles, flat tabletop view - not photorealistic, no 3D render, not a photograph of real felt.
+Handmade felt appliqué and embroidery illustration on natural linen, layered cut felt shapes with soft fuzzy edges and tiny shadows, visible hand-sewn outlines in contrasting thread on each shape, warm palette of red, mustard, sage and denim blue, simple rounded characters with button eyes and sewn smiles, flat tabletop view - not photorealistic, no 3D render, not a photograph of real felt.
 ```
 
 **Avoid list (negative prompt):**

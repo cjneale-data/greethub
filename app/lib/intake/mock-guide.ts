@@ -11,7 +11,7 @@ import { quickRepliesFor } from "./quick-replies";
 /** Deterministic Greet Guide used in mock mode and as the fallback when a live call fails. No network. */
 
 const REL_WORDS: [RegExp, string][] = [
-  [/\b(mum|mom|mother|mummy|mommy|mama)\b/i, "Mum"],
+  [/\b(mum|mom|mother|mummy|mommy|mama)\b/i, "Mom"],
   [/\b(dad|father|daddy|papa)\b/i, "Dad"],
   [/\b(wife|husband|partner|girlfriend|boyfriend|fianc[eé]e?|spouse)\b/i, "Partner"],
   [/\b(son|daughter|child|kid|baby)\b/i, "Child"],

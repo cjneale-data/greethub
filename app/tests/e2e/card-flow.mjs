@@ -3,9 +3,12 @@
 import { mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { chromium } from "playwright";
+import { BASE_URL, outDir, warmup } from "./_lib.mjs";
 
-const base = process.env.BASE_URL ?? "http://localhost:3101";
-const shots = process.argv[2] ?? "e2e-shots";
+const base = BASE_URL;
+// first compile of /create/card full-reloads the page in next dev, which made the first run fail
+await warmup(["/create/card", "/api/card/preview"]);
+const shots = process.argv[2] ?? outDir("card");
 mkdirSync(shots, { recursive: true });
 const browser = await chromium.launch();
 const log = (m) => console.log(m);
@@ -39,11 +42,11 @@ async function run(name, viewport) {
   await page.getByText("What should the picture show?").first().waitFor();
   await page.screenshot({ path: join(shots, `${name}-2-chat.png`), fullPage: true });
 
-  // copyright guardrail
-  await say("Meeko the raccoon in her garden");
-  await page.getByText("I can't draw Meeko").first().waitFor();
+  // IP guardrail: the protected character is rewritten into an original one and the chat carries on (docs/legal/07)
+  await say("A Mickey Mouse party in her garden");
+  await page.getByText("Kept the idea").first().waitFor();
+  must(!(await page.locator(".gc-brief").first().innerText()).toLowerCase().includes("mickey"), `${name}: protected name kept out of the brief`);
   await page.screenshot({ path: join(shots, `${name}-3-guardrail.png`), fullPage: true });
-  await page.getByRole("button", { name: "Yes, do that" }).click();
   await page.getByText("What do you want to say inside?").first().waitFor();
   await page.getByRole("button", { name: "Write it for me" }).first().click();
   await page.getByText("Here's a draft").first().waitFor();
@@ -66,7 +69,7 @@ async function run(name, viewport) {
   await page.screenshot({ path: join(shots, `${name}-7-preview-inside.png`), fullPage: true });
 
   await page.getByRole("button", { name: "Re-roll" }).click();
-  await page.getByText("Accounts get re-rolls every month").waitFor();
+  await page.getByText("Make a free account to redraw it").waitFor();
   await page.screenshot({ path: join(shots, `${name}-8-upgrade.png`), fullPage: true });
   await page.getByRole("button", { name: "Not now" }).click();
 

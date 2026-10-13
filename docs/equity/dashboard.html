@@ -172,6 +172,7 @@ const DEFAULT_CONFIG = {
     },
 };
 const round2 = (n) => Math.round(n * 100) / 100;
+const finite = (n) => typeof n === "number" && Number.isFinite(n);
 /** Entry counts only if approved by a different, known person. */
 function entryCounts(e, people) {
     return e.status === "approved" && !!e.approvedBy && e.approvedBy !== e.personId && people.some((p) => p.id === e.approvedBy);
@@ -199,6 +200,15 @@ function ideaAward(idea, people, cfg = DEFAULT_CONFIG) {
 }
 function computeSplit(l, cfg = DEFAULT_CONFIG, asOf) {
     const warnings = [];
+    const seen = new Set();
+    for (const [kind, list] of [["time", l.time], ["cash", l.cash], ["resource", l.resources], ["idea", l.ideas]]) {
+        for (const e of list) {
+            const key = `${kind}:${e.id}`;
+            if (seen.has(key))
+                warnings.push(`${kind} ${e.id}: duplicate id`);
+            seen.add(key);
+        }
+    }
     const inRange = (d) => !asOf || d <= asOf;
     const byId = new Map();
     for (const p of l.people) {
@@ -214,12 +224,14 @@ function computeSplit(l, cfg = DEFAULT_CONFIG, asOf) {
         }
         if (!inRange(e.date) || !entryCounts(e, l.people))
             continue;
-        if (e.hours <= 0 || p.hourlyRate < 0) {
-            warnings.push(`time ${e.id}: invalid hours or rate`);
+        const paid = e.paidAmount ?? 0;
+        if (!finite(e.hours) || e.hours <= 0 || !finite(p.hourlyRate) || p.hourlyRate < 0 || !finite(paid) || paid < 0) {
+            warnings.push(`time ${e.id}: invalid hours, rate or pay`);
             continue;
         }
         row.hours += e.hours;
-        row.timeSlices += e.hours * p.hourlyRate * cfg.nonCashMultiplier * rule(p.id).nonCashKept;
+        const unpaid = Math.max(0, e.hours * p.hourlyRate - paid);
+        row.timeSlices += unpaid * cfg.nonCashMultiplier * rule(p.id).nonCashKept;
     }
     for (const e of l.cash) {
         const row = byId.get(e.personId);
@@ -229,14 +241,16 @@ function computeSplit(l, cfg = DEFAULT_CONFIG, asOf) {
         }
         if (!inRange(e.date) || !entryCounts(e, l.people))
             continue;
-        if (e.amount <= 0) {
+        const repaid = e.reimbursed ?? 0;
+        if (!finite(e.amount) || e.amount <= 0 || !finite(repaid) || repaid < 0) {
             warnings.push(`cash ${e.id}: invalid amount`);
             continue;
         }
-        row.cashDollars += e.amount;
+        const net = Math.max(0, e.amount - repaid);
+        row.cashDollars += net;
         const leaverRule = rule(e.personId);
         // Standard multiplier is cfg.cashMultiplier; a leaver rule can only lower it.
-        row.cashSlices += e.amount * Math.min(cfg.cashMultiplier, leaverRule.cashMultiplier);
+        row.cashSlices += net * Math.min(cfg.cashMultiplier, leaverRule.cashMultiplier);
     }
     for (const e of l.resources) {
         const row = byId.get(e.personId);
@@ -246,7 +260,7 @@ function computeSplit(l, cfg = DEFAULT_CONFIG, asOf) {
         }
         if (!inRange(e.date) || !entryCounts(e, l.people))
             continue;
-        if (e.fairValue <= 0) {
+        if (!finite(e.fairValue) || e.fairValue <= 0) {
             warnings.push(`resource ${e.id}: invalid value`);
             continue;
         }
@@ -258,7 +272,7 @@ function computeSplit(l, cfg = DEFAULT_CONFIG, asOf) {
             warnings.push(`idea ${i.id}: unknown author`);
             continue;
         }
-        if (!inRange(i.date))
+        if (!inRange(i.unlockedDate ?? i.date))
             continue;
         const award = ideaAward(i, l.people, cfg) * rule(i.authorId).nonCashKept;
         row.ideaSlices = Math.min(cfg.ideaCapPerPerson, row.ideaSlices + award);
@@ -284,7 +298,7 @@ function computeHistory(l, cfg = DEFAULT_CONFIG) {
             dates.add(e.date);
     for (const i of l.ideas)
         if (ideaAward(i, l.people, cfg) > 0)
-            dates.add(i.date);
+            dates.add(i.unlockedDate ?? i.date);
     return [...dates].sort().map((date) => {
         const s = computeSplit(l, cfg, date);
         return { date, totalSlices: s.totalSlices, percents: Object.fromEntries(s.people.map((p) => [p.personId, p.percent])) };
@@ -331,8 +345,10 @@ function computeHistory(l, cfg = DEFAULT_CONFIG) {
     const mine=st.people.find(p=>p.userId&&p.userId===myId);
     st.actor=(mine&&mine.id)||(st.people.some(p=>p.id===cur)?cur:(st.people[0]&&st.people[0].id));
     sel.value=st.actor||"";
+    // A viewer linked to a partner (people.userId) acts only as that partner; the picker is for unlinked demo use.
+    sel.disabled=!!mine;
   }
-  $("actor").addEventListener("change",e=>{st.actor=e.target.value;render()});
+  $("actor").addEventListener("change",e=>{if(e.target.disabled)return;st.actor=e.target.value;render()});
 
   function ledgers(){return {people:st.people,time:st.time,cash:st.cash,resources:st.resources,ideas:st.ideas}}
 
@@ -408,7 +424,7 @@ function computeHistory(l, cfg = DEFAULT_CONFIG) {
     const nxt=Object.assign({},e);delete nxt.id;
     nxt.status=b.dataset.act==="approve"?"approved":"rejected";nxt.approvedBy=st.actor;nxt.decidedAt=new Date().toISOString();
     await put(coll,id,nxt);
-    await put("audit",uid("a"),{at:new Date().toISOString(),actor:st.actor,action:nxt.status,target:coll+"/"+id});
+    await put("audit",uid("a"),{at:new Date().toISOString(),actor:st.actor,viewer:myId||null,action:nxt.status,target:coll+"/"+id});
   });
 
   function renderIdeas(){
@@ -430,8 +446,9 @@ function computeHistory(l, cfg = DEFAULT_CONFIG) {
     const nxt=Object.assign({},i);delete nxt.id;
     if(b.dataset.a==="score")return;
     nxt.status=b.dataset.a;
+    if(!nxt.unlockedDate)nxt.unlockedDate=new Date().toISOString().slice(0,10);
     await put("ideas",i.id,nxt);
-    await put("audit",uid("a"),{at:new Date().toISOString(),actor:st.actor,action:b.dataset.a,target:"ideas/"+i.id});
+    await put("audit",uid("a"),{at:new Date().toISOString(),actor:st.actor,viewer:myId||null,action:b.dataset.a,target:"ideas/"+i.id});
   });
   // Inline scoring panel (no dialogs in the viewer).
   const scorePanel=document.createElement("form");scorePanel.id="scoreForm";scorePanel.hidden=true;scorePanel.className="panel";
@@ -461,7 +478,7 @@ function computeHistory(l, cfg = DEFAULT_CONFIG) {
     nxt.scores={impact:+$("s-imp").value,originality:+$("s-ori").value,evidence:+$("s-evi").value};
     nxt.reviewedBy=st.actor;nxt.reviewNote=$("s-note").value;
     await put("ideas",i.id,nxt);
-    await put("audit",uid("a"),{at:new Date().toISOString(),actor:st.actor,action:"scored",target:"ideas/"+i.id});
+    await put("audit",uid("a"),{at:new Date().toISOString(),actor:st.actor,viewer:myId||null,action:"scored",target:"ideas/"+i.id});
     scorePanel.hidden=true;
   });
 

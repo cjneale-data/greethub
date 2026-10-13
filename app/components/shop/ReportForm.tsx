@@ -86,7 +86,7 @@ export function ReportForm() {
           <label style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
             <input type="checkbox" checked={goodFaith} onChange={(e) => setGoodFaith(e.target.checked)} style={{ marginTop: 4 }} />
             <span>
-              I have a good-faith belief that this use is not authorised by the copyright owner, its agent or the law, and the information in this notice is accurate. I am the owner or authorised to act for the owner.
+              I have a good-faith belief that this use is not authorized by the copyright owner, its agent or the law, and the information in this notice is accurate. I am the owner or authorized to act for the owner.
             </span>
           </label>
           {errors.goodFaith && <span className="gh-field__hint gh-field__hint--error">{errors.goodFaith}</span>}

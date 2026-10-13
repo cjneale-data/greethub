@@ -2,6 +2,8 @@
 
 Research output, not legal advice; the attorney may change these. Each requirement cites the file and section it comes from. Priority: **P0** = before real users or real children's photos; **P1** = before public launch; **P2** = soon after. Owner: CTO, CMO, or Both.
 
+**Status 2026-10-13:** for promise-by-promise build status see `docs/privacy-ops/05-audit-2026-10-12.md`, and for open legal questions see `attorney-brief-2026-10.md`. Key gaps against this list: req 2 (under-18 handler), 4 (durable consent log), 24 (repeat infringer), 25 (box C exception has no end date and no Saved Person), 26 (14-day email), 27 (retention config), 36 and 37 (delivery estimate from printer data; delay notice). Req 18: the hook discards the image; see the brief, Q13. Req 47: withdrawn (the sample book is fictional).
+
 ## A. Age gate, accounts and consent
 
 1. **P0 CTO. 18+ gate.** Signup requires ticking "I am 18 or older" and a U.S. shipping/billing country; no child accounts or child-directed UI. Source: 02 s1, s2; 01 s2 (Google, OpenRouter 18+).

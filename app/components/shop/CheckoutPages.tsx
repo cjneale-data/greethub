@@ -93,11 +93,12 @@ export function CheckoutSuccess() {
       </div>
     );
   }
-  const first = session.firstName || session.email?.split("@")[0] || "";
+  // First name only. Never the email handle (CX-12): "Thanks, qa-launch-179..." reads like a bug.
+  const first = session.firstName || "";
   return (
     <div className="gs-page gs-page--narrow gs-stack gs-stack--lg">
       <h1 className="gs-h1">Thanks{first ? `, ${first}` : ""}. We&apos;re on it.</h1>
-      <p className="gs-lede" style={{ margin: 0 }}>We emailed {session.email ?? "you"} with what&apos;s on its way.</p>
+      <p className="gs-lede" style={{ margin: 0 }}>Your order number is <strong>{orderId}</strong>. We emailed {session.email ?? "you"} with what&apos;s on its way.</p>
       <div className="gs-row">
         <ButtonLink size="lg" href={`/orders/${orderId}`}>Track this order</ButtonLink>
         <ButtonLink size="lg" variant="secondary" href="/create/card">Make another</ButtonLink>

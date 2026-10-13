@@ -1,8 +1,11 @@
 import { isPrinted, itemSku, priceLine, describeItem, type CartItem } from "@greethub/shared";
 import { getAdapters, type PrintJob, type PrinterAdapter, type PaymentEvent } from "../adapters";
-import { readDB, updateDB, newId } from "./store";
+import { docs } from "../store";
+import { newId } from "./store";
 import { aggregateStatus, applyTransition, canTransition, isTerminal, mapPrinterState, pathTo, type OrderStatus } from "./orderState";
 import { sendNeedsAttention, sendOrderConfirmed, sendShipped } from "./mail";
+import { fakeAllowed } from "./policies";
+import { findCheckoutBySession } from "./checkoutService";
 import type { Order, OrderItem, PendingCheckout } from "./types";
 
 /* ---------- building an order from a paid checkout ---------- */
@@ -27,48 +30,72 @@ export function toOrderItem(item: CartItem, pending: PendingCheckout): OrderItem
   };
 }
 
+/**
+ * The order keeps what the customer was actually charged. Our cart tax is a placeholder (0), and Stripe automatic tax
+ * adds the real tax on top, so take tax and total from the payment event when it has them. Bookkeeping needs the
+ * collected sales tax per order (finance/ops). The pre-tax amount was already checked against the cart before this runs.
+ */
+function chargedTotals(totals: Order["totals"], ev: Pick<PaymentEvent, "amountTotalCents" | "amountTaxCents">): Order["totals"] {
+  if (ev.amountTotalCents == null) return totals;
+  return { ...totals, taxCents: ev.amountTaxCents ?? totals.taxCents, totalCents: ev.amountTotalCents };
+}
+
 const orderNumber = () => "GH-" + crypto.randomUUID().replace(/-/g, "").slice(0, 8).toUpperCase();
 
 /**
  * Creates the order for a paid checkout. Idempotent: a second call for the same checkout returns the existing order,
  * so Stripe's retried webhook deliveries (and the fake page being double-clicked) never create two orders.
+ * The order number is claimed on the checkout first, so a retry after a crash part-way through reuses it.
  */
-export function createOrderFromCheckout(checkoutId: string, ev: Pick<PaymentEvent, "paymentIntentId" | "sessionId">, now = new Date()): { order: Order; created: boolean } | null {
-  return updateDB((db) => {
-    const pending = db.checkouts[checkoutId];
-    if (!pending) return null;
-    if (pending.orderId && db.orders[pending.orderId]) return { order: db.orders[pending.orderId], created: false };
-    const order: Order = {
-      id: orderNumber(),
-      userId: pending.userId,
-      email: pending.email,
-      firstName: pending.firstName,
-      stripeSessionId: ev.sessionId ?? pending.sessionId ?? "",
-      paymentIntentId: ev.paymentIntentId,
-      createdAt: now.toISOString(),
-      status: "paid",
-      history: [{ status: "paid", at: now.toISOString() }],
-      items: pending.items.map((i) => toOrderItem(i, pending)),
-      totals: pending.totals,
-      shippingMethod: pending.shippingMethod,
-      deliveryDate: pending.deliveryDate,
-      consent: pending.consent,
-    };
-    db.orders[order.id] = order;
-    pending.status = "completed";
-    pending.orderId = order.id;
-    // The purchased lines leave the cart; anything added since stays.
-    const bought = new Set(pending.items.map((i) => i.id));
-    db.carts[pending.userId] = (db.carts[pending.userId] ?? []).filter((i) => !bought.has(i.id));
-    // Save addresses the buyer asked us to keep.
-    const book = (db.addresses[pending.userId] ??= []);
-    for (const s of pending.saveAddresses) {
-      const dup = book.some((a) => a.address.line1 === s.address.line1 && a.address.postalCode === s.address.postalCode);
-      if (!dup) book.push({ id: newId("ad"), label: s.label, address: s.address, isDefault: book.length === 0 });
-    }
-    // Recipients become "used in" counts later; creators own that. Nothing to do here.
-    return { order, created: true };
-  });
+export async function createOrderFromCheckout(
+  checkoutId: string,
+  ev: Pick<PaymentEvent, "paymentIntentId" | "sessionId" | "amountTotalCents" | "amountTaxCents">,
+  now = new Date(),
+): Promise<{ order: Order; created: boolean } | null> {
+  const store = docs();
+  const claim = orderNumber();
+  const pending = await store.mutate("checkouts", checkoutId, (c) => c && (c.orderId ? c : { ...c, orderId: claim }));
+  if (!pending?.orderId) return null;
+  const existing = await store.get("orders", pending.orderId);
+  if (existing) return { order: existing, created: false };
+  const order: Order = {
+    id: pending.orderId,
+    userId: pending.userId,
+    email: pending.email,
+    firstName: pending.firstName,
+    stripeSessionId: ev.sessionId ?? pending.sessionId ?? "",
+    paymentIntentId: ev.paymentIntentId,
+    createdAt: now.toISOString(),
+    status: "paid",
+    history: [{ status: "paid", at: now.toISOString() }],
+    items: pending.items.map((i) => toOrderItem(i, pending)),
+    totals: chargedTotals(pending.totals, ev),
+    shippingMethod: pending.shippingMethod,
+    deliveryDate: pending.deliveryDate,
+    consent: pending.consent,
+  };
+  if (!(await store.insertIfAbsent("orders", order.id, order))) {
+    const raced = await store.get("orders", order.id);
+    return raced ? { order: raced, created: false } : null;
+  }
+  await store.mutate("checkouts", checkoutId, (c) => c && { ...c, status: "completed" });
+  // The purchased lines leave the cart; anything added since stays.
+  const bought = new Set(pending.items.map((i) => i.id));
+  await store.mutate("carts", pending.userId, (cart) => (cart ?? []).filter((i) => !bought.has(i.id)));
+  // Save addresses the buyer asked us to keep.
+  if (pending.saveAddresses.length) {
+    const ids = pending.saveAddresses.map(() => newId("ad"));
+    await store.mutate("addresses", pending.userId, (cur) => {
+      const book = cur ?? [];
+      pending.saveAddresses.forEach((s, n) => {
+        const dup = book.some((a) => a.address.line1 === s.address.line1 && a.address.postalCode === s.address.postalCode);
+        if (!dup) book.push({ id: ids[n], label: s.label, address: s.address, isDefault: book.length === 0 });
+      });
+      return book;
+    });
+  }
+  // Recipients become "used in" counts later; creators own that. Nothing to do here.
+  return { order, created: true };
 }
 
 /* ---------- printing ---------- */
@@ -80,10 +107,8 @@ async function printAssets(): Promise<PrintJob["pdfUrls"]> {
   return {};
 }
 
-function saveOrder(order: Order) {
-  updateDB((db) => {
-    db.orders[order.id] = order;
-  });
+async function saveOrder(order: Order) {
+  await docs().mutate("orders", order.id, () => order);
 }
 
 /** Moves the order status to match its items, recording each step on the timeline. */
@@ -110,7 +135,7 @@ function setItemStatus(item: OrderItem, to: OrderStatus): OrderItem {
 
 /** Validates and submits each printed line to its printer; digital lines are delivered at once. Safe to call again: submitted lines are skipped. */
 export async function submitOrder(orderId: string, now = new Date()): Promise<Order | null> {
-  const found = readDB().orders[orderId];
+  const found = await docs().get("orders", orderId);
   if (!found) return null;
   let order: Order = structuredClone(found);
   const attention: { item: OrderItem; reason: string }[] = [];
@@ -142,13 +167,13 @@ export async function submitOrder(orderId: string, now = new Date()): Promise<Or
       } catch (err) {
         console.error("print submit failed", orderId, err);
         attention.push({ item, reason: "we couldn't reach the print shop" });
-        return { ...item, status: "needs_attention", note: "We couldn't reach the print shop. We'll try again." };
+        return { ...item, status: "needs_attention", note: "We couldn't reach the print shop. We're looking into it." };
       }
     }),
   );
   order = recomputeOrder(order, now);
-  saveOrder(order);
-  for (const a of attention) await sendNeedsAttention(order, a.item, a.reason).catch((e) => console.error("email failed", e));
+  await saveOrder(order);
+  for (const a of attention) await sendNeedsAttention(order, a.item).catch((e) => console.error("email failed", e));
   return order;
 }
 
@@ -170,14 +195,14 @@ function applyPrinterState(order: Order, item: OrderItem, raw: { state: string; 
 async function finishUpdate(order: Order, shipped: OrderItem[], now: Date): Promise<Order> {
   let out = recomputeOrder(order, now);
   if (out.accountDeleted && isTerminal(out.status)) out = scrubOrder(out);
-  saveOrder(out);
+  await saveOrder(out);
   for (const s of shipped) await sendShipped(out, s).catch((e) => console.error("email failed", e));
   return out;
 }
 
 /** Polls the printers for each open line. Real printers also call the webhook; polling covers a missed delivery. */
 export async function refreshOrder(orderId: string, now = new Date()): Promise<Order | null> {
-  const found = readDB().orders[orderId];
+  const found = await docs().get("orders", orderId);
   if (!found) return null;
   const order: Order = structuredClone(found);
   const shipped: OrderItem[] = [];
@@ -198,10 +223,23 @@ export async function refreshOrder(orderId: string, now = new Date()): Promise<O
   return finishUpdate(order, shipped, now);
 }
 
+const lastRefresh = new Map<string, number>();
+
+/**
+ * Page-view polling: refreshes an order from the printers at most once per `minMs` per instance, so an account page
+ * that is reloaded (or many customers at a peak) does not turn into one printer API call per open line per view.
+ */
+export async function refreshOrderIfStale(orderId: string, minMs = 5 * 60_000, now = Date.now()): Promise<void> {
+  const last = lastRefresh.get(orderId) ?? 0;
+  if (now - last < minMs) return;
+  lastRefresh.set(orderId, now);
+  if (lastRefresh.size > 5000) lastRefresh.delete(lastRefresh.keys().next().value!);
+  await refreshOrder(orderId);
+}
+
 /** Printer webhook entry: find the line by the printer's id and apply the new state. */
 export async function applyPrinterWebhook(externalId: string, state: string, tracking: { trackingUrl?: string; trackingNumber?: string; carrier?: string } = {}, now = new Date()): Promise<Order | null> {
-  const db = readDB();
-  const order = Object.values(db.orders).find((o) => o.items.some((i) => i.fulfillment?.externalId === externalId));
+  const order = (await docs().find("orders", { ref: externalId })).find((o) => o.items.some((i) => i.fulfillment?.externalId === externalId));
   if (!order) return null;
   const copy: Order = structuredClone(order);
   const shipped: OrderItem[] = [];
@@ -236,6 +274,9 @@ export type WebhookResult = { status: number; body: Record<string, unknown> };
  * Returns an HTTP-shaped result so the route stays thin and tests can call it directly.
  */
 export async function handlePaymentWebhook(rawBody: string, signature: string | null): Promise<WebhookResult> {
+  // Without Stripe keys the fake adapter verifies with a public constant secret, so anyone could sign a "paid" event.
+  // Outside local dev and opted-in previews, refuse rather than create orders from forged events.
+  if (getAdapters().payments.name === "fake" && !fakeAllowed()) return { status: 404, body: { error: "not available" } };
   let ev: PaymentEvent;
   try {
     ev = await getAdapters().payments.parseWebhook(rawBody, signature);
@@ -244,12 +285,10 @@ export async function handlePaymentWebhook(rawBody: string, signature: string | 
   }
   // Replays of an event we already finished are acknowledged without doing anything. The event is recorded only after
   // success, so a crash mid-way lets Stripe's retry run again; order creation itself is idempotent per checkout.
-  if (readDB().processedEvents.includes(ev.id)) return { status: 200, body: { received: true, duplicate: true } };
-  const done = (body: Record<string, unknown>): WebhookResult => {
-    updateDB((db) => {
-      db.processedEvents.push(ev.id);
-      if (db.processedEvents.length > 500) db.processedEvents.splice(0, db.processedEvents.length - 500);
-    });
+  const store = docs();
+  if (await store.get("processed_events", ev.id)) return { status: 200, body: { received: true, duplicate: true } };
+  const done = async (body: Record<string, unknown>): Promise<WebhookResult> => {
+    await store.insertIfAbsent("processed_events", ev.id, { at: new Date().toISOString() });
     return { status: 200, body: { received: true, ...body } };
   };
 
@@ -260,19 +299,18 @@ export async function handlePaymentWebhook(rawBody: string, signature: string | 
     // Unpaid on completion (delayed payment method): wait for async_payment_succeeded.
     return { status: 200, body: { received: true, waiting: ev.paymentStatus } };
   }
-  const db = readDB();
-  const checkoutId = ev.checkoutId ?? Object.values(db.checkouts).find((c) => c.sessionId === ev.sessionId)?.id;
-  if (!checkoutId || !db.checkouts[checkoutId]) return done({ unknown: true });
-  const pending = db.checkouts[checkoutId];
-  if (ev.amountTotalCents != null && ev.amountTotalCents !== pending.totals.totalCents) {
+  const pending = ev.checkoutId ? await store.get("checkouts", ev.checkoutId) : ev.sessionId ? await findCheckoutBySession(ev.sessionId) : undefined;
+  if (!pending) return done({ unknown: true });
+  const checkoutId = pending.id;
+  // Stripe automatic tax adds tax on top of our lines, so compare amounts before tax on both sides.
+  const paidBeforeTax = ev.amountTotalCents == null ? null : ev.amountTotalCents - (ev.amountTaxCents ?? 0);
+  if (paidBeforeTax != null && paidBeforeTax !== pending.totals.totalCents - pending.totals.taxCents) {
     // A mismatch means the cart changed under the session. Record it and do not fulfil; a human reviews it.
     console.error("checkout amount mismatch", checkoutId, ev.amountTotalCents, pending.totals.totalCents);
-    updateDB((d) => {
-      d.checkouts[checkoutId].status = "failed";
-    });
+    await store.mutate("checkouts", checkoutId, (c) => c && { ...c, status: "failed" });
     return done({ mismatch: true });
   }
-  const res = createOrderFromCheckout(checkoutId, ev);
+  const res = await createOrderFromCheckout(checkoutId, ev);
   if (!res) return done({ unknown: true });
   if (res.created) {
     await sendOrderConfirmed(res.order).catch((e) => console.error("confirmation email failed", e));

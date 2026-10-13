@@ -10,8 +10,8 @@ export async function POST(req: Request) {
   if (!u) return json(NOT_SIGNED_IN, 401);
   const b = (await req.json().catch(() => ({}))) as { confirmText?: string; acknowledgeOpenOrders?: boolean };
   if (b.confirmText !== "DELETE") return json({ error: "Type DELETE to confirm." }, 400);
-  if (openOrderCount(u.userId) > 0 && !b.acknowledgeOpenOrders) return json({ error: "Tick the box so we know you've seen the open order." }, 400);
-  const token = createDeleteToken(u.userId);
+  if ((await openOrderCount(u.userId)) > 0 && !b.acknowledgeOpenOrders) return json({ error: "Tick the box so we know you've seen the open order." }, 400);
+  const token = await createDeleteToken(u.userId);
   const path = `/account/delete/confirm?token=${token}`;
   await sendTemplate("deleteConfirm", { to: u.email, link: site() + path });
   return json({ sent: true, ...(fakeAllowed() ? { devLink: path } : {}) });

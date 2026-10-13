@@ -744,7 +744,8 @@
    "cat": "describe",
    "field": "card_idea",
    "text": "The ice queen with the long platinum braid who freezes things",
-   "expect": "rewritten"
+   "expect": "rewritten",
+   "mock": true
   },
   {
    "id": "describe-075",
@@ -847,14 +848,16 @@
    "cat": "lang",
    "field": "card_idea",
    "text": "Bob l'éponge au bord de la mer",
-   "expect": "rewritten"
+   "expect": "rewritten",
+   "mock": true
   },
   {
    "id": "lang-087",
    "cat": "lang",
    "field": "card_idea",
    "text": "Тополино и Минни",
-   "expect": "rewritten"
+   "expect": "rewritten",
+   "mock": true
   },
   {
    "id": "slogan-088",
@@ -1866,6 +1869,200 @@
    "keep": [
     "Anna"
    ]
+  },
+  {
+   "id": "lang-198",
+   "cat": "lang",
+   "field": "card_idea",
+   "text": "Pato Donald en la playa",
+   "expect": "rewritten",
+   "mock": true,
+   "no": [
+    "donald"
+   ],
+   "source": "assessment-2026-10-12"
+  },
+  {
+   "id": "lang-199",
+   "cat": "lang",
+   "field": "card_idea",
+   "text": "Bob Esponja en la fiesta",
+   "expect": "rewritten",
+   "mock": true,
+   "no": [
+    "esponja"
+   ],
+   "source": "assessment-2026-10-12"
+  },
+  {
+   "id": "lang-200",
+   "cat": "lang",
+   "field": "card_idea",
+   "text": "Человек-паук на крыше",
+   "expect": "rewritten",
+   "mock": true,
+   "source": "assessment-2026-10-12"
+  },
+  {
+   "id": "misspell-201",
+   "cat": "misspell",
+   "field": "card_idea",
+   "text": "Pepa Pig jumping in puddles",
+   "expect": "rewritten",
+   "mock": true,
+   "no": [
+    "pepa"
+   ],
+   "source": "assessment-2026-10-12"
+  },
+  {
+   "id": "style-202",
+   "cat": "style",
+   "field": "card_idea",
+   "text": "looks like a Dr Seuss book",
+   "expect": "rewritten",
+   "mock": true,
+   "no": [
+    "seuss"
+   ],
+   "source": "assessment-2026-10-12"
+  },
+  {
+   "id": "misspell-203",
+   "cat": "misspell",
+   "field": "card_idea",
+   "text": "Elsaa from Frozzen building a snowman",
+   "expect": "rewritten",
+   "source": "assessment-2026-10-12"
+  },
+  {
+   "id": "misspell-204",
+   "cat": "misspell",
+   "field": "card_idea",
+   "text": "Buzz Lightyaer flying",
+   "expect": "rewritten",
+   "source": "assessment-2026-10-12"
+  },
+  {
+   "id": "describe-205",
+   "cat": "describe",
+   "field": "card_idea",
+   "text": "a blue heeler puppy family from Brisbane",
+   "expect": "rewritten",
+   "source": "assessment-2026-10-12"
+  },
+  {
+   "id": "describe-206",
+   "cat": "describe",
+   "field": "card_idea",
+   "text": "a space ranger toy with a laser who says to infinity",
+   "expect": "rewritten",
+   "source": "assessment-2026-10-12"
+  },
+  {
+   "id": "person-207",
+   "cat": "person",
+   "field": "card_idea",
+   "text": "Taylor Swifft concert birthday",
+   "expect": "blocked",
+   "source": "assessment-2026-10-12"
+  },
+  {
+   "id": "person-208",
+   "cat": "person",
+   "field": "card_idea",
+   "text": "Tay Tay singing to my mom",
+   "expect": "blocked",
+   "source": "assessment-2026-10-12"
+  },
+  {
+   "id": "benign-209",
+   "cat": "benign",
+   "field": "card_idea",
+   "text": "Ariel my niece who loves the sea",
+   "expect": "ok",
+   "keep": [
+    "Ariel"
+   ],
+   "source": "assessment-2026-10-12"
+  },
+  {
+   "id": "benign-210",
+   "cat": "benign",
+   "field": "card_idea",
+   "text": "Belle, our daughter, reading under a tree",
+   "expect": "ok",
+   "keep": [
+    "Belle"
+   ],
+   "source": "assessment-2026-10-12"
+  },
+  {
+   "id": "benign-211",
+   "cat": "benign",
+   "field": "story_idea",
+   "text": "Luca on his first day of school",
+   "expect": "ok",
+   "keep": [
+    "Luca"
+   ],
+   "knownNames": [
+    "Luca"
+   ],
+   "source": "assessment-2026-10-12"
+  },
+  {
+   "id": "benign-212",
+   "cat": "benign",
+   "field": "story_idea",
+   "text": "Coco the cat napping in the sun",
+   "expect": "ok",
+   "keep": [
+    "Coco"
+   ],
+   "knownNames": [
+    "Coco"
+   ],
+   "source": "assessment-2026-10-12"
+  },
+  {
+   "id": "benign-213",
+   "cat": "benign",
+   "field": "card_idea",
+   "text": "Olaf, our Norwegian grandfather, skiing",
+   "expect": "ok",
+   "keep": [
+    "Olaf"
+   ],
+   "knownNames": [
+    "Olaf"
+   ],
+   "source": "assessment-2026-10-12"
+  },
+  {
+   "id": "benign-214",
+   "cat": "benign",
+   "field": "card_idea",
+   "text": "Taylor my best friend at her swim meet",
+   "expect": "ok",
+   "keep": [
+    "Taylor"
+   ],
+   "knownNames": [
+    "Taylor"
+   ],
+   "source": "assessment-2026-10-12"
+  },
+  {
+   "id": "benign-215",
+   "cat": "benign",
+   "field": "card_message",
+   "text": "Just do it your way, love Dad",
+   "expect": "ok",
+   "keep": [
+    "Just do it your way"
+   ],
+   "source": "assessment-2026-10-12"
   }
  ]
 }

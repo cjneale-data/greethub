@@ -125,3 +125,9 @@ Across all 11: no text, logos or lookalike characters appeared; every render use
 - Run a two-page consistency test per style (same character, two scenes) to turn estimated ratings into measured ones.
 - Add the card-only fonts to `pipeline/fonts` (only Andika and Chewy are embedded today). Fonts named in the style guides are open-license Google Fonts.
 - Ask the attorney whether offering a "closest style" note to a franchise-look request (see 03 section 5) is acceptable wording.
+
+Status check, 2026-10-12 (platform assessment, PLAN.md "Head of Design"):
+
+- Nothing sets type on a card front. `layoutCard` prints the front art only, so Hand-Lettered Note (and the empty centers of Gold & Luxe and Bold Geometric) would print with no words. Either the card layout sets a front line in the style's `card.typography`, or these looks stop being recommended until it does.
+- Every image prompt ends with the shared guard lines (full-bleed, no frame, nothing in the outer 12%, no text). Style strings must not ask for a frame, border or vignette. Block Print ("framed composition") and Felt & Thread ("sewn thread borders") did; both are reworded. The card-only frame looks still pull against the guard, so test them before relying on them.
+- Every measured run so far used one legacy style. Ratings for all 26 styles are still single-image or estimated.

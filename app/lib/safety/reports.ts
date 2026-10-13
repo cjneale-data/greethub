@@ -4,9 +4,11 @@
  * and the team a notice through the email adapter (fake locally, Resend when configured).
  * Target: first response within 48 hours. That is a target, not a legal safe harbour.
  */
+import { createHash, timingSafeEqual } from "node:crypto";
 import { z } from "zod";
 import { getAdapters } from "../adapters";
-import { newId, readDB, updateDB } from "../shop/store";
+import { docs } from "../store";
+import { newId } from "../shop/store";
 import type { ContentReport } from "../shop/types";
 
 export const REPORT_RESPONSE_HOURS = 48;
@@ -48,7 +50,7 @@ export async function createReport(input: ReportInput, now = new Date()): Promis
     status: "new",
     dueAt: new Date(now.getTime() + REPORT_RESPONSE_HOURS * 3_600_000).toISOString(),
   };
-  updateDB((db) => void db.reports.push(report));
+  await docs().insertIfAbsent("content_reports", report.id, report);
   const email = getAdapters().email;
   await email.send({
     to: report.contactEmail,
@@ -65,19 +67,32 @@ export async function createReport(input: ReportInput, now = new Date()): Promis
   return report;
 }
 
-export const listReports = (): ContentReport[] => readDB().reports.slice().reverse();
+export const listReports = async (): Promise<ContentReport[]> => (await docs().all("content_reports")).reverse();
 
-export function setReportStatus(id: string, status: ContentReport["status"]): boolean {
-  return updateDB((db) => {
-    const r = db.reports.find((x) => x.id === id);
-    if (r) r.status = status;
-    return !!r;
+/** Changes a report's status and appends an audit entry (time, from, to, the reviewer's reason). Never rewrites history. */
+export async function setReportStatus(id: string, status: ContentReport["status"], note = "", now = new Date()): Promise<boolean> {
+  const r = await docs().mutate("content_reports", id, (r) => {
+    if (!r) return r;
+    (r.history ??= []).push({ at: now.toISOString(), from: r.status, to: status, note: note.trim().slice(0, 500) });
+    r.status = status;
+    return r;
   });
+  return !!r;
 }
 
-/** Admin gate: the existing dev gating (fake mode) or a token in GREETHUB_ADMIN_TOKEN. Closed in production without the token. */
+/** Open (new or in review) and past the response target. */
+export const reportOverdue = (r: ContentReport, now = new Date()): boolean =>
+  (r.status === "new" || r.status === "in_review") && Date.parse(r.dueAt) < now.getTime();
+
+/** Admin gate: open in local dev; any production build (Vercel previews included, even with GREETHUB_ALLOW_FAKE=1)
+ *  needs GREETHUB_ADMIN_TOKEN in the x-admin-token header. Reports hold reporters' emails and descriptions of children. */
 export function adminAllowed(headers: Headers): boolean {
   const token = process.env.GREETHUB_ADMIN_TOKEN;
-  if (token && headers.get("x-admin-token") === token) return true;
-  return process.env.NODE_ENV !== "production" || process.env.GREETHUB_ALLOW_FAKE === "1";
+  const given = headers.get("x-admin-token");
+  if (token && given) {
+    const a = createHash("sha256").update(given).digest();
+    const b = createHash("sha256").update(token).digest();
+    if (timingSafeEqual(a, b)) return true;
+  }
+  return process.env.NODE_ENV !== "production";
 }

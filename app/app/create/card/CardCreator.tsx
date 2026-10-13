@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Badge, Button, ButtonLink, Progress, Segmented, TextField, Toast } from "@/components/brand";
 import { BriefCard, ChatBubble, FieldEditor, Modal, Sheet, TypingBubble } from "@/components/creator";
-import { applyPatch, disabledHint, emptyDraft, isComplete, missingRequired, progress, validateField, type CardDraft } from "@/lib/intake/draft";
+import { applyPatch, disabledHint, emptyDraft, insideText, isComplete, mergeServerDraft, missingRequired, progress, validateField, type CardDraft } from "@/lib/intake/draft";
 import { getDraftStorage, type StoredChat, type StoredPreview } from "@/lib/intake/draft-storage";
 import { FIELD_LABELS, OPTIONAL_FIELDS, REQUIRED_FIELDS, type FieldKey } from "@/lib/intake/fields";
 import { PHOTO_GUEST_MESSAGE } from "@/lib/intake/guardrails";
@@ -11,11 +11,11 @@ import { openingTurn } from "@/lib/intake/quick-replies";
 type LockKey = "second" | "reroll" | "save" | "proof" | "photo" | "people";
 const LOCKS: Record<LockKey, { title: string; text: string }> = {
   second: { title: "That's your free preview", text: "That's your free preview. Make a free account to keep going. Your card comes with you." },
-  reroll: { title: "Want another go", text: "Not quite right? Accounts get re-rolls every month. Make a free account." },
+  reroll: { title: "Want another go", text: "Not quite right? Make a free account to redraw it." },
   save: { title: "Keep this for later", text: "Want to come back to this? Make a free account and we'll keep it." },
   proof: { title: "See the full-size proof", text: "Make a free account to see the full-size proof." },
   photo: { title: "Photos stay private", text: PHOTO_GUEST_MESSAGE },
-  people: { title: "Save people", text: "Save Grandma once and she looks the same in every card. Make a free account to save people." },
+  people: { title: "Save people", text: "Save Grandma once and skip the typing next time. Make a free account to save people." },
 };
 
 const ONE_LINERS = ["Sharpening the pencils.", "Mixing the colors.", "Choosing the paper.", "Adding the last touches."];
@@ -92,8 +92,10 @@ export function CardCreator() {
   }, [hydrated, draft, chat, preview, storage]);
 
   useEffect(() => {
-    chatEnd.current?.scrollIntoView?.({ block: "end" });
-  }, [chat, typing]);
+    // Also on mode: switching Form back to Chat remounts the log at the top.
+    const log = chatEnd.current?.parentElement;
+    if (log) log.scrollTop = log.scrollHeight;
+  }, [chat, typing, mode]);
 
   /* ---- rendering progress theatre ---- */
   useEffect(() => {
@@ -123,19 +125,16 @@ export function CardCreator() {
       setQuick([]);
       setInput("");
       setTyping(true);
+      const sent = draftRef.current;
       try {
         const res = await fetch("/api/intake", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: history.slice(-12), draft: draftRef.current, override }),
+          body: JSON.stringify({ messages: history.slice(-12), draft: sent, override }),
         });
         const body = await res.json();
         if (!res.ok) throw new Error(body.message ?? GREETING_ERR);
-        setDraft((cur) => {
-          // Keep any form edits made while the guide was thinking; the server draft wins for fields it set.
-          const merged = { ...cur, ...body.draft, sources: { ...cur.sources, ...body.draft.sources } };
-          return merged as CardDraft;
-        });
+        setDraft((cur) => mergeServerDraft(sent, cur, body.draft as CardDraft));
         setChat([...history, { role: "assistant", content: body.reply }]);
         setQuick(body.quickReplies ?? []);
         if (body.guardrail?.kind === "copyright") setPendingRewrite(body.guardrail.rewritten);
@@ -220,6 +219,11 @@ export function CardCreator() {
     setDraft(emptyDraft());
     setPreview(null);
     setPreviewKey(null);
+    setRenderErr(null);
+    setPendingRewrite(null);
+    setStyleOffer(null);
+    setChatErr(false);
+    setSide("front");
     const o = openingTurn(emptyDraft());
     setChat([{ role: "assistant", content: o.reply }]);
     setQuick(o.quickReplies);
@@ -262,7 +266,7 @@ export function CardCreator() {
                 <img className="gc-card__img" src={preview.front} alt={`Front of the card for ${name ?? "your recipient"}, low-resolution preview`} />
               </div>
               <div className="gc-card__face gc-card__face--inside">
-                <p className="gc-card__msg">{preview.insideMessage}</p>
+                <p className="gc-card__msg">{insideText(draft) || preview.insideMessage}</p>
               </div>
             </div>
             <button type="button" className="gc-card__tap" aria-label="Flip the card" onClick={() => setSide((s) => (s === "front" ? "inside" : "front"))} />
@@ -323,7 +327,7 @@ export function CardCreator() {
 
       {mode === "Chat" ? (
         <>
-          <div className="gc-chat" role="log" aria-live="polite" aria-label="Conversation with the Greet Guide">
+          <div className="gc-chat" role="log" aria-live="polite" aria-label="Conversation with the Greet Guide" tabIndex={0}>
             {!hydrated ? (
               <>
                 <div className="gc-skel" style={{ height: 52, width: "70%", borderRadius: 22 }} />
@@ -413,7 +417,7 @@ export function CardCreator() {
             <p>{LOCKS[lock].text}</p>
             {lock !== "second" && missingRequired(draft).length < REQUIRED_FIELDS.length && <p>Your card comes with you.</p>}
             <div className="gc-modal__actions">
-              <ButtonLink href="/login?next=/create/card">Make a free account</ButtonLink>
+              <ButtonLink href="/signup?next=/create/card">Make a free account</ButtonLink>
               <Button variant="ghost" onClick={() => setLock(null)}>
                 Not now
               </Button>

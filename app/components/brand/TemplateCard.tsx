@@ -31,8 +31,10 @@ export function TemplateCard({
 }) {
   const [a, b, fg] = TONES[tone];
   const ph = { "--a": a, "--b": b, color: fg } as CSSProperties;
+  // Only a clickable card is a button. A display-only card (cart line, drafts) was a nameless, do-nothing tab stop (axe button-name).
+  const Tag = onClick ? "button" : "div";
   return (
-    <button className="gh-card" style={{ transform: `rotate(${tiltDegrees(tilt)}deg)` }} onClick={onClick}>
+    <Tag className="gh-card" style={{ transform: `rotate(${tiltDegrees(tilt)}deg)` }} {...(onClick ? { type: "button" as const, onClick } : {})}>
       <div className="gh-card__media">
         {image ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -47,6 +49,6 @@ export function TemplateCard({
         <span className="gh-card__title">{title}</span>
         {aside && <span className="gh-card__aside">{aside}</span>}
       </div>
-    </button>
+    </Tag>
   );
 }

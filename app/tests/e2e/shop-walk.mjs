@@ -1,20 +1,21 @@
 // Walks cart -> sign-up -> checkout -> fake pay -> order tracking -> account -> delete, with screenshots.
-// Usage: BASE=http://localhost:3000 OUT=./shots node tests/e2e/shop-walk.mjs [desktop|mobile]
+// Usage: BASE_URL=http://localhost:3101 [OUT=dir] node tests/e2e/shop-walk.mjs [desktop|mobile]   (BASE= still works)
+// Exits 1 if export, sign-out after delete, or console errors fail. The full launch walk is launch-flow.mjs.
 import { chromium } from "playwright";
 import fs from "node:fs";
+import { BASE_URL as BASE, collectErrors, outDir, warmup } from "./_lib.mjs";
 
-const BASE = process.env.BASE || "http://localhost:3103";
-const OUT = process.env.OUT || "./shots";
+const OUT = outDir("shop");
 const mode = process.argv[2] || "desktop";
 fs.mkdirSync(OUT, { recursive: true });
 const viewport = mode === "mobile" ? { width: 390, height: 844 } : { width: 1280, height: 900 };
 
-const browser = await chromium.launch({ channel: "chrome", headless: true });
+await warmup(["/", "/browse", "/pricing", "/faq", "/cart", "/signup", "/checkout", "/orders", "/account", "/account/addresses", "/account/drafts", "/account/people", "/account/delete"]);
+// Bundled Chromium (was channel "chrome", which needs Google Chrome installed and differs from CI).
+const browser = await chromium.launch({ headless: true });
 const ctx = await browser.newContext({ viewport, deviceScaleFactor: mode === "mobile" ? 2 : 1, isMobile: mode === "mobile" });
 const page = await ctx.newPage();
-const errors = [];
-page.on("pageerror", (e) => errors.push(String(e)));
-page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
+const errors = collectErrors(page); // ignores the 402 from the deliberate declined-card step
 let n = 0;
 const shot = async (name) => page.screenshot({ path: `${OUT}/${mode}-${String(++n).padStart(2, "0")}-${name}.png`, fullPage: true });
 const step = (s) => console.log(`[${mode}] ${s}`);
@@ -120,7 +121,8 @@ await page.getByRole("button", { name: "Save", exact: true }).click();
 await page.getByText("Grandma Rosa").first().waitFor();
 await shot("account-people");
 const dl = await page.request.get(BASE + "/api/account/export");
-console.log("export status", dl.status(), (await dl.text()).includes(email));
+const exported = dl.ok() && (await dl.text()).includes(email);
+console.log("export ok:", exported);
 
 step("delete account");
 await page.goto(BASE + "/account/delete");
@@ -138,3 +140,9 @@ console.log("profile after delete (expect 401):", after.status());
 
 console.log("console/page errors:", errors.length ? errors : "none");
 await browser.close();
+const failed = [!exported && "export", after.status() !== 401 && "still signed in after delete", errors.length && "console errors"].filter(Boolean);
+if (failed.length) {
+  console.log(`FAIL [${mode}]: ${failed.join(", ")}`);
+  process.exit(1);
+}
+console.log(`ALL OK [${mode}]`);

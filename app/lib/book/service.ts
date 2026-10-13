@@ -4,6 +4,7 @@ import { isPet, validateBriefForm, type FieldErrors } from "./briefForm";
 import { buildConsentRecord, consentCovers, consentValid, evaluateConsentGate, requiredBoxesTicked } from "./consent";
 import { moderatePhoto } from "./moderation";
 import { screenFields } from "../safety/server";
+import { checkSensitive } from "../intake/guardrails";
 import type { IpInput } from "../safety/types";
 import { MAX_PHOTOS_PER_CHARACTER, MAX_PHOTO_BYTES, MIN_PHOTO_SHORT_EDGE, PHOTO_RETENTION_DAYS, REROLL_ALLOWANCE, SHEET_FREE_REDOS } from "./constants";
 import { projectSpendCapUsd, spreadsOverride } from "./config";
@@ -86,6 +87,12 @@ export type Screened<T> = { value: T; notes: string[] };
 /** Screens named strings; rewrites are applied (original characters inspired by the idea), blocked text refuses with a friendly message. */
 async function screenTexts(d: Deps, items: { key: string; text: string; field: IpInput["field"] }[], knownNames: string[]): Promise<{ out: Record<string, string>; notes: string[] }> {
   const live = items.filter((i) => i.text.trim());
+  // Acceptable Use Policy rules 1-4 (docs/legal/05): the same free rule-based sensitive check the card creator runs,
+  // before any paid screen call. Grief words are not in the list, so sympathy books still work.
+  for (const i of live) {
+    const s = checkSensitive(i.text);
+    if (!s.ok) throw new BookError(422, "content_blocked", s.message, { field: i.key });
+  }
   const res = live.length ? await screenFields(live.map((i) => ({ text: i.text, field: i.field, knownNames })), { mock: d.mock }) : [];
   const out: Record<string, string> = Object.fromEntries(items.map((i) => [i.key, i.text]));
   const notes: string[] = [];
@@ -229,7 +236,7 @@ const toPublicJob = (j: Job): PublicJob => ({ id: j.id, kind: j.kind, status: j.
 
 export async function viewOf(d: Deps, p: BookProject): Promise<ProjectView> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { userId: _u, mergedJobIds: _m, photos, consent, ...rest } = p;
+  const { userId: _u, mergedJobIds: _m, consentHistory: _h, photos, consent, ...rest } = p;
   const job = p.activeJobId ? await d.jobs.get(p.activeJobId) : null;
   return {
     ...rest,
@@ -365,6 +372,8 @@ export async function recordConsent(d: Deps, userId: string, id: string, input: 
       characterLabels: p.brief.characters.map((c) => c.name),
     });
     for (const x of p.photos) x.consentId = rec.id;
+    // Keep the earlier record (and its withdrawal time) instead of overwriting it.
+    if (p.consent) (p.consentHistory ??= []).push(p.consent);
     p.consent = rec;
     p.photosConfirmed = false;
     return p;
@@ -409,6 +418,7 @@ function jobInput(d: Deps, p: BookProject, extra: Partial<JobInput> = {}): JobIn
   });
   return {
     brief: p.brief,
+    consentId: p.consent?.id,
     photoPaths,
     characters,
     story: p.story ? { title: p.story.title, blurb: p.story.blurb, pages: p.story.pages } : undefined,

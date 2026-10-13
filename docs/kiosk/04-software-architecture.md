@@ -139,3 +139,15 @@ Cash flow: card authorization at start of print, capture at confirmed dispense, 
 ## 13. Dependencies on other teams
 
 CTO: Supabase auth and DB-backed ledger first; device registry; kiosk route group. Security: threat model for an unattended device (new item), pen-test the link and device-code endpoints. Data: new `device_id` fields and 24-hour guest retention. Legal: public-device privacy language and ADA review (06). CX: kiosk screen designs against the standards.
+
+## 14. Status against the built app (checked 2026-10-13)
+
+Nothing kiosk-specific exists in `app/` (no kiosk route, no `/api/kiosk`). What the web app needs first, most blocking first:
+
+1. **Durable data and auth:** sessions, device registry, link codes and per-device ledgers need Supabase (SEC-18). Today every record is a local JSON file.
+2. **A card that can be bought and printed:** the signed-in card path, approval page, full-res render, `layoutCard` call and card print PDF are not built; the print step can print a model-written message instead of the approved one (`pipeline/src/stages/copy.ts`); `messageFitted:false` is never read. A kiosk prints in front of the buyer, so all three must be fixed.
+3. **Imposition for a local printer:** `layoutCard` emits two separate 5.25 x 7.25 in pages (front, inside right). A kiosk needs one duplex sheet per card (section 6). Not built.
+4. **Render latency:** the guest preview is one blocking 30 to 90 second request with a fake progress bar, and live renders cannot run on Vercel without the hosted queue (SEC-21). The template pack of pre-generated fronts (section 4) does not exist.
+5. **Payment:** only Stripe Checkout (web redirect) exists, and it has not run against a Stripe sandbox. No Stripe Terminal, no authorize-then-capture-on-dispense.
+6. **Public-terminal abuse:** the guest cap is a cookie (wiped every kiosk session, so unlimited previews), the per-instance counter is not durable, and the rate limit keys on the left-most `x-forwarded-for` (spoofable, and one store IP would throttle a busy kiosk). Needs a device token, durable caps (SEC-10) and the moderation pass on printed text.
+7. **Kiosk mode itself:** locked full-screen browser, inactivity timeout and profile wipe (sections 3 and 9), device management. None built; all P1 scope.

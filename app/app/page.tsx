@@ -6,6 +6,13 @@ import { HomeToast } from "@/components/shop/HomeToast";
 import { ShopShell } from "@/components/shop/ShopShell";
 import { SkeletonList } from "@/components/shop/ui";
 import { priceTokens } from "@greethub/shared";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: "GreetHub — cards and picture books that sound like you",
+  description: "Custom illustrated greeting cards and picture books, drawn from your story, printed and mailed for you.",
+  path: "/",
+});
 
 export default function Home() {
   const p = priceTokens();
@@ -16,9 +23,7 @@ export default function Home() {
       </Suspense>
       <section className="gh-hero">
         <div className="gh-hero__copy">
-          <div className="gh-hero__badge">
-            <Badge tone="promo">Mother’s Day ships free until May 4</Badge>
-          </div>
+          {/* The out-of-date "Mother's Day ships free until May 4" promo was removed (CX-03). Bring promos back only from a dated config. */}
           <h1 className="gh-hero__h1">
             Cards that sound like <em>you.</em>
           </h1>
@@ -53,7 +58,7 @@ export default function Home() {
       </section>
 
       <section className="gs-section">
-        <h2 className="gs-h2">Three steps. About ten minutes.</h2>
+        <h2 className="gs-h2">Three steps. A card takes about ten minutes.</h2>
         <div className="gs-steps">
           <div className="gs-step"><h3 className="gs-h3">Tell us.</h3><p>Chat with the Greet Guide or fill a short form. Who it’s for, what to say, how it should feel.</p></div>
           <div className="gs-step"><h3 className="gs-h3">Check the look.</h3><p>See your card or your characters before anything is final. Change what’s off.</p></div>
@@ -64,7 +69,7 @@ export default function Home() {
       <section className="gs-section" id="books">
         <div className="gs-band">
           <h2 className="gs-h2">Make the book your family keeps.</h2>
-          <p>Add a few photos. We draw everyone as characters that stay the same on every page, you approve them, then we build the story around your memory. Hardcover, 8.5 by 8.5 inches, printed to order.</p>
+          <p>Tell us the memory and add a few photos. We write the story with you, draw everyone once for you to approve, then draw every page from that approved sheet. Hardcover, 8.5 by 8.5 inches, printed to order.</p>
           <div><ButtonLink variant="sunny" href="/create/book">Start a picture book</ButtonLink></div>
         </div>
       </section>

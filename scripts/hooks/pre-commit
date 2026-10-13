@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Optional local secret scan before each commit (SEC-06). Agents commit too, so install it once per clone:
+#   git config core.hooksPath scripts/hooks
+# Needs the gitleaks binary on PATH (https://github.com/gitleaks/gitleaks/releases). Without it the hook warns and
+# lets the commit through; CI (.github/workflows/ci.yml) still scans every push. --redact keeps matches out of the terminal.
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "[pre-commit] gitleaks not installed; skipping local secret scan (CI still scans)." >&2
+  exit 0
+fi
+ROOT="$(git rev-parse --show-toplevel)"
+exec gitleaks git --pre-commit --staged --redact --no-banner --config "$ROOT/.github/gitleaks.toml" "$ROOT"

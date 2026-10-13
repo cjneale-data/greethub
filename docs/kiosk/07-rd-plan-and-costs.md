@@ -1,6 +1,6 @@
 ﻿# 07. R&D program and costs
 
-All costs in USD, estimates [U] unless tagged. Everything here is reproduced in `financial-inputs.csv` (built by one script so the totals tie). Month 1 is the month the owner approves P0; the online launch is planned for Nov 2026 (`finance/README.md`), so the calendar mapping is the CFO's choice (suggest M1 = Jan 2027).
+All costs in USD, estimates [U] unless tagged. Everything here is reproduced in `financial-inputs.csv` (built by one script so the totals tie). Month 1 is the month the owner approves P0; the online launch is planned for Nov 2026 (`finance/README.md`), so the calendar mapping is the CFO's choice (suggest M1 = Jan 2027). **2026-10-13:** in finance workbook v3, month 1 is the launch month (Nov 2026) and the kiosk schedule is shifted 6 months (P0 M7-M9, G0 M10, P1 M11-M15, P2 M17-M22, P3 M24-M29, P4 M31-M42, fleet plan 6 months later); G0 defaults to 0. The phase tables below keep the original program-month numbering.
 
 ## 1. Assumptions
 
@@ -12,6 +12,17 @@ All costs in USD, estimates [U] unless tagged. Everything here is reproduced in 
 
 ## 2. Phases
 
+### S0 Evidence before spend (after launch, before P0; added 2026-10-13)
+
+- **Scope:** no hardware, no contractors, no retailer commitments. (a) From the live online store: printed-card orders a month, reprint and complaint rate on Prodigi 5x7 cards, printed versus digital share, and how many card buyers make a second card. (b) A paper check: the owner orders 5 printed cards through the normal flow (about $55 at list price) and 3 people compare them blind against 2 rack cards. (c) Refresh the operator research (Scribbler/Fujifilm, Card Isle) and whether they license software. (d) Only if the owner chooses: informal talks with up to 3 hosts the owner already knows; no terms offered.
+- **Cost:** owner and agent time, about $100 to $500 cash. Not in the workbook (immaterial).
+- **Start gate S0 (to begin P0), all must hold:**
+  1. The online store has sold printed cards for at least 3 months and at least 150 printed cards in total [U threshold], with complaints or reprints under 5%.
+  2. Cash: P0's $35k base is funded on top of the CFO's peak funding need, or the business has had 3 consecutive months of positive contribution after marketing.
+  3. Platform: Supabase store and auth (SEC-18), durable spend ledger (SEC-10), hosted job queue (SEC-21), the signed-in card path with approval and card print PDF, and a print path that uses the approved message verbatim, all live in production.
+  4. Interest: one host the owner knows would take a free pilot, or one operator agrees to a licence call.
+  5. The owner approves P0 in writing (budget and dates).
+
 ### P0 Concept validation (M1 to M3)
 
 - **Scope:** borrowed tablet; one dye-sub printer (about $1k [S]), one colour laser (about $0.5k to $1k [U]) and one pigment inkjet (about $0.6k to $1.4k [S]) bought for the test; sample stock (216 gsm pre-scored blanks, envelopes) from three suppliers; a Stripe S700 reader ($299 [S]) for the payment test; a `/kiosk` prototype of the Quick pick and Make it yours paths running on the existing app in a dev environment (reuse, no new product code beyond a stub); print test matrix (stock x engine x fold x colour), 20 to 30 observed users at a friendly venue, 20 retailer conversations including licence talks with an operator.
@@ -21,7 +32,7 @@ All costs in USD, estimates [U] unless tagged. Everything here is reproduced in 
 - **Gate G0 (M4), all must pass:**
   1. Print: at least 8 of 10 cards fold and read as "better than a rack card" in a blind comparison with three testers; the fold-and-colour test picks a viable engine for Tier B and Tier A.
   2. Demand: at the $6.99 target, at least 30% of 20+ observed users say they would buy (stated intent only, weak evidence) and at least 3 retailers agree to host a free pilot; at least 1 operator is open to a licence discussion.
-  3. Online: the web business has at least 6 months of data and is not in crisis (I recommend this gate, not the owner's necessarily).
+  3. Online: the web business has at least 6 months of data and is not in crisis (I recommend this gate, not the owner's necessarily). Reachable only if P0 starts after launch, which the 2026-10-13 schedule now does.
   4. Legal: the attorney has no blocking objection to unattended sales with AI-printed content.
 
 ### P1 Pilot prototype (M5 to M9)
@@ -30,7 +41,7 @@ All costs in USD, estimates [U] unless tagged. Everything here is reproduced in 
 - **Person-days (base):** 85 software and integration, 20 UX/ADA, 15 industrial design, 25 mechanical, 10 electronics/firmware, 12 QA, 10 PM, 10 content/art direction = **187 days**.
 - **Hardware and tooling:** prototypes $7k / $19k / $50k, rapid fabrication $2k / $15k / $35k, pre-compliance testing $0 / $4k / $8k, model spend for the template pack about $0.1k to $0.6k.
 - **Cost:** **$138k / $270k / $538k** (labor $111k / $187k / $337k, contingency 15 / 20 / 25%).
-- **Decision gate G1 (M10):** pilot units run 500 test prints at 97% first-time success; fold yield at least 95% on the bench rig or Tier B is deferred; accessibility reviewer sign-off on screens; CTO security review of link, device token and spend caps passes; 3 sites signed.
+- **Decision gate G1 (M10):** pilot units run 500 test prints at 97% first-time success; kiosk routes capped and rate-limited per device token, not per IP (a store's shared IP would hit the web's 5-previews-per-10-minutes limit, and wiped cookies reset the guest cap every session); fold yield at least 95% on the bench rig or Tier B is deferred; accessibility reviewer sign-off on screens; CTO security review of link, device token and spend caps passes; 3 sites signed.
 
 ### P2 Field pilot at 1 to 3 sites (M11 to M16)
 
@@ -154,7 +165,7 @@ Online only is almost free to extend (no hardware, no host share). The kiosk is 
 1. **Volume:** sustained 8 or more cards a day per kiosk at about $7, with a path to 100 or more kiosks (base contribution $4.40 a card, $262 a month fixed per kiosk: 8 a day yields about $81k a month at 100 kiosks, about $970k a year, enough to repay base R&D plus fleet capex in roughly 2 to 3 years after reaching 100 units).
 2. **Cheaper program:** R&D near the low case ($0.56M) by using Tier A/C off-the-shelf units, or partner co-funding of hardware.
 3. **Licensing:** an operator pays for the brain (Tier D); this makes the kiosk a software line with near-zero hardware risk.
-4. **Acquisition value:** kiosk buyers who join GreetHub cost less than the online paid CAC ($76) and reorder online; the pilot must measure the signup rate and the 90-day reorder.
+4. **Acquisition value:** kiosk buyers who join GreetHub cost less than the online paid CAC (about $70 in v3; avoided CAC counts only if paid spend is actually cut, so value a sign-up at about $11 of repeat contribution [U]) and reorder online; the pilot must measure the signup rate and the 90-day reorder.
 5. **Retail terms:** host share at or below 25% of net sales, no placement fees.
 6. **Quality:** card stock and fold judged better than a rack card in blind tests (the Scribbler criticism).
 

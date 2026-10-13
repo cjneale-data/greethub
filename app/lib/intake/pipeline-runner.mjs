@@ -14,6 +14,7 @@ const { styleStringFor } = await import(pathToFileURL(join(root, "..", "app", "p
 const { OpenRouterClient } = await import(src("openrouter.ts"));
 const { FileLedger } = await import(src("ledger.ts"));
 const { guardLines } = await import(src("stages/prompts.ts"));
+const { guestGuardLines } = await import(pathToFileURL(join(root, "..", "app", "lib", "intake", "guest-prompt.ts")).href);
 const { guestProof } = await import(src("layout/card.ts"));
 const { visionCheck } = await import(src("stages/qa.ts"));
 const { sanitizeImagePrompt, rerollAddendum, PAGE_BLOCKED_MESSAGE, logOutputFlagged, logOutputRerolled } = await import(src("safety/index.ts"));
@@ -37,7 +38,8 @@ try {
     brief.avoid?.length ? `Leave out: ${sanitizeImagePrompt(brief.avoid.join("; "), []).text}.` : "",
     `GLOBAL STYLE: ${styleStringFor(brief.artStyle)}`,
     "Keep the subject centered with calm space around it.",
-    guardLines({ id: "front", kind: "card_front", scene: "", characters: [] }),
+    // Real cast from the brief; with none, a neutral count line (never "no people or animals" for a scene that has them).
+    guestGuardLines(guardLines, brief),
   ]
     .filter(Boolean)
     .join("\n");

@@ -21,3 +21,8 @@ body { margin: 0; min-height: 100vh; font-size: 17px; line-height: 1.6; }
 .gh-hero__card--a { left: 4%; top: 30px; transform: rotate(-6deg); }
 .gh-hero__card--b { right: 4%; top: 0; transform: rotate(5deg); }
 .gh-hero__sticker { position: absolute; left: 38%; bottom: 40px; z-index: 2; white-space: nowrap; font-family: var(--gh-font-display); font-weight: 800; font-size: 20px; letter-spacing: -0.02em; background: var(--gh-plum); color: var(--gh-paper); padding: 10px 16px; border-radius: var(--gh-r-pill); transform: rotate(-4deg); }
+
+/* Skip link (WCAG 2.4.1): hidden until focused, first stop in the tab order on every page. */
+.gh-skip { position: absolute; left: 12px; top: -64px; z-index: 1000; padding: 10px 16px; border-radius: 10px; background: var(--gh-cocoa); color: #fff; font-weight: 700; text-decoration: none; }
+.gh-skip:focus { top: 12px; color: #fff; outline: 3px solid var(--gh-persimmon-deep); outline-offset: 2px; }
+main:focus { outline: none; }

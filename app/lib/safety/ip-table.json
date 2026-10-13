@@ -397,7 +397,7 @@
         "sparkle"
       ],
       "descriptors": [
-        "ice queen with (a )?(long )?(platinum|white|blonde?) (braid|hair)",
+        "ice queen with (a |the |her )?(long )?(platinum|white|blonde?) (braid|hair)",
         "queen who (freezes|makes ice)",
         "princess who (freezes|makes ice)",
         "snow queen (with|who)"
@@ -483,6 +483,7 @@
         "mickey maus",
         "raton mickey",
         "topolino",
+        "Тополино",
         "ミッキー",
         "mickey"
       ],
@@ -504,6 +505,7 @@
         "mickey maus",
         "raton mickey",
         "topolino",
+        "Тополино",
         "ミッキー"
       ]
     },
@@ -531,6 +533,8 @@
       "franchise": "disney",
       "names": [
         "donald duck",
+        "pato donald",
+        "paperino",
         "daisy duck",
         "scrooge mcduck"
       ],
@@ -865,6 +869,7 @@
         "peter parker",
         "spinnenmann",
         "hombre arana",
+        "Человек-паук",
         "スパイダーマン"
       ],
       "ambiguous": false,
@@ -1225,6 +1230,7 @@
       "franchise": "tv",
       "names": [
         "peppa pig",
+        "pepa pig",
         "peppa",
         "george pig",
         "daddy pig",
@@ -1242,6 +1248,7 @@
       ],
       "strong": [
         "peppa pig",
+        "pepa pig",
         "george pig",
         "daddy pig",
         "mummy pig"
@@ -1298,6 +1305,8 @@
       "names": [
         "spongebob",
         "sponge bob",
+        "bob esponja",
+        "bob l'éponge",
         "spongebob squarepants",
         "patrick star",
         "squidward",

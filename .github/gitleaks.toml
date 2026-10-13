@@ -1,0 +1,12 @@
+# gitleaks config for CI (.github/workflows/ci.yml) and the optional pre-commit hook (scripts/hooks/pre-commit).
+# Default rules plus an allowlist for paths that only ever hold public placeholders.
+# If a real secret is found: follow docs/security/05-incident-response.md (rotate first, then clean history).
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Lockfiles and generated build output"
+paths = [
+  '''(^|/)package-lock\.json$''',
+  '''(^|/)\.next/''',
+]

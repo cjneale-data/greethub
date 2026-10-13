@@ -4,6 +4,14 @@ Owner: Head of Customer Experience. Sizes: **S** under 0.5 day, **M** 0.5 to 2 d
 
 All UI tickets are done only when they meet the "definition of done for a screen" in the standards (390 and 1280 widths, all states, keyboard and axe pass, US spelling).
 
+## Status, re-checked against the running app 2026-10-12 (mock mode, 1280 and 390 px, axe)
+
+- **Done:** CX-21 skip link and `main` target on every layout (Progress name was done by QA). CX-32 404 only (branded, header, footer, ways out; 500, offline and expired-link pages still open). CX-03 stale Mother's Day badge removed (the dated promo config is still open). CX-19 in full: persimmon-deep links and ghost buttons, plus `--gh-control-border` #8C7B6E on every control border and cocoa-70 placeholders (Head of Design decision, 2026-10-13). The legal-page banner contrast is fixed too. WCAG 2.5.3 label fixes: brief "Add" buttons, logo links, proof "Back".
+- **Partly done:** CX-12 confirmation now shows the order number and never greets by email handle (the summary, delivery range and "what happens next" lines are still open). CX-06 has a "Redo the sheet" label, but I did not verify that the gating works. CX-29: "ZIP code" is done; "Mum" is still an intake enum value and the "Mum, You Did It" template title is unchanged (card engineer and CMO).
+- **Not started (still S1):** CX-01 real imagery, CX-02 placeholder legal and company text (footer and DMCA block show `[PLACEHOLDER]` on every page, and legal pages show a "Draft placeholder" banner), CX-04 server-side delivery range, CX-05 proof "Seen X of N" and spelling card, CX-08 tax line, CX-09 AiNote, CX-11 cancel, CX-31 help and contact (no `/help` or `/contact`; every contact path is `mailto:hello@greethub.example`, a domain that cannot receive mail), CX-34 reference codes.
+- **New, from other teams' findings:** CX-44 (S1) the proof shows the dedication, but the print file leaves it out (book engineer). Until it prints, hide it from the proof. CX-45 (S1) a derived "delivered" status. Real orders stop at "shipped", so the post-delivery survey (Quality s4) and the claim-window clock never start (shop engineer). CX-46 (S2) a signed-in card path. "Looks good" still shows the sign-up wall after sign-in (card engineer, M3b).
+- **Axe false positive:** the footer logotype "hub" (#EE5A36 on cream, 2.86:1) is a logotype, which WCAG 1.4.3 exempts. QA should exclude it from `a11y.mjs`.
+
 ## Must-fix before launch
 
 ### CX-01 Real product imagery (F-01, F-17) | L | CMO + CX
@@ -220,7 +228,7 @@ Decisions and inputs to unblock launch.
 4. **Policy numbers.** The claim window (draft says 30 days), "lost" threshold (recommend 10 days past the estimate), cancel cut-off (recommend 60-minute undo window), refund timing (7 business days). Attorney to confirm and finalise the Refund & Reprint Policy so the pages, macros and articles use the same numbers.
 5. **Refund and reprint authority.** Approve my limits: agents decide up to $60 per order; owner above that, for repeat claimants and suspected fraud. Approve the goodwill budget of 1 percent of revenue (CFO to add the line).
 6. **Photo-related legal items.** Sign-off on the consent wording, the 90-day purge, vendor zero-data-retention status (docs/legal/06 req 8), and the CSAM procedure. Until these are done, only synthetic photos can be used in testing and demos.
-7. **Brand token change.** Approve the two accessibility tokens (`--gh-control-border`, placeholder colour) and the cocoa header CTA; the CMO updates `brand/README.md`.
+7. **Brand token change.** (Done 2026-10-13: the Head of Design approved the tokens and they are applied. The CMO still needs to update `brand/README.md`.) Approve the two accessibility tokens (`--gh-control-border`, placeholder colour) and the cocoa header CTA; the CMO updates `brand/README.md`.
 8. **Sample content.** Approve generating and publishing the 12 template covers and 6 style samples; decide whether the Eye Story goes live (needs signed releases).
 9. **Testing.** Approve a $400 to $500 usability test budget (recruitment incentives plus panel fees) and a live-adapter staging environment with a small image-model spend cap for it.
 10. **Phone number.** Confirm there is none at launch (recommended), and say so in the FAQ.

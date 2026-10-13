@@ -52,10 +52,19 @@ export async function sendShipped(order: Order, item: OrderItem) {
   return send(order.email, `Your ${item.kind}'s on its way to ${who}.`, body, "shipped", { label: "Track your order", href: `/orders/${order.id}` });
 }
 
-export async function sendNeedsAttention(order: Order, item: OrderItem, reason: string) {
+/**
+ * Printer validation or submit failed. The cause is on our side, so the customer has nothing to fix; the raw reason
+ * (often vendor text) stays in the order note and the ops exception list, never in the email.
+ */
+export async function sendNeedsAttention(order: Order, item: OrderItem) {
   const who = item.recipientName || "you";
-  const body = [`Hi ${order.firstName || "there"},`, `We hit a snag before printing: ${reason}. Here's how to sort it out: open your order. Nothing has been charged twice.`, `The GreetHub team`].join("\n\n");
-  return send(order.email, `One thing to fix on ${who}'s ${item.kind}`, body, "needs_attention", { label: "Open order", href: `/orders/${order.id}` });
+  const body = [
+    `Hi ${order.firstName || "there"},`,
+    `We hit a snag getting your ${item.kind} for ${who} ready to print. It's on our side, so there's nothing you need to do.`,
+    `A person on our team is looking at it and will email you by the end of the next business day with what happens next. You haven't been charged twice.`,
+    `If it's for a date, reply and tell us the day.\n\nThe GreetHub team`,
+  ].join("\n\n");
+  return send(order.email, `A short delay on ${who}'s ${item.kind}`, body, "needs_attention", { label: "See your order", href: `/orders/${order.id}` });
 }
 
 export async function sendTemplate(kind: "magicLink", args: { to: string; link: string }): Promise<unknown>;

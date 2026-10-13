@@ -25,7 +25,7 @@ Rating: **niche**. Linocut or woodblock is named for folk tales (R05); earthy pa
 - **Technique:** Carved line, flat ink areas with rough edges and tiny speckles, 2 or 3 color layers offset slightly
 - **Line:** Thick carved white lines inside dark shapes
 - **Palette:** Forest green, terracotta, mustard, indigo, cream
-- **Composition:** Bold framed scenes, symmetrical or patterned, folk motifs
+- **Composition:** Bold scenes that fill the picture to every edge, symmetrical or patterned, folk motifs
 - **Mood:** Earthy, warm, folk-tale
 - **Era:** Timeless folk print
 
@@ -34,7 +34,7 @@ Rating: **niche**. Linocut or woodblock is named for folk tales (R05); earthy pa
 Passed verbatim to the image model. The pipeline appends the page rules and the IP-safety hardening lines separately.
 
 ```text
-Hand-carved linocut block print illustration, bold flat ink shapes with carved white lines and rough ink speckle, two or three offset color layers, limited earthy palette of forest green, terracotta, mustard and indigo on cream paper, folk-art motifs, characters with simple carved faces and strong silhouettes, framed composition - not photorealistic, no 3D render, no gradients.
+Hand-carved linocut block print illustration, bold flat ink shapes with carved white lines and rough ink speckle, two or three offset color layers, limited earthy palette of forest green, terracotta, mustard and indigo on cream paper, folk-art motifs, characters with simple carved faces and strong silhouettes, bold composition that fills the picture to every edge - not photorealistic, no 3D render, no gradients.
 ```
 
 **Avoid list (negative prompt):**

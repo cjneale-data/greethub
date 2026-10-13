@@ -14,6 +14,7 @@ export type StripeEvent = {
       metadata?: Record<string, string> | null;
       payment_status?: string;
       amount_total?: number | null;
+      total_details?: { amount_tax?: number | null } | null;
       payment_intent?: string | null;
       customer_email?: string | null;
       customer_details?: { email?: string | null } | null;
@@ -30,6 +31,7 @@ export function normalizeStripeEvent(event: StripeEvent): PaymentEvent {
     checkoutId: o.metadata?.checkout_id ?? o.client_reference_id ?? undefined,
     paymentStatus: o.payment_status,
     amountTotalCents: o.amount_total ?? undefined,
+    amountTaxCents: o.total_details?.amount_tax ?? undefined,
     paymentIntentId: o.payment_intent ?? undefined,
     email: o.customer_details?.email ?? o.customer_email ?? undefined,
   };

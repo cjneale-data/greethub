@@ -1,10 +1,10 @@
 # GreetHub Financial Model
 
-Files: `GreetHub_Financial_Model.xlsx` (original, left untouched because the owner had it open in LibreOffice when v2 was built) and `GreetHub_Financial_Model_v2.xlsx` (current; copy it over the original once the lock is released). 36 months from launch month, default Nov 2026. Every output is a live formula. Change a blue cell and everything flows.
+Files: `GreetHub_Financial_Model.xlsx` (original, untouched), `GreetHub_Financial_Model_v2.xlsx` (2026-10-11, kept for comparison) and `GreetHub_Financial_Model_v3.xlsx` (**current**, 2026-10-12). A LibreOffice lock file for the original (dated 2026-10-11 05:08) is still in the folder, so neither earlier file was overwritten. No LibreOffice process was running on 2026-10-12, so the lock is probably stale; the owner can delete it and copy v3 over the original. 36 months from launch month, default Nov 2026. Every output is a live formula. Change a blue cell and everything flows.
 
 Colour code: blue font = input, black = formula, yellow fill = slot for CMO/CTO data. All inputs sit on `Inputs`, with two sanctioned exceptions: the scenario selector (`Scenarios!B3`) and the CTO measured-cost slots on `Model Costs`.
 
-Status labels used in the sheets: SOURCED = from the owner brief, PLAN.md or the CMO csv. ESTIMATE = reasoned from public price lists or the Eye Story build, verify. GUESS = judgement, no data behind it.
+Status labels used in the sheets: SOURCED = from the owner brief, PLAN.md, a vendor price list or a cited benchmark. CMO PLAN = a spend decision, not evidence. The CMO csv is mostly GUESS: only the Google and Meta CPCs are sourced (secondary benchmarks), see `Inputs` column K. ESTIMATE = reasoned from public price lists or the Eye Story build, verify. GUESS = judgement, no data behind it.
 
 ## Sheets
 
@@ -17,6 +17,47 @@ Status labels used in the sheets: SOURCED = from the owner brief, PLAN.md or the
 | Forecast | 36 monthly columns plus Year 1-3. Budget -> channel budgets -> paid visits (budget / CPC) + organic + referral -> sign-ups -> creator starts -> orders (new and repeat) -> items by SKU -> revenue -> COGS (incl. guest previews and abandoned drafts) -> marketing -> opex -> net income -> cash. |
 | Scenarios | Low / Base / High selector (drives every sheet), active lever values, headline KPIs: break-even months, month 12 and 36 revenue and profit, funding need, blended CAC, LTV, LTV:CAC. |
 | Dashboard | KPI block, annual table, contribution margin per SKU, six charts (revenue/profit, cash, orders, visits by source, budget, CM per SKU). |
+
+## v3 update (2026-10-12): what changed
+
+Saved as a new file because of the lock above. Structure and every v2 row are unchanged; three blocks were added. Recalculated in LibreOffice 26.8 headless: 8,811 formula cells, 0 error values.
+
+| Change | Where | Why |
+|---|---|---|
+| CMO csv re-imported (Google CPC $1.60 to $4.14; budgets Google $800, TikTok $300, creators $1,400, SEO $1,200; total still $6.5k) | `Inputs` B57:H62, evidence in K57:K62 | CMO re-based Google CPC (market/02). Most of the csv is guessed; the label now says so. |
+| Creators modelled as fixed plus per-order | `Inputs` B291:B293, `Forecast` rows 87-88 (and row 74 = budget + row 88), `Unit Economics` rows 31-34 | The $1,400 creator line stays as gifts and fees (fixed). New: 10% off plus 10% commission on the discounted merchandise subtotal of attributed new-customer orders = $4.91 per creator order. Creator contribution on a first order falls from $15.20 to $10.29; all-in creator CAC is about $99. |
+| Re-roll input now reaches the measured token cost | `Model Costs` J35:J39, `Inputs` B294 | The CTO totals had 20% re-rolls baked in, so `Inputs` B34/B35 did nothing at 2K. Column J now adds (re-roll - 20%) x (renders - 1) x (render + QA). Re-roll labelled GUESS (n=10), range 20-50%. |
+
+### Readout (Base, Market-adjusted off, core only)
+
+- Break-even: none within 36 months. Month-36 cash -$267k (v2 -$270k). Peak funding need $297k with $30k opening cash. The CMO mix shift (less Google, more SEO) lowers paid CAC from $76 to $70 even at $4.14 Google CPC; creator discount and commission cost about $1k a year.
+- Contribution per item (unchanged): digital card $3.19, mailed card $4.45, digital book $17.18, 24pp book $21.42, 32pp book $27.84; per order $15.20; LTV $26. Paid CAC $70 is 2.7x LTV, so each paid customer loses about $44.
+- Re-roll 50% instead of 20%: -$2.7k of cash over 36 months (token cost is about 6% of a book's variable cost). Not a driver.
+- Full book rendered before every abandoned purchase (today's build, no pay-before-render): -$9.5k over 36 months at modelled volumes. The real exposure is abuse (no per-account cap on unpaid books), which the model does not include.
+
+| Scenario (36 months) | Break-even month | Month-36 cash | Peak funding |
+|---|---:|---:|---:|
+| Base, $6.5k/mo paid | none | -$267k | $297k |
+| $2k/mo paid | none (first profitable month 26) | -$148k | $178k |
+| $0 paid | 24 | -$95k | $134k |
+| Engineering 25% cash (agents build most of it) | none | -$187k | $217k |
+| Books +$5 ($44 / $54 + $5.99 postage) | none | -$248k | $278k |
+| Mailed card $8.99 postage included | none | -$274k | $304k |
+| Mailed card $7.99, free postage | none | -$278k | $308k |
+| Digital book $9.99 | none | -$276k | $306k |
+| Market-adjusted switch on | none | -$276k | $306k |
+| Recommended prices (books +$5, card $8.99 incl. postage, digital book $9.99) + $0 paid + engineering 25% cash | 24 | -$13k | $54k |
+| Same with $2k/mo paid | none | -$65k | $95k |
+| Paid conversion x2 (Base otherwise) | 25 | -$133k | $182k |
+| Low / High | none / 18 | -$359k / -$60k | $389k / $159k |
+
+Digital-book and card price cuts assume no extra volume; the model has no price elasticity, so they show only the margin loss.
+
+### Scale (indicative; the model is linear in demand and has no price elasticity)
+
+- 10x paid spend ($65k/mo) with CPC 1.45x: month-36 cash -$1.6M. 100x with CPC 2x: -$14.5M. Paid acquisition loses more the more you buy, because CAC > LTV at every scale.
+- 10x organic demand with $0 paid: break-even month 6, month-36 cash +$327k (+$388k with a 15% print discount). Fixed costs are small; the business scales only if demand is organic, referral or repeat.
+- Print and shipping are about 80% of a printed book's variable cost; tokens about 6%. Volume print pricing and a second printer move margin; cheaper models barely do.
 
 ## v2 update (2026-10-11): what changed
 
@@ -82,7 +123,7 @@ Not modelled in v2: income tax, working-capital timing, kiosk host fees as a fla
 
 - **CTO**: `finance/measured_costs.json` is pasted into the yellow cells on `Model Costs`: render prices (1K $0.041, 2K $0.0609, 4K $0.1233), QA $0.0025, per-unit text costs, total per SKU with 20% re-rolls (card $0.2479, 24pp book $1.2641, 32pp book $1.6357) and guest preview ($0.0689). A blank yellow cell falls back to the estimate. The 5.5% OpenRouter fee and scenario multiplier are added on top. Status labels on the sheet: MEASURED (per-call prices), EXTRAPOLATED (all per-product totals; no full 24/32-page run exists, the longest real run was 4 art pages at $0.469) and ESTIMATE (intake chat, guest intake, which the CTO has not built). The CTO totals exclude intake chat, so the computed column on the sheet runs about $0.07-0.13 higher per SKU; re-measure once Greet Guide exists.
 - **Image size**: `Model Costs!B5` selects 2K (default) or 4K. 2K is about 280 DPI at card size and 234 DPI at book size, under the usual 300 DPI print norm. The CTO judges 4K (2x cost) not worth it; I have not verified that against Lulu's file validator, so order a physical proof before locking it in. At 4K the contribution per order falls from $15.20 to $14.25 and the 24pp book token cost rises from $1.26 to about $2.44 (CTO's own 4K figure: $2.31, excluding intake).
-- **CMO**: `docs/cmo/channel-assumptions.csv` is already loaded into `Inputs` section 7 (same columns). Paste a new csv over those rows. Budget share is calculated from `monthly_budget_base_usd`. Low scenario uses `cpc_high`, High uses `cpc_low`. Month-1 budget is the sum of channel budgets ($6.5k/mo = $19.5k per 90 days).
+- **CMO**: `docs/cmo/channel-assumptions.csv` (2026-10-12 version, Google CPC $4.14) is loaded into `Inputs` section 7 B57:H62, with its `evidence` column in K57:K62. To update, paste a new csv over those rows in the same channel order. Budget share is calculated from `monthly_budget_base_usd`. Low scenario uses `cpc_high`, High uses `cpc_low`. Month-1 budget is the sum of channel budgets ($6.5k/mo = $19.5k per 90 days).
 
 ## Launch prices (inputs) and reasoning
 
@@ -100,9 +141,9 @@ Printer costs are estimates: verify against live Lulu (8.5x8.5 casewrap hardcove
 
 Ranges are printed beside each input on `Inputs` (column E). Summary of what is sourced versus guessed:
 
-- **Sourced**: Stripe 2.9% + $0.30; launch month and 90-day budget (CMO); channel budgets/CPC/CTR/conversion (CMO csv, but the CMO labels every value a guess); per-call image, QA and text costs (CTO ledger, `measured_costs.json`; Eye Story ~$0.11 per 4K-class render was the earlier estimate); Sonnet token prices (list price, verify).
-- **Estimates to verify**: all print and shipping costs; OpenRouter 5.5% fee; vendor plan prices (Vercel, Supabase, Resend, Sentry, Stripe Tax 0.5%); intake-chat tokens; full-book totals (extrapolated); re-roll rate (CTO planning figure 20%, small sample).
-- **Pure guesses**: organic traffic and growth, referral visits, guest-try rate, sign-up/start/purchase rates for organic, product mix, repeat rate, refund/reprint rate, seasonality indices, insurance/legal/support costs, one-time costs, opening cash, scenario multipliers.
+- **Sourced**: Stripe 2.9% + $0.30; launch month (CMO); Google CPC $4.14 and Meta CPC $0.85 (secondary benchmarks via market/02); per-call image, QA and text costs (CTO ledger, `measured_costs.json`; Eye Story ~$0.11 per 4K-class render was the earlier estimate); Sonnet token prices (list price, verify).
+- **Estimates to verify**: all print and shipping costs; OpenRouter 5.5% fee; vendor plan prices (Vercel, Supabase, Resend, Sentry, Stripe Tax 0.5%); intake-chat tokens; full-book totals (extrapolated); re-roll rate (moved to guesses below).
+- **Pure guesses**: re-roll rate (20% base, test 50%: 10 first-attempt renders, 5 passed, 95% CI 24-76%); every channel CTR and conversion rate and the Pinterest, TikTok, creator and SEO CPCs (CMO csv `evidence` column); channel budgets are a CMO spend decision; creator 10% discount and 10% commission (Social proposal); organic traffic and growth, referral visits, guest-try rate, sign-up/start/purchase rates for organic, product mix, repeat rate, refund/reprint rate, seasonality indices, insurance/legal/support costs, one-time costs, opening cash, scenario multipliers.
 - Not modelled: income tax, sales tax (pass-through), working-capital timing of payouts, founder pay (an input, default $0).
 
 ## Verification

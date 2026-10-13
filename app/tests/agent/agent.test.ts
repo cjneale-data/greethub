@@ -110,6 +110,25 @@ describe("MCP endpoint", () => {
     mem.addGrant(grant({ revokedAt: "2026-02-01T00:00:00Z" }));
     expect((await rpc("tools/list")).status).toBe(401);
   });
+  const post = (body: string) => handleMcpPost(new Request("http://x/api/mcp", { method: "POST", headers: { "content-type": "application/json", authorization: "Bearer good" }, body }));
+  it("refuses JSON-RPC batches and oversized bodies without a content-length", async () => {
+    const batch = await post(JSON.stringify([{ jsonrpc: "2.0", id: 1, method: "ping" }, { jsonrpc: "2.0", id: 2, method: "ping" }]));
+    expect(batch.status).toBe(400);
+    const big = await post(JSON.stringify({ jsonrpc: "2.0", id: 1, method: "ping", params: { pad: "x".repeat(300_000) } }));
+    expect(big.status).toBe(413);
+    expect((await post(JSON.stringify({ jsonrpc: "2.0", method: "notifications/initialized" }))).status).toBe(202);
+  });
+  it("get_account_limits reports a user pause and ignores autonomy still in cooling-off", async () => {
+    mem.kill.paused.add("u_1");
+    mem.addGrant(grant({ mode: "autonomous", autonomyEnabledAt: new Date().toISOString() }));
+    const out = await callTool(principalOf(grant()), "get_account_limits", {}, mem.deps);
+    // A paused user is denied by policy before the handler runs; check the handler view with the pause lifted.
+    expect(!out.ok && out.error.code).toBe("service_busy");
+    mem.kill.paused.delete("u_1");
+    const ok = await callTool(principalOf(grant({ mode: "autonomous", autonomyEnabledAt: new Date().toISOString() })), "get_account_limits", {}, mem.deps);
+    expect(ok.ok && ok.data.autonomyEnabled).toBe(false);
+    expect(ok.ok && ok.data.paused).toBe(false);
+  });
 });
 
 describe("REST endpoint", () => {

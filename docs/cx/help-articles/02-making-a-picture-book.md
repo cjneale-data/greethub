@@ -11,7 +11,7 @@ A hardcover book, 8.5 by 8.5 inches, 24 or 32 pages, with your people drawn as c
 3. **The story.** We write a draft. Change any words you like. Nothing is final until you approve it.
 4. **The characters.** We draw a character sheet for each person. **Check that it looks like them before we draw the pages.** You get free redos. This is the best moment to fix a face.
 5. **The pages.** We draw every page. This takes about {render_minutes} minutes. You can close the tab; we email you when it's ready.
-6. **Your proof.** Look through every page. Fix a title or dedication. Redraw a page you don't like (you get a few each month). Then approve it and add it to your cart.
+6. **Your proof.** Look through every page. Fix the title. Redraw a page you don't like (each book has 3 redraws). Then approve it and add it to your cart.
 
 ## How long does it take?
 

@@ -34,7 +34,8 @@ export async function handleRestCall(req: Request, toolName: string): Promise<Re
   } catch {
     return Response.json({ error: toolError("validation_failed", "Body must be JSON.") }, { status: 400, headers });
   }
-  const out = await callTool(auth.principal, toolName, body, deps, req.headers.get("x-request-id") ?? undefined);
+  const rid = req.headers.get("x-request-id");
+  const out = await callTool(auth.principal, toolName, body, deps, rid && /^[A-Za-z0-9._:-]{1,128}$/.test(rid) ? rid : undefined);
   if (out.ok) return Response.json(out.data, { headers });
   const status = out.error.code === "validation_failed" ? 400 : HTTP_STATUS[out.error.code];
   return Response.json({ error: out.error }, { status, headers: { ...headers, ...(out.error.retryAfterSeconds ? { "Retry-After": String(out.error.retryAfterSeconds) } : {}) } });

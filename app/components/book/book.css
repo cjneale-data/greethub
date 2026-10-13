@@ -38,7 +38,7 @@
 /* checkbox */
 .gb-check { display: flex; gap: var(--gh-s-3); align-items: flex-start; cursor: pointer; font-size: 15px; line-height: 1.45; min-height: 44px; padding: var(--gh-s-2) 0; }
 .gb-check input { position: absolute; opacity: 0; width: 44px; height: 44px; margin: -10px 0 0 -10px; cursor: pointer; }
-.gb-check__box { flex: none; width: 24px; height: 24px; margin-top: 1px; border: 1.5px solid var(--gh-twine); border-radius: var(--gh-r-sm); background: var(--gh-white); display: inline-flex; align-items: center; justify-content: center; color: transparent; transition: background 0.15s var(--gh-ease); }
+.gb-check__box { flex: none; width: 24px; height: 24px; margin-top: 1px; border: 1.5px solid var(--gh-control-border); border-radius: var(--gh-r-sm); background: var(--gh-white); display: inline-flex; align-items: center; justify-content: center; color: transparent; transition: background 0.15s var(--gh-ease); }
 .gb-check input:checked + .gb-check__box { background: var(--gh-persimmon-tint); border-color: var(--gh-persimmon-ink); color: var(--gh-persimmon-ink); }
 .gb-check input:focus-visible + .gb-check__box { box-shadow: var(--gh-focus-ring); }
 .gb-check--disabled { opacity: 0.55; cursor: not-allowed; }
@@ -46,7 +46,7 @@
 /* brief step */
 .gb-grid2 { display: grid; gap: var(--gh-s-4); grid-template-columns: 1fr; }
 .gb-styles { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gh-s-3); }
-.gb-style { border: 1.5px solid var(--gh-twine); background: var(--gh-white); border-radius: var(--gh-r-md); padding: var(--gh-s-2); display: flex; flex-direction: column; gap: var(--gh-s-2); cursor: pointer; font: inherit; color: inherit; text-align: left; min-height: 44px; }
+.gb-style { border: 1.5px solid var(--gh-control-border); background: var(--gh-white); border-radius: var(--gh-r-md); padding: var(--gh-s-2); display: flex; flex-direction: column; gap: var(--gh-s-2); cursor: pointer; font: inherit; color: inherit; text-align: left; min-height: 44px; }
 .gb-style[aria-pressed="true"] { border-color: var(--gh-cocoa); box-shadow: 0 0 0 2px var(--gh-cocoa); }
 .gb-style:focus-visible { outline: none; box-shadow: var(--gh-focus-ring); }
 .gb-style__swatch { aspect-ratio: 16 / 9; border-radius: var(--gh-r-sm); }
@@ -60,7 +60,7 @@
 .gb-draft { display: flex; align-items: center; justify-content: space-between; gap: var(--gh-s-3); flex-wrap: wrap; }
 
 /* photos */
-.gb-drop { border: 1.5px dashed var(--gh-twine); border-radius: var(--gh-r-md); background: var(--gh-paper); padding: var(--gh-s-4); display: flex; flex-direction: column; align-items: center; gap: var(--gh-s-2); text-align: center; min-height: 96px; justify-content: center; cursor: pointer; font: inherit; color: inherit; width: 100%; }
+.gb-drop { border: 1.5px dashed var(--gh-control-border); border-radius: var(--gh-r-md); background: var(--gh-paper); padding: var(--gh-s-4); display: flex; flex-direction: column; align-items: center; gap: var(--gh-s-2); text-align: center; min-height: 96px; justify-content: center; cursor: pointer; font: inherit; color: inherit; width: 100%; }
 .gb-drop:hover:not(:disabled), .gb-drop[data-over="true"] { background: var(--gh-cream); border-color: var(--gh-cocoa-70); }
 .gb-drop:disabled { opacity: 0.55; cursor: not-allowed; }
 .gb-drop:focus-visible { outline: none; box-shadow: var(--gh-focus-ring); }
