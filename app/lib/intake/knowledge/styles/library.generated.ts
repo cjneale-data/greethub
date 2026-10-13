@@ -399,8 +399,8 @@ export const STYLE_LIBRARY: StyleEntry[] = [
     },
     "thumbnail": {
       "file": "ink_wash.jpg",
-      "rendered": false,
-      "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      "rendered": true,
+      "note": "Rendered 2026-10-13 at 1K (site-art-v1, best of 3). Sample of the style, not yet reviewed against a print proof."
     }
   },
   {
@@ -559,8 +559,8 @@ export const STYLE_LIBRARY: StyleEntry[] = [
     },
     "thumbnail": {
       "file": "pastel_chalk.jpg",
-      "rendered": false,
-      "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      "rendered": true,
+      "note": "Rendered 2026-10-13 at 1K (site-art-v1, best of 3). Sample of the style, not yet reviewed against a print proof."
     }
   },
   {
@@ -887,8 +887,8 @@ export const STYLE_LIBRARY: StyleEntry[] = [
     },
     "thumbnail": {
       "file": "vintage_storybook.jpg",
-      "rendered": false,
-      "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      "rendered": true,
+      "note": "Rendered 2026-10-13 at 1K (site-art-v1, best of 3). Sample of the style, not yet reviewed against a print proof."
     }
   },
   {
@@ -1043,8 +1043,8 @@ export const STYLE_LIBRARY: StyleEntry[] = [
     },
     "thumbnail": {
       "file": "moonlit_night.jpg",
-      "rendered": false,
-      "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      "rendered": true,
+      "note": "Rendered 2026-10-13 at 1K (site-art-v1, best of 3). Sample of the style, not yet reviewed against a print proof."
     }
   },
   {
@@ -1381,8 +1381,8 @@ export const STYLE_LIBRARY: StyleEntry[] = [
     },
     "thumbnail": {
       "file": "flat_vector_friendly.jpg",
-      "rendered": false,
-      "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      "rendered": true,
+      "note": "Rendered 2026-10-13 at 1K (site-art-v1, best of 3). Sample of the style, not yet reviewed against a print proof."
     }
   },
   {
@@ -1543,8 +1543,8 @@ export const STYLE_LIBRARY: StyleEntry[] = [
     },
     "thumbnail": {
       "file": "comic_panel.jpg",
-      "rendered": false,
-      "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      "rendered": true,
+      "note": "Rendered 2026-10-13 at 1K (site-art-v1, best of 3). Sample of the style, not yet reviewed against a print proof."
     }
   },
   {
@@ -1871,8 +1871,8 @@ export const STYLE_LIBRARY: StyleEntry[] = [
     },
     "thumbnail": {
       "file": "felt_thread.jpg",
-      "rendered": false,
-      "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      "rendered": true,
+      "note": "Rendered 2026-10-13 at 1K (site-art-v1, best of 3). Sample of the style, not yet reviewed against a print proof."
     }
   },
   {
@@ -2028,8 +2028,8 @@ export const STYLE_LIBRARY: StyleEntry[] = [
     },
     "thumbnail": {
       "file": "clay_stopmotion.jpg",
-      "rendered": false,
-      "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      "rendered": true,
+      "note": "Rendered 2026-10-13 at 1K (site-art-v1, best of 3). Sample of the style, not yet reviewed against a print proof."
     }
   },
   {
@@ -2345,8 +2345,8 @@ export const STYLE_LIBRARY: StyleEntry[] = [
     },
     "thumbnail": {
       "file": "block_print.jpg",
-      "rendered": false,
-      "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      "rendered": true,
+      "note": "Rendered 2026-10-13 at 1K (site-art-v1, best of 3). Sample of the style, not yet reviewed against a print proof."
     }
   },
   {
@@ -2675,8 +2675,8 @@ export const STYLE_LIBRARY: StyleEntry[] = [
     },
     "thumbnail": {
       "file": "wonky_ink_cartoon.jpg",
-      "rendered": false,
-      "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      "rendered": true,
+      "note": "Rendered 2026-10-13 at 1K (site-art-v1, best of 3). Sample of the style, not yet reviewed against a print proof."
     }
   },
   {
@@ -3341,8 +3341,8 @@ export const STYLE_LIBRARY: StyleEntry[] = [
     },
     "thumbnail": {
       "file": "cinematic_photoreal.jpg",
-      "rendered": false,
-      "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      "rendered": true,
+      "note": "Rendered 2026-10-13 at 1K (site-art-v1, best of 3). Sample of the style, not yet reviewed against a print proof."
     }
   },
   {
@@ -3659,8 +3659,8 @@ export const STYLE_LIBRARY: StyleEntry[] = [
     },
     "thumbnail": {
       "file": "botanical_gouache.jpg",
-      "rendered": false,
-      "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      "rendered": true,
+      "note": "Rendered 2026-10-13 at 1K (site-art-v1, best of 3). Sample of the style, not yet reviewed against a print proof."
     }
   },
   {
@@ -3823,8 +3823,8 @@ export const STYLE_LIBRARY: StyleEntry[] = [
     },
     "thumbnail": {
       "file": "hand_lettered_type.jpg",
-      "rendered": false,
-      "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      "rendered": true,
+      "note": "Rendered 2026-10-13 at 1K (site-art-v1, best of 3). Sample of the style, not yet reviewed against a print proof."
     }
   },
   {
@@ -4137,8 +4137,8 @@ export const STYLE_LIBRARY: StyleEntry[] = [
     },
     "thumbnail": {
       "file": "deco_geometric.jpg",
-      "rendered": false,
-      "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      "rendered": true,
+      "note": "Rendered 2026-10-13 at 1K (site-art-v1, best of 3). Sample of the style, not yet reviewed against a print proof."
     }
   },
   {
@@ -4294,8 +4294,8 @@ export const STYLE_LIBRARY: StyleEntry[] = [
     },
     "thumbnail": {
       "file": "maximalist_pattern.jpg",
-      "rendered": false,
-      "note": "Not rendered (budget): generated swatch placeholder, not a real sample of this style."
+      "rendered": true,
+      "note": "Rendered 2026-10-13 at 1K (site-art-v1, best of 3). Sample of the style, not yet reviewed against a print proof."
     }
   }
 ];

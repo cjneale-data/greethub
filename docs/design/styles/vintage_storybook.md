@@ -124,4 +124,4 @@ Display Bricolage Grotesque 700, text Figtree 400. Text colour `#2B1E18`, paper 
 
 ## Thumbnail
 
-Not rendered (budget): generated swatch placeholder, not a real sample of this style.
+Rendered sample: `docs/design/samples/vintage_storybook.jpg` (copied to `app/public/styles/`). Rendered 2026-10-13 at 1K (site-art-v1, best of 3). Sample of the style, not yet reviewed against a print proof.

@@ -153,7 +153,7 @@ export const PICKER_STYLES: PickerStyle[] = [
     "popularity": "medium",
     "thumbnail": {
       "file": "ink_wash.jpg",
-      "rendered": false
+      "rendered": true
     }
   },
   {
@@ -196,7 +196,7 @@ export const PICKER_STYLES: PickerStyle[] = [
     "popularity": "medium",
     "thumbnail": {
       "file": "pastel_chalk.jpg",
-      "rendered": false
+      "rendered": true
     }
   },
   {
@@ -286,7 +286,7 @@ export const PICKER_STYLES: PickerStyle[] = [
     "popularity": "medium",
     "thumbnail": {
       "file": "vintage_storybook.jpg",
-      "rendered": false
+      "rendered": true
     }
   },
   {
@@ -330,7 +330,7 @@ export const PICKER_STYLES: PickerStyle[] = [
     "popularity": "niche",
     "thumbnail": {
       "file": "moonlit_night.jpg",
-      "rendered": false
+      "rendered": true
     }
   },
   {
@@ -422,7 +422,7 @@ export const PICKER_STYLES: PickerStyle[] = [
     "popularity": "high",
     "thumbnail": {
       "file": "flat_vector_friendly.jpg",
-      "rendered": false
+      "rendered": true
     }
   },
   {
@@ -466,7 +466,7 @@ export const PICKER_STYLES: PickerStyle[] = [
     "popularity": "niche",
     "thumbnail": {
       "file": "comic_panel.jpg",
-      "rendered": false
+      "rendered": true
     }
   },
   {
@@ -557,7 +557,7 @@ export const PICKER_STYLES: PickerStyle[] = [
     "popularity": "niche",
     "thumbnail": {
       "file": "felt_thread.jpg",
-      "rendered": false
+      "rendered": true
     }
   },
   {
@@ -601,7 +601,7 @@ export const PICKER_STYLES: PickerStyle[] = [
     "popularity": "niche",
     "thumbnail": {
       "file": "clay_stopmotion.jpg",
-      "rendered": false
+      "rendered": true
     }
   },
   {
@@ -693,7 +693,7 @@ export const PICKER_STYLES: PickerStyle[] = [
     "popularity": "niche",
     "thumbnail": {
       "file": "block_print.jpg",
-      "rendered": false
+      "rendered": true
     }
   },
   {
@@ -782,7 +782,7 @@ export const PICKER_STYLES: PickerStyle[] = [
     "popularity": "medium",
     "thumbnail": {
       "file": "wonky_ink_cartoon.jpg",
-      "rendered": false
+      "rendered": true
     }
   },
   {
@@ -963,7 +963,7 @@ export const PICKER_STYLES: PickerStyle[] = [
     "popularity": "niche",
     "thumbnail": {
       "file": "cinematic_photoreal.jpg",
-      "rendered": false
+      "rendered": true
     }
   },
   {
@@ -1053,7 +1053,7 @@ export const PICKER_STYLES: PickerStyle[] = [
     "popularity": "high",
     "thumbnail": {
       "file": "botanical_gouache.jpg",
-      "rendered": false
+      "rendered": true
     }
   },
   {
@@ -1099,7 +1099,7 @@ export const PICKER_STYLES: PickerStyle[] = [
     "popularity": "high",
     "thumbnail": {
       "file": "hand_lettered_type.jpg",
-      "rendered": false
+      "rendered": true
     }
   },
   {
@@ -1185,7 +1185,7 @@ export const PICKER_STYLES: PickerStyle[] = [
     "popularity": "medium",
     "thumbnail": {
       "file": "deco_geometric.jpg",
-      "rendered": false
+      "rendered": true
     }
   },
   {
@@ -1228,7 +1228,7 @@ export const PICKER_STYLES: PickerStyle[] = [
     "popularity": "emerging",
     "thumbnail": {
       "file": "maximalist_pattern.jpg",
-      "rendered": false
+      "rendered": true
     }
   }
 ];

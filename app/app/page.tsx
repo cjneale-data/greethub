@@ -7,6 +7,7 @@ import { ShopShell } from "@/components/shop/ShopShell";
 import { SkeletonList } from "@/components/shop/ui";
 import { priceTokens } from "@greethub/shared";
 import { pageMetadata } from "@/lib/seo";
+import { templateImage } from "@/lib/shop/templates";
 
 export const metadata = pageMetadata({
   title: "GreetHub — cards and picture books that sound like you",
@@ -40,10 +41,12 @@ export default function Home() {
         </div>
         <div className="gh-hero__pile" aria-hidden="true">
           <div className="gh-hero__card gh-hero__card--a">
-            <div className="gh-placeholder" style={{ "--a": "#F5B83D", "--b": "#F8C964" } as React.CSSProperties}>family photo card</div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={templateImage("night-the-moon-came-down", 1200)} alt="" />
           </div>
           <div className="gh-hero__card gh-hero__card--b">
-            <div className="gh-placeholder" style={{ "--a": "#F6C9C0", "--b": "#F9D7D0", color: "#5B2A4B" } as React.CSSProperties}>birthday card cover</div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={templateImage("big-birthday", 1200)} alt="" />
           </div>
           <span className="gh-hero__sticker">Love, Maya</span>
         </div>
