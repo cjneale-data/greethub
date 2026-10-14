@@ -14,12 +14,12 @@ export class MembershipError extends Error {
 }
 
 /**
- * On in local dev, tests and opted-in previews; in production only when the owner sets GREETHUB_MEMBERSHIP=1 (after the
- * attorney's auto-renewal review, docs/finance/membership-plan.md). While off, everyone gets LAUNCH_FEATURES: nothing
- * is gated and nothing can be bought.
+ * On in local dev and tests; in any production build (including previews that allow fake payments) only when the owner
+ * sets GREETHUB_MEMBERSHIP=1, after the attorney's auto-renewal review (docs/finance/membership-plan.md). While off,
+ * everyone gets LAUNCH_FEATURES: nothing is gated and nothing can be bought.
  */
 export const membershipEnabled = (env: NodeJS.ProcessEnv = process.env) =>
-  env.GREETHUB_MEMBERSHIP === "1" || (env.GREETHUB_MEMBERSHIP !== "0" && (env.NODE_ENV !== "production" || env.GREETHUB_ALLOW_FAKE === "1"));
+  env.GREETHUB_MEMBERSHIP === "1" || (env.GREETHUB_MEMBERSHIP !== "0" && env.NODE_ENV !== "production");
 
 const iso = (d: Date) => d.toISOString();
 const monthKey = (d = new Date()) => d.toISOString().slice(0, 7);
