@@ -10,7 +10,8 @@ const REQUIRED: (keyof Address)[] = ["name", "line1", "city", "region", "postalC
 /** Quick client-side check so people see problems before a round trip. The server re-validates everything. */
 export function quickErrors(a: AddressDraft): Record<string, string> {
   const e: Record<string, string> = {};
-  for (const k of REQUIRED) if (!a[k]?.trim()) e[k] = "Required";
+  const NEEDS: Record<string, string> = { name: "Add the name on the envelope.", line1: "Add the street address.", city: "Add the city.", region: "Add the state.", postalCode: "Add the ZIP code." };
+  for (const k of REQUIRED) if (!a[k]?.trim()) e[k] = NEEDS[k] ?? "Add this.";
   if (a.line1 && /\bp\.?\s*o\.?\s*box\b/i.test(a.line1)) e.line1 = "We can't ship to PO boxes. Use a street address.";
   if ((a.country || "US") === "US" && a.postalCode?.trim() && !/^\d{5}(-\d{4})?$/.test(a.postalCode.trim())) e.postalCode = "We can't find that address. Check the ZIP code and street.";
   return e;

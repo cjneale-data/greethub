@@ -1,4 +1,6 @@
-import { SiteNav } from "@/components/brand";
+import { Suspense } from "react";
+import { ShopNav } from "@/components/shop/ShopNav";
+import "@/components/shop/shop.css";
 import { BookCreator } from "@/components/book/BookCreator";
 import { pageMetadata } from "@/lib/seo";
 
@@ -12,7 +14,9 @@ export const metadata = pageMetadata({
 export default function Page() {
   return (
     <>
-      <SiteNav />
+      <Suspense>
+        <ShopNav />
+      </Suspense>
       <main id="main" tabIndex={-1}>
         <BookCreator />
       </main>

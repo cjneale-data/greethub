@@ -6,6 +6,7 @@ import { isTerminal } from "./orderState";
 import { scrubOrder } from "./orderService";
 import { validateAddress } from "./address";
 import { deleteWriting, exportWriting } from "../writing/service";
+import { deleteMembership, exportMembership } from "../membership/service";
 import type { Draft, Order, Person, SavedAddress, UserRecord } from "./types";
 
 /* ---------- profile ---------- */
@@ -150,6 +151,7 @@ export async function exportUserData(userId: string) {
     listOrders(userId),
     exportWriting(userId),
   ]);
+  const membership = await exportMembership(userId);
   return {
     exportedAt: new Date().toISOString(),
     profile: profile ?? null,
@@ -159,6 +161,7 @@ export async function exportUserData(userId: string) {
     cart: cart ?? [],
     orders,
     handwritingAndSignatures: writing,
+    membership,
   };
 }
 
@@ -168,6 +171,7 @@ export async function deleteAccount(userId: string): Promise<{ email?: string; f
   const store = docs();
   const u = await store.get("users", userId);
   const who = { email: u?.email, firstName: u?.firstName };
+  await deleteMembership(userId); // stop any subscription billing before anything else goes
   await deleteWriting(userId); // signature and handwriting images first: they are private files, not just rows
   await Promise.all((["users", "carts", "addresses", "drafts", "people"] as const).map((c) => store.remove(c, userId)));
   await store.removeByOwner("delete_tokens", userId);

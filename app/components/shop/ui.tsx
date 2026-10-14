@@ -19,17 +19,25 @@ export function SkeletonList({ rows = 3, h = 96 }: { rows?: number; h?: number }
   );
 }
 
-export function EmptyState({ message, actions }: { message: string; actions?: { label: string; href: string; variant?: "primary" | "secondary" | "dark" }[] }) {
+type EmptyAction = { label: string; variant?: "primary" | "secondary" | "dark" } & ({ href: string; onClick?: never } | { onClick: () => void; href?: never });
+
+export function EmptyState({ message, actions }: { message: string; actions?: EmptyAction[] }) {
   return (
     <div className="gs-empty">
       <p>{message}</p>
       {actions && (
         <div className="gs-row">
-          {actions.map((a) => (
-            <ButtonLink key={a.href + a.label} href={a.href} variant={a.variant ?? "secondary"}>
-              {a.label}
-            </ButtonLink>
-          ))}
+          {actions.map((a) =>
+            a.onClick ? (
+              <Button key={a.label} variant={a.variant ?? "secondary"} onClick={a.onClick}>
+                {a.label}
+              </Button>
+            ) : (
+              <ButtonLink key={a.href + a.label} href={a.href} variant={a.variant ?? "secondary"}>
+                {a.label}
+              </ButtonLink>
+            ),
+          )}
         </div>
       )}
     </div>
@@ -55,7 +63,16 @@ export function Modal({ title, children, actions, onClose }: { title: string; ch
   useEffect(() => {
     const prev = document.activeElement as HTMLElement | null;
     ref.current?.querySelector<HTMLElement>("input,button,select,textarea")?.focus();
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    // Escape closes; Tab stays inside the dialog (WAI-ARIA modal pattern, CX P1-4).
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") return onClose();
+      if (e.key !== "Tab" || !ref.current) return;
+      const els = [...ref.current.querySelectorAll<HTMLElement>('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')];
+      if (!els.length) return;
+      const first = els[0], last = els[els.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    };
     window.addEventListener("keydown", onKey);
     return () => {
       window.removeEventListener("keydown", onKey);
@@ -65,7 +82,10 @@ export function Modal({ title, children, actions, onClose }: { title: string; ch
   return (
     <div className="gs-scrim" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div className="gs-modal" role="dialog" aria-modal="true" aria-labelledby={id} ref={ref}>
-        <h2 id={id}>{title}</h2>
+        <div className="gs-row gs-row--between" style={{ alignItems: "flex-start" }}>
+          <h2 id={id}>{title}</h2>
+          <button type="button" className="gs-modal__close" aria-label="Close" onClick={onClose}>×</button>
+        </div>
         {children}
         <div className="gs-modal__actions">{actions}</div>
       </div>

@@ -41,6 +41,9 @@ export default function PricingPage() {
         <p className="gs-muted gs-small" style={{ margin: 0 }}>
           Prices don&apos;t include tax. Tax is worked out at checkout. Faster shipping is {formatMoney(PRICING.shippingMethods.express.extraCents)} more per order. We ship to the US to start. The art is drawn by AI and you always see it before it prints.
         </p>
+        <p className="gs-muted" style={{ margin: 0 }}>
+          <strong>Want cards in your own handwriting?</strong> That comes with GreetHub Plus. <Link className="gs-link" href="/membership">See membership</Link>.
+        </p>
         <div>
           <h2 className="gs-h3">If it&apos;s not right</h2>
           <p className="gs-muted" style={{ margin: 0 }}>

@@ -1,5 +1,6 @@
 import type { CartItem } from "@greethub/shared";
 import type { WritingProfile } from "../writing/types";
+import type { MembershipRecord } from "../membership/types";
 import type { ContentReport, Draft, Order, OutboxMessage, PendingCheckout, Person, SavedAddress, UserRecord } from "../shop/types";
 
 /**
@@ -16,6 +17,7 @@ export type Docs = {
   drafts: Draft[];
   people: Person[];
   writing: WritingProfile;
+  memberships: MembershipRecord;
   checkouts: PendingCheckout;
   orders: Order;
   processed_events: { at: string };
@@ -35,6 +37,8 @@ export const INDEX: { [C in Collection]: (doc: Docs[C], id: string) => { owner?:
   drafts: (_d, id) => ({ owner: id }),
   people: (_d, id) => ({ owner: id }),
   writing: (_d, id) => ({ owner: id }),
+  // refs: the Stripe customer and subscription ids, so webhooks find the member.
+  memberships: (d, id) => ({ owner: id, refs: [d.stripeCustomerId ?? "", d.stripeSubscriptionId ?? ""].filter(Boolean) }),
   checkouts: (d) => ({ owner: d.userId, refs: d.sessionId ? [d.sessionId] : [] }),
   orders: (d) => ({ owner: d.userId, refs: [d.stripeSessionId, ...d.items.map((i) => i.fulfillment?.externalId ?? "")].filter(Boolean) }),
   processed_events: () => ({}),
