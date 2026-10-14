@@ -119,6 +119,8 @@ export type BookProject = {
   /** Order of art pages, e.g. cover, p1..pN, back. */
   artOrder: string[];
   rerollsUsed: number;
+  /** Page redraws this book allows, fixed from the owner's plan when it was created. Absent on older books: REROLL_ALLOWANCE. */
+  rerollAllowance?: number;
   /** Job ids already merged into this project. */
   mergedJobIds: string[];
   activeJobId?: string;

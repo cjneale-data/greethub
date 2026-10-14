@@ -7,6 +7,7 @@ import { screenFields } from "../safety/server";
 import { checkSensitive } from "../intake/guardrails";
 import type { IpInput } from "../safety/types";
 import { MAX_PHOTOS_PER_CHARACTER, MAX_PHOTO_BYTES, MIN_PHOTO_SHORT_EDGE, PHOTO_RETENTION_DAYS, REROLL_ALLOWANCE, SHEET_FREE_REDOS } from "./constants";
+import { featuresFor } from "../membership/service";
 import { projectSpendCapUsd, spreadsOverride } from "./config";
 import { artPlan } from "./engine/runner";
 import { extFor, readImageInfo } from "./imageInfo";
@@ -243,7 +244,7 @@ export async function viewOf(d: Deps, p: BookProject): Promise<ProjectView> {
     consent: consent ? (({ ip: _ip, userAgent: _ua, ...safe }) => safe)(consent) : undefined,
     photos: photos.map((x) => ({ id: x.id, characterId: x.characterId, width: x.width, height: x.height })),
     job: job ? toPublicJob(job) : undefined,
-    rerollsLeft: Math.max(0, REROLL_ALLOWANCE - p.rerollsUsed),
+    rerollsLeft: Math.max(0, (p.rerollAllowance ?? REROLL_ALLOWANCE) - p.rerollsUsed),
     sheetFreeRedosLeft: Math.max(0, SHEET_FREE_REDOS - p.sheet.freeRedosUsed),
   };
 }
@@ -271,6 +272,7 @@ export async function createProject(d: Deps, userId: string, brief: BriefForm): 
   assertValidBrief(cleaned);
   const { value: b, notes } = await screenBrief(d, cleaned);
   const p = emptyProject(d, userId, b);
+  p.rerollAllowance = (await featuresFor(userId)).book_page_redraws_per_book;
   await d.projects.put(p);
   return withNotes(await viewOf(d, p), notes);
 }
@@ -577,7 +579,7 @@ export async function generateSheet(d: Deps, userId: string, id: string, opts: {
     let charge: Job["charge"];
     if (redo) {
       if (p.sheet.freeRedosUsed < SHEET_FREE_REDOS) charge = "free_redo";
-      else if (p.rerollsUsed < REROLL_ALLOWANCE) charge = "reroll";
+      else if (p.rerollsUsed < (p.rerollAllowance ?? REROLL_ALLOWANCE)) charge = "reroll";
       else throw new BookError(402, "no_rerolls", "No redraws left on this book.");
     }
     return {
@@ -629,7 +631,7 @@ export async function rerollPage(d: Deps, userId: string, id: string, pageId: st
   if (cur.proof.approved) throw new BookError(409, "locked", "This book is approved.");
   const free = art.status === "failed" && art.versions.length === 0; // retry of a page that never drew costs nothing
   if (!free && art.status !== "done") throw new BookError(409, "busy", "That page is still being drawn.");
-  if (!free && cur.rerollsUsed >= REROLL_ALLOWANCE) throw new BookError(402, "no_rerolls", "No redraws left on this book.");
+  if (!free && cur.rerollsUsed >= (cur.rerollAllowance ?? REROLL_ALLOWANCE)) throw new BookError(402, "no_rerolls", "No redraws left on this book.");
   const rn = await screenTexts(d, [{ key: "note", text: (note ?? "").trim().slice(0, 300), field: "reroll_note" }], [cur.brief.recipientName, ...cur.brief.characters.map((c) => c.name)]);
   const cleanNote = rn.out.note;
   return startJob(d, userId, id, free ? "pages" : "reroll", (p) => ({

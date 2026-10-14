@@ -7,6 +7,7 @@ import { sendNeedsAttention, sendOrderConfirmed, sendShipped } from "./mail";
 import { fakeAllowed } from "./policies";
 import { findCheckoutBySession } from "./checkoutService";
 import type { Order, OrderItem, PendingCheckout } from "./types";
+import { applySubscriptionEvent, isSubscriptionEvent, type StripeSubscription } from "../membership/service";
 
 /* ---------- building an order from a paid checkout ---------- */
 
@@ -291,6 +292,11 @@ export async function handlePaymentWebhook(rawBody: string, signature: string | 
     await store.insertIfAbsent("processed_events", ev.id, { at: new Date().toISOString() });
     return { status: 200, body: { received: true, ...body } };
   };
+
+  // Membership subscriptions share this endpoint (lib/membership). Their checkout sessions are not orders.
+  const obj = (JSON.parse(rawBody) as { data?: { object?: Record<string, unknown> } }).data?.object ?? {};
+  if (isSubscriptionEvent(ev.type)) return done(await applySubscriptionEvent(ev.type, obj as unknown as StripeSubscription));
+  if (obj.mode === "subscription") return done({ membershipCheckout: true });
 
   if (ev.type !== "checkout.session.completed" && ev.type !== "checkout.session.async_payment_succeeded") {
     return done({ ignored: ev.type });

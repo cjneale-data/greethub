@@ -7,6 +7,7 @@ import {
 } from "@greethub/shared";
 import { checkText } from "@/lib/intake/guardrails";
 import { onRadioKeys, rovingTab } from "./radioKeys";
+import { useMembership } from "@/components/membership/useMembership";
 import { signatureImageUrl, useWriting } from "./useWriting";
 import "./writing.css";
 
@@ -20,6 +21,10 @@ export function WritingPicker({ value, onChange, signoff }: { value?: CardWritin
   const w: CardWritingInput = value ?? { message: "typed", signature: { kind: "none" } };
   const handwritten = w.message === "handwritten";
   const sig = w.signature ?? { kind: "none" };
+  const { state: plan } = useMembership();
+  // While the plan view loads, nothing is locked; the server enforces the same limits regardless.
+  const ownPrint = plan.status !== "ready" || !!plan.view.features.own_handwriting_print;
+  const savedOk = plan.status !== "ready" || Number(plan.view.features.saved_signatures) > 0;
   const [typedName, setTypedName] = useState(sig.kind === "typed" ? sig.text : (signoff ?? "").replace(/^(love|with love|cheers|best|xo+|from)[,!]?\s*/i, ""));
   const nameVerdict = typedName.trim() ? checkText(typedName, { nameLike: true }) : null;
   const set = (patch: Partial<CardWritingInput>) => {
@@ -30,7 +35,7 @@ export function WritingPicker({ value, onChange, signoff }: { value?: CardWritin
 
   const styles = [
     ...HANDWRITING_PRESETS.map((p) => ({ id: p.id as string, name: p.name, family: handwritingFamily(p.id), note: p.note })),
-    ...(view?.styles ?? []).map((s) => ({ id: s.id as string, name: s.name, family: "", note: "Your own handwriting" })),
+    ...(view?.styles ?? []).map((s) => ({ id: s.id as string, name: s.name, family: "", note: ownPrint ? "Your own handwriting" : "Preview only · printing needs Plus" })),
   ];
 
   return (
@@ -69,7 +74,7 @@ export function WritingPicker({ value, onChange, signoff }: { value?: CardWritin
           <button type="button" role="radio" aria-checked={sig.kind === "none"} tabIndex={sig.kind === "none" || (sig.kind === "saved" && !view?.signatures.some((s) => s.id === sig.signatureId)) ? 0 : -1} className="gh-chip" onClick={() => setSig({ kind: "none" })}>None</button>
           <button type="button" role="radio" aria-checked={sig.kind === "typed"} tabIndex={sig.kind === "typed" ? 0 : -1} className="gh-chip" onClick={() => setSig({ kind: "typed", text: typedName.trim() || "Me", fontId: sig.kind === "typed" ? sig.fontId : "allura" })}>Type my name</button>
           {view?.signatures.map((s) => (
-            <button key={s.id} type="button" role="radio" aria-checked={sig.kind === "saved" && sig.signatureId === s.id} tabIndex={sig.kind === "saved" && sig.signatureId === s.id ? 0 : -1} className="gh-chip gw-sig__saved" onClick={() => setSig({ kind: "saved", signatureId: s.id as `sg_${string}` })}>
+            <button key={s.id} type="button" role="radio" disabled={!savedOk} title={savedOk ? undefined : "Saved signatures come with Plus"} aria-checked={sig.kind === "saved" && sig.signatureId === s.id} tabIndex={sig.kind === "saved" && sig.signatureId === s.id ? 0 : -1} className="gh-chip gw-sig__saved" onClick={() => setSig({ kind: "saved", signatureId: s.id as `sg_${string}` })}>
               {s.kind === "typed" ? (
                 <span style={{ fontFamily: `"${handwritingFamily(s.fontId ?? "allura")}", cursive`, fontSize: 20 }}>{s.text}</span>
               ) : (
@@ -109,6 +114,12 @@ export function WritingPicker({ value, onChange, signoff }: { value?: CardWritin
           </p>
         ) : null}
       </fieldset>
+      {plan.status === "ready" && (!ownPrint || !savedOk) && (
+        <p className="gs-small gs-muted" style={{ margin: 0 }}>
+          {!ownPrint && w.message === "handwritten" && w.styleId?.startsWith("custom_") ? "You can preview your own handwriting; printing it comes with Plus. " : ""}
+          <Link className="gs-link" href="/membership">See what Plus adds</Link>
+        </p>
+      )}
       {(handwritten || sig.kind !== "none") && (
         <Button type="button" variant="ghost" size="sm" onClick={() => onChange(undefined)}>Use typed text, no signature</Button>
       )}

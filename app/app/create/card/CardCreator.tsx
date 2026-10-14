@@ -9,6 +9,7 @@ import { PHOTO_GUEST_MESSAGE } from "@/lib/intake/guardrails";
 import { openingTurn } from "@/lib/intake/quick-replies";
 import { HandwrittenInside } from "@/components/writing/HandwrittenInside";
 import { useWriting } from "@/components/writing/useWriting";
+import { isPaidFeatureOn, useMembership } from "@/components/membership/useMembership";
 
 type LockKey = "second" | "reroll" | "save" | "proof" | "photo" | "people";
 const LOCKS: Record<LockKey, { title: string; text: string }> = {
@@ -101,8 +102,9 @@ export function CardCreator() {
 
   /* ---- a member's default handwriting and signature, when they asked for it on every new card ---- */
   const { state: writingState } = useWriting();
+  const { state: planState } = useMembership();
   useEffect(() => {
-    if (!hydrated || writingState.status !== "ready" || !writingState.view.applyToNewCards) return;
+    if (!hydrated || writingState.status !== "ready" || !writingState.view.applyToNewCards || !isPaidFeatureOn(planState, "apply_to_new_cards")) return;
     const v = writingState.view;
     if (draftRef.current.writing || (!v.defaultStyleId && !v.defaultSignatureId)) return;
     setDraft((d) =>
@@ -116,7 +118,7 @@ export function CardCreator() {
             },
           }, "form"),
     );
-  }, [hydrated, writingState]);
+  }, [hydrated, writingState, planState]);
 
   /* ---- rendering progress theatre ---- */
   useEffect(() => {

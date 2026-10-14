@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { Avatar, Badge, Button, ButtonLink, ChipGroup, TemplateCard, TextField, Toggle } from "@/components/brand";
 import type { Address } from "@greethub/shared";
 import { DELETION_VENDORS } from "@/lib/shop/policies";
@@ -9,31 +9,43 @@ import type { Draft, Person, SavedAddress, UserRecord } from "@/lib/shop/types";
 import { AddressFields, EMPTY_ADDRESS, quickErrors, type AddressDraft } from "./AddressFields";
 import { Check, EmptyState, ErrorBox, Modal, SkeletonList } from "./ui";
 import { api, refreshSession, useSession, useToast } from "./client";
+import { useMembership } from "@/components/membership/useMembership";
 
-const NAV = [
-  { href: "/account", label: "Profile" },
-  { href: "/account/addresses", label: "Addresses" },
-  { href: "/account/drafts", label: "Drafts" },
-  { href: "/account/people", label: "People" },
-  { href: "/account/handwriting", label: "Handwriting" },
-  { href: "/orders", label: "Orders" },
-  { href: "/account/delete", label: "Delete account" },
+/** Account sections in three groups (docs/cx/06-member-portal-review.md, "Where Membership should live"). `also` marks
+ *  sub-pages that light up their parent (the delete flow lives under Privacy & data). */
+const NAV_GROUPS: { group: string; items: { href: string; label: string; also?: string[] }[] }[] = [
+  { group: "Make", items: [{ href: "/account/drafts", label: "Drafts" }, { href: "/account/people", label: "People" }, { href: "/account/handwriting", label: "Handwriting" }] },
+  { group: "Buy", items: [{ href: "/orders", label: "Orders" }, { href: "/account/membership", label: "Membership" }, { href: "/account/addresses", label: "Addresses" }] },
+  { group: "You", items: [{ href: "/account", label: "Profile" }, { href: "/account/privacy", label: "Privacy & data", also: ["/account/delete", "/account/delete/confirm"] }] },
 ];
+const NAV = NAV_GROUPS.flatMap((g) => g.items);
 
 export function AccountFrame({ children }: { children: ReactNode }) {
   const path = usePathname();
-  const items = NAV.map((n) => (
-    <Link key={n.href} href={n.href} aria-current={path === n.href ? "page" : undefined} className={n.href === path ? "gh-seg__item" : undefined}>
-      {n.label}
-    </Link>
-  ));
+  const chips = useRef<HTMLElement>(null);
+  const isCurrent = (n: (typeof NAV)[number]) => path === n.href || !!n.also?.includes(path);
+  useEffect(() => {
+    // Mobile chips scroll sideways; keep the current page's chip in view (CX P1-6).
+    chips.current?.querySelector<HTMLElement>('[aria-current="page"]')?.scrollIntoView({ inline: "center", block: "nearest" });
+  }, [path]);
   return (
     <div className="gs-page">
       <div className="gs-account">
-        <nav className="gs-subnav" aria-label="Account">{items}</nav>
-        <nav className="gs-subnav-m" aria-label="Account">
+        <nav className="gs-subnav" aria-label="Account">
+          {NAV_GROUPS.map((g) => (
+            <div key={g.group} className="gs-subnav__group" role="group" aria-label={g.group}>
+              <span className="gs-subnav__heading" aria-hidden="true">{g.group}</span>
+              {g.items.map((n) => (
+                <Link key={n.href} href={n.href} aria-current={isCurrent(n) ? "page" : undefined} className={isCurrent(n) ? "gh-seg__item" : undefined}>
+                  {n.label}
+                </Link>
+              ))}
+            </div>
+          ))}
+        </nav>
+        <nav className="gs-subnav-m" aria-label="Account" ref={chips}>
           {NAV.map((n) => (
-            <Link key={n.href} href={n.href} className="gh-chip" aria-current={path === n.href ? "page" : undefined} style={{ display: "inline-flex", alignItems: "center", textDecoration: "none" }}>
+            <Link key={n.href} href={n.href} className="gh-chip" aria-current={isCurrent(n) ? "page" : undefined} style={{ display: "inline-flex", alignItems: "center", textDecoration: "none" }}>
               {n.label}
             </Link>
           ))}
@@ -95,8 +107,12 @@ export function ProfilePage() {
       setSeeded(true);
     }
   }, [data, seeded]);
+  const welcomed = useRef(false);
   useEffect(() => {
-    if (sp.get("signedin")) toast("You're in. Your card's saved.");
+    // Once per arrival (StrictMode runs effects twice in dev), and only claim a saved card when one came along.
+    if (!sp.get("signedin") || welcomed.current) return;
+    welcomed.current = true;
+    toast(sp.get("carried") ? "You're in. Your card's saved." : "You're in.");
   }, [sp, toast]);
 
   async function save() {
@@ -180,7 +196,7 @@ export function AddressesPage() {
   return (
     <Shell title="Addresses" error={error} reload={reload} ready={!!data} action={<Button variant="secondary" onClick={() => { setErrs({}); setEditing({ label: "", form: { ...EMPTY_ADDRESS } }); }}>+ Add an address</Button>}>
       {data && data.addresses.length === 0 ? (
-        <EmptyState message="No saved addresses. We'll offer to save one at checkout." actions={[{ label: "Add an address", href: "#" }]} />
+        <EmptyState message="No saved addresses. We'll offer to save one at checkout." actions={[{ label: "Add an address", onClick: () => { setErrs({}); setEditing({ label: "", form: { ...EMPTY_ADDRESS } }); } }]} />
       ) : (
         <div className="gs-stack">
           {data?.addresses.map((a) => (
@@ -222,7 +238,9 @@ export function DraftsPage() {
     const days = Math.floor((now - new Date(iso).getTime()) / 86400000);
     return days <= 0 ? "Edited today" : `Edited ${days} day${days === 1 ? "" : "s"} ago`;
   };
-  const daysLeft = (iso: string) => 90 - Math.floor((now - new Date(iso).getTime()) / 86400000);
+  const { state: plan } = useMembership();
+  const keepDays = plan.status === "ready" ? Number(plan.view.features.drafts_retention_days) : 90;
+  const daysLeft = (iso: string) => keepDays - Math.floor((now - new Date(iso).getTime()) / 86400000);
   async function act(id: string, method: "DELETE" | "POST") {
     const r = await api<{ drafts: Draft[] }>(`/api/account/drafts/${id}`, { method });
     if (r.ok) {
@@ -268,8 +286,8 @@ export function PeoplePage() {
 
   async function add() {
     const e: Record<string, string> = {};
-    if (!name.trim()) e.name = "Required";
-    if (!rel.trim()) e.rel = "Required";
+    if (!name.trim()) e.name = "Add their name, or a nickname.";
+    if (!rel.trim()) e.rel = "Add who they are to you, like Grandma.";
     setFe(e);
     if (Object.keys(e).length) return;
     const r = await api<{ people: Person[] }>("/api/account/people", { method: "POST", json: { name, relationship: rel, ageBand: age } });
@@ -323,6 +341,32 @@ export function PeoplePage() {
         </Modal>
       )}
     </Shell>
+  );
+}
+
+/* ---------- 11g privacy & data ---------- */
+
+export function PrivacyDataPage() {
+  return (
+    <div className="gs-stack gs-stack--lg">
+      <h1 className="gs-h2" style={{ margin: 0 }}>Privacy &amp; data</h1>
+      <div className="gs-panel gs-stack">
+        <h2 className="gs-h3" style={{ margin: 0 }}>Your data</h2>
+        <p style={{ margin: 0 }}>Download a copy of everything we keep about you: profile, addresses, drafts, people, handwriting and signatures, orders, and your books with the photo consent you gave.</p>
+        <div><ButtonLink variant="secondary" href="/api/account/export" download>Download my data</ButtonLink></div>
+      </div>
+      <div className="gs-panel gs-stack">
+        <h2 className="gs-h3" style={{ margin: 0 }}>Where your data lives</h2>
+        <ul className="gs-small gs-muted" style={{ margin: 0, paddingLeft: 18 }}>
+          {DELETION_VENDORS.map((v) => <li key={v.name}><strong>{v.name}:</strong> {v.how}</li>)}
+        </ul>
+      </div>
+      <div className="gs-panel gs-stack">
+        <h2 className="gs-h3" style={{ margin: 0 }}>Delete your account</h2>
+        <p style={{ margin: 0 }}>Removes your profile, saved people, photos, handwriting and signatures, drafts and addresses. We email a link to confirm first.</p>
+        <div><ButtonLink variant="dark" href="/account/delete">Delete my account</ButtonLink></div>
+      </div>
+    </div>
   );
 }
 
@@ -409,6 +453,7 @@ export function DeleteConfirm() {
         <h1 className="gs-h2" style={{ margin: 0 }}>Delete your account</h1>
         <p className="gs-muted" style={{ margin: 0 }}>This removes your profile, saved people, photos, handwriting and signatures, drafts and addresses. It can&apos;t be undone.</p>
         {err && <ErrorBox message={err} />}
+        {err && <ButtonLink variant="secondary" href="/account/delete">Send a new link</ButtonLink>}
         <Button variant="dark" size="lg" disabled={busy || !token} onClick={go} data-testid="confirm-delete">Yes, delete everything</Button>
         <ButtonLink variant="secondary" href="/account">Keep my account</ButtonLink>
       </div>

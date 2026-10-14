@@ -13,6 +13,7 @@ import {
   setDefaults, signatureImage, uploadSignature, WritingError,
 } from "@/lib/writing/service";
 import { filledSheet } from "./sheet-fixture";
+import { makeMember } from "../membership-fixture";
 
 const A = "u_alice";
 const B = "u_bob";
@@ -22,9 +23,11 @@ const files = () => {
   return fs.existsSync(root) ? fs.readdirSync(root, { recursive: true }).filter((f) => String(f).endsWith(".png")) : [];
 };
 
-beforeEach(() => {
+beforeEach(async () => {
   process.env.GREETHUB_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "gh-writing-"));
   setDocStoreForTest(null);
+  // Saved signatures and printing own handwriting are Plus perks (docs/finance/membership-plan.md); A is a member.
+  await makeMember(A, "plus");
 });
 
 describe("card writing schema", () => {

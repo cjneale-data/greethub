@@ -1,13 +1,15 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Badge, Button, Segmented, TextField, Toggle } from "@/components/brand";
+import { Badge, Button, ButtonLink, Segmented, TextField, Toggle } from "@/components/brand";
 import { HANDWRITING_PRESETS, SIGNATURE_FONTS, handwritingFamily, type SignatureFontId } from "@greethub/shared";
 import { checkText } from "@/lib/intake/guardrails";
 import type { WritingView } from "@/lib/writing/service";
 import { HandwrittenInside } from "@/components/writing/HandwrittenInside";
 import { SignaturePad, type Stroke } from "@/components/writing/SignaturePad";
 import { onRadioKeys, rovingTab } from "@/components/writing/radioKeys";
+import { useMembership } from "@/components/membership/useMembership";
+import "@/components/membership/membership.css";
 import { signatureImageUrl, useWriting } from "@/components/writing/useWriting";
 import { prepareUpload, UploadError, UPLOAD_ACCEPT } from "@/components/writing/prepareUpload";
 import "@/components/writing/writing.css";
@@ -20,6 +22,7 @@ const SAMPLE = "Happy birthday! Thinking of you today, with love.";
 export function WritingPage() {
   const toast = useToast();
   const { state, setView, reload } = useWriting();
+  const { state: plan } = useMembership();
   const [busy, setBusy] = useState(false);
   const [confirm, setConfirm] = useState<{ kind: "style" | "signature"; id: string; name: string } | null>(null);
   const router = useRouter();
@@ -59,19 +62,25 @@ export function WritingPage() {
     <div className="gs-stack gs-stack--lg">
       {head}
       <p className="gs-muted" style={{ margin: 0 }}>Choose how the inside of your cards is written. You can still change it on any single card.</p>
+      {plan.status === "ready" && plan.view.enabled && plan.view.tier === "free" && (
+        <div className="gm-upsell">
+          <p><strong>Plus</strong> prints cards in your own handwriting, keeps up to 5 signatures and puts them on every new card. 14 days free.</p>
+          <ButtonLink href="/account/membership" size="sm">See Plus</ButtonLink>
+        </div>
+      )}
 
       <section className="gs-panel gs-stack" aria-labelledby="hw-defaults">
         <h2 id="hw-defaults" className="gs-h3" style={{ margin: 0 }}>Handwriting for your cards</h2>
         <div className="gw-styles" role="radiogroup" aria-label="Default handwriting" onKeyDown={onRadioKeys}>
           {[...HANDWRITING_PRESETS.map((p) => ({ id: p.id as string, name: p.name, family: handwritingFamily(p.id), note: p.note })), ...view.styles.map((s) => ({ id: s.id, name: s.name, family: "", note: "Your own handwriting" }))].map((s, i, all) => (
-            <button key={s.id} type="button" role="radio" aria-checked={view.defaultStyleId === s.id} tabIndex={rovingTab(view.defaultStyleId === s.id, i, all.some((x) => x.id === view.defaultStyleId))} className="gw-style" disabled={busy} onClick={() => setDefaults({ defaultStyleId: view.defaultStyleId === s.id ? null : s.id })}>
+            <button key={s.id} type="button" role="radio" aria-checked={view.defaultStyleId === s.id} tabIndex={rovingTab(view.defaultStyleId === s.id, i, all.some((x) => x.id === view.defaultStyleId))} className="gw-style" disabled={busy} onClick={() => view.defaultStyleId !== s.id && setDefaults({ defaultStyleId: s.id })}>
               <span className="gw-style__sample" style={s.family ? { fontFamily: `"${s.family}", cursive` } : undefined}>{s.family ? "Happy birthday!" : "✎ Mine"}</span>
               <span className="gw-style__name">{s.name} {view.defaultStyleId === s.id && <Badge tone="new">Default</Badge>}</span>
               <span className="gs-small gs-muted">{s.note}</span>
             </button>
           ))}
         </div>
-        <Toggle checked={view.applyToNewCards} onChange={(v) => void setDefaults({ applyToNewCards: v })}>
+        <Toggle checked={view.applyToNewCards} onChange={(v) => (v && !view.defaultStyleId && !view.defaultSignatureId ? toast("Pick a handwriting style or add a signature first.") : void setDefaults({ applyToNewCards: v }))}>
           Use my default handwriting and signature on every new card
         </Toggle>
       </section>

@@ -1,4 +1,5 @@
 import type { WritingProfile } from "../writing/types";
+import type { MembershipRecord } from "../membership/types";
 import type { Address, CartItem, ShippingMethodId, Sku } from "@greethub/shared";
 import type { OrderStatus, StatusEvent } from "./orderState";
 
@@ -140,6 +141,7 @@ export type DB = {
   drafts: Record<string, Draft[]>;
   people: Record<string, Person[]>;
   writing: Record<string, WritingProfile>;
+  memberships: Record<string, MembershipRecord>;
   checkouts: Record<string, PendingCheckout>;
   orders: Record<string, Order>;
   processedEvents: string[];

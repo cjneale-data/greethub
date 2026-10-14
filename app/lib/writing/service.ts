@@ -11,6 +11,17 @@ import { checkText } from "../intake/guardrails";
 import { extractSheet, renderHandwriting, signatureFromPhoto, signatureFromStrokes, SheetError, SignatureError, type RenderOptions, type Stroke } from "./glyphs";
 import { writingPath, writingStorage } from "./storage";
 import { MAX_CUSTOM_STYLES, MAX_SIGNATURES, type CustomStyle, type SignatureRec, type WritingProfile } from "./types";
+import { featuresFor } from "../membership/service";
+
+/** The member's plan limits for writing (docs/finance/membership-plan.md), capped by what storage allows anyway. */
+async function writingLimits(userId: string) {
+  const f = await featuresFor(userId);
+  const cap = (n: number, max: number) => (n === -1 ? max : Math.min(n, max));
+  return { styles: cap(f.own_handwriting_styles, MAX_CUSTOM_STYLES), signatures: cap(f.saved_signatures, MAX_SIGNATURES), applyToNewCards: f.apply_to_new_cards };
+}
+
+/** A limit set by the plan, not by storage: the page shows an upgrade, not "delete one first". */
+const planLimit = (what: string) => new WritingError(402, "upgrade_required", `${what} come with a membership. See Plus to add more.`);
 
 export class WritingError extends Error {
   constructor(public status: number, public code: string, message: string) {
@@ -45,6 +56,7 @@ export const DefaultsSchema = z.object({ defaultStyleId: z.string().max(64).null
 
 export async function setDefaults(userId: string, input: unknown): Promise<WritingProfile> {
   const d = DefaultsSchema.parse(input);
+  if (d.applyToNewCards && !(await writingLimits(userId)).applyToNewCards) throw new WritingError(402, "upgrade_required", "Using your handwriting and signature on every new card comes with a membership.");
   const cur = await getWriting(userId);
   if (d.defaultStyleId && !ownsStyle(cur, d.defaultStyleId)) throw new WritingError(404, "no_style", "We couldn't find that handwriting style.");
   if (d.defaultSignatureId && !ownsSignature(cur, d.defaultSignatureId)) throw new WritingError(404, "no_signature", "We couldn't find that signature.");
@@ -64,7 +76,11 @@ const nameOf = (raw: unknown, fallback: string) => (typeof raw === "string" && r
 export async function createCustomStyle(userId: string, input: { name?: string; data: Uint8Array }): Promise<{ profile: WritingProfile; style: CustomStyle }> {
   if (input.data.byteLength > MAX_UPLOAD_BYTES) throw new WritingError(413, "too_big", "That photo is over 12 MB. Try a smaller one.");
   const cur = await getWriting(userId);
-  if (cur.styles.length >= MAX_CUSTOM_STYLES) throw new WritingError(422, "too_many", `You can keep up to ${MAX_CUSTOM_STYLES} handwriting styles. Delete one first.`);
+  const limits = await writingLimits(userId);
+  if (cur.styles.length >= limits.styles) {
+    if (limits.styles < MAX_CUSTOM_STYLES) throw planLimit("More handwriting styles");
+    throw new WritingError(422, "too_many", `You can keep up to ${MAX_CUSTOM_STYLES} handwriting styles. Delete one first.`);
+  }
   const name = nameOf(input.name, "My handwriting");
   const v = checkText(name, { nameLike: true });
   if (v && !v.ok) throw new WritingError(422, "bad_name", "Try a different name for this style.");
@@ -83,7 +99,7 @@ export async function createCustomStyle(userId: string, input: { name?: string; 
   const profile = await commitOrClean(sheetPath, () =>
     docs().mutate("writing", userId, (p) => {
       const next = p ?? empty();
-      full = next.styles.length >= MAX_CUSTOM_STYLES;
+      full = next.styles.length >= limits.styles;
       if (full) return next;
       next.styles.push(style);
       next.defaultStyleId ??= id;
@@ -92,7 +108,7 @@ export async function createCustomStyle(userId: string, input: { name?: string; 
   );
   if (full) {
     await removeQuietly(sheetPath);
-    throw new WritingError(422, "too_many", `You can keep up to ${MAX_CUSTOM_STYLES} handwriting styles. Delete one first.`);
+    throw limits.styles < MAX_CUSTOM_STYLES ? planLimit("More handwriting styles") : new WritingError(422, "too_many", `You can keep up to ${MAX_CUSTOM_STYLES} handwriting styles. Delete one first.`);
   }
   return { profile, style };
 }
@@ -132,11 +148,12 @@ const TypedSchema = z.object({ kind: z.literal("typed"), label: z.string().max(4
 export const SignatureInputSchema = z.discriminatedUnion("kind", [StrokesSchema, TypedSchema]);
 
 async function addSignatureRec(userId: string, rec: SignatureRec): Promise<WritingProfile> {
+  const limit = (await writingLimits(userId)).signatures;
   let full = false;
   const profile = await commitOrClean(rec.path, () =>
     docs().mutate("writing", userId, (p) => {
       const next = p ?? empty();
-      full = next.signatures.length >= MAX_SIGNATURES;
+      full = next.signatures.length >= limit;
       if (full) return next;
       next.signatures.push(rec);
       next.defaultSignatureId ??= rec.id;
@@ -145,7 +162,7 @@ async function addSignatureRec(userId: string, rec: SignatureRec): Promise<Writi
   );
   if (full) {
     if (rec.path) await removeQuietly(rec.path);
-    throw new WritingError(422, "too_many", `You can keep up to ${MAX_SIGNATURES} signatures. Delete one first.`);
+    throw limit < MAX_SIGNATURES ? planLimit("Saved signatures") : new WritingError(422, "too_many", `You can keep up to ${MAX_SIGNATURES} signatures. Delete one first.`);
   }
   return profile;
 }
@@ -170,7 +187,10 @@ async function removeQuietly(path_: string) {
 }
 
 async function roomForSignature(userId: string) {
-  if ((await getWriting(userId)).signatures.length >= MAX_SIGNATURES) throw new WritingError(422, "too_many", `You can keep up to ${MAX_SIGNATURES} signatures. Delete one first.`);
+  const limit = (await writingLimits(userId)).signatures;
+  if ((await getWriting(userId)).signatures.length < limit) return;
+  if (limit < MAX_SIGNATURES) throw planLimit("Saved signatures");
+  throw new WritingError(422, "too_many", `You can keep up to ${MAX_SIGNATURES} signatures. Delete one first.`);
 }
 
 export async function addSignature(userId: string, input: unknown): Promise<WritingProfile> {
@@ -282,6 +302,19 @@ export async function resolveCardWriting(userId: string | null, w: CardWriting |
     else out.signatureImage = await writingStorage().read(rec.path!);
   }
   return out;
+}
+
+/**
+ * Can this card be ordered with its handwriting? Call at add-to-cart and checkout (card checkout, docs/PLAN.md B4).
+ * Paid perks: printing own handwriting, and using a saved signature. Paid orders are never re-checked at print, so a
+ * member who downgrades after paying still gets the card they bought. Returns a reason to show, or null when fine.
+ */
+export async function writingOrderBlock(userId: string | null, w: CardWriting | undefined): Promise<string | null> {
+  if (!w) return null;
+  const f = await featuresFor(userId);
+  if (w.message === "handwritten" && isCustomStyle(w.styleId) && !f.own_handwriting_print) return "Printing cards in your own handwriting comes with Plus. Pick a preset style, or join Plus.";
+  if (w.signature.kind === "saved" && Number(f.saved_signatures) <= 0) return "Saved signatures come with Plus. Type your name instead, or join Plus.";
+  return null;
 }
 
 /* ---------- export and deletion ---------- */

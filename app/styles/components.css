@@ -1,6 +1,8 @@
 .gh-btn{white-space:nowrap;flex:none;font-family:var(--gh-font-body);font-weight:700;border:none;border-radius:var(--gh-r-pill);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:background .15s var(--gh-ease),transform .15s var(--gh-ease)}
 .gh-btn:active{transform:translateY(1px)}
-.gh-btn:focus-visible{outline:none;box-shadow:var(--gh-focus-ring)}
+.gh-btn:focus-visible,.gh-chip:focus-visible,[role=radio]:focus-visible,[role=switch]:focus-visible{outline:3px solid var(--gh-persimmon-ink);outline-offset:2px;box-shadow:none}
+/* CX-20 / brand 01 §5: 44px hit area on touch screens for small buttons and chips. */
+@media (pointer:coarse){.gh-btn--sm,.gh-chip{min-height:44px}}
 .gh-btn--sm{height:36px;padding:0 16px;font-size:14px}.gh-btn--md{height:48px;padding:0 24px;font-size:16px}.gh-btn--lg{height:52px;padding:0 26px;font-size:16px}
 .gh-btn--primary{background:var(--gh-persimmon-ink);color:#fff;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18)}.gh-btn--primary:hover{background:var(--gh-persimmon-deep)}
 .gh-btn--secondary{background:transparent;color:var(--gh-cocoa);box-shadow:inset 0 0 0 1.5px var(--gh-cocoa)}.gh-btn--secondary:hover{background:var(--gh-cream)}

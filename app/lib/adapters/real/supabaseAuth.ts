@@ -39,7 +39,7 @@ export const supabaseAuth: AuthAdapter = {
     }
     const sb = await supabaseServer();
     const { error } = await sb.auth.signInWithOtp({ email: addr, options: { emailRedirectTo: callbackUrl(redirectTo), shouldCreateUser: true } });
-    if (error) throw new Error(`Supabase magic link failed: ${error.message}`);
+    if (error) throw new MagicLinkError(magicLinkReason(error), `Supabase magic link failed: ${error.message}`);
     return {};
   },
 
@@ -92,3 +92,19 @@ export const supabaseAuth: AuthAdapter = {
     await sb.auth.signOut();
   },
 };
+
+/** Why a sign-in email could not be sent, in terms the route can explain to the person. */
+export type MagicLinkReason = "invalid_email" | "rate_limited" | "unavailable";
+
+export class MagicLinkError extends Error {
+  constructor(public reason: MagicLinkReason, message: string) {
+    super(message);
+  }
+}
+
+/** Supabase Auth reports a bad address as email_address_invalid (400) and its send quota as over_email_send_rate_limit (429). */
+export function magicLinkReason(e: { code?: string; status?: number; message?: string }): MagicLinkReason {
+  if (e.code === "email_address_invalid" || /email address .* is invalid/i.test(e.message ?? "")) return "invalid_email";
+  if (e.status === 429 || e.code === "over_email_send_rate_limit" || e.code === "over_request_rate_limit" || /rate limit/i.test(e.message ?? "")) return "rate_limited";
+  return "unavailable";
+}

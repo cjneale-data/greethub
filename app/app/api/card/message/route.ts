@@ -6,6 +6,8 @@ import { suggestMessage } from "@/lib/intake/mock-guide";
 import { allow } from "@/lib/intake/rate-limit";
 import { screenDraft } from "@/lib/safety/draft";
 import { screenField } from "@/lib/safety/server";
+import { signedIn } from "@/lib/shop/api";
+import { consumeQuota, membershipEnabled } from "@/lib/membership/service";
 
 /** "Write it for me": a starter message from the sample-message knowledge base, filled with the recipient's name. */
 export async function POST(req: NextRequest) {
@@ -16,6 +18,14 @@ export async function POST(req: NextRequest) {
   }
   const parsed = z.object({ draft: CardDraftSchema }).safeParse(await req.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "bad_request", message: "Something went wrong on our side. Try again?" }, { status: 400 });
+  // Members: a monthly "Write it for me" allowance by plan (docs/finance/membership-plan.md). Counted before the work.
+  const member = await signedIn();
+  if (member && membershipEnabled()) {
+    const q = await consumeQuota(member.userId, "ai_message_writes_per_month");
+    if (!q.ok) {
+      return NextResponse.json({ error: "upgrade_required", message: `You've used your ${q.limit} written messages this month. Plus includes 100 a month, or you can write it yourself.` }, { status: 402 });
+    }
+  }
   const screened = await screenDraft(parsed.data.draft as CardDraft);
   if (!screened.ok) return NextResponse.json({ error: "guardrail", message: screened.message }, { status: 422 });
   const draft = screened.draft;

@@ -108,6 +108,7 @@ Three proof lines (no testimonials until real ones exist):
 **With a free account:** saved drafts, saved people, full-size proofs, order tracking. Each picture book comes with 3 page redraws.
 **Redraws:** "Each picture book comes with 3 page redraws and 2 free redos of the character sheet. A drawing that fails never uses one up." (Matches `lib/book/constants.ts`. Card redraws and any paid pack: CFO to set before publishing.)
 **Fine print line:** "Prices don't include tax. Tax is worked out at checkout."
+**Membership line (live 2026-10-14):** "**Want cards in your own handwriting?** That comes with GreetHub Plus. See membership." Links to `/membership`. Don't list membership prices on this page; the plan cards on `/membership` read them from `MEMBERSHIP_SPEC`. Full copy: `docs/cmo/membership-landing.md`.
 **Guarantee (H3: "If it's not right"):** "If something arrives damaged or printed wrong, tell us within 30 days and we'll reprint it or refund it. If it's just not to your taste, we'll help you fix it before it prints." (Policy must be confirmed by CEO and CFO.)
 
 ---
@@ -158,6 +159,12 @@ For personal use, it's yours. For business use, email us first. (Legal to confir
 
 **Which countries do you ship to?**
 List comes from CTO's printer coverage at launch. Default launch copy: "We ship to the US to start. More countries soon." Confirm with CTO.
+
+**Can my cards be in my own handwriting?**
+Yes, with GreetHub Plus. Fill in one printed sheet, upload a photo, and your cards can use your hand and your saved signature. Everyone can use our 8 handwriting styles and type their name as a signature for free. (Added 2026-10-14 with membership B13. Until memberships open, own handwriting is free for every account; switch this answer on with `GREETHUB_MEMBERSHIP=1`.)
+
+**What is GreetHub Plus?**
+An optional membership: your own handwriting on printed cards, up to 5 saved signatures, more "Write it for me" messages and redraws, drafts kept a year and a free e-card each month. 14 days free, no card needed. Cancel anytime. See /membership.
 
 **How do I delete my account?**
 Account, then Delete account. It removes your profile, saved people, photos, drafts and addresses.
