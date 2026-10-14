@@ -1,5 +1,6 @@
 @import "../styles/tokens.css";
 @import "../styles/components.css";
+@import "../styles/handwriting.css";
 
 :root {
   --gh-font-display: var(--font-bricolage), "Bricolage Grotesque", system-ui, sans-serif;

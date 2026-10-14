@@ -5,6 +5,7 @@ import { newId } from "./store";
 import { isTerminal } from "./orderState";
 import { scrubOrder } from "./orderService";
 import { validateAddress } from "./address";
+import { deleteWriting, exportWriting } from "../writing/service";
 import type { Draft, Order, Person, SavedAddress, UserRecord } from "./types";
 
 /* ---------- profile ---------- */
@@ -140,13 +141,14 @@ export const openOrderCount = async (userId: string) => (await listOrders(userId
 /* ---------- export and deletion ---------- */
 
 export async function exportUserData(userId: string) {
-  const [profile, addresses, drafts, people, cart, orders] = await Promise.all([
+  const [profile, addresses, drafts, people, cart, orders, writing] = await Promise.all([
     docs().get("users", userId),
     docs().get("addresses", userId),
     docs().get("drafts", userId),
     docs().get("people", userId),
     docs().get("carts", userId),
     listOrders(userId),
+    exportWriting(userId),
   ]);
   return {
     exportedAt: new Date().toISOString(),
@@ -156,6 +158,7 @@ export async function exportUserData(userId: string) {
     people: people ?? [],
     cart: cart ?? [],
     orders,
+    handwritingAndSignatures: writing,
   };
 }
 
@@ -165,6 +168,7 @@ export async function deleteAccount(userId: string): Promise<{ email?: string; f
   const store = docs();
   const u = await store.get("users", userId);
   const who = { email: u?.email, firstName: u?.firstName };
+  await deleteWriting(userId); // signature and handwriting images first: they are private files, not just rows
   await Promise.all((["users", "carts", "addresses", "drafts", "people"] as const).map((c) => store.remove(c, userId)));
   await store.removeByOwner("delete_tokens", userId);
   if (who.email) await store.removeByOwner("magic_tokens", who.email);

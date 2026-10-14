@@ -4,9 +4,10 @@ import { Badge, Button, Progress } from "@/components/brand";
 import { describeOccasion, progress, validateField, type CardDraft } from "@/lib/intake/draft";
 import { FIELD_LABELS, REQUIRED_FIELDS, TONE_LABELS, styleLabel, type FieldKey, type RequiredField } from "@/lib/intake/fields";
 import { FieldEditor } from "./FieldEditor";
+import { writingSummary } from "@/components/writing/summary";
 import "./creator.css";
 
-const DISPLAY_ORDER: FieldKey[] = [...REQUIRED_FIELDS, "insideJokes", "include", "avoid", "signoff", "insideIllustration"];
+const DISPLAY_ORDER: FieldKey[] = [...REQUIRED_FIELDS, "insideJokes", "include", "avoid", "signoff", "writing", "insideIllustration"];
 
 function valueOf(field: FieldKey, d: CardDraft): string {
   switch (field) {
@@ -22,6 +23,7 @@ function valueOf(field: FieldKey, d: CardDraft): string {
     case "avoid": return d.avoid ?? "";
     case "signoff": return d.signoff ?? "";
     case "insideIllustration": return d.insideIllustration ? "Yes" : "";
+    case "writing": return writingSummary(d.writing);
   }
 }
 

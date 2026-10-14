@@ -1,0 +1,13 @@
+/* Self-hosted handwriting and signature faces (packages/shared/src/handwriting.ts). Same files the print PDF embeds. */
+@font-face { font-family: "gh-hw-kalam"; src: url("/fonts/handwriting/kalam.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "gh-hw-patrick_hand"; src: url("/fonts/handwriting/patrick_hand.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "gh-hw-indie_flower"; src: url("/fonts/handwriting/indie_flower.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "gh-hw-shadows_into_light"; src: url("/fonts/handwriting/shadows_into_light.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "gh-hw-gochi_hand"; src: url("/fonts/handwriting/gochi_hand.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "gh-hw-nothing_you_could_do"; src: url("/fonts/handwriting/nothing_you_could_do.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "gh-hw-cedarville_cursive"; src: url("/fonts/handwriting/cedarville_cursive.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "gh-hw-homemade_apple"; src: url("/fonts/handwriting/homemade_apple.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "gh-hw-mr_dafoe"; src: url("/fonts/handwriting/mr_dafoe.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "gh-hw-herr_von_muellerhoff"; src: url("/fonts/handwriting/herr_von_muellerhoff.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "gh-hw-allura"; src: url("/fonts/handwriting/allura.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "gh-hw-great_vibes"; src: url("/fonts/handwriting/great_vibes.ttf") format("truetype"); font-display: swap; }

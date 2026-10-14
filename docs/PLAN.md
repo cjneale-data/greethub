@@ -49,6 +49,7 @@ Sequencing (Waves 1–3 are spent; the current order is the PM build order B1–
   - Illustrated from the brief; v1 cards take no photos. The book is the lead product; the card is the funnel and add-on.
   - Printed and mailed (to the buyer or straight to the recipient), or bought as a digital e-card or PDF.
   - About 3 image renders each.
+  - Inside message typeset, or handwritten: in one of 8 preset hands or the member's own handwriting, with an optional signature. See "Handwriting and signatures" below.
 - **Picture book:**
   - 8.5×8.5 hardcover, 24 or 32 pages, laid out as text-left / art-right spreads like the Eye Story. That layout is proven, and image models won't reliably keep text zones clear.
   - 1 to 4 main characters from photos, plus an optional pet.
@@ -194,6 +195,33 @@ The existing OpenRouter key in `book\.env` gets copied into GreetHub's own `.env
 - **Per milestone:** Vitest unit tests, plus a manual walkthrough with the Chrome browser tools on the preview URL, with screenshots.
 - **Done gate:** the Playwright e2e (guest → sign-up → card → book → cart → Stripe test payment → sandbox print orders → tracking on the account page → account deletion) passes against the Vercel preview.
 - **Finance:** the workbook opens in Excel. Changing the marketing budget input moves traffic, orders and profit, and token costs match the CTO's measured `cost_ledger`.
+
+## Handwriting and signatures (added 2026-10-13, owner request)
+**Goal:** a card can read as if the sender wrote it. Every card gets a choice: typed or handwritten message, and none, typed or saved signature. Members set it up once in the account portal, DocuSign-style, and can have it applied to every new card.
+
+**What members get** (account → Handwriting, `/account/handwriting`)
+- **Preset handwriting (8):** Everyday, Neat print, Bubbly, Quick note, Marker, Loose scrawl, Looping cursive, Grown-up cursive. Self-hosted OFL/Apache fonts in `app/public/fonts/handwriting` (licences alongside), so the browser preview and the print PDF use the same files. One preset can be the default.
+- **Own handwriting:** print a one-page template (79 boxes: A–Z, a–z, 0–9, punctuation; four black registration squares plus a small orientation mark), fill it in with a dark pen, upload a photo. The browser first shrinks the photo to 2800 px (HEIC accepted) so it fits hosted request limits. The server finds the squares and the mark, so sideways and upside-down photos also work. It then corrects perspective, drops the light-blue guides and paper, and keeps each box's ink. Text is set from those glyphs with a little size and baseline wobble. No model calls and no per-card cost. Up to 3 styles per member.
+  - Every letter (in either case) and every digit must be readable, or the sheet is refused with the list of what's missing. Blank punctuation is listed and allowed.
+  - A message character the hand doesn't have (an accent, an emoji, a skipped symbol) is never invented or silently dropped. The preview warns, and print treats the message as not fitting, so the member picks a preset or edits the text.
+- **Signature, three ways:** *choose a style* (name typed in one of 4 signature scripts), *draw* (mouse, finger or stylus), or *upload* (photo of a signature on paper; we keep only the ink). Up to 5; one is the default.
+- **"Use on every new card":** new cards start with the default handwriting and signature; each card can still change or turn them off.
+
+**On every card** (card creator, Form tab and the brief card's Handwriting row): toggle "Write the message by hand", pick a style (presets for everyone, own styles for members), pick a signature (none / type my name / a saved one). The preview's inside face shows it at the print box's shape (`CARD_MESSAGE_BOX_PX`, checked against `layoutCard` in the pipeline tests), so line breaks match. With an inside drawing the print box is shorter than the preview's (known gap). Guests get presets and a typed signature; drawing, uploading and own handwriting need a free account.
+
+**Data and print**
+- Brief: `CardBrief.writing = { message: typed|handwritten, styleId, signature: none|typed|saved }` (`packages/shared/src/handwriting.ts`). Ids only: no images in the brief.
+- Cost control: the own-handwriting preview route is rate-limited (40 a minute per member) and renders at most the print box (about 0.7 s for a 600-character message).
+- Store: one `writing` document per member (migration `20261014000000_writing_profiles.sql`). Glyph sheets and signature PNGs go in the private bucket under `writing/<user>/`, served only through ownership-checked routes (`/api/account/writing/...`, `Cache-Control: private, no-store`).
+- Print: `resolveCardWriting(userId, writing)` returns the font, renderer or signature for `layoutCard`. It refuses (404) a custom style or saved signature the user doesn't own, so a forged brief can't print someone else's signature. Typed signatures are screened like the sign-off. `layoutCard` embeds the handwriting TTF (or places the rendered message at 300 DPI), reserves a 0.7 in signature band, and reports `messageFitted` from the renderer too.
+- Privacy: export includes the writing summary; account deletion removes the document and every private file. Signatures are used only to print the member's own cards: never as an e-signature, never shared, never used for training.
+
+**Still to do (not launch-blocking)**
+- Wire `resolveCardWriting` into the print job when B4/B6 build the real card print path (today `layoutCard` supports it and is tested). At checkout, copy the resolved style sheet and signature into the order's own files, so deleting them afterwards can't break a paid order. The handwriting fonts are traced into API functions (`outputFileTracingIncludes` in `next.config.ts`).
+- Attorney question: the data export lists signatures and handwriting styles but not the images themselves ("ask support"). Is that enough for access requests on signature images?
+- Trust & safety: drawn or uploaded signatures are ink-only and print only on the member's own cards. Add an image check on upload in live mode if abuse shows up.
+- Phase 2: "match my handwriting" from a free-form photo (suggest the nearest preset with a vision call); a per-letter re-upload instead of a new sheet; joined-up cursive for own handwriting (needs glyph connections).
+- CX: help article and short video for the template sheet; QA: add the account handwriting flow to the e2e scripts.
 
 ## Platform assessment — 2026-10-12
 Each agent checked its own part of the build, one at a time, in this order: CTO, engineers, platform, data/quality, business, legal/ops. Every entry uses the same headings: **Built vs. needed**, **Plan changes**, **Scale adjustments**, **Easy fixes made**, **Blocked by**.
@@ -1050,6 +1078,7 @@ Each agent checked its own part of the build, one at a time, in this order: CTO,
 - **B9 Done gate (QA, DevOps).** Preview test-auth path, CI e2e job, SEC-09 monitoring, log drain, Supabase backups with one restore drill. *Accept:* STRICT launch-flow 0 gaps at desktop and mobile on the preview; a11y no serious issues; CI required on `master`.
 - **B10 Real art (Head of Design, CMO; owner cap).** 15 style samples, two-page consistency test, hero, 12 covers, fictional sample book, Christmas book, Hanukkah and Thanksgiving templates, each IP-checked and logged. *Accept:* no striped placeholders; recommended styles all have a sample and a consistency result.
 - **B11 Before real photos (Privacy ops, Book engineer, General counsel).** Box C hidden, append-only consent log, 14-day reminder email, CSAM preservation path per the attorney, final consent wording. *Accept:* attorney's written answers to Q1–Q13 on file.
+- **B12 Handwriting and signatures (Card engineer, Shop engineer; CTO for print).** Built 2026-10-13 in mock mode: presets, own handwriting from a template sheet, signatures (style, draw, upload), defaults and apply-to-new-cards, card picker and preview, `layoutCard` support, export and deletion. *Accept:* a printed card proof shows the handwritten message and signature at the size previewed; the print job uses `resolveCardWriting` (after B4/B6) on copies taken at checkout; a print function on the preview deploy finds the handwriting fonts. CTO review 2026-10-13: ship after fixes; findings addressed.
 - **After launch (Valentine's 2027):** promo codes and creator attribution, email consent and marketing email, occasion pages, Saved People with likeness, reminders, agent channel P1, kiosk S0.
 
 **Christmas 2026 go/no-go — recommendation: invite-only soft launch; full public launch for Valentine's 2027.** Even if every owner input arrives this week, B1–B6 plus a physical proof plus an attorney opinion fit only just inside the Nov 13 gate, and the paid-spend gate (CMO/CFO) and SEO timing already push paid growth to January. Soft launch = allowlist or invite code, about 50 orders max, no paid ads or creator seeding, lower 48 only, Express off, digital book and e-card as the after-cut-off gift.
