@@ -7,6 +7,8 @@ import { getDraftStorage, type StoredChat, type StoredPreview } from "@/lib/inta
 import { FIELD_LABELS, OPTIONAL_FIELDS, REQUIRED_FIELDS, type FieldKey } from "@/lib/intake/fields";
 import { PHOTO_GUEST_MESSAGE } from "@/lib/intake/guardrails";
 import { openingTurn } from "@/lib/intake/quick-replies";
+import { HandwrittenInside } from "@/components/writing/HandwrittenInside";
+import { useWriting } from "@/components/writing/useWriting";
 
 type LockKey = "second" | "reroll" | "save" | "proof" | "photo" | "people";
 const LOCKS: Record<LockKey, { title: string; text: string }> = {
@@ -96,6 +98,25 @@ export function CardCreator() {
     const log = chatEnd.current?.parentElement;
     if (log) log.scrollTop = log.scrollHeight;
   }, [chat, typing, mode]);
+
+  /* ---- a member's default handwriting and signature, when they asked for it on every new card ---- */
+  const { state: writingState } = useWriting();
+  useEffect(() => {
+    if (!hydrated || writingState.status !== "ready" || !writingState.view.applyToNewCards) return;
+    const v = writingState.view;
+    if (draftRef.current.writing || (!v.defaultStyleId && !v.defaultSignatureId)) return;
+    setDraft((d) =>
+      d.writing
+        ? d
+        : applyPatch(d, {
+            writing: {
+              message: v.defaultStyleId ? "handwritten" : "typed",
+              styleId: v.defaultStyleId ?? undefined,
+              signature: v.defaultSignatureId ? { kind: "saved", signatureId: v.defaultSignatureId as `sg_${string}` } : { kind: "none" },
+            },
+          }, "form"),
+    );
+  }, [hydrated, writingState]);
 
   /* ---- rendering progress theatre ---- */
   useEffect(() => {
@@ -266,7 +287,7 @@ export function CardCreator() {
                 <img className="gc-card__img" src={preview.front} alt={`Front of the card for ${name ?? "your recipient"}, low-resolution preview`} />
               </div>
               <div className="gc-card__face gc-card__face--inside">
-                <p className="gc-card__msg">{insideText(draft) || preview.insideMessage}</p>
+                <HandwrittenInside text={insideText(draft) || preview.insideMessage} writing={draft.writing} savedSignatures={writingState.status === "ready" ? writingState.view.signatures : undefined} />
               </div>
             </div>
             <button type="button" className="gc-card__tap" aria-label="Flip the card" onClick={() => setSide((s) => (s === "front" ? "inside" : "front"))} />

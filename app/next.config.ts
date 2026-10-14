@@ -19,6 +19,9 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   poweredByHeader: false,
+  // Print (resolveCardWriting) reads the handwriting TTFs from disk; public/ is served by the CDN, not bundled, so the
+  // server functions need them traced in explicitly.
+  outputFileTracingIncludes: { "/api/**": ["./public/fonts/handwriting/*.ttf"] },
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   },

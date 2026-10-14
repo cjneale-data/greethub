@@ -2,8 +2,9 @@ import { describe, expect, it } from "vitest";
 import { mkdtempSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { PDFDocument } from "pdf-lib";
-import { bookSpreads } from "@greethub/shared";
+import { PDFDict, PDFDocument, PDFName } from "pdf-lib";
+import sharp from "sharp";
+import { bookSpreads, CARD_MESSAGE_BOX_PX } from "@greethub/shared";
 import { layoutBook, BOOK_PX, BOOK_GEOM } from "../src/layout/book.js";
 import { layoutCard, CARD_PX } from "../src/layout/card.js";
 import { fitText, newDoc, wrapLines } from "../src/layout/common.js";
@@ -68,5 +69,51 @@ describe("print PDFs", () => {
     expect(pdf.getPage(0).getTrimBox()).toEqual({ x: 9, y: 9, width: 360, height: 504 });
     expect(rep.messageFitted).toBe(true);
     expect(readFileSync(rep.files.guestProof).length).toBeGreaterThan(1000);
+  });
+});
+
+describe("handwritten card inside", () => {
+  const font = (f: string) => readFileSync(join(import.meta.dirname, "..", "..", "app", "public", "fonts", "handwriting", f));
+  /** BaseFont names of every font dictionary in the PDF (object streams are compressed, so read them through pdf-lib). */
+  const fontNames = async (path: string) => {
+    const pdf = await PDFDocument.load(readFileSync(path));
+    return pdf.context
+      .enumerateIndirectObjects()
+      .map(([, o]) => (o instanceof PDFDict && o.get(PDFName.of("Type")) === PDFName.of("Font") ? String(o.get(PDFName.of("BaseFont")) ?? "") : ""))
+      .filter(Boolean);
+  };
+
+  it("sets the message in a preset handwriting face and a typed signature in a signature face, both embedded", async () => {
+    const art = await fakeArt(96, 128);
+    const rep = await layoutCard(
+      { title: "Hi", message: "Happy birthday, Rosa!\nLove from all of us.", frontArt: art, writing: { messageFont: font("kalam.ttf"), sizeScale: 1.05, signatureText: { text: "Sam", font: font("allura.ttf") } } },
+      tmp(),
+      "hw",
+    );
+    expect(rep.messageFitted).toBe(true);
+    const names = await fontNames(rep.files.print);
+    expect(names.some((n) => /Kalam/.test(n))).toBe(true);
+    expect(names.some((n) => /Allura/.test(n))).toBe(true);
+  });
+
+  it("places a rendered own-handwriting message and a signature image, and passes through the renderer's fit", async () => {
+    const art = await fakeArt(96, 128);
+    const ink = await sharp({ create: { width: 400, height: 120, channels: 4, background: { r: 20, g: 20, b: 20, alpha: 1 } } }).png().toBuffer();
+    const boxes: { width: number; height: number }[] = [];
+    const render = (fitted: boolean) => async (_t: string, box: { width: number; height: number }) => {
+      boxes.push(box);
+      return { png: await sharp({ create: { width: box.width, height: box.height, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } }).composite([{ input: ink, top: 10, left: 10 }]).png().toBuffer(), fitted };
+    };
+    const ok = await layoutCard({ title: "Hi", message: "Hello", frontArt: art, writing: { renderMessage: render(true), signatureImage: ink } }, tmp(), "own");
+    expect(ok.messageFitted).toBe(true);
+    // 300 DPI box inside the safe area, shortened to leave room for the signature: exactly what the preview renders.
+    expect(boxes[0]).toEqual({ width: CARD_MESSAGE_BOX_PX.width, height: CARD_MESSAGE_BOX_PX.heightWithSignature });
+    expect(boxes[0].height).toBeLessThan(CARD_PX.h - 600);
+    const pdf = await PDFDocument.load(readFileSync(ok.files.print));
+    expect(pdf.getPageCount()).toBe(2);
+    const over = await layoutCard({ title: "Hi", message: "Hello", frontArt: art, writing: { renderMessage: render(false) } }, tmp(), "own2");
+    expect(over.messageFitted).toBe(false);
+    await layoutCard({ title: "Hi", message: "Hello", frontArt: art, writing: { renderMessage: render(true) } }, tmp(), "own3");
+    expect(boxes[2]).toEqual({ width: CARD_MESSAGE_BOX_PX.width, height: CARD_MESSAGE_BOX_PX.height });
   });
 });

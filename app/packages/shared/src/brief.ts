@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { ART_STYLE_INPUT_IDS, resolveArtStyleId, type ArtStyleId } from "./styles";
+import { CardWritingSchema } from "./handwriting";
 
 /** Accepts current and legacy style ids; the parsed value is always the canonical id. */
 export const ArtStyleField = z.enum(ART_STYLE_INPUT_IDS).transform((v) => resolveArtStyleId(v) as ArtStyleId);
@@ -93,6 +94,8 @@ export const CardBriefBase = z.object({
   delivery: z.enum(CARD_DELIVERY),
   mailTo: z.enum(["buyer", "recipient"]).optional(),
   insideIllustration: z.boolean().default(false),
+  /** Handwritten message and signature for the inside (packages/shared/src/handwriting.ts). */
+  writing: CardWritingSchema.optional(),
 });
 
 const cardRules = (b: z.infer<typeof CardBriefBase>, ctx: z.RefinementCtx) => {

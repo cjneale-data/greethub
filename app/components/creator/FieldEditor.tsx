@@ -10,6 +10,7 @@ import {
 import { checkText } from "@/lib/intake/guardrails";
 import { StyleBrowser, type StyleSuggestion } from "@/components/styles/StyleBrowser";
 import { ChipPicker } from "./widgets";
+import { WritingPicker } from "@/components/writing/WritingPicker";
 
 const toneEntries = Object.entries(TONE_LABELS) as [Tone, string][];
 const occasionLabels = OCCASIONS.map((o) => OCCASION_LABELS[o]);
@@ -128,5 +129,7 @@ export function FieldEditor({ field, draft, onPatch, error, onWriteMessage, writ
           Add a small drawing inside
         </Toggle>
       );
+    case "writing":
+      return <WritingPicker value={draft.writing} signoff={draft.signoff} onChange={(w) => onPatch({ writing: w ?? { message: "typed", signature: { kind: "none" } } })} />;
   }
 }

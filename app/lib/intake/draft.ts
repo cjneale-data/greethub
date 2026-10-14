@@ -1,4 +1,4 @@
-import { ArtStyleField, CardBriefSchema, OCCASIONS, TONES, type ArtStyleId, type CardBrief } from "@greethub/shared";
+import { ArtStyleField, CardBriefSchema, CardWritingSchema, OCCASIONS, TONES, type ArtStyleId, type CardBrief, type CardWritingInput } from "@greethub/shared";
 import { z } from "zod";
 import {
   LIMITS, NAME_PATTERN, OCCASION_LABELS, QUESTIONS, REQUIRED_COUNT, REQUIRED_FIELDS,
@@ -22,6 +22,8 @@ export type CardDraft = {
   avoid?: string;
   insideIllustration?: boolean;
   signoff?: string;
+  /** Handwritten message and signature (packages/shared/src/handwriting.ts). */
+  writing?: CardWritingInput;
   optionalDone?: boolean;
   sources?: Partial<Record<FieldKey, FieldSource>>;
 };
@@ -44,6 +46,7 @@ export const CardDraftSchema = z.object({
   avoid: str(LIMITS.avoid[1]).optional(),
   insideIllustration: z.boolean().optional(),
   signoff: str(LIMITS.signoff[1]).optional(),
+  writing: CardWritingSchema.optional(),
   optionalDone: z.boolean().optional(),
   sources: z.record(z.string(), z.enum(["chat", "form", "template", "people", "rag"])).optional(),
 });
@@ -163,6 +166,7 @@ export function toCardBrief(d: CardDraft): { ok: true; brief: CardBrief } | { ok
     include: splitList(d.include),
     avoid: splitList(d.avoid),
     insideIllustration: !!d.insideIllustration,
+    writing: d.writing,
     delivery: "ecard",
   });
   if (parsed.success) return { ok: true, brief: parsed.data };

@@ -1,4 +1,5 @@
 import type { CartItem } from "@greethub/shared";
+import type { WritingProfile } from "../writing/types";
 import type { ContentReport, Draft, Order, OutboxMessage, PendingCheckout, Person, SavedAddress, UserRecord } from "../shop/types";
 
 /**
@@ -14,6 +15,7 @@ export type Docs = {
   addresses: SavedAddress[];
   drafts: Draft[];
   people: Person[];
+  writing: WritingProfile;
   checkouts: PendingCheckout;
   orders: Order;
   processed_events: { at: string };
@@ -32,6 +34,7 @@ export const INDEX: { [C in Collection]: (doc: Docs[C], id: string) => { owner?:
   addresses: (_d, id) => ({ owner: id }),
   drafts: (_d, id) => ({ owner: id }),
   people: (_d, id) => ({ owner: id }),
+  writing: (_d, id) => ({ owner: id }),
   checkouts: (d) => ({ owner: d.userId, refs: d.sessionId ? [d.sessionId] : [] }),
   orders: (d) => ({ owner: d.userId, refs: [d.stripeSessionId, ...d.items.map((i) => i.fulfillment?.externalId ?? "")].filter(Boolean) }),
   processed_events: () => ({}),

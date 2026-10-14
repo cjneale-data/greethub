@@ -21,7 +21,25 @@ export type CardSpec = {
   insideArt?: Buffer;
   /** e.g. "Made with GreetHub" line on the back of the fold (kept tiny). */
   signature?: string;
+  /** Handwritten inside (app/lib/writing: resolveCardWriting supplies these, already ownership-checked). */
+  writing?: CardWritingSpec;
 };
+
+export type CardWritingSpec = {
+  /** Preset handwriting face (TTF) for the message, and its size correction against the body font. */
+  messageFont?: Buffer;
+  sizeScale?: number;
+  /** The member's own handwriting: renders the message into a transparent PNG of exactly this pixel box (300 DPI). */
+  renderMessage?: (text: string, box: { width: number; height: number }) => Promise<{ png: Buffer; fitted: boolean }>;
+  /** Drawn or uploaded signature: transparent PNG. */
+  signatureImage?: Buffer;
+  /** Typed signature: the name set in a signature face (TTF). */
+  signatureText?: { text: string; font: Buffer };
+};
+
+/** Signature area under the message: at most this wide and tall, centred. */
+const SIG_MAX_W = 2.2 * IN;
+const SIG_H = 0.7 * IN;
 
 export type CardLayoutReport = { files: Record<string, string>; messageSize: number; messageFitted: boolean; pages: number };
 
@@ -47,10 +65,46 @@ export async function layoutCard(spec: CardSpec, outDir: string, baseName = "car
     inside.drawImage(img, { x: margin, y: top - artH, width: artW, height: artH });
     top -= artH + 0.3 * IN;
   }
-  const maxH = top - margin - 0.3 * IN;
-  const fit = fitText(spec.message, fonts.body, boxW, maxH, 22, 11, 1.5);
-  const y0 = spec.insideArt ? top : (g.h + fit.height) / 2;
-  drawLines(inside, fit, fonts.body, margin, y0, NAVY, "center", boxW);
+  const w = spec.writing;
+  const hasSig = !!(w?.signatureImage || w?.signatureText);
+  const sigBlock = hasSig ? SIG_H + 0.15 * IN : 0;
+  const maxH = top - margin - 0.3 * IN - sigBlock;
+  let messageSize: number;
+  let messageFitted: boolean;
+  let messageBottom: number;
+  if (w?.renderMessage) {
+    // Own handwriting: the renderer fits the text to the box and returns it as one transparent image.
+    const box = { width: Math.round((boxW / IN) * 300), height: Math.round((maxH / IN) * 300) };
+    const { png, fitted } = await w.renderMessage(spec.message, box);
+    const img = await doc.embedPng(png);
+    const yTop = spec.insideArt ? top : (g.h + maxH + sigBlock) / 2;
+    inside.drawImage(img, { x: margin, y: yTop - maxH, width: boxW, height: maxH });
+    const ink = await inkExtent(png);
+    messageBottom = yTop - maxH + ((box.height - ink.bottom) / box.height) * maxH;
+    messageSize = 0;
+    messageFitted = fitted && ink.any;
+  } else {
+    const font = w?.messageFont ? await doc.embedFont(w.messageFont, { subset: true }) : fonts.body;
+    const k = w?.messageFont ? (w.sizeScale ?? 1) : 1;
+    const fit = fitText(spec.message, font, boxW, maxH, 22 * k * (w?.messageFont ? 1.25 : 1), 11 * k, w?.messageFont ? 1.35 : 1.5);
+    const y0 = spec.insideArt ? top : (g.h + fit.height + sigBlock) / 2;
+    drawLines(inside, fit, font, margin, y0, NAVY, "center", boxW);
+    messageSize = fit.size;
+    messageFitted = fit.fitted;
+    messageBottom = y0 - fit.height;
+  }
+  if (w?.signatureImage) {
+    const img = await doc.embedPng(await sharp(w.signatureImage).png().toBuffer());
+    const s = Math.min(SIG_MAX_W / img.width, SIG_H / img.height);
+    const sw = img.width * s, sh = img.height * s;
+    inside.drawImage(img, { x: (g.w - sw) / 2, y: Math.max(margin, messageBottom - 0.15 * IN - sh), width: sw, height: sh });
+  } else if (w?.signatureText) {
+    const f = await doc.embedFont(w.signatureText.font, { subset: true });
+    let size = 30;
+    while (size > 14 && f.widthOfTextAtSize(w.signatureText.text, size) > SIG_MAX_W) size -= 1;
+    const tw = f.widthOfTextAtSize(w.signatureText.text, size);
+    inside.drawText(w.signatureText.text, { x: (g.w - tw) / 2, y: Math.max(margin, messageBottom - 0.15 * IN - size * 0.8), size, font: f, color: NAVY });
+  }
   if (spec.signature) {
     const s = 8;
     inside.drawText(spec.signature, { x: g.w / 2 - fonts.body.widthOfTextAtSize(spec.signature, s) / 2, y: edge(g), size: s, font: fonts.body, color: hex("#A99888") });
@@ -60,7 +114,16 @@ export async function layoutCard(spec: CardSpec, outDir: string, baseName = "car
   writeFileSync(pdfPath, await doc.save());
   const proofPath = join(outDir, `${baseName}_guest_proof.jpg`);
   writeFileSync(proofPath, await guestProof(spec.frontArt));
-  return { files: { print: pdfPath, guestProof: proofPath }, messageSize: fit.size, messageFitted: fit.fitted, pages: doc.getPageCount() };
+  return { files: { print: pdfPath, guestProof: proofPath }, messageSize, messageFitted, pages: doc.getPageCount() };
+}
+
+/** Lowest row with ink in a rendered message, so the signature sits under the words rather than under the empty box. */
+async function inkExtent(png: Buffer): Promise<{ any: boolean; bottom: number }> {
+  const { data, info } = await sharp(png).ensureAlpha().extractChannel("alpha").raw().toBuffer({ resolveWithObject: true });
+  for (let y = info.height - 1; y >= 0; y--) {
+    for (let x = 0; x < info.width; x++) if (data[y * info.width + x] > 40) return { any: true, bottom: y + 1 };
+  }
+  return { any: false, bottom: 0 };
 }
 
 /** Low-resolution watermarked proof for guests: 600 px wide JPEG with a repeating diagonal "GreetHub preview" mark. */

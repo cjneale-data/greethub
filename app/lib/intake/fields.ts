@@ -8,7 +8,7 @@ export type Tone = (typeof TONES)[number];
 /** Card brief fields in the order the Greet Guide asks them (docs/cmo/intake-questions.md section 2). */
 export const REQUIRED_FIELDS = ["relationship", "recipientName", "occasion", "tone", "artStyle", "idea", "message"] as const;
 export type RequiredField = (typeof REQUIRED_FIELDS)[number];
-export const OPTIONAL_FIELDS = ["insideJokes", "include", "avoid", "insideIllustration", "signoff"] as const;
+export const OPTIONAL_FIELDS = ["insideJokes", "include", "avoid", "insideIllustration", "signoff", "writing"] as const;
 export type OptionalField = (typeof OPTIONAL_FIELDS)[number];
 export type FieldKey = RequiredField | OptionalField;
 
@@ -78,6 +78,7 @@ export const FIELD_LABELS: Record<FieldKey, string> = {
   avoid: "Leave out",
   insideIllustration: "Inside drawing",
   signoff: "Sign-off",
+  writing: "Handwriting",
 };
 
 const IDEA_SUGGESTIONS: Partial<Record<Occasion, string[]>> & { default: string[] } = {

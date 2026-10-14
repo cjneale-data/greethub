@@ -15,6 +15,7 @@ const NAV = [
   { href: "/account/addresses", label: "Addresses" },
   { href: "/account/drafts", label: "Drafts" },
   { href: "/account/people", label: "People" },
+  { href: "/account/handwriting", label: "Handwriting" },
   { href: "/orders", label: "Orders" },
   { href: "/account/delete", label: "Delete account" },
 ];
@@ -354,7 +355,7 @@ export function DeletePage() {
   return (
     <Shell title="Delete your account" error={orders.error} reload={orders.reload} ready={!!orders.data}>
       <div className="gs-panel gs-stack">
-        <p style={{ margin: 0 }}>This removes your profile, saved people, photos, drafts and addresses. Orders already in production still ship. Order records are kept for tax and accounting, with your name and address removed after fulfillment.</p>
+        <p style={{ margin: 0 }}>This removes your profile, saved people, photos, handwriting and signatures, drafts and addresses. Orders already in production still ship. Order records are kept for tax and accounting, with your name and address removed after fulfillment.</p>
         <div>
           <h2 className="gs-h3">Where your data lives</h2>
           <ul className="gs-small gs-muted" style={{ margin: 0, paddingLeft: 18 }}>
@@ -406,7 +407,7 @@ export function DeleteConfirm() {
     <div className="gs-page gs-page--form">
       <div className="gs-auth gs-stack">
         <h1 className="gs-h2" style={{ margin: 0 }}>Delete your account</h1>
-        <p className="gs-muted" style={{ margin: 0 }}>This removes your profile, saved people, photos, drafts and addresses. It can&apos;t be undone.</p>
+        <p className="gs-muted" style={{ margin: 0 }}>This removes your profile, saved people, photos, handwriting and signatures, drafts and addresses. It can&apos;t be undone.</p>
         {err && <ErrorBox message={err} />}
         <Button variant="dark" size="lg" disabled={busy || !token} onClick={go} data-testid="confirm-delete">Yes, delete everything</Button>
         <ButtonLink variant="secondary" href="/account">Keep my account</ButtonLink>
