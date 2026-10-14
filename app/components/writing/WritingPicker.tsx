@@ -66,7 +66,7 @@ export function WritingPicker({ value, onChange, signoff }: { value?: CardWritin
       <fieldset className="gw-sig">
         <legend className="gw-sig__legend">Signature</legend>
         <div className="gw-sig__opts" role="radiogroup" aria-label="Signature" onKeyDown={onRadioKeys}>
-          <button type="button" role="radio" aria-checked={sig.kind === "none"} tabIndex={sig.kind === "none" ? 0 : -1} className="gh-chip" onClick={() => setSig({ kind: "none" })}>None</button>
+          <button type="button" role="radio" aria-checked={sig.kind === "none"} tabIndex={sig.kind === "none" || (sig.kind === "saved" && !view?.signatures.some((s) => s.id === sig.signatureId)) ? 0 : -1} className="gh-chip" onClick={() => setSig({ kind: "none" })}>None</button>
           <button type="button" role="radio" aria-checked={sig.kind === "typed"} tabIndex={sig.kind === "typed" ? 0 : -1} className="gh-chip" onClick={() => setSig({ kind: "typed", text: typedName.trim() || "Me", fontId: sig.kind === "typed" ? sig.fontId : "allura" })}>Type my name</button>
           {view?.signatures.map((s) => (
             <button key={s.id} type="button" role="radio" aria-checked={sig.kind === "saved" && sig.signatureId === s.id} tabIndex={sig.kind === "saved" && sig.signatureId === s.id ? 0 : -1} className="gh-chip gw-sig__saved" onClick={() => setSig({ kind: "saved", signatureId: s.id as `sg_${string}` })}>

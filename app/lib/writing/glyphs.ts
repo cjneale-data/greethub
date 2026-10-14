@@ -131,7 +131,7 @@ export function findMarkers(g: Gray): Pt[] | null {
     }
     const bw = maxX - minX + 1, bh = maxY - minY + 1;
     const aspect = bw / bh;
-    if (n < area * 0.0001 || n > area * 0.03 || aspect < 0.6 || aspect > 1.65 || n / (bw * bh) < 0.72) continue;
+    if (n < Math.max(30, area * 0.00003) || n > area * 0.03 || aspect < 0.6 || aspect > 1.65 || n / (bw * bh) < 0.72) continue;
     cands.push({ c: [sx / n, sy / n], size: n });
   }
   if (cands.length < 5) return null;
@@ -222,7 +222,8 @@ export async function extractSheet(photo: Uint8Array): Promise<ExtractedSheet> {
   } catch {
     throw new SheetError("bad_image", "We couldn't read that file. Try a JPG or PNG photo.");
   }
-  const small = await toGray(await sharp(Buffer.from(g.data), { raw: { width: g.w, height: g.h, channels: 1 } }).png().toBuffer(), 1000);
+  // 1600 px and an absolute floor keep the small orientation mark visible when the sheet fills little of the photo.
+  const small = await toGray(await sharp(Buffer.from(g.data), { raw: { width: g.w, height: g.h, channels: 1 } }).png().toBuffer(), 1600);
   const marks = findMarkers(small);
   if (!marks) throw new SheetError("no_markers", "We couldn't find all the black squares (four corners and the small one at the top). Take the photo straight on, with the whole sheet in the picture.");
   const k = g.w / small.w;
@@ -352,13 +353,15 @@ export async function renderHandwriting(style: Style, text: string, o: RenderOpt
   const maxEm = o.maxEm ?? Math.min(o.height / 3, o.width / 8);
   const minEm = o.minEm ?? Math.max(18, maxEm * 0.35);
   let emPx = maxEm;
-  let res = layout(style, text, emPx, o.width);
+  // Wrap a little inside the box so the size wobble can't push a full line past the edge.
+  const wrapW = o.width / 1.04;
+  let res = layout(style, text, emPx, wrapW);
   const lineH = () => emPx * 0.95;
   // Room for the size wobble on the right and the last line's descenders at the bottom.
   const fits = () => res.lines.length * lineH() + emPx * 0.3 <= o.height && !res.lines.some((l) => l.width * 1.04 > o.width);
   while (emPx > minEm && !fits()) {
     emPx *= 0.93;
-    res = layout(style, text, emPx, o.width);
+    res = layout(style, text, emPx, wrapW);
   }
   const fitted = fits();
   const k = emPx / style.em;

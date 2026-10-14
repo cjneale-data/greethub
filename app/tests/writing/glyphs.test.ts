@@ -74,6 +74,23 @@ describe("handwriting template sheet", () => {
     await expect(extractSheet(blank)).rejects.toBeInstanceOf(SheetError);
   });
 
+  it("fits an ordinary 300-character message in the print box at a readable size", async () => {
+    const out = await extractSheet(await filledSheet());
+    const style = { sheet: out.png, em: out.em, glyphs: out.glyphs };
+    const text = "Happy birthday Rosa! We hope this year brings you sunshine, long walks, good books and plenty of cake. Thank you for always being there for us, for the late night calls and the early morning coffees. We love you more than words can say, now and always. See you very soon! Sam";
+    for (const len of [200, 250, 300]) {
+      const r = await renderHandwriting(style, text.slice(0, len), { width: 1155, height: 1410 });
+      expect(r.fitted, `${len} chars`).toBe(true);
+      expect(r.emPx, `${len} chars`).toBeGreaterThan(60);
+    }
+  }, 30_000);
+
+  it("reads a sheet that fills well under half the photo", async () => {
+    const small = await sharp(await filledSheet()).extend({ top: 1500, bottom: 1500, left: 1300, right: 1300, background: "#8a8a8a" }).jpeg().toBuffer();
+    const out = await extractSheet(small);
+    expect(out.missing).toEqual([]);
+  }, 30_000);
+
   it("renders text that fits the box, with unsupported characters reported", async () => {
     const out = await extractSheet(await filledSheet());
     const style = { sheet: out.png, em: out.em, glyphs: out.glyphs };
