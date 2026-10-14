@@ -54,6 +54,8 @@ describe("switch", () => {
     expect(membershipEnabled()).toBe(true);
     expect(membershipEnabled({ GREETHUB_MEMBERSHIP: "0", NODE_ENV: "test" } as never)).toBe(false);
     expect(membershipEnabled({ NODE_ENV: "production" } as never)).toBe(false);
+    // Production with fake payments allowed (the current preview setup) must still be off until the owner opts in.
+    expect(membershipEnabled({ NODE_ENV: "production", GREETHUB_ALLOW_FAKE: "1" } as never)).toBe(false);
     expect(membershipEnabled({ NODE_ENV: "production", GREETHUB_MEMBERSHIP: "1" } as never)).toBe(true);
   });
 
