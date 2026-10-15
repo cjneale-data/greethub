@@ -72,14 +72,14 @@ export type CardPdfResult = {
   fontFallbacks: string[];
 };
 
-const hexToRgb = (c: string) => {
+export const hexToRgb = (c: string) => {
   const h = c.replace("#", "");
   const f = h.length === 3 ? h.split("").map((x) => x + x).join("") : h;
   return rgb(parseInt(f.slice(0, 2), 16) / 255, parseInt(f.slice(2, 4), 16) / 255, parseInt(f.slice(4, 6), 16) / 255);
 };
 
 /** Keep only characters the font can encode, so one odd character never fails an order. */
-function safeText(font: PDFFont, text: string): string {
+export function safeText(font: PDFFont, text: string): string {
   const set = new Set(font.getCharacterSet());
   return [...text].map((ch) => (set.has(ch.codePointAt(0)!) || ch === " " ? ch : "?")).join("");
 }
@@ -119,7 +119,7 @@ export function fitText(text: string, slot: TextSlot, measure: WrapMeasure, inde
   }
 }
 
-async function loadFace(doc: PDFDocument, key: string, weight: number, load: FontLoader, fallbacks: Set<string>, faces: Map<string, PDFFont>) {
+export async function loadFace(doc: PDFDocument, key: string, weight: number, load: FontLoader, fallbacks: Set<string>, faces: Map<string, PDFFont>) {
   const id = `${key}@${weight}`;
   const have = faces.get(id);
   if (have) return have;

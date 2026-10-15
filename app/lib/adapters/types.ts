@@ -20,7 +20,8 @@ export interface AuthAdapter {
 }
 
 /** One line on the Stripe-hosted page. Postage and shipping surcharges are lines too (creationId empty). */
-export type CheckoutLine = { sku: string; description: string; unitAmountCents: number; quantity: number; creationId?: string };
+export type CheckoutLine = { sku: string; description: string; unitAmountCents: number; quantity: number; creationId?: string;
+  /** Stripe product tax code (txcd_...). When set, the line is sent tax-exclusive with that code. */ taxCode?: string };
 
 export type CheckoutSessionInput = {
   /** Our pending checkout id; echoed back in metadata and as client_reference_id. */

@@ -23,6 +23,7 @@ const emptyDB = (): DB => ({
   magicTokens: {},
   deleteTokens: {},
   fakePrinterJobs: {},
+  batchJobs: {},
   outbox: [],
   reports: [],
 });
@@ -81,6 +82,7 @@ const MAPS = {
   magic_tokens: "magicTokens",
   delete_tokens: "deleteTokens",
   fake_printer_jobs: "fakePrinterJobs",
+  batch_jobs: "batchJobs",
 } as const satisfies Partial<Record<Collection, keyof DB>>;
 /** Collections stored as arrays of `{ id, ... }`, oldest first, optionally capped. */
 const LISTS = { outbox: { key: "outbox", cap: 50 }, content_reports: { key: "reports", cap: 0 } } as const;

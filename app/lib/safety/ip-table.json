@@ -372,6 +372,23 @@
       "theme": [
         "wizard school"
       ]
+    },
+    {
+      "id": "holiday-specials",
+      "names": [
+        "nightmare before christmas",
+        "how the grinch stole christmas",
+        "the grinch who stole christmas",
+        "rudolph the red nosed reindeer",
+        "rudolph the red-nosed reindeer",
+        "elf on the shelf",
+        "elf on a shelf"
+      ],
+      "replacement": "a cozy holiday tale",
+      "note": "the cozy holiday story",
+      "theme": [
+        "cozy holiday tale"
+      ]
     }
   ],
   "characters": [
@@ -1504,6 +1521,131 @@
         "singalong sea"
       ],
       "descriptors": []
+    },
+    {
+      "id": "rudolph",
+      "franchise": "holiday-specials",
+      "names": [
+        "rudolph",
+        "rudolf",
+        "rudolph the red nosed reindeer",
+        "rudolph the red-nosed reindeer",
+        "red nosed reindeer",
+        "red-nosed reindeer"
+      ],
+      "ambiguous": true,
+      "newName": "Clover",
+      "design": "a small cream-coloured reindeer fawn with speckled antlers, a patchwork saddle blanket and a lantern that glows soft green",
+      "note": "the glowing-guide idea",
+      "theme": [
+        "reindeer who lights the way",
+        "guiding light"
+      ],
+      "descriptors": [
+        "reindeer with a (shiny |glowing |bright )?(red )?nose",
+        "reindeer who guides (the |santa.s )?sleigh"
+      ],
+      "strong": [
+        "red nosed reindeer",
+        "red-nosed reindeer",
+        "rudolph the red nosed reindeer",
+        "rudolph the red-nosed reindeer"
+      ]
+    },
+    {
+      "id": "frosty",
+      "franchise": "holiday-specials",
+      "names": [
+        "frosty the snowman",
+        "frosty",
+        "frosty snowman"
+      ],
+      "ambiguous": true,
+      "newName": "Pebble",
+      "design": "a squat snow-sprite made of three lumpy snowballs, with a knitted teal earflap hat, button eyes and a wooden spoon for a wand",
+      "note": "a friendly snow friend",
+      "theme": [
+        "snow friend who comes alive"
+      ],
+      "descriptors": [
+        "snowman who (comes|came) (to )?alive",
+        "snowman with a magic (silk )?hat",
+        "magic hat (brings|makes) (a |the )?snowman"
+      ],
+      "strong": [
+        "frosty the snowman"
+      ]
+    },
+    {
+      "id": "grinch",
+      "franchise": "holiday-specials",
+      "names": [
+        "the grinch",
+        "grinch",
+        "grinsh",
+        "gr1nch",
+        "mr grinch"
+      ],
+      "ambiguous": false,
+      "newName": "Mossbottom",
+      "design": "a grumpy hilltop hermit in a patched indigo poncho, with a bristly grey beard, a lantern and a very old goat",
+      "note": "the grumpy-neighbour-learns-warmth idea",
+      "theme": [
+        "grumpy neighbour",
+        "heart warms up"
+      ],
+      "descriptors": [
+        "green furry (grump|creature|monster) who (hates|stole|steals) christmas",
+        "grump who (hates|stole|steals) christmas"
+      ]
+    },
+    {
+      "id": "jack-skellington",
+      "franchise": "holiday-specials",
+      "names": [
+        "jack skellington",
+        "jack skelington",
+        "jack skellingten",
+        "skellington",
+        "pumpkin king"
+      ],
+      "ambiguous": false,
+      "newName": "Hollow Jim",
+      "design": "a lanky lantern-headed scarecrow in a patchwork waistcoat and a crooked top hat made of birch bark, who tends a pumpkin patch",
+      "note": "the spooky-meets-cozy idea",
+      "theme": [
+        "spooky-meets-cozy",
+        "pumpkin patch"
+      ],
+      "descriptors": [
+        "skeleton (in|with) a (pinstripe|pin-stripe) suit",
+        "pumpkin king of halloween town"
+      ],
+      "strong": [
+        "pumpkin king",
+        "jack skellington"
+      ]
+    },
+    {
+      "id": "elf-on-the-shelf",
+      "franchise": "holiday-specials",
+      "names": [
+        "elf on the shelf",
+        "the elf on the shelf",
+        "elf on a shelf",
+        "shelf elf"
+      ],
+      "ambiguous": false,
+      "newName": "Tumble",
+      "design": "a tiny acorn-capped sprig-elf in a mossy-green tunic who naps on windowsills and leaves small surprises",
+      "note": "the secret-visitor idea",
+      "theme": [
+        "secret holiday visitor"
+      ],
+      "descriptors": [
+        "scout elf",
+        "santa.s (scout )?elf who (watches|reports)"
+      ]
     }
   ],
   "brands": [
