@@ -1,0 +1,4312 @@
+{
+  "$comment": "GreetHub photo cards and events: layout templates. Source of truth for app/lib/collage. Generated and validated by the Head of Design; see docs/design/photo-events-templates.md.",
+  "version": "1.0.0",
+  "updated": "2026-10-14",
+  "units": "inches",
+  "origin": "top-left of the trim box, y grows downward; negative values and values past trim reach into bleed",
+  "rotate": "degrees clockwise about `pivot` (default: slot centre)",
+  "print": {
+    "dpi": 300,
+    "bleed": 0.125,
+    "safe": 0.25,
+    "colour": "sRGB unless the printer spec asks for CMYK",
+    "fontsEmbedded": true
+  },
+  "photoQuality": {
+    "effectiveDpi": {
+      "ideal": 300,
+      "ok": 200,
+      "warnBelow": 200,
+      "strongWarnBelow": 150,
+      "blockBelow": 100
+    },
+    "maxUpscale": 2,
+    "faceMarginOfSlotShortSide": 0.08,
+    "faceMinFromTrim": 0.375,
+    "headroomOfSlotHeight": 0.05,
+    "textNeverOverFaces": true
+  },
+  "textOverPhoto": {
+    "minContrastBody": 4.5,
+    "minContrastLarge": 3,
+    "largeTextPt": 24,
+    "measure": "95th-percentile worst pixel luminance under the text box",
+    "fixOrder": [
+      "scrim (theme dark, up to 65%)",
+      "move text to band layout",
+      "block"
+    ]
+  },
+  "qr": {
+    "minSizeIn": 0.75,
+    "quietZoneModules": 4,
+    "darkOnLight": true,
+    "neverOnPhoto": true,
+    "printShortUrlNearby": true
+  },
+  "textRoles": [
+    "headline",
+    "names",
+    "kicker",
+    "date",
+    "subhead",
+    "body",
+    "small",
+    "caption",
+    "signoff",
+    "address",
+    "address_return"
+  ],
+  "sizes": [
+    {
+      "id": "flat_5x7_p",
+      "name": "Flat 5x7 portrait",
+      "trimW": 5,
+      "trimH": 7,
+      "bleed": 0.125,
+      "safe": 0.25,
+      "envelope": "A7",
+      "products": [
+        "holiday",
+        "save_the_date",
+        "invitation"
+      ]
+    },
+    {
+      "id": "flat_7x5_l",
+      "name": "Flat 5x7 landscape",
+      "trimW": 7,
+      "trimH": 5,
+      "bleed": 0.125,
+      "safe": 0.25,
+      "envelope": "A7",
+      "products": [
+        "holiday",
+        "save_the_date",
+        "invitation"
+      ]
+    },
+    {
+      "id": "postcard_6x4_l",
+      "name": "Flat 4x6 landscape / postcard",
+      "trimW": 6,
+      "trimH": 4,
+      "bleed": 0.125,
+      "safe": 0.25,
+      "envelope": "A6",
+      "mailableBare": true,
+      "products": [
+        "save_the_date",
+        "invitation_rsvp_postcard"
+      ]
+    },
+    {
+      "id": "details_4x6_p",
+      "name": "Flat 4x6 portrait (details card)",
+      "trimW": 4,
+      "trimH": 6,
+      "bleed": 0.125,
+      "safe": 0.25,
+      "envelope": "A7 (inserted with the invitation)",
+      "products": [
+        "invitation_details"
+      ]
+    },
+    {
+      "id": "rsvp_5x3_5_l",
+      "name": "Flat 3.5x5 landscape (RSVP card)",
+      "trimW": 5,
+      "trimH": 3.5,
+      "bleed": 0.125,
+      "safe": 0.25,
+      "envelope": "A1 preferred, A2 fallback",
+      "products": [
+        "invitation_rsvp"
+      ]
+    }
+  ],
+  "envelopes": [
+    {
+      "id": "A7",
+      "w": 7.25,
+      "h": 5.25,
+      "holds": "5x7",
+      "aspect": 1.381
+    },
+    {
+      "id": "A6",
+      "w": 6.5,
+      "h": 4.75,
+      "holds": "4x6",
+      "aspect": 1.3684
+    },
+    {
+      "id": "A2",
+      "w": 5.75,
+      "h": 4.375,
+      "holds": "4.25x5.5 (3.5x5 fits loosely)",
+      "aspect": 1.3143
+    },
+    {
+      "id": "A1",
+      "w": 5.125,
+      "h": 3.625,
+      "holds": "3.5x5",
+      "aspect": 1.4138
+    }
+  ],
+  "textStyles": [
+    {
+      "id": "hol_headline_display",
+      "font": "bricolage_grotesque",
+      "weight": 800,
+      "sizePt": 34,
+      "minPt": 22,
+      "lineHeight": 0.95,
+      "tracking": -0.02,
+      "case": "as_typed"
+    },
+    {
+      "id": "hol_headline_script",
+      "font": "sig:great_vibes",
+      "weight": 400,
+      "sizePt": 44,
+      "minPt": 28,
+      "lineHeight": 1,
+      "tracking": 0,
+      "case": "as_typed"
+    },
+    {
+      "id": "hol_names",
+      "font": "figtree",
+      "weight": 700,
+      "sizePt": 12,
+      "minPt": 10,
+      "lineHeight": 1.2,
+      "tracking": 0.12,
+      "case": "upper"
+    },
+    {
+      "id": "hol_subhead",
+      "font": "bricolage_grotesque",
+      "weight": 700,
+      "sizePt": 15,
+      "minPt": 12,
+      "lineHeight": 1.15,
+      "tracking": 0,
+      "case": "as_typed"
+    },
+    {
+      "id": "hol_body",
+      "font": "figtree",
+      "weight": 400,
+      "sizePt": 10,
+      "minPt": 8.5,
+      "lineHeight": 1.45,
+      "tracking": 0,
+      "case": "as_typed"
+    },
+    {
+      "id": "hol_small",
+      "font": "figtree",
+      "weight": 600,
+      "sizePt": 8.5,
+      "minPt": 7,
+      "lineHeight": 1.3,
+      "tracking": 0.14,
+      "case": "upper"
+    },
+    {
+      "id": "hol_caption",
+      "font": "hw:user",
+      "weight": 400,
+      "sizePt": 11,
+      "minPt": 9,
+      "lineHeight": 1.1,
+      "tracking": 0,
+      "case": "as_typed",
+      "defaultHandwriting": "kalam",
+      "applySizeScale": true
+    },
+    {
+      "id": "hol_signoff",
+      "font": "hw:user",
+      "weight": 400,
+      "sizePt": 18,
+      "minPt": 13,
+      "lineHeight": 1.15,
+      "tracking": 0,
+      "case": "as_typed",
+      "defaultHandwriting": "kalam",
+      "applySizeScale": true,
+      "allowCustomHandwriting": true
+    },
+    {
+      "id": "wed_names_script",
+      "font": "sig:allura",
+      "weight": 400,
+      "sizePt": 48,
+      "minPt": 30,
+      "lineHeight": 1,
+      "tracking": 0,
+      "case": "as_typed"
+    },
+    {
+      "id": "wed_names_serif",
+      "font": "cormorant_garamond",
+      "weight": 600,
+      "sizePt": 30,
+      "minPt": 20,
+      "lineHeight": 1.05,
+      "tracking": 0.08,
+      "case": "upper",
+      "proposedFont": true,
+      "fallback": {
+        "font": "figtree",
+        "weight": 600,
+        "sizePt": 24,
+        "minPt": 18
+      }
+    },
+    {
+      "id": "wed_kicker",
+      "font": "figtree",
+      "weight": 600,
+      "sizePt": 9,
+      "minPt": 7.5,
+      "lineHeight": 1.2,
+      "tracking": 0.24,
+      "case": "upper"
+    },
+    {
+      "id": "wed_date",
+      "font": "figtree",
+      "weight": 600,
+      "sizePt": 12,
+      "minPt": 10,
+      "lineHeight": 1.2,
+      "tracking": 0.18,
+      "case": "upper"
+    },
+    {
+      "id": "wed_subhead",
+      "font": "cormorant_garamond",
+      "weight": 600,
+      "sizePt": 13,
+      "minPt": 11,
+      "lineHeight": 1.2,
+      "tracking": 0.1,
+      "case": "upper",
+      "proposedFont": true,
+      "fallback": {
+        "font": "figtree",
+        "weight": 600,
+        "sizePt": 11,
+        "minPt": 9.5
+      }
+    },
+    {
+      "id": "wed_body",
+      "font": "cormorant_garamond",
+      "weight": 500,
+      "sizePt": 12,
+      "minPt": 10,
+      "lineHeight": 1.35,
+      "tracking": 0,
+      "case": "as_typed",
+      "proposedFont": true,
+      "fallback": {
+        "font": "figtree",
+        "weight": 400,
+        "sizePt": 10,
+        "minPt": 9
+      }
+    },
+    {
+      "id": "wed_small",
+      "font": "figtree",
+      "weight": 500,
+      "sizePt": 8.5,
+      "minPt": 7,
+      "lineHeight": 1.35,
+      "tracking": 0.04,
+      "case": "as_typed"
+    },
+    {
+      "id": "party_headline",
+      "font": "bricolage_grotesque",
+      "weight": 800,
+      "sizePt": 40,
+      "minPt": 24,
+      "lineHeight": 0.95,
+      "tracking": -0.03,
+      "case": "as_typed"
+    },
+    {
+      "id": "party_date",
+      "font": "bricolage_grotesque",
+      "weight": 700,
+      "sizePt": 18,
+      "minPt": 13,
+      "lineHeight": 1.1,
+      "tracking": 0,
+      "case": "as_typed"
+    },
+    {
+      "id": "party_subhead",
+      "font": "bricolage_grotesque",
+      "weight": 700,
+      "sizePt": 14,
+      "minPt": 11,
+      "lineHeight": 1.15,
+      "tracking": 0,
+      "case": "as_typed"
+    },
+    {
+      "id": "party_body",
+      "font": "figtree",
+      "weight": 500,
+      "sizePt": 11,
+      "minPt": 9,
+      "lineHeight": 1.35,
+      "tracking": 0,
+      "case": "as_typed"
+    },
+    {
+      "id": "party_small",
+      "font": "figtree",
+      "weight": 600,
+      "sizePt": 8.5,
+      "minPt": 7,
+      "lineHeight": 1.3,
+      "tracking": 0,
+      "case": "as_typed"
+    },
+    {
+      "id": "party_signoff",
+      "font": "hw:gochi_hand",
+      "weight": 400,
+      "sizePt": 18,
+      "minPt": 13,
+      "lineHeight": 1.1,
+      "tracking": 0,
+      "case": "as_typed",
+      "applySizeScale": true
+    },
+    {
+      "id": "addr_recipient",
+      "font": "figtree",
+      "weight": 500,
+      "sizePt": 11,
+      "minPt": 10,
+      "lineHeight": 1.25,
+      "tracking": 0,
+      "case": "upper",
+      "noScript": true,
+      "note": "USPS readability: sans, 10pt minimum, never script or handwriting"
+    },
+    {
+      "id": "addr_return",
+      "font": "figtree",
+      "weight": 400,
+      "sizePt": 8.5,
+      "minPt": 8,
+      "lineHeight": 1.25,
+      "tracking": 0,
+      "case": "as_typed",
+      "allowHandwriting": true
+    }
+  ],
+  "layouts": [
+    {
+      "id": "full_bleed_band_p",
+      "name": "Full-bleed photo, color band",
+      "size": "flat_5x7_p",
+      "side": "front",
+      "products": [
+        "holiday",
+        "save_the_date"
+      ],
+      "slots": [
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": -0.125,
+          "y": -0.125,
+          "w": 5.25,
+          "h": 5.625,
+          "fit": "cover",
+          "faceZone": "upper",
+          "minPixels": {
+            "warnBelow": [
+              1050,
+              1125
+            ],
+            "blockBelow": [
+              525,
+              563
+            ],
+            "ideal": [
+              1575,
+              1688
+            ]
+          }
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "x": 0.375,
+          "y": 5.65,
+          "w": 4.25,
+          "h": 0.6,
+          "textStyle": "headline",
+          "bind": "greeting",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.375,
+          "y": 6.3,
+          "w": 4.25,
+          "h": 0.4,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "id": "full_bleed_scrim_p",
+      "name": "Full-bleed photo, text on scrim",
+      "size": "flat_5x7_p",
+      "side": "front",
+      "products": [
+        "holiday",
+        "save_the_date"
+      ],
+      "slots": [
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": -0.125,
+          "y": -0.125,
+          "w": 5.25,
+          "h": 7.25,
+          "fit": "cover",
+          "faceZone": "upper",
+          "minPixels": {
+            "warnBelow": [
+              1050,
+              1450
+            ],
+            "blockBelow": [
+              525,
+              725
+            ],
+            "ideal": [
+              1575,
+              2175
+            ]
+          }
+        },
+        {
+          "id": "scrim",
+          "kind": "art",
+          "x": -0.125,
+          "y": 4.25,
+          "w": 5.25,
+          "h": 2.875,
+          "role": "scrim",
+          "gradient": "bottom-up",
+          "maxOpacity": 0.65
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "x": 0.375,
+          "y": 5.2,
+          "w": 4.25,
+          "h": 0.85,
+          "textStyle": "headline",
+          "bind": "greeting",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.375,
+          "y": 6.1,
+          "w": 4.25,
+          "h": 0.4,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "center"
+        },
+        {
+          "id": "small",
+          "kind": "text",
+          "x": 0.375,
+          "y": 6.5,
+          "w": 4.25,
+          "h": 0.25,
+          "textStyle": "small",
+          "bind": "small_line",
+          "align": "center",
+          "optional": true
+        }
+      ],
+      "requiresContrastCheck": true
+    },
+    {
+      "id": "two_up_p",
+      "name": "2-up",
+      "size": "flat_5x7_p",
+      "side": "front",
+      "products": [
+        "holiday"
+      ],
+      "slots": [
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": 0.3125,
+          "y": 0.3125,
+          "w": 2.125,
+          "h": 5.125,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              425,
+              1025
+            ],
+            "blockBelow": [
+              213,
+              513
+            ],
+            "ideal": [
+              638,
+              1538
+            ]
+          }
+        },
+        {
+          "id": "p2",
+          "kind": "photo",
+          "x": 2.5625,
+          "y": 0.3125,
+          "w": 2.125,
+          "h": 5.125,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              425,
+              1025
+            ],
+            "blockBelow": [
+              213,
+              513
+            ],
+            "ideal": [
+              638,
+              1538
+            ]
+          }
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 5.5625,
+          "w": 4.375,
+          "h": 0.75,
+          "textStyle": "headline",
+          "bind": "greeting",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 6.3125,
+          "w": 4.375,
+          "h": 0.375,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "id": "three_grid_p",
+      "name": "3-grid (one tall, two stacked)",
+      "size": "flat_5x7_p",
+      "side": "front",
+      "products": [
+        "holiday"
+      ],
+      "slots": [
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": 0.3125,
+          "y": 0.3125,
+          "w": 2.125,
+          "h": 5.125,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              425,
+              1025
+            ],
+            "blockBelow": [
+              213,
+              513
+            ],
+            "ideal": [
+              638,
+              1538
+            ]
+          }
+        },
+        {
+          "id": "p2",
+          "kind": "photo",
+          "x": 2.5625,
+          "y": 0.3125,
+          "w": 2.125,
+          "h": 2.5,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              425,
+              500
+            ],
+            "blockBelow": [
+              213,
+              250
+            ],
+            "ideal": [
+              638,
+              750
+            ]
+          }
+        },
+        {
+          "id": "p3",
+          "kind": "photo",
+          "x": 2.5625,
+          "y": 2.9375,
+          "w": 2.125,
+          "h": 2.5,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              425,
+              500
+            ],
+            "blockBelow": [
+              213,
+              250
+            ],
+            "ideal": [
+              638,
+              750
+            ]
+          }
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 5.5625,
+          "w": 4.375,
+          "h": 0.75,
+          "textStyle": "headline",
+          "bind": "greeting",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 6.3125,
+          "w": 4.375,
+          "h": 0.375,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "id": "four_grid_p",
+      "name": "4-grid",
+      "size": "flat_5x7_p",
+      "side": "front",
+      "products": [
+        "holiday"
+      ],
+      "slots": [
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": 0.3125,
+          "y": 0.3125,
+          "w": 2.125,
+          "h": 2.5,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              425,
+              500
+            ],
+            "blockBelow": [
+              213,
+              250
+            ],
+            "ideal": [
+              638,
+              750
+            ]
+          }
+        },
+        {
+          "id": "p2",
+          "kind": "photo",
+          "x": 2.5625,
+          "y": 0.3125,
+          "w": 2.125,
+          "h": 2.5,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              425,
+              500
+            ],
+            "blockBelow": [
+              213,
+              250
+            ],
+            "ideal": [
+              638,
+              750
+            ]
+          }
+        },
+        {
+          "id": "p3",
+          "kind": "photo",
+          "x": 0.3125,
+          "y": 2.9375,
+          "w": 2.125,
+          "h": 2.5,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              425,
+              500
+            ],
+            "blockBelow": [
+              213,
+              250
+            ],
+            "ideal": [
+              638,
+              750
+            ]
+          }
+        },
+        {
+          "id": "p4",
+          "kind": "photo",
+          "x": 2.5625,
+          "y": 2.9375,
+          "w": 2.125,
+          "h": 2.5,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              425,
+              500
+            ],
+            "blockBelow": [
+              213,
+              250
+            ],
+            "ideal": [
+              638,
+              750
+            ]
+          }
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 5.5625,
+          "w": 4.375,
+          "h": 0.75,
+          "textStyle": "headline",
+          "bind": "greeting",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 6.3125,
+          "w": 4.375,
+          "h": 0.375,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "id": "hero_two_p",
+      "name": "Hero plus two",
+      "size": "flat_5x7_p",
+      "side": "front",
+      "products": [
+        "holiday"
+      ],
+      "slots": [
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": 0.3125,
+          "y": 0.3125,
+          "w": 4.375,
+          "h": 3.25,
+          "fit": "cover",
+          "hero": true,
+          "minPixels": {
+            "warnBelow": [
+              875,
+              650
+            ],
+            "blockBelow": [
+              438,
+              325
+            ],
+            "ideal": [
+              1313,
+              975
+            ]
+          }
+        },
+        {
+          "id": "p2",
+          "kind": "photo",
+          "x": 0.3125,
+          "y": 3.6875,
+          "w": 2.125,
+          "h": 1.75,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              425,
+              350
+            ],
+            "blockBelow": [
+              213,
+              175
+            ],
+            "ideal": [
+              638,
+              525
+            ]
+          }
+        },
+        {
+          "id": "p3",
+          "kind": "photo",
+          "x": 2.5625,
+          "y": 3.6875,
+          "w": 2.125,
+          "h": 1.75,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              425,
+              350
+            ],
+            "blockBelow": [
+              213,
+              175
+            ],
+            "ideal": [
+              638,
+              525
+            ]
+          }
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 5.5625,
+          "w": 4.375,
+          "h": 0.75,
+          "textStyle": "headline",
+          "bind": "greeting",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 6.3125,
+          "w": 4.375,
+          "h": 0.375,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "id": "polaroid_stack_p",
+      "name": "Polaroid stack",
+      "size": "flat_5x7_p",
+      "side": "front",
+      "products": [
+        "holiday"
+      ],
+      "slots": [
+        {
+          "id": "background",
+          "kind": "art",
+          "x": -0.125,
+          "y": -0.125,
+          "w": 5.25,
+          "h": 7.25,
+          "role": "pattern"
+        },
+        {
+          "id": "frame1",
+          "kind": "art",
+          "x": 0.45,
+          "y": 0.55,
+          "w": 2.6,
+          "h": 3.1,
+          "role": "polaroid_frame",
+          "rotate": -6,
+          "pivot": {
+            "x": 1.75,
+            "y": 2.1
+          },
+          "z": 1,
+          "shadow": "soft"
+        },
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": 0.6,
+          "y": 0.7,
+          "w": 2.3,
+          "h": 2.4,
+          "fit": "cover",
+          "rotate": -6,
+          "pivot": {
+            "x": 1.75,
+            "y": 2.1
+          },
+          "z": 1.5,
+          "minPixels": {
+            "warnBelow": [
+              460,
+              480
+            ],
+            "blockBelow": [
+              230,
+              240
+            ],
+            "ideal": [
+              690,
+              720
+            ]
+          }
+        },
+        {
+          "id": "frame2",
+          "kind": "art",
+          "x": 1.95,
+          "y": 1.35,
+          "w": 2.6,
+          "h": 3.1,
+          "role": "polaroid_frame",
+          "rotate": 5,
+          "pivot": {
+            "x": 3.25,
+            "y": 2.9
+          },
+          "z": 2,
+          "shadow": "soft"
+        },
+        {
+          "id": "p2",
+          "kind": "photo",
+          "x": 2.1,
+          "y": 1.5,
+          "w": 2.3,
+          "h": 2.4,
+          "fit": "cover",
+          "rotate": 5,
+          "pivot": {
+            "x": 3.25,
+            "y": 2.9
+          },
+          "z": 2.5,
+          "minPixels": {
+            "warnBelow": [
+              460,
+              480
+            ],
+            "blockBelow": [
+              230,
+              240
+            ],
+            "ideal": [
+              690,
+              720
+            ]
+          }
+        },
+        {
+          "id": "frame3",
+          "kind": "art",
+          "x": 0.9,
+          "y": 2.85,
+          "w": 2.6,
+          "h": 3.1,
+          "role": "polaroid_frame",
+          "rotate": -2,
+          "pivot": {
+            "x": 2.2,
+            "y": 4.4
+          },
+          "z": 3,
+          "shadow": "soft"
+        },
+        {
+          "id": "p3",
+          "kind": "photo",
+          "x": 1.05,
+          "y": 3,
+          "w": 2.3,
+          "h": 2.4,
+          "fit": "cover",
+          "rotate": -2,
+          "pivot": {
+            "x": 2.2,
+            "y": 4.4
+          },
+          "z": 3.5,
+          "minPixels": {
+            "warnBelow": [
+              460,
+              480
+            ],
+            "blockBelow": [
+              230,
+              240
+            ],
+            "ideal": [
+              690,
+              720
+            ]
+          }
+        },
+        {
+          "id": "caption3",
+          "kind": "text",
+          "x": 1.05,
+          "y": 5.45,
+          "w": 2.3,
+          "h": 0.4,
+          "textStyle": "caption",
+          "bind": "caption",
+          "align": "center",
+          "rotate": -2,
+          "pivot": {
+            "x": 2.2,
+            "y": 4.4
+          },
+          "z": 3.6,
+          "optional": true
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "x": 0.375,
+          "y": 6,
+          "w": 4.25,
+          "h": 0.4,
+          "textStyle": "headline",
+          "bind": "greeting",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.375,
+          "y": 6.4,
+          "w": 4.25,
+          "h": 0.35,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "center"
+        }
+      ],
+      "allowsOverlap": true
+    },
+    {
+      "id": "full_bleed_band_l",
+      "name": "Full-bleed photo, color band",
+      "size": "flat_7x5_l",
+      "side": "front",
+      "products": [
+        "holiday"
+      ],
+      "slots": [
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": -0.125,
+          "y": -0.125,
+          "w": 7.25,
+          "h": 3.875,
+          "fit": "cover",
+          "faceZone": "upper",
+          "minPixels": {
+            "warnBelow": [
+              1450,
+              775
+            ],
+            "blockBelow": [
+              725,
+              388
+            ],
+            "ideal": [
+              2175,
+              1163
+            ]
+          }
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "x": 0.375,
+          "y": 3.85,
+          "w": 6.25,
+          "h": 0.5,
+          "textStyle": "headline",
+          "bind": "greeting",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.375,
+          "y": 4.35,
+          "w": 6.25,
+          "h": 0.4,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "id": "two_up_l",
+      "name": "2-up",
+      "size": "flat_7x5_l",
+      "side": "front",
+      "products": [
+        "holiday"
+      ],
+      "slots": [
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": 0.3125,
+          "y": 0.3125,
+          "w": 3.125,
+          "h": 3.5,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              625,
+              700
+            ],
+            "blockBelow": [
+              313,
+              350
+            ],
+            "ideal": [
+              938,
+              1050
+            ]
+          }
+        },
+        {
+          "id": "p2",
+          "kind": "photo",
+          "x": 3.5625,
+          "y": 0.3125,
+          "w": 3.125,
+          "h": 3.5,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              625,
+              700
+            ],
+            "blockBelow": [
+              313,
+              350
+            ],
+            "ideal": [
+              938,
+              1050
+            ]
+          }
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 3.9,
+          "w": 6.375,
+          "h": 0.5,
+          "textStyle": "headline",
+          "bind": "greeting",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 4.4,
+          "w": 6.375,
+          "h": 0.35,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "id": "three_grid_l",
+      "name": "3-grid (three columns)",
+      "size": "flat_7x5_l",
+      "side": "front",
+      "products": [
+        "holiday"
+      ],
+      "slots": [
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": 0.3125,
+          "y": 0.3125,
+          "w": 2.0417,
+          "h": 3.5,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              409,
+              700
+            ],
+            "blockBelow": [
+              205,
+              350
+            ],
+            "ideal": [
+              613,
+              1050
+            ]
+          }
+        },
+        {
+          "id": "p2",
+          "kind": "photo",
+          "x": 2.4792,
+          "y": 0.3125,
+          "w": 2.0417,
+          "h": 3.5,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              409,
+              700
+            ],
+            "blockBelow": [
+              205,
+              350
+            ],
+            "ideal": [
+              613,
+              1050
+            ]
+          }
+        },
+        {
+          "id": "p3",
+          "kind": "photo",
+          "x": 4.6459,
+          "y": 0.3125,
+          "w": 2.0417,
+          "h": 3.5,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              409,
+              700
+            ],
+            "blockBelow": [
+              205,
+              350
+            ],
+            "ideal": [
+              613,
+              1050
+            ]
+          }
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 3.9,
+          "w": 6.375,
+          "h": 0.5,
+          "textStyle": "headline",
+          "bind": "greeting",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 4.4,
+          "w": 6.375,
+          "h": 0.35,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "id": "four_grid_l",
+      "name": "4-grid",
+      "size": "flat_7x5_l",
+      "side": "front",
+      "products": [
+        "holiday"
+      ],
+      "slots": [
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": 0.3125,
+          "y": 0.3125,
+          "w": 3.125,
+          "h": 1.6875,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              625,
+              338
+            ],
+            "blockBelow": [
+              313,
+              169
+            ],
+            "ideal": [
+              938,
+              507
+            ]
+          }
+        },
+        {
+          "id": "p2",
+          "kind": "photo",
+          "x": 3.5625,
+          "y": 0.3125,
+          "w": 3.125,
+          "h": 1.6875,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              625,
+              338
+            ],
+            "blockBelow": [
+              313,
+              169
+            ],
+            "ideal": [
+              938,
+              507
+            ]
+          }
+        },
+        {
+          "id": "p3",
+          "kind": "photo",
+          "x": 0.3125,
+          "y": 2.125,
+          "w": 3.125,
+          "h": 1.6875,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              625,
+              338
+            ],
+            "blockBelow": [
+              313,
+              169
+            ],
+            "ideal": [
+              938,
+              507
+            ]
+          }
+        },
+        {
+          "id": "p4",
+          "kind": "photo",
+          "x": 3.5625,
+          "y": 2.125,
+          "w": 3.125,
+          "h": 1.6875,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              625,
+              338
+            ],
+            "blockBelow": [
+              313,
+              169
+            ],
+            "ideal": [
+              938,
+              507
+            ]
+          }
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 3.9,
+          "w": 6.375,
+          "h": 0.5,
+          "textStyle": "headline",
+          "bind": "greeting",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 4.4,
+          "w": 6.375,
+          "h": 0.35,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "id": "hero_two_l",
+      "name": "Hero plus two",
+      "size": "flat_7x5_l",
+      "side": "front",
+      "products": [
+        "holiday"
+      ],
+      "slots": [
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": 0.3125,
+          "y": 0.3125,
+          "w": 4.1875,
+          "h": 3.5,
+          "fit": "cover",
+          "hero": true,
+          "minPixels": {
+            "warnBelow": [
+              838,
+              700
+            ],
+            "blockBelow": [
+              419,
+              350
+            ],
+            "ideal": [
+              1257,
+              1050
+            ]
+          }
+        },
+        {
+          "id": "p2",
+          "kind": "photo",
+          "x": 4.625,
+          "y": 0.3125,
+          "w": 2.0625,
+          "h": 1.6875,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              413,
+              338
+            ],
+            "blockBelow": [
+              207,
+              169
+            ],
+            "ideal": [
+              619,
+              507
+            ]
+          }
+        },
+        {
+          "id": "p3",
+          "kind": "photo",
+          "x": 4.625,
+          "y": 2.125,
+          "w": 2.0625,
+          "h": 1.6875,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              413,
+              338
+            ],
+            "blockBelow": [
+              207,
+              169
+            ],
+            "ideal": [
+              619,
+              507
+            ]
+          }
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 3.9,
+          "w": 6.375,
+          "h": 0.5,
+          "textStyle": "headline",
+          "bind": "greeting",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 4.4,
+          "w": 6.375,
+          "h": 0.35,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "id": "back_photo_strip_p",
+      "name": "Photo strip (3)",
+      "size": "flat_5x7_p",
+      "side": "back",
+      "products": [
+        "holiday",
+        "save_the_date"
+      ],
+      "slots": [
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": 0.3125,
+          "y": 0.3125,
+          "w": 1.375,
+          "h": 1.375,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              275,
+              275
+            ],
+            "blockBelow": [
+              138,
+              138
+            ],
+            "ideal": [
+              413,
+              413
+            ]
+          }
+        },
+        {
+          "id": "p2",
+          "kind": "photo",
+          "x": 1.8125,
+          "y": 0.3125,
+          "w": 1.375,
+          "h": 1.375,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              275,
+              275
+            ],
+            "blockBelow": [
+              138,
+              138
+            ],
+            "ideal": [
+              413,
+              413
+            ]
+          }
+        },
+        {
+          "id": "p3",
+          "kind": "photo",
+          "x": 3.3125,
+          "y": 0.3125,
+          "w": 1.375,
+          "h": 1.375,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              275,
+              275
+            ],
+            "blockBelow": [
+              138,
+              138
+            ],
+            "ideal": [
+              413,
+              413
+            ]
+          }
+        },
+        {
+          "id": "message",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 2,
+          "w": 4.375,
+          "h": 2.6,
+          "textStyle": "body",
+          "bind": "message",
+          "align": "center",
+          "optional": true
+        },
+        {
+          "id": "signoff",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 4.75,
+          "w": 4.375,
+          "h": 0.7,
+          "textStyle": "signoff",
+          "bind": "signoff",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 5.6,
+          "w": 4.375,
+          "h": 0.4,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "center"
+        },
+        {
+          "id": "brand_mark",
+          "kind": "art",
+          "x": 2.05,
+          "y": 6.55,
+          "w": 0.9,
+          "h": 0.2,
+          "role": "brand_mark",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "back_photo_strip_double_p",
+      "name": "Photo strip (6)",
+      "size": "flat_5x7_p",
+      "side": "back",
+      "products": [
+        "holiday"
+      ],
+      "slots": [
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": 0.3125,
+          "y": 0.3125,
+          "w": 1.375,
+          "h": 1.375,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              275,
+              275
+            ],
+            "blockBelow": [
+              138,
+              138
+            ],
+            "ideal": [
+              413,
+              413
+            ]
+          }
+        },
+        {
+          "id": "p2",
+          "kind": "photo",
+          "x": 1.8125,
+          "y": 0.3125,
+          "w": 1.375,
+          "h": 1.375,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              275,
+              275
+            ],
+            "blockBelow": [
+              138,
+              138
+            ],
+            "ideal": [
+              413,
+              413
+            ]
+          }
+        },
+        {
+          "id": "p3",
+          "kind": "photo",
+          "x": 3.3125,
+          "y": 0.3125,
+          "w": 1.375,
+          "h": 1.375,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              275,
+              275
+            ],
+            "blockBelow": [
+              138,
+              138
+            ],
+            "ideal": [
+              413,
+              413
+            ]
+          }
+        },
+        {
+          "id": "p4",
+          "kind": "photo",
+          "x": 0.3125,
+          "y": 1.8125,
+          "w": 1.375,
+          "h": 1.375,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              275,
+              275
+            ],
+            "blockBelow": [
+              138,
+              138
+            ],
+            "ideal": [
+              413,
+              413
+            ]
+          }
+        },
+        {
+          "id": "p5",
+          "kind": "photo",
+          "x": 1.8125,
+          "y": 1.8125,
+          "w": 1.375,
+          "h": 1.375,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              275,
+              275
+            ],
+            "blockBelow": [
+              138,
+              138
+            ],
+            "ideal": [
+              413,
+              413
+            ]
+          }
+        },
+        {
+          "id": "p6",
+          "kind": "photo",
+          "x": 3.3125,
+          "y": 1.8125,
+          "w": 1.375,
+          "h": 1.375,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              275,
+              275
+            ],
+            "blockBelow": [
+              138,
+              138
+            ],
+            "ideal": [
+              413,
+              413
+            ]
+          }
+        },
+        {
+          "id": "message",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 3.375,
+          "w": 4.375,
+          "h": 1.6,
+          "textStyle": "body",
+          "bind": "message",
+          "align": "center",
+          "optional": true
+        },
+        {
+          "id": "signoff",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 5.1,
+          "w": 4.375,
+          "h": 0.6,
+          "textStyle": "signoff",
+          "bind": "signoff",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 5.8,
+          "w": 4.375,
+          "h": 0.4,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "center"
+        },
+        {
+          "id": "brand_mark",
+          "kind": "art",
+          "x": 2.05,
+          "y": 6.55,
+          "w": 0.9,
+          "h": 0.2,
+          "role": "brand_mark",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "back_letter_p",
+      "name": "Letter",
+      "size": "flat_5x7_p",
+      "side": "back",
+      "products": [
+        "holiday"
+      ],
+      "slots": [
+        {
+          "id": "heading",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 0.3125,
+          "w": 4.375,
+          "h": 0.45,
+          "textStyle": "subhead",
+          "bind": "letter_heading",
+          "align": "left"
+        },
+        {
+          "id": "body",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 0.875,
+          "w": 4.375,
+          "h": 4.6,
+          "textStyle": "body",
+          "bind": "letter",
+          "align": "left",
+          "maxWords": 220
+        },
+        {
+          "id": "signoff",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 5.55,
+          "w": 4.375,
+          "h": 0.6,
+          "textStyle": "signoff",
+          "bind": "signoff",
+          "align": "left"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 6.18,
+          "w": 4.375,
+          "h": 0.32,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "left"
+        },
+        {
+          "id": "brand_mark",
+          "kind": "art",
+          "x": 2.05,
+          "y": 6.55,
+          "w": 0.9,
+          "h": 0.2,
+          "role": "brand_mark",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "back_from_block_p",
+      "name": "From block",
+      "size": "flat_5x7_p",
+      "side": "back",
+      "products": [
+        "holiday",
+        "save_the_date",
+        "invitation"
+      ],
+      "slots": [
+        {
+          "id": "background",
+          "kind": "art",
+          "x": -0.125,
+          "y": -0.125,
+          "w": 5.25,
+          "h": 7.25,
+          "role": "pattern"
+        },
+        {
+          "id": "panel",
+          "kind": "art",
+          "x": 0.75,
+          "y": 2.25,
+          "w": 3.5,
+          "h": 2.5,
+          "role": "panel"
+        },
+        {
+          "id": "signoff",
+          "kind": "text",
+          "x": 1,
+          "y": 2.5,
+          "w": 3,
+          "h": 0.8,
+          "textStyle": "signoff",
+          "bind": "signoff",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 1,
+          "y": 3.4,
+          "w": 3,
+          "h": 0.5,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "center"
+        },
+        {
+          "id": "small",
+          "kind": "text",
+          "x": 1,
+          "y": 4,
+          "w": 3,
+          "h": 0.5,
+          "textStyle": "small",
+          "bind": "small_line",
+          "align": "center",
+          "optional": true
+        },
+        {
+          "id": "brand_mark",
+          "kind": "art",
+          "x": 2.05,
+          "y": 6.55,
+          "w": 0.9,
+          "h": 0.2,
+          "role": "brand_mark",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "back_photo_strip_l",
+      "name": "Photo strip (4)",
+      "size": "flat_7x5_l",
+      "side": "back",
+      "products": [
+        "holiday"
+      ],
+      "slots": [
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": 0.3125,
+          "y": 0.3125,
+          "w": 1.5,
+          "h": 1.5,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              300,
+              300
+            ],
+            "blockBelow": [
+              150,
+              150
+            ],
+            "ideal": [
+              450,
+              450
+            ]
+          }
+        },
+        {
+          "id": "p2",
+          "kind": "photo",
+          "x": 1.9375,
+          "y": 0.3125,
+          "w": 1.5,
+          "h": 1.5,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              300,
+              300
+            ],
+            "blockBelow": [
+              150,
+              150
+            ],
+            "ideal": [
+              450,
+              450
+            ]
+          }
+        },
+        {
+          "id": "p3",
+          "kind": "photo",
+          "x": 3.5625,
+          "y": 0.3125,
+          "w": 1.5,
+          "h": 1.5,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              300,
+              300
+            ],
+            "blockBelow": [
+              150,
+              150
+            ],
+            "ideal": [
+              450,
+              450
+            ]
+          }
+        },
+        {
+          "id": "p4",
+          "kind": "photo",
+          "x": 5.1875,
+          "y": 0.3125,
+          "w": 1.5,
+          "h": 1.5,
+          "fit": "cover",
+          "minPixels": {
+            "warnBelow": [
+              300,
+              300
+            ],
+            "blockBelow": [
+              150,
+              150
+            ],
+            "ideal": [
+              450,
+              450
+            ]
+          }
+        },
+        {
+          "id": "message",
+          "kind": "text",
+          "x": 1.25,
+          "y": 2,
+          "w": 4.5,
+          "h": 1.4,
+          "textStyle": "body",
+          "bind": "message",
+          "align": "center",
+          "optional": true
+        },
+        {
+          "id": "signoff",
+          "kind": "text",
+          "x": 1.25,
+          "y": 3.5,
+          "w": 4.5,
+          "h": 0.55,
+          "textStyle": "signoff",
+          "bind": "signoff",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 1.25,
+          "y": 4.1,
+          "w": 4.5,
+          "h": 0.35,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "center"
+        },
+        {
+          "id": "brand_mark",
+          "kind": "art",
+          "x": 3.05,
+          "y": 4.55,
+          "w": 0.9,
+          "h": 0.2,
+          "role": "brand_mark",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "back_letter_l",
+      "name": "Letter (two columns)",
+      "size": "flat_7x5_l",
+      "side": "back",
+      "products": [
+        "holiday"
+      ],
+      "slots": [
+        {
+          "id": "heading",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 0.3125,
+          "w": 6.375,
+          "h": 0.45,
+          "textStyle": "subhead",
+          "bind": "letter_heading",
+          "align": "left"
+        },
+        {
+          "id": "body",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 0.875,
+          "w": 3.0625,
+          "h": 2.9,
+          "textStyle": "body",
+          "bind": "letter",
+          "align": "left",
+          "flowTo": "body2",
+          "maxWords": 240
+        },
+        {
+          "id": "body2",
+          "kind": "text",
+          "x": 3.625,
+          "y": 0.875,
+          "w": 3.0625,
+          "h": 2.9,
+          "textStyle": "body",
+          "bind": "letter_continued",
+          "align": "left"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 4,
+          "w": 3.0625,
+          "h": 0.35,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "left"
+        },
+        {
+          "id": "signoff",
+          "kind": "text",
+          "x": 3.625,
+          "y": 3.85,
+          "w": 3.0625,
+          "h": 0.5,
+          "textStyle": "signoff",
+          "bind": "signoff",
+          "align": "left"
+        },
+        {
+          "id": "brand_mark",
+          "kind": "art",
+          "x": 3.05,
+          "y": 4.55,
+          "w": 0.9,
+          "h": 0.2,
+          "role": "brand_mark",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "back_from_block_l",
+      "name": "From block",
+      "size": "flat_7x5_l",
+      "side": "back",
+      "products": [
+        "holiday"
+      ],
+      "slots": [
+        {
+          "id": "background",
+          "kind": "art",
+          "x": -0.125,
+          "y": -0.125,
+          "w": 7.25,
+          "h": 5.25,
+          "role": "pattern"
+        },
+        {
+          "id": "panel",
+          "kind": "art",
+          "x": 1.75,
+          "y": 1.25,
+          "w": 3.5,
+          "h": 2.5,
+          "role": "panel"
+        },
+        {
+          "id": "signoff",
+          "kind": "text",
+          "x": 2,
+          "y": 1.5,
+          "w": 3,
+          "h": 0.8,
+          "textStyle": "signoff",
+          "bind": "signoff",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 2,
+          "y": 2.4,
+          "w": 3,
+          "h": 0.5,
+          "textStyle": "names",
+          "bind": "names_year",
+          "align": "center"
+        },
+        {
+          "id": "small",
+          "kind": "text",
+          "x": 2,
+          "y": 3,
+          "w": 3,
+          "h": 0.5,
+          "textStyle": "small",
+          "bind": "small_line",
+          "align": "center",
+          "optional": true
+        },
+        {
+          "id": "brand_mark",
+          "kind": "art",
+          "x": 3.05,
+          "y": 4.55,
+          "w": 0.9,
+          "h": 0.2,
+          "role": "brand_mark",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "std_scrim_p",
+      "name": "Save the date: full-bleed photo",
+      "size": "flat_5x7_p",
+      "side": "front",
+      "products": [
+        "save_the_date"
+      ],
+      "slots": [
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": -0.125,
+          "y": -0.125,
+          "w": 5.25,
+          "h": 7.25,
+          "fit": "cover",
+          "faceZone": "upper",
+          "minPixels": {
+            "warnBelow": [
+              1050,
+              1450
+            ],
+            "blockBelow": [
+              525,
+              725
+            ],
+            "ideal": [
+              1575,
+              2175
+            ]
+          }
+        },
+        {
+          "id": "scrim",
+          "kind": "art",
+          "x": -0.125,
+          "y": 4,
+          "w": 5.25,
+          "h": 3.125,
+          "role": "scrim",
+          "gradient": "bottom-up",
+          "maxOpacity": 0.65
+        },
+        {
+          "id": "kicker",
+          "kind": "text",
+          "x": 0.375,
+          "y": 4.7,
+          "w": 4.25,
+          "h": 0.35,
+          "textStyle": "kicker",
+          "bind": "kicker",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.375,
+          "y": 5.05,
+          "w": 4.25,
+          "h": 0.9,
+          "textStyle": "names",
+          "bind": "couple_names",
+          "align": "center"
+        },
+        {
+          "id": "date",
+          "kind": "text",
+          "x": 0.375,
+          "y": 5.95,
+          "w": 4.25,
+          "h": 0.4,
+          "textStyle": "date",
+          "bind": "event_date",
+          "align": "center"
+        },
+        {
+          "id": "small",
+          "kind": "text",
+          "x": 0.375,
+          "y": 6.35,
+          "w": 4.25,
+          "h": 0.4,
+          "textStyle": "small",
+          "bind": "place_and_url",
+          "align": "center"
+        }
+      ],
+      "requiresContrastCheck": true
+    },
+    {
+      "id": "std_calendar_p",
+      "name": "Save the date: photo and calendar",
+      "size": "flat_5x7_p",
+      "side": "front",
+      "products": [
+        "save_the_date"
+      ],
+      "slots": [
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": -0.125,
+          "y": -0.125,
+          "w": 5.25,
+          "h": 3.875,
+          "fit": "cover",
+          "faceZone": "upper",
+          "minPixels": {
+            "warnBelow": [
+              1050,
+              775
+            ],
+            "blockBelow": [
+              525,
+              388
+            ],
+            "ideal": [
+              1575,
+              1163
+            ]
+          }
+        },
+        {
+          "id": "kicker",
+          "kind": "text",
+          "x": 0.375,
+          "y": 3.9,
+          "w": 4.25,
+          "h": 0.3,
+          "textStyle": "kicker",
+          "bind": "kicker",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.375,
+          "y": 4.2,
+          "w": 4.25,
+          "h": 0.6,
+          "textStyle": "names",
+          "bind": "couple_names",
+          "align": "center"
+        },
+        {
+          "id": "calendar",
+          "kind": "art",
+          "x": 1.5,
+          "y": 4.9,
+          "w": 2,
+          "h": 1.35,
+          "role": "calendar",
+          "source": "vector, generated from event_date; date circled in accent"
+        },
+        {
+          "id": "small",
+          "kind": "text",
+          "x": 0.375,
+          "y": 6.35,
+          "w": 4.25,
+          "h": 0.4,
+          "textStyle": "small",
+          "bind": "place_and_url",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "id": "std_garden_p",
+      "name": "Save the date: art border, round photo",
+      "size": "flat_5x7_p",
+      "side": "front",
+      "products": [
+        "save_the_date"
+      ],
+      "slots": [
+        {
+          "id": "border",
+          "kind": "art",
+          "x": -0.125,
+          "y": -0.125,
+          "w": 5.25,
+          "h": 7.25,
+          "role": "border",
+          "keepClearInner": {
+            "x": 0.6,
+            "y": 0.6,
+            "w": 3.8,
+            "h": 5.8
+          }
+        },
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": 1.5,
+          "y": 0.9,
+          "w": 2,
+          "h": 2,
+          "fit": "cover",
+          "mask": "circle",
+          "optional": true,
+          "minPixels": {
+            "warnBelow": [
+              400,
+              400
+            ],
+            "blockBelow": [
+              200,
+              200
+            ],
+            "ideal": [
+              600,
+              600
+            ]
+          }
+        },
+        {
+          "id": "kicker",
+          "kind": "text",
+          "x": 0.75,
+          "y": 3.15,
+          "w": 3.5,
+          "h": 0.3,
+          "textStyle": "kicker",
+          "bind": "kicker",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.75,
+          "y": 3.5,
+          "w": 3.5,
+          "h": 1,
+          "textStyle": "names",
+          "bind": "couple_names",
+          "align": "center"
+        },
+        {
+          "id": "date",
+          "kind": "text",
+          "x": 0.75,
+          "y": 4.6,
+          "w": 3.5,
+          "h": 0.4,
+          "textStyle": "date",
+          "bind": "event_date",
+          "align": "center"
+        },
+        {
+          "id": "place",
+          "kind": "text",
+          "x": 0.75,
+          "y": 5.05,
+          "w": 3.5,
+          "h": 0.4,
+          "textStyle": "subhead",
+          "bind": "place",
+          "align": "center"
+        },
+        {
+          "id": "small",
+          "kind": "text",
+          "x": 0.75,
+          "y": 5.5,
+          "w": 3.5,
+          "h": 0.3,
+          "textStyle": "small",
+          "bind": "url",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "id": "std_photo_left_6x4",
+      "name": "Save the date: photo left, text right",
+      "size": "postcard_6x4_l",
+      "side": "front",
+      "products": [
+        "save_the_date"
+      ],
+      "slots": [
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": -0.125,
+          "y": -0.125,
+          "w": 3.125,
+          "h": 4.25,
+          "fit": "cover",
+          "faceZone": "center",
+          "minPixels": {
+            "warnBelow": [
+              625,
+              850
+            ],
+            "blockBelow": [
+              313,
+              425
+            ],
+            "ideal": [
+              938,
+              1275
+            ]
+          }
+        },
+        {
+          "id": "kicker",
+          "kind": "text",
+          "x": 3.3125,
+          "y": 0.5,
+          "w": 2.375,
+          "h": 0.3,
+          "textStyle": "kicker",
+          "bind": "kicker",
+          "align": "center"
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 3.3125,
+          "y": 0.85,
+          "w": 2.375,
+          "h": 1,
+          "textStyle": "names",
+          "bind": "couple_names",
+          "align": "center"
+        },
+        {
+          "id": "date",
+          "kind": "text",
+          "x": 3.3125,
+          "y": 1.95,
+          "w": 2.375,
+          "h": 0.4,
+          "textStyle": "date",
+          "bind": "event_date",
+          "align": "center"
+        },
+        {
+          "id": "place",
+          "kind": "text",
+          "x": 3.3125,
+          "y": 2.4,
+          "w": 2.375,
+          "h": 0.4,
+          "textStyle": "small",
+          "bind": "place",
+          "align": "center"
+        },
+        {
+          "id": "qr",
+          "kind": "art",
+          "x": 3.3125,
+          "y": 2.9,
+          "w": 0.8,
+          "h": 0.8,
+          "role": "qr",
+          "optional": true,
+          "quietZoneModules": 4
+        },
+        {
+          "id": "url",
+          "kind": "text",
+          "x": 4.2,
+          "y": 3.05,
+          "w": 1.4875,
+          "h": 0.5,
+          "textStyle": "small",
+          "bind": "url",
+          "align": "left",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "postcard_back_6x4",
+      "name": "Postcard address side",
+      "size": "postcard_6x4_l",
+      "side": "back",
+      "products": [
+        "save_the_date",
+        "invitation_rsvp_postcard"
+      ],
+      "slots": [
+        {
+          "id": "return_address",
+          "kind": "text",
+          "x": 0.25,
+          "y": 0.25,
+          "w": 2.5,
+          "h": 0.7,
+          "textStyle": "address_return",
+          "bind": "return_address",
+          "align": "left"
+        },
+        {
+          "id": "message",
+          "kind": "text",
+          "x": 0.25,
+          "y": 1.05,
+          "w": 2.5,
+          "h": 2.2,
+          "textStyle": "body",
+          "bind": "message",
+          "align": "left",
+          "optional": true
+        },
+        {
+          "id": "divider",
+          "kind": "art",
+          "x": 2.95,
+          "y": 0.5,
+          "w": 0.01,
+          "h": 2.75,
+          "role": "rule"
+        },
+        {
+          "id": "postage",
+          "kind": "art",
+          "x": 4.75,
+          "y": 0.25,
+          "w": 1,
+          "h": 1,
+          "role": "postage_clear",
+          "keepClear": true
+        },
+        {
+          "id": "recipient",
+          "kind": "text",
+          "x": 3.125,
+          "y": 1.5,
+          "w": 2.625,
+          "h": 1.25,
+          "textStyle": "address",
+          "bind": "recipient_address",
+          "align": "left"
+        },
+        {
+          "id": "barcode_clear_zone",
+          "kind": "art",
+          "x": 1.25,
+          "y": 3.375,
+          "w": 4.75,
+          "h": 0.625,
+          "role": "usps_barcode_clear_zone",
+          "keepClear": true
+        }
+      ]
+    },
+    {
+      "id": "inv_text_p",
+      "name": "Invitation: text-led with art border",
+      "size": "flat_5x7_p",
+      "side": "front",
+      "products": [
+        "invitation"
+      ],
+      "slots": [
+        {
+          "id": "border",
+          "kind": "art",
+          "x": -0.125,
+          "y": -0.125,
+          "w": 5.25,
+          "h": 7.25,
+          "role": "border",
+          "keepClearInner": {
+            "x": 0.6,
+            "y": 0.6,
+            "w": 3.8,
+            "h": 5.8
+          }
+        },
+        {
+          "id": "host",
+          "kind": "text",
+          "x": 0.75,
+          "y": 1,
+          "w": 3.5,
+          "h": 0.6,
+          "textStyle": "small",
+          "bind": "host_line",
+          "align": "center",
+          "optional": true
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.75,
+          "y": 1.75,
+          "w": 3.5,
+          "h": 1.4,
+          "textStyle": "names",
+          "bind": "couple_names",
+          "align": "center"
+        },
+        {
+          "id": "request",
+          "kind": "text",
+          "x": 0.75,
+          "y": 3.25,
+          "w": 3.5,
+          "h": 0.5,
+          "textStyle": "body",
+          "bind": "request_line",
+          "align": "center"
+        },
+        {
+          "id": "date",
+          "kind": "text",
+          "x": 0.75,
+          "y": 3.85,
+          "w": 3.5,
+          "h": 0.45,
+          "textStyle": "date",
+          "bind": "event_date",
+          "align": "center"
+        },
+        {
+          "id": "time",
+          "kind": "text",
+          "x": 0.75,
+          "y": 4.3,
+          "w": 3.5,
+          "h": 0.35,
+          "textStyle": "body",
+          "bind": "event_time",
+          "align": "center"
+        },
+        {
+          "id": "venue",
+          "kind": "text",
+          "x": 0.75,
+          "y": 4.75,
+          "w": 3.5,
+          "h": 0.4,
+          "textStyle": "subhead",
+          "bind": "venue",
+          "align": "center"
+        },
+        {
+          "id": "address",
+          "kind": "text",
+          "x": 0.75,
+          "y": 5.15,
+          "w": 3.5,
+          "h": 0.4,
+          "textStyle": "small",
+          "bind": "venue_address",
+          "align": "center"
+        },
+        {
+          "id": "reception",
+          "kind": "text",
+          "x": 0.75,
+          "y": 5.75,
+          "w": 3.5,
+          "h": 0.4,
+          "textStyle": "small",
+          "bind": "reception_line",
+          "align": "center",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "id": "inv_photo_top_p",
+      "name": "Invitation: photo top",
+      "size": "flat_5x7_p",
+      "side": "front",
+      "products": [
+        "invitation"
+      ],
+      "slots": [
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": -0.125,
+          "y": -0.125,
+          "w": 5.25,
+          "h": 2.875,
+          "fit": "cover",
+          "faceZone": "center",
+          "minPixels": {
+            "warnBelow": [
+              1050,
+              575
+            ],
+            "blockBelow": [
+              525,
+              288
+            ],
+            "ideal": [
+              1575,
+              863
+            ]
+          }
+        },
+        {
+          "id": "names",
+          "kind": "text",
+          "x": 0.375,
+          "y": 2.95,
+          "w": 4.25,
+          "h": 0.9,
+          "textStyle": "names",
+          "bind": "couple_names",
+          "align": "center"
+        },
+        {
+          "id": "request",
+          "kind": "text",
+          "x": 0.375,
+          "y": 3.9,
+          "w": 4.25,
+          "h": 0.4,
+          "textStyle": "body",
+          "bind": "request_line",
+          "align": "center"
+        },
+        {
+          "id": "date",
+          "kind": "text",
+          "x": 0.375,
+          "y": 4.35,
+          "w": 4.25,
+          "h": 0.45,
+          "textStyle": "date",
+          "bind": "event_date",
+          "align": "center"
+        },
+        {
+          "id": "time",
+          "kind": "text",
+          "x": 0.375,
+          "y": 4.8,
+          "w": 4.25,
+          "h": 0.35,
+          "textStyle": "body",
+          "bind": "event_time",
+          "align": "center"
+        },
+        {
+          "id": "venue",
+          "kind": "text",
+          "x": 0.375,
+          "y": 5.25,
+          "w": 4.25,
+          "h": 0.4,
+          "textStyle": "subhead",
+          "bind": "venue",
+          "align": "center"
+        },
+        {
+          "id": "address",
+          "kind": "text",
+          "x": 0.375,
+          "y": 5.65,
+          "w": 4.25,
+          "h": 0.35,
+          "textStyle": "small",
+          "bind": "venue_address",
+          "align": "center"
+        },
+        {
+          "id": "rsvp",
+          "kind": "text",
+          "x": 0.375,
+          "y": 6.1,
+          "w": 4.25,
+          "h": 0.35,
+          "textStyle": "small",
+          "bind": "rsvp_line",
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "id": "inv_party_p",
+      "name": "Party invitation",
+      "size": "flat_5x7_p",
+      "side": "front",
+      "products": [
+        "invitation"
+      ],
+      "slots": [
+        {
+          "id": "background",
+          "kind": "art",
+          "x": -0.125,
+          "y": -0.125,
+          "w": 5.25,
+          "h": 7.25,
+          "role": "pattern"
+        },
+        {
+          "id": "p1",
+          "kind": "photo",
+          "x": 0.3125,
+          "y": 0.3125,
+          "w": 4.375,
+          "h": 3,
+          "fit": "cover",
+          "corner": 0.14,
+          "optional": true,
+          "minPixels": {
+            "warnBelow": [
+              875,
+              600
+            ],
+            "blockBelow": [
+              438,
+              300
+            ],
+            "ideal": [
+              1313,
+              900
+            ]
+          }
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 3.45,
+          "w": 4.375,
+          "h": 1,
+          "textStyle": "headline",
+          "bind": "party_headline",
+          "align": "center"
+        },
+        {
+          "id": "date",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 4.55,
+          "w": 4.375,
+          "h": 0.45,
+          "textStyle": "date",
+          "bind": "event_date_time",
+          "align": "center"
+        },
+        {
+          "id": "details",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 5,
+          "w": 4.375,
+          "h": 0.7,
+          "textStyle": "body",
+          "bind": "venue_and_address",
+          "align": "center"
+        },
+        {
+          "id": "rsvp",
+          "kind": "text",
+          "x": 0.3125,
+          "y": 5.8,
+          "w": 3.5,
+          "h": 0.4,
+          "textStyle": "small",
+          "bind": "rsvp_line",
+          "align": "left"
+        },
+        {
+          "id": "qr",
+          "kind": "art",
+          "x": 3.9375,
+          "y": 5.875,
+          "w": 0.75,
+          "h": 0.75,
+          "role": "qr",
+          "optional": true,
+          "quietZoneModules": 4,
+          "onPanel": true
+        }
+      ]
+    },
+    {
+      "id": "rsvp_card_l",
+      "name": "RSVP card",
+      "size": "rsvp_5x3_5_l",
+      "side": "front",
+      "products": [
+        "invitation_rsvp"
+      ],
+      "slots": [
+        {
+          "id": "heading",
+          "kind": "text",
+          "x": 0.375,
+          "y": 0.35,
+          "w": 4.25,
+          "h": 0.4,
+          "textStyle": "subhead",
+          "bind": "reply_by_line",
+          "align": "center"
+        },
+        {
+          "id": "name_line",
+          "kind": "art",
+          "x": 0.375,
+          "y": 1,
+          "w": 4.25,
+          "h": 0.35,
+          "role": "writein_rule",
+          "label": "M"
+        },
+        {
+          "id": "accept",
+          "kind": "text",
+          "x": 0.375,
+          "y": 1.5,
+          "w": 4.25,
+          "h": 0.35,
+          "textStyle": "body",
+          "bind": "accept_line",
+          "align": "left",
+          "checkbox": true
+        },
+        {
+          "id": "decline",
+          "kind": "text",
+          "x": 0.375,
+          "y": 1.85,
+          "w": 4.25,
+          "h": 0.35,
+          "textStyle": "body",
+          "bind": "decline_line",
+          "align": "left",
+          "checkbox": true
+        },
+        {
+          "id": "meal",
+          "kind": "text",
+          "x": 0.375,
+          "y": 2.3,
+          "w": 3.25,
+          "h": 0.45,
+          "textStyle": "small",
+          "bind": "meal_choices",
+          "align": "left",
+          "optional": true
+        },
+        {
+          "id": "online",
+          "kind": "text",
+          "x": 0.375,
+          "y": 2.8,
+          "w": 3.25,
+          "h": 0.35,
+          "textStyle": "small",
+          "bind": "reply_online_line",
+          "align": "left"
+        },
+        {
+          "id": "qr",
+          "kind": "art",
+          "x": 3.875,
+          "y": 2.375,
+          "w": 0.75,
+          "h": 0.75,
+          "role": "qr",
+          "quietZoneModules": 4
+        }
+      ]
+    },
+    {
+      "id": "rsvp_qr_only_l",
+      "name": "Reply online card (QR-first)",
+      "size": "rsvp_5x3_5_l",
+      "side": "front",
+      "products": [
+        "invitation_rsvp"
+      ],
+      "slots": [
+        {
+          "id": "background",
+          "kind": "art",
+          "x": -0.125,
+          "y": -0.125,
+          "w": 5.25,
+          "h": 3.75,
+          "role": "pattern"
+        },
+        {
+          "id": "panel",
+          "kind": "art",
+          "x": 0.5,
+          "y": 0.5,
+          "w": 4,
+          "h": 2.5,
+          "role": "panel"
+        },
+        {
+          "id": "heading",
+          "kind": "text",
+          "x": 0.75,
+          "y": 0.7,
+          "w": 2.25,
+          "h": 0.8,
+          "textStyle": "subhead",
+          "bind": "reply_by_line",
+          "align": "left"
+        },
+        {
+          "id": "url",
+          "kind": "text",
+          "x": 0.75,
+          "y": 1.6,
+          "w": 2.25,
+          "h": 1.1,
+          "textStyle": "small",
+          "bind": "short_url",
+          "align": "left"
+        },
+        {
+          "id": "qr",
+          "kind": "art",
+          "x": 3.2,
+          "y": 0.95,
+          "w": 1,
+          "h": 1,
+          "role": "qr",
+          "quietZoneModules": 4
+        }
+      ]
+    },
+    {
+      "id": "details_p",
+      "name": "Details card",
+      "size": "details_4x6_p",
+      "side": "front",
+      "products": [
+        "invitation_details"
+      ],
+      "slots": [
+        {
+          "id": "motif_band",
+          "kind": "art",
+          "x": -0.125,
+          "y": -0.125,
+          "w": 4.25,
+          "h": 1,
+          "role": "border"
+        },
+        {
+          "id": "heading",
+          "kind": "text",
+          "x": 0.375,
+          "y": 1.05,
+          "w": 3.25,
+          "h": 0.5,
+          "textStyle": "subhead",
+          "bind": "details_heading",
+          "align": "center"
+        },
+        {
+          "id": "s1_head",
+          "kind": "text",
+          "x": 0.375,
+          "y": 1.65,
+          "w": 3.25,
+          "h": 0.3,
+          "textStyle": "kicker",
+          "bind": "section1_heading",
+          "align": "center"
+        },
+        {
+          "id": "s1_body",
+          "kind": "text",
+          "x": 0.375,
+          "y": 1.95,
+          "w": 3.25,
+          "h": 0.9,
+          "textStyle": "small",
+          "bind": "section1_body",
+          "align": "center"
+        },
+        {
+          "id": "s2_head",
+          "kind": "text",
+          "x": 0.375,
+          "y": 2.95,
+          "w": 3.25,
+          "h": 0.3,
+          "textStyle": "kicker",
+          "bind": "section2_heading",
+          "align": "center",
+          "optional": true
+        },
+        {
+          "id": "s2_body",
+          "kind": "text",
+          "x": 0.375,
+          "y": 3.25,
+          "w": 3.25,
+          "h": 0.9,
+          "textStyle": "small",
+          "bind": "section2_body",
+          "align": "center",
+          "optional": true
+        },
+        {
+          "id": "s3_head",
+          "kind": "text",
+          "x": 0.375,
+          "y": 4.25,
+          "w": 3.25,
+          "h": 0.3,
+          "textStyle": "kicker",
+          "bind": "section3_heading",
+          "align": "center",
+          "optional": true
+        },
+        {
+          "id": "s3_body",
+          "kind": "text",
+          "x": 0.375,
+          "y": 4.55,
+          "w": 3.25,
+          "h": 0.45,
+          "textStyle": "small",
+          "bind": "section3_body",
+          "align": "center",
+          "optional": true
+        },
+        {
+          "id": "qr",
+          "kind": "art",
+          "x": 1.625,
+          "y": 5,
+          "w": 0.75,
+          "h": 0.75,
+          "role": "qr",
+          "optional": true,
+          "quietZoneModules": 4
+        }
+      ]
+    }
+  ],
+  "envelopeLayouts": [
+    {
+      "id": "envelope_a7_front",
+      "name": "A7 envelope, address side",
+      "envelope": "A7",
+      "trimW": 7.25,
+      "trimH": 5.25,
+      "bleed": 0,
+      "safe": 0.25,
+      "side": "front",
+      "slots": [
+        {
+          "id": "return_address",
+          "kind": "text",
+          "x": 0.375,
+          "y": 0.375,
+          "w": 2.75,
+          "h": 0.9,
+          "textStyle": "address_return",
+          "bind": "return_address",
+          "align": "left",
+          "optional": true,
+          "note": "or on the back flap per printer template"
+        },
+        {
+          "id": "postage",
+          "kind": "art",
+          "x": 5.75,
+          "y": 0.25,
+          "w": 1.25,
+          "h": 1,
+          "role": "postage_clear",
+          "keepClear": true
+        },
+        {
+          "id": "recipient",
+          "kind": "text",
+          "x": 3,
+          "y": 2.1,
+          "w": 3.75,
+          "h": 1.5,
+          "textStyle": "address",
+          "bind": "recipient_address",
+          "align": "left"
+        },
+        {
+          "id": "barcode_clear_zone",
+          "kind": "art",
+          "x": 2.5,
+          "y": 4.625,
+          "w": 4.75,
+          "h": 0.625,
+          "role": "usps_barcode_clear_zone",
+          "keepClear": true
+        }
+      ]
+    },
+    {
+      "id": "envelope_a6_front",
+      "name": "A6 envelope, address side",
+      "envelope": "A6",
+      "trimW": 6.5,
+      "trimH": 4.75,
+      "bleed": 0,
+      "safe": 0.25,
+      "side": "front",
+      "slots": [
+        {
+          "id": "return_address",
+          "kind": "text",
+          "x": 0.375,
+          "y": 0.375,
+          "w": 2.75,
+          "h": 0.9,
+          "textStyle": "address_return",
+          "bind": "return_address",
+          "align": "left",
+          "optional": true,
+          "note": "or on the back flap per printer template"
+        },
+        {
+          "id": "postage",
+          "kind": "art",
+          "x": 5,
+          "y": 0.25,
+          "w": 1.25,
+          "h": 1,
+          "role": "postage_clear",
+          "keepClear": true
+        },
+        {
+          "id": "recipient",
+          "kind": "text",
+          "x": 2.5,
+          "y": 1.8,
+          "w": 3.5,
+          "h": 1.4,
+          "textStyle": "address",
+          "bind": "recipient_address",
+          "align": "left"
+        },
+        {
+          "id": "barcode_clear_zone",
+          "kind": "art",
+          "x": 1.75,
+          "y": 4.125,
+          "w": 4.75,
+          "h": 0.625,
+          "role": "usps_barcode_clear_zone",
+          "keepClear": true
+        }
+      ]
+    },
+    {
+      "id": "envelope_a2_front",
+      "name": "A2 envelope, address side",
+      "envelope": "A2",
+      "trimW": 5.75,
+      "trimH": 4.375,
+      "bleed": 0,
+      "safe": 0.25,
+      "side": "front",
+      "slots": [
+        {
+          "id": "return_address",
+          "kind": "text",
+          "x": 0.375,
+          "y": 0.375,
+          "w": 2.5,
+          "h": 0.9,
+          "textStyle": "address_return",
+          "bind": "return_address",
+          "align": "left",
+          "optional": true,
+          "note": "or on the back flap per printer template"
+        },
+        {
+          "id": "postage",
+          "kind": "art",
+          "x": 4.25,
+          "y": 0.25,
+          "w": 1.25,
+          "h": 1,
+          "role": "postage_clear",
+          "keepClear": true
+        },
+        {
+          "id": "recipient",
+          "kind": "text",
+          "x": 1.9,
+          "y": 1.5,
+          "w": 3.35,
+          "h": 1.2,
+          "textStyle": "address",
+          "bind": "recipient_address",
+          "align": "left"
+        },
+        {
+          "id": "barcode_clear_zone",
+          "kind": "art",
+          "x": 1,
+          "y": 3.75,
+          "w": 4.75,
+          "h": 0.625,
+          "role": "usps_barcode_clear_zone",
+          "keepClear": true
+        }
+      ]
+    },
+    {
+      "id": "envelope_a1_front",
+      "name": "A1 envelope, address side",
+      "envelope": "A1",
+      "trimW": 5.125,
+      "trimH": 3.625,
+      "bleed": 0,
+      "safe": 0.25,
+      "side": "front",
+      "slots": [
+        {
+          "id": "return_address",
+          "kind": "text",
+          "x": 0.375,
+          "y": 0.375,
+          "w": 2.5,
+          "h": 0.85,
+          "textStyle": "address_return",
+          "bind": "return_address",
+          "align": "left",
+          "optional": true,
+          "note": "or on the back flap per printer template"
+        },
+        {
+          "id": "postage",
+          "kind": "art",
+          "x": 3.625,
+          "y": 0.25,
+          "w": 1.25,
+          "h": 1,
+          "role": "postage_clear",
+          "keepClear": true
+        },
+        {
+          "id": "recipient",
+          "kind": "text",
+          "x": 1.5,
+          "y": 1.4,
+          "w": 3.25,
+          "h": 1.15,
+          "textStyle": "address",
+          "bind": "recipient_address",
+          "align": "left"
+        },
+        {
+          "id": "barcode_clear_zone",
+          "kind": "art",
+          "x": 0.375,
+          "y": 3,
+          "w": 4.75,
+          "h": 0.625,
+          "role": "usps_barcode_clear_zone",
+          "keepClear": true
+        }
+      ]
+    }
+  ],
+  "themes": [
+    {
+      "id": "paper_pines",
+      "name": "Paper Pines",
+      "product": "holiday",
+      "occasion": "christmas",
+      "mood": "calm, botanical, handmade",
+      "palette": {
+        "background": "#FBF6EE",
+        "ink": "#2F4A3A",
+        "accent": "#9E3115",
+        "inkOnBackgroundContrast": 9.0303
+      },
+      "typography": {
+        "headline": "hol_headline_display",
+        "names": "hol_names",
+        "subhead": "hol_subhead",
+        "body": "hol_body",
+        "small": "hol_small",
+        "caption": "hol_caption",
+        "signoff": "hol_signoff",
+        "kicker": "hol_small",
+        "date": "hol_names",
+        "address": "addr_recipient",
+        "address_return": "addr_return"
+      },
+      "fronts": [
+        "full_bleed_band_p",
+        "full_bleed_scrim_p",
+        "two_up_p",
+        "three_grid_p",
+        "four_grid_p",
+        "hero_two_p",
+        "polaroid_stack_p",
+        "full_bleed_band_l",
+        "two_up_l",
+        "three_grid_l",
+        "four_grid_l",
+        "hero_two_l"
+      ],
+      "backs": [
+        "back_photo_strip_p",
+        "back_photo_strip_double_p",
+        "back_letter_p",
+        "back_from_block_p",
+        "back_photo_strip_l",
+        "back_letter_l",
+        "back_from_block_l"
+      ],
+      "defaultFront": "hero_two_p",
+      "greetings": [
+        "Merry Christmas",
+        "Peace on earth",
+        "Joy to you"
+      ],
+      "art": {
+        "patternMotif": "pine sprigs and berries",
+        "optionalStyles": [
+          "botanical_gouache",
+          "block_print"
+        ]
+      }
+    },
+    {
+      "id": "red_wool",
+      "name": "Red Wool",
+      "product": "holiday",
+      "occasion": "christmas",
+      "mood": "cozy, classic, warm",
+      "palette": {
+        "background": "#9E3115",
+        "ink": "#FBF6EE",
+        "accent": "#F5B83D",
+        "inkOnBackgroundContrast": 6.7214
+      },
+      "typography": {
+        "headline": "hol_headline_script",
+        "names": "hol_names",
+        "subhead": "hol_subhead",
+        "body": "hol_body",
+        "small": "hol_small",
+        "caption": "hol_caption",
+        "signoff": "hol_signoff",
+        "kicker": "hol_small",
+        "date": "hol_names",
+        "address": "addr_recipient",
+        "address_return": "addr_return"
+      },
+      "fronts": [
+        "full_bleed_band_p",
+        "full_bleed_scrim_p",
+        "two_up_p",
+        "three_grid_p",
+        "four_grid_p",
+        "hero_two_p",
+        "polaroid_stack_p",
+        "full_bleed_band_l",
+        "two_up_l",
+        "three_grid_l",
+        "four_grid_l",
+        "hero_two_l"
+      ],
+      "backs": [
+        "back_photo_strip_p",
+        "back_photo_strip_double_p",
+        "back_letter_p",
+        "back_from_block_p",
+        "back_photo_strip_l",
+        "back_letter_l",
+        "back_from_block_l"
+      ],
+      "defaultFront": "full_bleed_band_p",
+      "greetings": [
+        "Merry Christmas",
+        "Warmest wishes"
+      ],
+      "art": {
+        "patternMotif": "knit stitches and stars",
+        "optionalStyles": [
+          "felt_thread",
+          "cozy_gouache"
+        ]
+      }
+    },
+    {
+      "id": "snow_day",
+      "name": "Snow Day",
+      "product": "holiday",
+      "occasion": "season",
+      "mood": "quiet, airy, non-religious",
+      "palette": {
+        "background": "#FFFFFF",
+        "ink": "#23395B",
+        "accent": "#8FB3D9",
+        "inkOnBackgroundContrast": 11.6164
+      },
+      "typography": {
+        "headline": "hol_headline_display",
+        "names": "hol_names",
+        "subhead": "hol_subhead",
+        "body": "hol_body",
+        "small": "hol_small",
+        "caption": "hol_caption",
+        "signoff": "hol_signoff",
+        "kicker": "hol_small",
+        "date": "hol_names",
+        "address": "addr_recipient",
+        "address_return": "addr_return"
+      },
+      "fronts": [
+        "full_bleed_band_p",
+        "full_bleed_scrim_p",
+        "two_up_p",
+        "three_grid_p",
+        "four_grid_p",
+        "hero_two_p",
+        "polaroid_stack_p",
+        "full_bleed_band_l",
+        "two_up_l",
+        "three_grid_l",
+        "four_grid_l",
+        "hero_two_l"
+      ],
+      "backs": [
+        "back_photo_strip_p",
+        "back_photo_strip_double_p",
+        "back_letter_p",
+        "back_from_block_p",
+        "back_photo_strip_l",
+        "back_letter_l",
+        "back_from_block_l"
+      ],
+      "defaultFront": "four_grid_p",
+      "greetings": [
+        "Happy holidays",
+        "Season's greetings",
+        "Warm wishes for the new year"
+      ],
+      "art": {
+        "patternMotif": "snowflakes and soft hills",
+        "optionalStyles": [
+          "watercolor_wash",
+          "minimal_line_art"
+        ]
+      }
+    },
+    {
+      "id": "merry_bright",
+      "name": "Merry and Bright",
+      "product": "holiday",
+      "occasion": "christmas",
+      "mood": "playful, loud, kid-friendly",
+      "palette": {
+        "background": "#F5B83D",
+        "ink": "#2B1E18",
+        "accent": "#5B2A4B",
+        "inkOnBackgroundContrast": 9.0703
+      },
+      "typography": {
+        "headline": "hol_headline_display",
+        "names": "hol_names",
+        "subhead": "hol_subhead",
+        "body": "hol_body",
+        "small": "hol_small",
+        "caption": "hol_caption",
+        "signoff": "hol_signoff",
+        "kicker": "hol_small",
+        "date": "hol_names",
+        "address": "addr_recipient",
+        "address_return": "addr_return"
+      },
+      "fronts": [
+        "full_bleed_band_p",
+        "full_bleed_scrim_p",
+        "two_up_p",
+        "three_grid_p",
+        "four_grid_p",
+        "hero_two_p",
+        "polaroid_stack_p",
+        "full_bleed_band_l",
+        "two_up_l",
+        "three_grid_l",
+        "four_grid_l",
+        "hero_two_l"
+      ],
+      "backs": [
+        "back_photo_strip_p",
+        "back_photo_strip_double_p",
+        "back_letter_p",
+        "back_from_block_p",
+        "back_photo_strip_l",
+        "back_letter_l",
+        "back_from_block_l"
+      ],
+      "defaultFront": "polaroid_stack_p",
+      "greetings": [
+        "Merry and bright",
+        "Merry Christmas"
+      ],
+      "art": {
+        "patternMotif": "ornaments, candy stripes, stars",
+        "optionalStyles": [
+          "bold_cartoon_pop",
+          "maximalist_pattern"
+        ]
+      },
+      "notes": "Brand rule carries over: no persimmon on marigold."
+    },
+    {
+      "id": "eight_nights",
+      "name": "Eight Nights",
+      "product": "holiday",
+      "occasion": "hanukkah",
+      "mood": "glowing, festive, deep blue",
+      "palette": {
+        "background": "#1F3A68",
+        "ink": "#FBF6EE",
+        "accent": "#E3B95A",
+        "inkOnBackgroundContrast": 10.4749
+      },
+      "typography": {
+        "headline": "hol_headline_display",
+        "names": "hol_names",
+        "subhead": "hol_subhead",
+        "body": "hol_body",
+        "small": "hol_small",
+        "caption": "hol_caption",
+        "signoff": "hol_signoff",
+        "kicker": "hol_small",
+        "date": "hol_names",
+        "address": "addr_recipient",
+        "address_return": "addr_return"
+      },
+      "fronts": [
+        "full_bleed_band_p",
+        "full_bleed_scrim_p",
+        "two_up_p",
+        "three_grid_p",
+        "four_grid_p",
+        "hero_two_p",
+        "polaroid_stack_p",
+        "full_bleed_band_l",
+        "two_up_l",
+        "three_grid_l",
+        "four_grid_l",
+        "hero_two_l"
+      ],
+      "backs": [
+        "back_photo_strip_p",
+        "back_photo_strip_double_p",
+        "back_letter_p",
+        "back_from_block_p",
+        "back_photo_strip_l",
+        "back_letter_l",
+        "back_from_block_l"
+      ],
+      "defaultFront": "full_bleed_band_p",
+      "greetings": [
+        "Happy Hanukkah",
+        "Happy Chanukah",
+        "Chag sameach"
+      ],
+      "art": {
+        "patternMotif": "candle flames, dreidels, stars of David, olive sprigs",
+        "optionalStyles": [
+          "paper_cut_collage",
+          "midcentury_shapes"
+        ],
+        "rules": [
+          "A hanukkiah has nine branches: eight level, the shammash set apart. Never draw a seven-branch menorah.",
+          "No Christmas motifs (trees, Santa, stockings, holly).",
+          "Customer picks the spelling; default 'Hanukkah'."
+        ]
+      }
+    },
+    {
+      "id": "midnight_confetti",
+      "name": "Midnight Confetti",
+      "product": "holiday",
+      "occasion": "new_year",
+      "mood": "sparkly, grown-up, celebratory",
+      "palette": {
+        "background": "#5B2A4B",
+        "ink": "#FBF6EE",
+        "accent": "#F5B83D",
+        "inkOnBackgroundContrast": 10.3955
+      },
+      "typography": {
+        "headline": "hol_headline_display",
+        "names": "hol_names",
+        "subhead": "hol_subhead",
+        "body": "hol_body",
+        "small": "hol_small",
+        "caption": "hol_caption",
+        "signoff": "hol_signoff",
+        "kicker": "hol_small",
+        "date": "hol_names",
+        "address": "addr_recipient",
+        "address_return": "addr_return"
+      },
+      "fronts": [
+        "full_bleed_band_p",
+        "full_bleed_scrim_p",
+        "two_up_p",
+        "three_grid_p",
+        "four_grid_p",
+        "hero_two_p",
+        "polaroid_stack_p",
+        "full_bleed_band_l",
+        "two_up_l",
+        "three_grid_l",
+        "four_grid_l",
+        "hero_two_l"
+      ],
+      "backs": [
+        "back_photo_strip_p",
+        "back_photo_strip_double_p",
+        "back_letter_p",
+        "back_from_block_p",
+        "back_photo_strip_l",
+        "back_letter_l",
+        "back_from_block_l"
+      ],
+      "defaultFront": "three_grid_p",
+      "greetings": [
+        "Happy New Year",
+        "Cheers to {next_year}",
+        "Hello, {next_year}"
+      ],
+      "art": {
+        "patternMotif": "confetti, streamers, clock hands at midnight",
+        "optionalStyles": [
+          "deco_geometric"
+        ]
+      },
+      "notes": "The proof checker must confirm the year shown is the coming year."
+    },
+    {
+      "id": "golden_hour",
+      "name": "Golden Hour",
+      "product": "save_the_date",
+      "occasion": "wedding",
+      "mood": "romantic, photo-led",
+      "palette": {
+        "background": "#1C2541",
+        "ink": "#FFFFFF",
+        "accent": "#C9A45C",
+        "scrim": "#2B1E18",
+        "inkOnBackgroundContrast": 15.1043
+      },
+      "typography": {
+        "names": "wed_names_script",
+        "kicker": "wed_kicker",
+        "date": "wed_date",
+        "subhead": "wed_subhead",
+        "body": "wed_body",
+        "small": "wed_small",
+        "headline": "wed_names_script",
+        "signoff": "hol_signoff",
+        "caption": "hol_caption",
+        "address": "addr_recipient",
+        "address_return": "addr_return"
+      },
+      "fronts": [
+        "std_scrim_p",
+        "std_photo_left_6x4"
+      ],
+      "backs": [
+        "back_from_block_p",
+        "postcard_back_6x4"
+      ],
+      "defaultFront": "std_scrim_p",
+      "pairsWith": "evening_deco",
+      "art": {
+        "patternMotif": "fine gold rules",
+        "optionalStyles": []
+      }
+    },
+    {
+      "id": "modern_calendar",
+      "name": "Modern Calendar",
+      "product": "save_the_date",
+      "occasion": "wedding",
+      "mood": "clean, graphic, modern",
+      "palette": {
+        "background": "#FFFFFF",
+        "ink": "#2B1E18",
+        "accent": "#C8441F",
+        "inkOnBackgroundContrast": 16.1338
+      },
+      "typography": {
+        "names": "wed_names_serif",
+        "kicker": "wed_kicker",
+        "date": "wed_date",
+        "subhead": "wed_subhead",
+        "body": "wed_body",
+        "small": "wed_small",
+        "headline": "wed_names_serif",
+        "signoff": "hol_signoff",
+        "caption": "hol_caption",
+        "address": "addr_recipient",
+        "address_return": "addr_return"
+      },
+      "fronts": [
+        "std_calendar_p",
+        "std_photo_left_6x4"
+      ],
+      "backs": [
+        "back_photo_strip_p",
+        "postcard_back_6x4"
+      ],
+      "defaultFront": "std_calendar_p",
+      "pairsWith": "evening_deco",
+      "art": {
+        "patternMotif": "none; calendar grid is the graphic",
+        "optionalStyles": [
+          "minimal_line_art"
+        ]
+      }
+    },
+    {
+      "id": "garden_letterpress",
+      "name": "Garden Letterpress",
+      "product": "save_the_date",
+      "occasion": "wedding",
+      "mood": "soft, botanical, timeless",
+      "palette": {
+        "background": "#F7F3EA",
+        "ink": "#3E4F3A",
+        "accent": "#A3B18A",
+        "inkOnBackgroundContrast": 7.9533
+      },
+      "typography": {
+        "names": "wed_names_script",
+        "kicker": "wed_kicker",
+        "date": "wed_date",
+        "subhead": "wed_subhead",
+        "body": "wed_body",
+        "small": "wed_small",
+        "headline": "wed_names_script",
+        "signoff": "hol_signoff",
+        "caption": "hol_caption",
+        "address": "addr_recipient",
+        "address_return": "addr_return"
+      },
+      "fronts": [
+        "std_garden_p",
+        "std_photo_left_6x4"
+      ],
+      "backs": [
+        "back_from_block_p",
+        "postcard_back_6x4"
+      ],
+      "defaultFront": "std_garden_p",
+      "pairsWith": "classic_garden",
+      "art": {
+        "patternMotif": "leafy vines framing the edge",
+        "optionalStyles": [
+          "botanical_gouache",
+          "ink_wash"
+        ]
+      }
+    }
+  ],
+  "suites": [
+    {
+      "id": "classic_garden",
+      "name": "Classic Garden",
+      "occasion": "wedding",
+      "mood": "soft, botanical, timeless",
+      "palette": {
+        "background": "#F7F3EA",
+        "ink": "#3E4F3A",
+        "accent": "#A3B18A",
+        "inkOnBackgroundContrast": 7.9533
+      },
+      "typography": {
+        "names": "wed_names_script",
+        "kicker": "wed_kicker",
+        "date": "wed_date",
+        "subhead": "wed_subhead",
+        "body": "wed_body",
+        "small": "wed_small",
+        "headline": "wed_names_script",
+        "signoff": "hol_signoff",
+        "caption": "hol_caption",
+        "address": "addr_recipient",
+        "address_return": "addr_return"
+      },
+      "pieces": {
+        "invitation": [
+          "inv_text_p",
+          "inv_photo_top_p"
+        ],
+        "rsvp": [
+          "rsvp_card_l",
+          "postcard_back_6x4"
+        ],
+        "details": [
+          "details_p"
+        ],
+        "back": [
+          "back_from_block_p"
+        ]
+      },
+      "pairsWith": "garden_letterpress",
+      "art": {
+        "patternMotif": "leafy vines; same render reused across all pieces",
+        "optionalStyles": [
+          "botanical_gouache",
+          "ink_wash"
+        ]
+      }
+    },
+    {
+      "id": "evening_deco",
+      "name": "Evening Deco",
+      "occasion": "wedding",
+      "mood": "formal, geometric, night",
+      "palette": {
+        "background": "#1C2541",
+        "ink": "#F3EADB",
+        "accent": "#C9A45C",
+        "inkOnBackgroundContrast": 12.661
+      },
+      "typography": {
+        "names": "wed_names_serif",
+        "kicker": "wed_kicker",
+        "date": "wed_date",
+        "subhead": "wed_subhead",
+        "body": "wed_body",
+        "small": "wed_small",
+        "headline": "wed_names_serif",
+        "signoff": "hol_signoff",
+        "caption": "hol_caption",
+        "address": "addr_recipient",
+        "address_return": "addr_return"
+      },
+      "pieces": {
+        "invitation": [
+          "inv_text_p",
+          "inv_photo_top_p"
+        ],
+        "rsvp": [
+          "rsvp_card_l",
+          "rsvp_qr_only_l"
+        ],
+        "details": [
+          "details_p"
+        ],
+        "back": [
+          "back_from_block_p"
+        ]
+      },
+      "pairsWith": "golden_hour",
+      "art": {
+        "patternMotif": "fan and stepped-line borders",
+        "optionalStyles": [
+          "deco_geometric"
+        ]
+      }
+    },
+    {
+      "id": "confetti_party",
+      "name": "Confetti Party",
+      "occasion": "party",
+      "mood": "bright, casual, fun",
+      "palette": {
+        "background": "#FBF6EE",
+        "ink": "#2B1E18",
+        "accent": "#EE5A36",
+        "inkOnBackgroundContrast": 14.9958
+      },
+      "typography": {
+        "headline": "party_headline",
+        "names": "party_subhead",
+        "date": "party_date",
+        "subhead": "party_subhead",
+        "body": "party_body",
+        "small": "party_small",
+        "kicker": "party_small",
+        "signoff": "party_signoff",
+        "caption": "hol_caption",
+        "address": "addr_recipient",
+        "address_return": "addr_return"
+      },
+      "pieces": {
+        "invitation": [
+          "inv_party_p"
+        ],
+        "rsvp": [
+          "rsvp_qr_only_l"
+        ],
+        "details": [
+          "details_p"
+        ],
+        "back": [
+          "back_from_block_p",
+          "back_photo_strip_p"
+        ]
+      },
+      "pairsWith": null,
+      "art": {
+        "patternMotif": "confetti dots and squiggles",
+        "optionalStyles": [
+          "bold_cartoon_pop",
+          "maximalist_pattern",
+          "paper_cut_collage"
+        ]
+      },
+      "notes": "Birthdays, showers, graduations, holiday parties. Digital-first: RSVP by QR to the event page."
+    }
+  ]
+}
