@@ -225,6 +225,9 @@ The existing OpenRouter key in `book\.env` gets copied into GreetHub's own `.env
 - Phase 2: "match my handwriting" from a free-form photo (suggest the nearest preset with a vision call); a per-letter re-upload instead of a new sheet; joined-up cursive for own handwriting (needs glyph connections).
 - CX: help article and short video for the template sheet; QA: add the account handwriting flow to the e2e scripts.
 
+## Photo cards and events (added 2026-10-14, owner request)
+Holiday photo cards (flat 5x7, 1 to 4 photos, batches of 10 to 200), save the dates (flat 5x7 or 4x6, QR, digital version) and invitations (5x7 suite with RSVP and details cards, plus a digital event page with RSVP). These are photo-collage products sold in batches to an address list, with AI used for photo picking, cropping, wording, proof checking and optional illustrated art. Full plan, sizes, phases and every agent's part: `docs/products/photo-cards-and-events-plan.md`. Christmas 2026 go/no-go for holiday photo cards on **Oct 24** (depends on a confirmed flat-card printer); save the dates Jan to Mar 2027; invitations Mar to Jun 2027. Build item **B14** once wave 1 reports in.
+
 ## Platform assessment — 2026-10-12
 Each agent checked its own part of the build, one at a time, in this order: CTO, engineers, platform, data/quality, business, legal/ops. Every entry uses the same headings: **Built vs. needed**, **Plan changes**, **Scale adjustments**, **Easy fixes made**, **Blocked by**.
 
