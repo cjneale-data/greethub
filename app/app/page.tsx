@@ -1,13 +1,12 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { Badge, ButtonLink } from "@/components/brand";
-import { Browse } from "@/components/shop/Browse";
+import { HeroShowcase } from "@/components/shop/HeroShowcase";
+import { HomeGallery } from "@/components/shop/HomeGallery";
 import { HomeToast } from "@/components/shop/HomeToast";
 import { ShopShell } from "@/components/shop/ShopShell";
-import { SkeletonList } from "@/components/shop/ui";
 import { priceTokens } from "@greethub/shared";
 import { pageMetadata } from "@/lib/seo";
-import { templateImage } from "@/lib/shop/templates";
 
 export const metadata = pageMetadata({
   title: "GreetHub — cards and picture books that sound like you",
@@ -39,26 +38,10 @@ export default function Home() {
           </div>
           <p className="gs-muted gs-small" style={{ margin: 0 }}>Try one card free. No account needed.</p>
         </div>
-        <div className="gh-hero__pile" aria-hidden="true">
-          <div className="gh-hero__card gh-hero__card--a">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={templateImage("night-the-moon-came-down", 1200)} alt="" />
-          </div>
-          <div className="gh-hero__card gh-hero__card--b">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={templateImage("big-birthday", 1200)} alt="" />
-          </div>
-          <span className="gh-hero__sticker">Love, Maya</span>
-        </div>
+        <HeroShowcase />
       </section>
 
-      <section className="gs-section" id="cards">
-        <h2 className="gs-h2">Who are we celebrating?</h2>
-        <Suspense fallback={<SkeletonList rows={1} h={260} />}>
-          <Browse compact limit={8} />
-        </Suspense>
-        <p style={{ margin: "16px 0 0" }}><Link className="gs-link" href="/browse">See all templates</Link></p>
-      </section>
+      <HomeGallery />
 
       <section className="gs-section">
         <h2 className="gs-h2">Three steps. A card takes about ten minutes.</h2>
