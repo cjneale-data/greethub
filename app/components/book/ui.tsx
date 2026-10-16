@@ -35,16 +35,21 @@ export function Skeleton({ h = 20, w = "100%" }: { h?: number; w?: number | stri
 
 export function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
+  // Once per open: a fresh onClose each render must not re-run this, or focus jumps back on every keystroke.
+  const closeRef = useRef(onClose);
+  useEffect(() => {
+    closeRef.current = onClose;
+  });
   useEffect(() => {
     const prev = document.activeElement as HTMLElement | null;
     ref.current?.querySelector<HTMLElement>("textarea,input,button")?.focus();
-    const key = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const key = (e: KeyboardEvent) => e.key === "Escape" && closeRef.current();
     window.addEventListener("keydown", key);
     return () => {
       window.removeEventListener("keydown", key);
       prev?.focus?.();
     };
-  }, [onClose]);
+  }, []);
   return (
     <div className="gb-modal" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div className="gb-modal__box" role="dialog" aria-modal="true" aria-label={title} ref={ref}>
