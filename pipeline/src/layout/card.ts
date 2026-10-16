@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import sharp from "sharp";
+import { WATERMARK_PATH } from "./watermark-path";
 import { addPage, drawArt, drawLines, edge, fitText, hex, IN, newDoc, type PageGeom } from "./common";
 
 /** 5 x 7 in folded card (flat panel). 0.125 in bleed, 0.375 in safe margin. Page size 5.25 x 7.25 in = 1575 x 2175 px at 300 DPI. */
@@ -133,7 +134,8 @@ export async function guestProof(frontArt: Buffer): Promise<Buffer> {
   const marks = [];
   for (let y = 100; y < h; y += 170) {
     for (let x = -40; x < w; x += 280) {
-      marks.push(`<text x="${x}" y="${y}" transform="rotate(-28 ${x} ${y})" font-family="sans-serif" font-size="34" font-weight="700" fill="rgba(255,255,255,0.45)" stroke="rgba(0,0,0,0.25)" stroke-width="1">GreetHub preview</text>`);
+      // A path, not <text>: servers without fonts (Vercel) draw text as empty boxes.
+      marks.push(`<path d="${WATERMARK_PATH}" transform="translate(${x} ${y}) rotate(-28)" fill="rgba(255,255,255,0.45)" stroke="rgba(0,0,0,0.25)" stroke-width="1"/>`);
     }
   }
   const svg = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">${marks.join("")}</svg>`);
