@@ -14,13 +14,18 @@ export interface AuthAdapter {
    */
   verifyCallback(params: URLSearchParams): Promise<{ userId: string; email: string; next: string; accepted?: boolean } | null>;
   signInWithGoogle(redirectTo: string, opts?: { accepted?: boolean }): Promise<{ url: string }>;
+  /** Email + password sign-up: creates the account with no confirmation email and starts the session. Throws PasswordAuthError. */
+  signUpWithPassword(email: string, password: string, opts?: { accepted?: boolean }): Promise<{ userId: string; email: string }>;
+  /** Email + password sign-in; starts the session. Throws PasswordAuthError. */
+  signInWithPassword(email: string, password: string): Promise<{ userId: string; email: string }>;
   /** Carries the guest draft and cart over to the account after sign-up. */
   upgradeGuest(guestUserId: string, newUserId: string): Promise<void>;
   signOut(): Promise<void>;
 }
 
 /** One line on the Stripe-hosted page. Postage and shipping surcharges are lines too (creationId empty). */
-export type CheckoutLine = { sku: string; description: string; unitAmountCents: number; quantity: number; creationId?: string };
+export type CheckoutLine = { sku: string; description: string; unitAmountCents: number; quantity: number; creationId?: string;
+  /** Stripe product tax code (txcd_...). When set, the line is sent tax-exclusive with that code. */ taxCode?: string };
 
 export type CheckoutSessionInput = {
   /** Our pending checkout id; echoed back in metadata and as client_reference_id. */

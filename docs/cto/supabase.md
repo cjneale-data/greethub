@@ -7,7 +7,7 @@ What runs on Supabase, how to run it locally, and what the owner sets up for the
 | Area | Code | Supabase piece |
 |---|---|---|
 | Shop data: users, carts, addresses, drafts, people, checkouts, orders, webhook ids, delete tokens, content reports | `app/lib/store/` (`docs()`), services in `app/lib/shop/` | Tables in `app/supabase/migrations/` |
-| Sign-in: magic link and Google | `app/lib/adapters/real/supabaseAuth.ts`, refresh in `app/proxy.ts` | Supabase Auth |
+| Sign-in: email + password, magic link and Google | `app/lib/adapters/real/supabaseAuth.ts`, `app/app/api/auth/password`, refresh in `app/proxy.ts` | Supabase Auth |
 | Private files | `app/lib/adapters/real/supabaseStorage.ts` (`getAdapters().storage`) | Storage bucket `private` |
 
 What switches it on (`app/lib/adapters/index.ts`, `app/lib/store/index.ts`):
@@ -23,6 +23,7 @@ What switches it on (`app/lib/adapters/index.ts`, `app/lib/store/index.ts`):
 - Writes are compare-and-swap on `version`, retried on conflict, so two server instances can't overwrite each other's changes.
 - Order creation from a payment is idempotent across instances: the order number is claimed on the checkout row first, the order is inserted only if absent, and webhook ids are stored in `processed_events`.
 - Security: row-level security is on with **no policies**, and the anon/authenticated roles are revoked. The browser can read nothing directly. Only the server, with the service-role key, reads and writes. Ownership is checked in the API routes, as before. The service-role key must never be in a `NEXT_PUBLIC_` variable.
+- Email + password: sign-up creates the Supabase user through the admin API already confirmed (`email_confirm: true`), so it sends no email and works without SMTP. It refuses an email that already has an app account or a Supabase user, so a sign-up can't take over an account made with a link or Google. The trade-off: the address is not verified, so someone could register an email they don't own before its owner does. Once SMTP works, consider sending a confirmation email on password sign-up. Local auth keeps scrypt hashes in the `credentials` collection.
 - User ids come from the verified email (`userIdForEmail`), not the Supabase auth uid, so accounts created under local auth keep their data. Guests keep the `gh_guest` cookie, so Supabase anonymous sign-ins are not needed.
 
 ## Local development
@@ -48,6 +49,6 @@ SUPABASE_TEST_URL=http://127.0.0.1:54321 SUPABASE_TEST_SERVICE_ROLE_KEY=<service
 1. Create the project at supabase.com. Copy the Project URL, the anon (publishable) key and the service-role (secret) key into Vercel env vars and `app/.env.local`.
 2. Apply the schema. Either give Claude a Supabase access token (`npx supabase login`, then `npx supabase link --project-ref <ref>` and `npx supabase db push`), or paste `app/supabase/migrations/*.sql` into the SQL editor in order.
 3. Authentication > URL Configuration: Site URL = the production domain. Redirect URLs: `https://<domain>/api/auth/callback**`, `https://*-<team>.vercel.app/api/auth/callback**` for previews, `http://localhost:3000/api/auth/callback**`.
-4. Authentication > Providers: Email on (magic link). Confirm email can stay on. Google is optional: add the Google OAuth client ID/secret there, and in Google Cloud set the redirect URI to `https://<project-ref>.supabase.co/auth/v1/callback`.
+4. Authentication > Providers: Email on (password and magic link). Confirm email can stay on. Google is optional: add the Google OAuth client ID/secret there, and in Google Cloud set the redirect URI to `https://<project-ref>.supabase.co/auth/v1/callback`.
 5. Optional, recommended: in Authentication > Email Templates > Magic Link, change the link to `{{ .SiteURL }}/api/auth/callback?token_hash={{ .TokenHash }}&type=magiclink&next=/account`. The default link uses PKCE and only works in the browser that asked for it. The token_hash link also works when the email is opened on a phone.
 6. Set up SMTP (Resend) under Authentication > SMTP. Supabase's built-in sender is rate-limited to a few emails an hour.

@@ -38,7 +38,7 @@ export type Person = {
 };
 
 export type Fulfillment = {
-  printer: "lulu" | "prodigi" | "gelato";
+  printer: "lulu" | "prodigi" | "gelato" | "gooten" | "lob" | "postgrid" | "fake";
   externalId: string;
   state: string;
   submittedAt: string;
@@ -51,7 +51,7 @@ export type OrderItem = {
   id: string;
   creationId: string;
   kind: "card" | "book";
-  sku: Sku;
+  sku: Sku | "photo_card";
   title: string;
   description: string;
   recipientName?: string;
@@ -64,6 +64,28 @@ export type OrderItem = {
   status: OrderStatus;
   fulfillment?: Fulfillment;
   note?: string;
+  /** Photo card (batch) lines only (kind stays "card", sku is "photo_card"): what to print. Per-line print state lives in the batch_jobs collection. */
+  batch?: { sizeId: "flat_5x7"; designVersion: number; paper: string; envelopes: "blank"; delivery: "ship_to_me" };
+};
+
+/** One render + print job for a batch line (collection batch_jobs, id `${orderId}:${lineId}`). No names or addresses: they stay on the order item. */
+export type BatchJob = {
+  id: string;
+  userId: string;
+  orderId: string;
+  lineId: string;
+  step: "queued" | "rendering" | "submitted" | "failed";
+  attempts: number;
+  files?: { front: string; back?: string; envelopes?: string };
+  printer?: string;
+  externalId?: string;
+  printerState?: string;
+  trackingUrl?: string;
+  trackingNumber?: string;
+  carrier?: string;
+  error?: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type OrderTotals = {
@@ -147,7 +169,9 @@ export type DB = {
   processedEvents: string[];
   magicTokens: Record<string, { email: string; next: string; expiresAt: number; used: boolean; accepted?: boolean }>;
   deleteTokens: Record<string, { userId: string; expiresAt: number }>;
+  credentials: Record<string, { passwordHash: string }>;
   fakePrinterJobs: Record<string, { stage: number; printer: string }>;
+  batchJobs: Record<string, BatchJob>;
   outbox: OutboxMessage[];
   reports: ContentReport[];
 };

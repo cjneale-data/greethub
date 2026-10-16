@@ -1,5 +1,7 @@
 import { hasEnv } from "../env";
 import { stubStorage } from "./stubs";
+import type { FlatCardPrinter } from "./flatCard";
+import { fakeFlatCardPrinter } from "./fake/flatCardPrinter";
 import type { AuthAdapter, EmailAdapter, PaymentsAdapter, PrinterAdapter } from "./types";
 import { fakeAuth } from "./fake/auth";
 import { fakePayments } from "./fake/payments";
@@ -14,12 +16,15 @@ import { supabaseStorage } from "./real/supabaseStorage";
 import { supabaseConfigured } from "../store";
 
 export * from "./types";
+export * from "./flatCard";
 
 type Adapters = {
   auth: AuthAdapter;
   payments: PaymentsAdapter;
   bookPrinter: PrinterAdapter;
   cardPrinter: PrinterAdapter;
+  /** Photo cards. Fake only until the vendor is picked (Oct 24); a real adapter plugs in here by env. */
+  flatPrinter: FlatCardPrinter;
   email: EmailAdapter;
   storage: typeof stubStorage;
   live: { supabase: boolean; stripe: boolean; lulu: boolean; prodigi: boolean; resend: boolean };
@@ -51,6 +56,7 @@ export function getAdapters(): Adapters {
     cardPrinter: live.prodigi
       ? prodigiPrinter({ apiKey: e.PRODIGI_API_KEY!, apiBase: e.PRODIGI_API_BASE || "https://api.sandbox.prodigi.com/v4.0", cardSku: e.PRODIGI_CARD_SKU })
       : fakePrinter("prodigi"),
+    flatPrinter: fakeFlatCardPrinter(),
     email: live.resend ? resendEmail(e.RESEND_API_KEY!, e.EMAIL_FROM || "GreetHub <hello@example.com>") : fakeEmail,
     storage: live.supabase ? supabaseStorage() : stubStorage,
     live,

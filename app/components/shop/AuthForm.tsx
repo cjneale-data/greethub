@@ -7,6 +7,7 @@ import { Check, ErrorBox } from "./ui";
 import { api } from "./client";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const MIN_PASSWORD = 8;
 
 export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const sp = useSearchParams();
@@ -15,6 +16,8 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const signup = mode === "signup";
   const [email, setEmail] = useState("");
   const [emailErr, setEmailErr] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordErr, setPasswordErr] = useState("");
   const [accepted, setAccepted] = useState(false);
   const [acceptErr, setAcceptErr] = useState("");
   const [busy, setBusy] = useState(false);
@@ -50,6 +53,26 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
     setWait(30);
   }
 
+  async function withPassword() {
+    setError("");
+    if (!EMAIL_RE.test(email.trim())) return setEmailErr("That email doesn't look right. Check for typos.");
+    setEmailErr("");
+    if (signup && password.length < MIN_PASSWORD) return setPasswordErr(`Use at least ${MIN_PASSWORD} characters.`);
+    if (!password) return setPasswordErr("Enter your password.");
+    setPasswordErr("");
+    if (!gate()) return;
+    setBusy(true);
+    const r = await api<{ next?: string }>("/api/auth/password", { method: "POST", json: { email: email.trim(), password, next, signup, accepted } });
+    if (!r.ok) {
+      setBusy(false);
+      return setError(r.data.error ?? "Something broke on our side. It's not you. Try again in a minute.");
+    }
+    // Full load so the header and every server component pick up the new session.
+    const dest = new URL(r.data.next || next, window.location.origin);
+    dest.searchParams.set("signedin", "1");
+    window.location.assign(dest.toString());
+  }
+
   async function google() {
     setError("");
     if (!gate()) return;
@@ -66,7 +89,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
         <LogoMark size={44} />
         <div>
           <h1 className="gs-h2" style={{ marginBottom: 4 }}>{signup ? "Make a free account" : "Welcome back"}</h1>
-          <p className="gs-muted" style={{ margin: 0 }}>{signup ? "Your card comes with you." : "We'll email you a link. No password."}</p>
+          <p className="gs-muted" style={{ margin: 0 }}>{signup ? "Your card comes with you." : "Sign in with your email and password, or get a link by email."}</p>
         </div>
         {error && <ErrorBox message={error} />}
         {sent ? (
@@ -85,16 +108,18 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
             </div>
           </div>
         ) : (
-          <form className="gs-stack" onSubmit={(e) => { e.preventDefault(); void sendLink(); }} noValidate>
+          <form className="gs-stack" onSubmit={(e) => { e.preventDefault(); void withPassword(); }} noValidate>
             <Button type="button" variant="secondary" size="lg" disabled={busy} onClick={google}>Continue with Google</Button>
             <div className="gs-divider">or</div>
             <TextField label="Email" type="email" autoComplete="email" inputMode="email" value={email} onChange={(e) => setEmail(e.target.value)} error={emailErr} placeholder="you@example.com" />
+            <TextField label="Password" type="password" autoComplete={signup ? "new-password" : "current-password"} value={password} onChange={(e) => setPassword(e.target.value)} error={passwordErr} hint={signup ? `At least ${MIN_PASSWORD} characters.` : undefined} maxLength={72} />
             {signup && (
               <Check checked={accepted} onChange={setAccepted} error={acceptErr}>
                 I&apos;m 18 or older, and I agree to the <Link className="gs-link" href="/terms" target="_blank">Terms</Link> and <Link className="gs-link" href="/privacy" target="_blank">Privacy Policy</Link>.
               </Check>
             )}
-            <Button type="submit" size="lg" disabled={busy}>{busy ? "Sending" : "Email me a sign-in link"}</Button>
+            <Button type="submit" size="lg" disabled={busy}>{busy ? "One moment" : signup ? "Make my account" : "Sign in"}</Button>
+            <Button type="button" variant="ghost" disabled={busy} onClick={sendLink}>Email me a sign-in link</Button>
             <p className="gs-muted gs-small" style={{ margin: 0 }}>
               {signup ? (
                 <>Already have an account? <Link className="gs-link" href={`/login?next=${encodeURIComponent(next)}`}>Sign in</Link></>

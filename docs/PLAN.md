@@ -225,6 +225,51 @@ The existing OpenRouter key in `book\.env` gets copied into GreetHub's own `.env
 - Phase 2: "match my handwriting" from a free-form photo (suggest the nearest preset with a vision call); a per-letter re-upload instead of a new sheet; joined-up cursive for own handwriting (needs glyph connections).
 - CX: help article and short video for the template sheet; QA: add the account handwriting flow to the e2e scripts.
 
+## Photo cards and events (merged launch plan, 2026-10-15; wave 2 PM merge)
+Products: holiday photo cards (flat 5x7, 1 to 4 photos, batches), save the dates (flat 5x7 or 4x6, QR, digital), invitations (5x7 suite, RSVP, event page). Full plan: `docs/products/photo-cards-and-events-plan.md`; PM roadmap and metrics: `docs/products/photo-events/pm-roadmap.md`; wave 1 inputs: `docs/*/photo-events-*` and `docs/cx/07-photo-events-ux.md`. **Overriding rule:** the book and folded-card gates (Nov 13, Nov 20) outrank photo cards; a contested engineer-day goes to B1 to B7 and B11. Phase 1 is invite-only (inside the main soft launch), at most 30 orders, lower 48, ship to me, blank envelopes, 25/50/100 cards. Not in 2026: mail-for-me, printed addresses, AI backgrounds, save the dates, invitations, event pages.
+
+### B14 Photo cards, Phase 1 (gates: Oct 24 go/no-go, then Nov 20 ship gate)
+About 27 engineer-days (CTO estimate), code-complete about Nov 13 if building starts Oct 24. On no-go, only B14.1 and B14.8 continue; the rest waits for January.
+
+| Item | Owner | Depends | Acceptance |
+|---|---|---|---|
+| B14.1 Flat-card printer, sandbox, real quote, `FlatCardPrinter` | Fulfillment, Shop, CTO | owner opens account; Gooten written answers (list in `docs/ops/photo-events-printing.md`) | Test order accepted by API; written Q4 order-by dates; price at 25/50/100; US ship cost; adapter passes fake and sandbox routine |
+| B14.2 Collage engine, 6 front and 2 back 5x7 templates | Card, Design | none | Engine and tests exist (`app/lib/collage`). Remaining: one DPI rule (decision 1) in one module; 5x7 print PDF with 0.125 in bleed and golden-PDF test; fonts embedded |
+| B14.3 Photo intake reused from book | Book, Privacy ops | B1, B11 | Upload, HEIC, moderation, consent first, private storage, 90-day purge covering design photos and frozen print PDFs; no new data store |
+| B14.4 Editor and proof approval | Card, CX | B14.2, B14.3, B4 | Pan, zoom, swap; DPI warnings; checker flags a name spelled two ways and a year not 2026; "I checked names and dates" tick; approved proof equals print PDF |
+| B14.5 Batch cart line and pricing | Shop, CFO | B14.1, B4 | 25/50/100 read from price config; cut-off from config; one printer order; refund and reprint on a batch line with audit log (B7) |
+| B14.6 Metrics events | Data | B8 | Funnel, proof, DPI-warning and reprint events; no photo, name or address in logs or analytics |
+| B14.7 Protected-character table and holiday templates | IP safety, Design | decision 7 | Five missing characters in the table with red-team cases and benign controls; `npm run eval:ip -- --mock` green; templates IP-logged |
+| B14.8 Physical proof and Nov 20 gate | Fulfillment, QA; owner orders | B14.1, B6 | Proof in hand and judged; Q1 to Q13 answered; STRICT e2e green on the photo-card path; printer sandbox routine passed |
+
+Phase 2 (save the dates, CSV import, mail-for-me; build from Jan 5, launch about Feb 2, 2027) and Phase 3 (invitations, event pages, RSVP; build from Mar, launch about May 2027) follow the roadmap, each gated on the attorney's answers (Q45 to Q66) for its new data. Phase 1 goes public only if, over at least 20 orders: proof-to-order is at least 40%, reprint or complaint at most 3%, contribution at least 25% at real print cost, and 0 privacy or IP incidents.
+
+### Oct 24 go/no-go (all ten must be met; any other status means no-go)
+| # | Criterion | Status | Evidence as of Oct 15 |
+|---|---|---|---|
+| 1 | One flat 5x7 printer, API, sandbox, Dec arrival | Not met | Gooten proposed from public pages only; API, sandbox and price unconfirmed; no test order |
+| 2 | Prices give at least 25% contribution at the real quote | Unknown | CFO prices ($1.99 / $1.79 / $1.59) are assumptions; no quote |
+| 3 | Attorney engaged, Q1 to Q13 by Nov 13 | Not met | No attorney engaged; Q45 to Q66 drafted |
+| 4 | B1 persistence, or committed by Oct 28 | Not met | Platform assessment: all state on local disk; no commitment on file |
+| 5 | Collage engine, 3 layouts to 5x7 PDF with bleed and DPI check | Met on tests | Ran collage and recipients vitest today: 92 pass (mock). DPI constants disagree (decision 1) |
+| 6 | Book photo intake reused | Not met | `app/lib/photo-sets` is uncommitted work in the tree; not verified, not on the preview |
+| 7 | CTO signs the Oct 27 to Nov 21 fit | Unknown | Estimate exists, no sign-off; tight against B1 to B7 |
+| 8 | 6 templates designed and IP-checked | Not met | Spec and JSON exist; no IP sign-off |
+| 9 | Physical proof ordered by Nov 6, in hand by Nov 20 | Not met | No account or sandbox; Fulfillment needs the order by Nov 6 |
+| 10 | Reprint and typo policy approved | Not met | Drafted by Support and Ops; not approved; conflicts (decision 6) |
+
+**PM read:** 1 met, 7 not met, 2 unknown. Plan for no-go (Holiday 2027); treat go as upside. The Oct 24 call is the owner's.
+
+### Decisions needed from the owner
+1. **DPI rule.** CTO and Fulfillment: warn under 200, block under 150. Design: tick-to-continue at 100 to 149, block under 100. Code (`quality.ts`): flag under 120, never block. CX: a block cannot be dismissed. *Recommend:* warn under 200, block under 150, undismissable; Card engineer aligns the code; revisit after the physical proof.
+2. **List cap.** Code, CTO and Legal say 500; Privacy ops says 1,000 (its doc misreads `MAX_LIST_SIZE`, which is 500). *Recommend:* 500; Privacy ops corrects its doc.
+3. **10-card order.** CFO and CTO sell 10 to 200 (10 cards at $2.49 earns about $9); the roadmap sells 25/50/100 only. *Recommend:* 25/50/100 for 2026 (one QA matrix, three price rows); add 10 to 24 in Phase 2.
+4. **Order-by Dec 5.** Gooten wants print-ready by Dec 7, but cards ship to the customer, who then addresses and mails by Dec 17. A Dec 5 order arrives about Dec 12 with no room for a reprint. *Recommend:* order-by Nov 30, "in your hands by Dec 8", unless Gooten gives written dates that support Dec 5. This gives up part of the Dec 1 to 10 demand (CFO: about 70%), which a 30-order cap can absorb.
+5. **Stale competitor prices.** Minted $2.28 and Vistaprint $59.95 are Nov 2022; Paperless Post $0.22 to $0.30 is out of date ($0.85 Premium, Oct 2026). *Recommend:* CMO, CFO and Growth label them dated or drop them; no public price comparison until Market intel refreshes (Oct 22).
+6. **12-month reprint copies vs 90-day purge.** Support and Ops propose a 12-month reprint window; Privacy ops and Legal say a frozen print PDF is the child's photo and goes at 90 days. *Recommend:* reprint window 90 days from delivery, shown at checkout; after that, re-upload. The attorney confirms in Q45.
+7. **Missing protected characters.** The committed `ip-table.json` lacked Rudolph, Frosty, the Grinch, Jack Skellington and Elf on the Shelf. An uncommitted edit now adds all five (seen in the working tree, not tested by me). *Recommend:* approve, run the IP eval, and commit before any holiday template or the Christmas book ships.
+8. **Other owner actions.** Open the Gooten account and sandbox; approve Phase 1 prices and the reprint policy; engage the attorney and add Q45 to Q66; order the proof by Nov 6; make the Oct 24 call.
+
 ## Platform assessment — 2026-10-12
 Each agent checked its own part of the build, one at a time, in this order: CTO, engineers, platform, data/quality, business, legal/ops. Every entry uses the same headings: **Built vs. needed**, **Plan changes**, **Scale adjustments**, **Easy fixes made**, **Blocked by**.
 
