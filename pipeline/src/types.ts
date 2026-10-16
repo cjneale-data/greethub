@@ -1,7 +1,7 @@
 import type { CreationBrief } from "@greethub/shared";
-import type { OpenRouterClient } from "./openrouter.js";
-import type { ImageSize } from "./models.js";
-import type { IpSafetyService } from "../../app/lib/safety/types.js";
+import type { OpenRouterClient } from "./openrouter";
+import type { ImageSize } from "./models";
+import type { IpSafetyService } from "../../app/lib/safety/types";
 
 /** Source of reference photos. Production: Supabase private storage via signed URLs. Tests/CLI: a local directory. */
 export interface PhotoStore {

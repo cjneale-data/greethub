@@ -1,5 +1,5 @@
 import sharp from "sharp";
-import type { ContentPart } from "./openrouter.js";
+import type { ContentPart } from "./openrouter";
 
 /** Downscale a photo for vision/reference use to keep input tokens low. */
 export async function photoPart(buf: Buffer, maxEdge = 1024): Promise<ContentPart> {

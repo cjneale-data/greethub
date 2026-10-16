@@ -1,15 +1,15 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { bookSpreads, type BookBrief, type CardBrief } from "@greethub/shared";
-import { identitySheet } from "./stages/identity.js";
-import { modelSheet } from "./stages/modelsheet.js";
-import { writeCardCopy, writeStory } from "./stages/copy.js";
-import { pagePrompts } from "./stages/prompts.js";
-import { renderPage } from "./stages/render.js";
-import { IpBlockedError, PAGE_BLOCKED_MESSAGE } from "./safety/index.js";
-import { layoutBook, type BookLayoutReport } from "./layout/book.js";
-import { layoutCard, type CardLayoutReport } from "./layout/card.js";
-import type { Ctx, PagePlan, RenderResult } from "./types.js";
+import { identitySheet } from "./stages/identity";
+import { modelSheet } from "./stages/modelsheet";
+import { writeCardCopy, writeStory } from "./stages/copy";
+import { pagePrompts } from "./stages/prompts";
+import { renderPage } from "./stages/render";
+import { IpBlockedError, PAGE_BLOCKED_MESSAGE } from "./safety/index";
+import { layoutBook, type BookLayoutReport } from "./layout/book";
+import { layoutCard, type CardLayoutReport } from "./layout/card";
+import type { Ctx, PagePlan, RenderResult } from "./types";
 
 export type RunOptions = {
   /** Called with the model sheet file. Return false to stop before any page render (the user-approval gate). */

@@ -2,7 +2,7 @@
  *  npx tsx scripts/cost-report.ts */
 import { readFileSync, writeFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import type { LedgerEntry } from "../src/ledger.js";
+import type { LedgerEntry } from "../src/ledger";
 
 const dir = join(import.meta.dirname, "..", "measurements");
 const load = (n: string) => readFileSync(join(dir, `${n}.jsonl`), "utf8").trim().split("\n").map((l) => JSON.parse(l) as LedgerEntry);

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { MemoryLedger, SpendCapExceeded } from "../src/ledger.js";
-import { OpenRouterClient, isRetryable, type FetchLike } from "../src/openrouter.js";
+import { MemoryLedger, SpendCapExceeded } from "../src/ledger";
+import { OpenRouterClient, isRetryable, type FetchLike } from "../src/openrouter";
 
 const okImg = { ok: true, status: 200, text: async () => "", json: async () => ({ choices: [{ message: { images: [{ image_url: { url: "data:image/png;base64,AAAA" } }] } }], usage: { cost: 0.05 } }) };
 const noImg = { ok: true, status: 200, text: async () => "", json: async () => ({ choices: [{ message: { content: "refused" } }], usage: { cost: 0.001 } }) };

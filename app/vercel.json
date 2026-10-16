@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "(test ! -f ../scripts/check-env.mjs || node ../scripts/check-env.mjs) && npm run build",
+  "buildCommand": "(test ! -f ../scripts/check-env.mjs || node ../scripts/check-env.mjs) && (cd ../pipeline && npm ci --omit=dev --no-audit --no-fund) && npm run build",
   "crons": [
     { "path": "/api/book/privacy/purge", "schedule": "17 8 * * *" }
   ]

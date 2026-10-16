@@ -2,17 +2,17 @@
  * Pipeline-side IP safety: the shared service (app/lib/safety, pure TypeScript, no Next.js imports) wired to the
  * pipeline's OpenRouter client so every screening call lands in the cost ledger, plus the last-mile prompt sanitiser.
  */
-import { createLiveIpSafety, createMockIpSafety, type ModelCaller } from "../../../app/lib/safety/service.js";
-import { fastScreen } from "../../../app/lib/safety/fastpass.js";
-import type { IpField, IpInput, IpResult, IpSafetyService } from "../../../app/lib/safety/types.js";
-import { logInputResult } from "../../../app/lib/safety/events.js";
-import type { OpenRouterClient } from "../openrouter.js";
+import { createLiveIpSafety, createMockIpSafety, type ModelCaller } from "../../../app/lib/safety/service";
+import { fastScreen } from "../../../app/lib/safety/fastpass";
+import type { IpField, IpInput, IpResult, IpSafetyService } from "../../../app/lib/safety/types";
+import { logInputResult } from "../../../app/lib/safety/events";
+import type { OpenRouterClient } from "../openrouter";
 
 export { createLiveIpSafety, createMockIpSafety, fastScreen };
 export type { IpSafetyService, IpInput, IpResult, IpField };
-export { IMAGE_HARDENING_LINES, rerollAddendum, PAGE_BLOCKED_MESSAGE, type OutputProblem } from "../../../app/lib/safety/hardening.js";
-export { logOutputFlagged, logOutputRerolled, type OutputFlag } from "../../../app/lib/safety/events.js";
-export * from "./thresholds.js";
+export { IMAGE_HARDENING_LINES, rerollAddendum, PAGE_BLOCKED_MESSAGE, type OutputProblem } from "../../../app/lib/safety/hardening";
+export { logOutputFlagged, logOutputRerolled, type OutputFlag } from "../../../app/lib/safety/events";
+export * from "./thresholds";
 
 /** Thrown when text cannot be made safe (for example a real public figure in story text). `userMessage` is customer-facing. */
 export class IpBlockedError extends Error {

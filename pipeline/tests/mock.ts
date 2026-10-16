@@ -1,7 +1,7 @@
 import sharp from "sharp";
-import type { Ctx } from "../src/types.js";
-import { MemoryLedger } from "../src/ledger.js";
-import { OpenRouterClient, type FetchLike } from "../src/openrouter.js";
+import type { Ctx } from "../src/types";
+import { MemoryLedger } from "../src/ledger";
+import { OpenRouterClient, type FetchLike } from "../src/openrouter";
 import { CreationBriefSchema } from "@greethub/shared";
 
 /** A colourful full-bleed test image (no white border). */

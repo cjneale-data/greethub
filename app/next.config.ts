@@ -1,3 +1,4 @@
+import path from "node:path";
 import type { NextConfig } from "next";
 
 /**
@@ -22,6 +23,10 @@ const nextConfig: NextConfig = {
   // Print (resolveCardWriting) reads the handwriting TTFs from disk; public/ is served by the CDN, not bundled, so the
   // server functions need them traced in explicitly.
   outputFileTracingIncludes: { "/api/**": ["./public/fonts/handwriting/*.ttf"] },
+  // The card preview bundles pipeline/src (lib/intake/guest-render.ts), so the build and file tracing see the whole
+  // repo, not just app/. On Vercel the pipeline's runtime packages are installed by the build command (vercel.json).
+  turbopack: { root: path.join(import.meta.dirname, "..") },
+  outputFileTracingRoot: path.join(import.meta.dirname, ".."),
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   },

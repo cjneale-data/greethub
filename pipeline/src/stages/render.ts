@@ -1,12 +1,12 @@
 import { mkdirSync, readdirSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { cast } from "./identity.js";
-import { renderLead } from "./prompts.js";
-import { qaPage } from "./qa.js";
-import { photoPart } from "../imageutil.js";
-import type { ContentPart } from "../openrouter.js";
-import { IP_MAX_AUTO_REROLLS, logOutputFlagged, logOutputRerolled, rerollAddendum, sanitizeImagePrompt, type OutputProblem } from "../safety/index.js";
-import type { Ctx, PagePlan, QaVerdict, RenderResult } from "../types.js";
+import { cast } from "./identity";
+import { renderLead } from "./prompts";
+import { qaPage } from "./qa";
+import { photoPart } from "../imageutil";
+import type { ContentPart } from "../openrouter";
+import { IP_MAX_AUTO_REROLLS, logOutputFlagged, logOutputRerolled, rerollAddendum, sanitizeImagePrompt, type OutputProblem } from "../safety/index";
+import type { Ctx, PagePlan, QaVerdict, RenderResult } from "../types";
 
 export const aspectFor = (ctx: Ctx) => (ctx.brief.product === "book" ? "1:1" : "3:4");
 
