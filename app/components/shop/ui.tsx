@@ -60,7 +60,14 @@ export function ErrorBox({ message, onRetry }: { message: string; onRetry?: () =
 export function Modal({ title, children, actions, onClose }: { title: string; children?: ReactNode; actions: ReactNode; onClose: () => void }) {
   const id = useId();
   const ref = useRef<HTMLDivElement>(null);
+  // Callers pass a fresh onClose each render; the effect below must run once per open, or every keystroke in a field
+  // re-runs it and focus jumps back to the first control.
+  const closeRef = useRef(onClose);
   useEffect(() => {
+    closeRef.current = onClose;
+  });
+  useEffect(() => {
+    const onClose = () => closeRef.current();
     const prev = document.activeElement as HTMLElement | null;
     ref.current?.querySelector<HTMLElement>("input,button,select,textarea")?.focus();
     // Escape closes; Tab stays inside the dialog (WAI-ARIA modal pattern, CX P1-4).
@@ -78,7 +85,7 @@ export function Modal({ title, children, actions, onClose }: { title: string; ch
       window.removeEventListener("keydown", onKey);
       prev?.focus?.();
     };
-  }, [onClose]);
+  }, []);
   return (
     <div className="gs-scrim" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div className="gs-modal" role="dialog" aria-modal="true" aria-labelledby={id} ref={ref}>

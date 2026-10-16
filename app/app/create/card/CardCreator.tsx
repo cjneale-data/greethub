@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Badge, Button, ButtonLink, Progress, Segmented, TextField, Toast } from "@/components/brand";
 import { BriefCard, ChatBubble, FieldEditor, Modal, Sheet, TypingBubble } from "@/components/creator";
-import { applyPatch, disabledHint, emptyDraft, insideText, isComplete, mergeServerDraft, missingRequired, progress, validateField, type CardDraft } from "@/lib/intake/draft";
+import { applyPatch, CardDraftSchema, disabledHint, emptyDraft, insideText, isComplete, mergeServerDraft, missingRequired, progress, validateField, type CardDraft } from "@/lib/intake/draft";
 import { getDraftStorage, type StoredChat, type StoredPreview } from "@/lib/intake/draft-storage";
 import { FIELD_LABELS, OPTIONAL_FIELDS, REQUIRED_FIELDS, type FieldKey } from "@/lib/intake/fields";
 import { PHOTO_GUEST_MESSAGE } from "@/lib/intake/guardrails";
@@ -10,6 +10,8 @@ import { openingTurn } from "@/lib/intake/quick-replies";
 import { HandwrittenInside } from "@/components/writing/HandwrittenInside";
 import { useWriting } from "@/components/writing/useWriting";
 import { isPaidFeatureOn, useMembership } from "@/components/membership/useMembership";
+import { api, useSession } from "@/components/shop/client";
+import type { Draft } from "@/lib/shop/types";
 
 type LockKey = "second" | "reroll" | "save" | "proof" | "photo" | "people";
 const LOCKS: Record<LockKey, { title: string; text: string }> = {
@@ -20,6 +22,13 @@ const LOCKS: Record<LockKey, { title: string; text: string }> = {
   photo: { title: "Photos stay private", text: PHOTO_GUEST_MESSAGE },
   people: { title: "Save people", text: "Save Grandma once and skip the typing next time. Make a free account to save people." },
 };
+/** Signed in, the account locks above don't apply. These steps aren't built yet (docs/PLAN.md, signed-in card path). */
+const NOT_YET: Partial<Record<LockKey, { title: string; text: string }>> = {
+  proof: { title: "Ordering cards is coming soon", text: "The full-size proof and ordering aren't switched on yet. Save this as a draft and it'll be waiting in your account." },
+  photo: { title: "No photos on cards", text: "Cards are drawn from your words, not photos. Tell the guide what makes them them." },
+};
+/** Previews are data URLs; past this size they stay out of the account draft (the brief is enough to redraw). */
+const MAX_SAVED_PREVIEW = 200_000;
 
 const ONE_LINERS = ["Sharpening the pencils.", "Mixing the colors.", "Choosing the paper.", "Adding the last touches."];
 const GREETING_ERR = "Something went wrong on our side. Try again?";
@@ -54,6 +63,11 @@ export function CardCreator() {
   const [styleOffer, setStyleOffer] = useState<{ styleId: string; note: string } | null>(null);
   const [chatErr, setChatErr] = useState(false);
   const chatEnd = useRef<HTMLDivElement>(null);
+  const session = useSession();
+  const signedIn = session.signedIn;
+  const [draftId, setDraftId] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const openedDraft = useRef(false);
   const draftRef = useRef(draft);
   const chatRef = useRef(chat);
   useEffect(() => {
@@ -87,6 +101,27 @@ export function CardCreator() {
       live = false;
     };
   }, [storage]);
+
+  /* ---- a saved account draft (?draft= from the account's Continue button) ---- */
+  useEffect(() => {
+    if (!hydrated || !session.loaded || !session.signedIn || openedDraft.current) return;
+    const id = new URL(window.location.href).searchParams.get("draft");
+    if (!id) return;
+    openedDraft.current = true;
+    void api<{ drafts: Draft[] }>("/api/account/drafts").then((r) => {
+      const saved = r.ok ? r.data.drafts.find((d) => d.id === id && d.kind === "card") : undefined;
+      const brief = saved?.brief as { draft?: unknown; chat?: StoredChat; preview?: StoredPreview } | undefined;
+      const parsed = CardDraftSchema.safeParse(brief?.draft);
+      if (!saved || !parsed.success) return setToast({ text: "We couldn't open that draft. It may have been deleted." });
+      const d = parsed.data as CardDraft;
+      setDraft(d);
+      setDraftId(saved.id);
+      if (Array.isArray(brief?.chat) && brief.chat.length) setChat(brief.chat);
+      setQuick([]);
+      setPreview(brief?.preview ?? null);
+      setPreviewKey(brief?.preview ? pictureKey(d) : null);
+    });
+  }, [hydrated, session.loaded, session.signedIn]);
 
   useEffect(() => {
     if (!hydrated) return;
@@ -230,6 +265,45 @@ export function CardCreator() {
     }
   };
 
+  /* ---- signed in: save to the account ---- */
+  const saveToAccount = async (quiet = false): Promise<boolean> => {
+    setSaving(true);
+    const keepPreview = preview && preview.front.length <= MAX_SAVED_PREVIEW ? preview : undefined;
+    const name = draft.recipientName?.trim();
+    const r = await api<{ draft: Draft }>("/api/account/drafts", {
+      method: "POST",
+      json: { id: draftId ?? undefined, kind: "card", title: name ? `Card for ${name}` : "Untitled card", brief: { draft, chat, preview: keepPreview } },
+    });
+    setSaving(false);
+    if (!r.ok) {
+      setToast({ text: r.data.error ?? "That draft didn't save. Try again?", retry: () => void saveToAccount(quiet) });
+      return false;
+    }
+    setDraftId(r.data.draft.id);
+    const url = new URL(window.location.href);
+    url.searchParams.set("draft", r.data.draft.id);
+    window.history.replaceState(null, "", url.toString());
+    if (!quiet) setToast({ text: "Saved to your drafts." });
+    return true;
+  };
+
+  /** Guests get the sign-up prompt; signed in, the action runs (or says honestly that it isn't built yet). */
+  const gate = (key: LockKey) => {
+    if (!signedIn) return setLock(key);
+    if (key === "save") return void saveToAccount();
+    if (key === "reroll") return void makePreview();
+    if (key === "second") {
+      return void saveToAccount(true).then((ok) => {
+        if (!ok) return;
+        startOver();
+        setDraftId(null);
+        window.history.replaceState(null, "", window.location.pathname);
+        setToast({ text: "Saved to your drafts. Here's a fresh card." });
+      });
+    }
+    setLock(key);
+  };
+
   const changeSomething = () => {
     setMode("Chat");
     setChat((c) => [...c, { role: "assistant", content: "What should change?" }]);
@@ -295,21 +369,21 @@ export function CardCreator() {
             <button type="button" className="gc-card__tap" aria-label="Flip the card" onClick={() => setSide((s) => (s === "front" ? "inside" : "front"))} />
           </div>
           <p className="gc-hint">Tap the card to flip it. Low-resolution preview, AI-illustrated.</p>
-          {stale && <p className="gc-hint">You&apos;ve changed the card since this preview. A new picture needs a free account.</p>}
+          {stale && <p className="gc-hint">You&apos;ve changed the card since this preview. {signedIn ? "Press Re-roll for a new picture." : "A new picture needs a free account."}</p>}
           <div className="gc-actions">
-            <Button onClick={() => setLock("proof")}>Looks good</Button>
+            <Button onClick={() => gate("proof")}>Looks good</Button>
             <Button variant="secondary" onClick={changeSomething}>
               Change something
             </Button>
-            <Button variant="ghost" onClick={() => setLock("reroll")}>
+            <Button variant="ghost" onClick={() => gate("reroll")}>
               Re-roll
             </Button>
           </div>
           <div className="gc-actions">
-            <Button variant="ghost" size="sm" onClick={() => setLock("save")}>
-              Save draft
+            <Button variant="ghost" size="sm" onClick={() => gate("save")}>
+              {saving ? "Saving" : "Save draft"}
             </Button>
-            <Button variant="ghost" size="sm" onClick={() => setLock("second")}>
+            <Button variant="ghost" size="sm" onClick={() => gate("second")}>
               Start another card
             </Button>
           </div>
@@ -387,7 +461,7 @@ export function CardCreator() {
               void send(input);
             }}
           >
-            <Button type="button" variant="ghost" size="sm" aria-label="Add a photo" onClick={() => setLock("photo")}>
+            <Button type="button" variant="ghost" size="sm" aria-label="Add a photo" onClick={() => gate("photo")}>
               + Photo
             </Button>
             <TextField id="gc-composer" aria-label="Say anything" placeholder="Say anything..." value={input} maxLength={500} onChange={(e) => setInput(e.target.value)} autoComplete="off" />
@@ -434,8 +508,18 @@ export function CardCreator() {
         </Button>
       </Sheet>
 
-      <Modal open={!!lock} title={lock ? LOCKS[lock].title : ""} onClose={() => setLock(null)}>
-        {lock && (
+      <Modal open={!!lock} title={lock ? (signedIn && NOT_YET[lock] ? NOT_YET[lock].title : LOCKS[lock].title) : ""} onClose={() => setLock(null)}>
+        {lock && signedIn && NOT_YET[lock] ? (
+          <>
+            <p>{NOT_YET[lock].text}</p>
+            <div className="gc-modal__actions">
+              {lock === "proof" && <Button onClick={() => { setLock(null); void saveToAccount(); }}>Save draft</Button>}
+              <Button variant="ghost" onClick={() => setLock(null)}>
+                OK
+              </Button>
+            </div>
+          </>
+        ) : lock && (
           <>
             <p>{LOCKS[lock].text}</p>
             {lock !== "second" && missingRequired(draft).length < REQUIRED_FIELDS.length && <p>Your card comes with you.</p>}
