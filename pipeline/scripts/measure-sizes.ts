@@ -2,10 +2,10 @@
  *  npx tsx scripts/measure-sizes.ts <runDir with prompts.json + images/modelsheet_v1.png> <photosDir> */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { OpenRouterClient } from "../src/openrouter.js";
-import { FileLedger } from "../src/ledger.js";
-import { photoPart } from "../src/imageutil.js";
-import type { ImageSize } from "../src/models.js";
+import { OpenRouterClient } from "../src/openrouter";
+import { FileLedger } from "../src/ledger";
+import { photoPart } from "../src/imageutil";
+import type { ImageSize } from "../src/models";
 
 const [runDir, photos] = process.argv.slice(2);
 const key = readFileSync(join(import.meta.dirname, "..", ".env.local"), "utf8").split(/\r?\n/).find((l) => l.startsWith("OPENROUTER_API_KEY="))!.slice(19).trim();

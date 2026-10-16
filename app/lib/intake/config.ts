@@ -6,12 +6,13 @@ export const TEXT_MODEL = "anthropic/claude-sonnet-5.5";
 
 export const openRouterKey = (): string | undefined => process.env.OPENROUTER_API_KEY?.trim() || undefined;
 
-/** Mock mode: GREETHUB_MOCK_AI=1 forces it; =0 forces live (needs a key); unset means mock when there is no key. */
+/** Mock mode: GREETHUB_MOCK_AI=1 forces it; otherwise live whenever an OpenRouter key is set (=0 changes nothing without one). */
 export function isMockAi(): boolean {
   const flag = process.env.GREETHUB_MOCK_AI?.trim();
   if (flag === "1" || flag?.toLowerCase() === "true") return true;
-  if (!openRouterKey()) return true;
-  return !(flag === "0" || flag?.toLowerCase() === "false");
+  // Same rule as lib/book/config.ts isMockMode. Unset used to mean mock even with a key, so production stayed on
+  // placeholder art until GREETHUB_MOCK_AI=0 was set explicitly.
+  return !openRouterKey();
 }
 
 export const mockDelayMs = (): number => {

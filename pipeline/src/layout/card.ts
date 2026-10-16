@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import sharp from "sharp";
-import { addPage, drawArt, drawLines, edge, fitText, hex, IN, newDoc, type PageGeom } from "./common.js";
+import { addPage, drawArt, drawLines, edge, fitText, hex, IN, newDoc, type PageGeom } from "./common";
 
 /** 5 x 7 in folded card (flat panel). 0.125 in bleed, 0.375 in safe margin. Page size 5.25 x 7.25 in = 1575 x 2175 px at 300 DPI. */
 export const CARD_TRIM_W = 5 * IN;

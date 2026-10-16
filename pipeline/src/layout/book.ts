@@ -2,7 +2,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { PDFDocument } from "pdf-lib";
 import { rgb } from "pdf-lib";
-import { addPage, drawArt, drawLines, edge, fitText, hex, IN, newDoc, outlinedText, panel, star, type Fonts, type PageGeom } from "./common.js";
+import { addPage, drawArt, drawLines, edge, fitText, hex, IN, newDoc, outlinedText, panel, star, type Fonts, type PageGeom } from "./common";
 
 /** 8.5 x 8.5 in trim + 0.125 in bleed on every side = 8.75 in square (630 pt, 2625 px at 300 DPI). Lulu hardcover. */
 export const BOOK_TRIM = 8.5 * IN;

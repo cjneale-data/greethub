@@ -1,10 +1,10 @@
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { extractJson } from "../imageutil.js";
-import { GUIDELINES } from "../guidelines.js";
-import { cast, styleOf } from "./identity.js";
-import { IMAGE_HARDENING_LINES, sanitizeImagePrompt } from "../safety/index.js";
-import type { Ctx, PagePlan } from "../types.js";
+import { extractJson } from "../imageutil";
+import { GUIDELINES } from "../guidelines";
+import { cast, styleOf } from "./identity";
+import { IMAGE_HARDENING_LINES, sanitizeImagePrompt } from "../safety/index";
+import type { Ctx, PagePlan } from "../types";
 
 /** Lines that code (not the LLM) appends to every page prompt. These are the Eye Story lessons: image models
  *  ignore soft requests, so every page restates them identically. */

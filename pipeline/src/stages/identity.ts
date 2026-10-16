@@ -1,9 +1,9 @@
 import { writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { styleStringFor, type Character } from "@greethub/shared";
-import type { ContentPart } from "../openrouter.js";
-import { photoPart } from "../imageutil.js";
-import type { Ctx } from "../types.js";
+import type { ContentPart } from "../openrouter";
+import { photoPart } from "../imageutil";
+import type { Ctx } from "../types";
 
 /** Everyone who must look the same across renders: main characters then the optional pet. */
 export function cast(brief: Ctx["brief"]): Character[] {

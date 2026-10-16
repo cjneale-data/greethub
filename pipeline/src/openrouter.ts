@@ -1,5 +1,5 @@
-import { assertUnderCap, type CostLedger, type LedgerEntry } from "./ledger.js";
-import { FALLBACK_PRICES, IMAGE_MODELS, TEXT_MODEL, capSize, type ImageSize } from "./models.js";
+import { assertUnderCap, type CostLedger, type LedgerEntry } from "./ledger";
+import { FALLBACK_PRICES, IMAGE_MODELS, TEXT_MODEL, capSize, type ImageSize } from "./models";
 
 export type ContentPart =
   | { type: "text"; text: string }

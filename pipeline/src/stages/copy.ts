@@ -1,9 +1,9 @@
-import { extractJson } from "../imageutil.js";
+import { extractJson } from "../imageutil";
 import { bookSpreads, type BookBrief, type CardBrief } from "@greethub/shared";
-import type { Ctx, PagePlan } from "../types.js";
-import { cast } from "./identity.js";
-import { fastText, logOutputFlagged, screenAll } from "../safety/index.js";
-import type { IpInput } from "../safety/index.js";
+import type { Ctx, PagePlan } from "../types";
+import { cast } from "./identity";
+import { fastText, logOutputFlagged, screenAll } from "../safety/index";
+import type { IpInput } from "../safety/index";
 
 type RawPage = { text?: string; scene: string; characters?: string[] };
 

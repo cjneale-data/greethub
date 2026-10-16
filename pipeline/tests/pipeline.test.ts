@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { runBook, runCard } from "../src/run.js";
-import { mockFetch, testCtx } from "./mock.js";
+import { runBook, runCard } from "../src/run";
+import { mockFetch, testCtx } from "./mock";
 
 const tmp = () => mkdtempSync(join(tmpdir(), "gh-run-"));
 

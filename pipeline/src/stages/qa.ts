@@ -1,8 +1,8 @@
 import sharp from "sharp";
-import { extractJson, photoPart } from "../imageutil.js";
-import type { OpenRouterClient } from "../openrouter.js";
-import { LOOKALIKE_RISK_FAIL_AT } from "../safety/thresholds.js";
-import type { Ctx, IpVisionResult, PagePlan, QaVerdict } from "../types.js";
+import { extractJson, photoPart } from "../imageutil";
+import type { OpenRouterClient } from "../openrouter";
+import { LOOKALIKE_RISK_FAIL_AT } from "../safety/thresholds";
+import type { Ctx, IpVisionResult, PagePlan, QaVerdict } from "../types";
 
 /** Free local check: do any of the four edges look like a flat white/cream border? */
 export async function hasWhiteBorder(png: Buffer): Promise<boolean> {

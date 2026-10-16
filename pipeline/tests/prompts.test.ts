@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import sharp from "sharp";
-import { guardLines, renderLead } from "../src/stages/prompts.js";
-import { hasWhiteBorder } from "../src/stages/qa.js";
-import { fakeArt } from "./mock.js";
+import { guardLines, renderLead } from "../src/stages/prompts";
+import { hasWhiteBorder } from "../src/stages/qa";
+import { fakeArt } from "./mock";
 
 describe("prompt guard lines", () => {
   const page = { id: "p1", kind: "spread" as const, scene: "s", characters: ["Madison", "Lee", "Louisa"], textZone: "top 30% sky" };

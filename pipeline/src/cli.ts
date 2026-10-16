@@ -7,11 +7,11 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { CreationBriefSchema } from "@greethub/shared";
-import { FileLedger } from "./ledger.js";
-import { OpenRouterClient } from "./openrouter.js";
-import { runBook, runCard } from "./run.js";
-import type { Ctx } from "./types.js";
-import type { ImageSize } from "./models.js";
+import { FileLedger } from "./ledger";
+import { OpenRouterClient } from "./openrouter";
+import { runBook, runCard } from "./run";
+import type { Ctx } from "./types";
+import type { ImageSize } from "./models";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 

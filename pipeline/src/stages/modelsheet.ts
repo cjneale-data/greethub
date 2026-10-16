@@ -1,8 +1,8 @@
 import { mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { cast, castPhotos, styleOf } from "./identity.js";
-import type { ContentPart } from "../openrouter.js";
-import type { Ctx } from "../types.js";
+import { cast, castPhotos, styleOf } from "./identity";
+import type { ContentPart } from "../openrouter";
+import type { Ctx } from "../types";
 
 /** Stage 2: one character lineup that every later render copies. The user approves it before any page renders
  *  (this gate is the main cost guard: a bad character costs one render, not fourteen). Port of stage_modelsheet. */

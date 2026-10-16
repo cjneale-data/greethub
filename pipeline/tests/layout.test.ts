@@ -5,10 +5,10 @@ import { join } from "node:path";
 import { PDFDict, PDFDocument, PDFName } from "pdf-lib";
 import sharp from "sharp";
 import { bookSpreads, CARD_MESSAGE_BOX_PX } from "@greethub/shared";
-import { layoutBook, BOOK_PX, BOOK_GEOM } from "../src/layout/book.js";
-import { layoutCard, CARD_PX } from "../src/layout/card.js";
-import { fitText, newDoc, wrapLines } from "../src/layout/common.js";
-import { fakeArt } from "./mock.js";
+import { layoutBook, BOOK_PX, BOOK_GEOM } from "../src/layout/book";
+import { layoutCard, CARD_PX } from "../src/layout/card";
+import { fitText, newDoc, wrapLines } from "../src/layout/common";
+import { fakeArt } from "./mock";
 
 const tmp = () => mkdtempSync(join(tmpdir(), "gh-layout-"));
 
