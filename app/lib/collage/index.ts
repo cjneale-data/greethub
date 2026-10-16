@@ -11,3 +11,5 @@ export * from "./quality";
 export * from "./render";
 export * from "./designSpec";
 export * from "./pdf";
+export * from "./proof";
+export * from "./envelope";

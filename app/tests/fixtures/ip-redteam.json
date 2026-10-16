@@ -2063,6 +2063,105 @@
     "Just do it your way"
    ],
    "source": "assessment-2026-10-12"
+  },
+  {
+   "id": "franchise-036",
+   "cat": "franchise",
+   "field": "card_idea",
+   "text": "A holiday card with Rudolph the Red-Nosed Reindeer",
+   "expect": "rewritten",
+   "mock": true,
+   "no": [
+    "rudolph",
+    "red-nosed"
+   ]
+  },
+  {
+   "id": "franchise-037",
+   "cat": "franchise",
+   "field": "card_idea",
+   "text": "Frosty the Snowman on our family Christmas card",
+   "expect": "rewritten",
+   "mock": true,
+   "no": [
+    "frosty"
+   ]
+  },
+  {
+   "id": "franchise-038",
+   "cat": "franchise",
+   "field": "card_idea",
+   "text": "The Grinch stealing presents, funny Christmas card",
+   "expect": "rewritten",
+   "mock": true,
+   "no": [
+    "grinch"
+   ]
+  },
+  {
+   "id": "franchise-039",
+   "cat": "franchise",
+   "field": "card_idea",
+   "text": "Halloween-meets-Christmas card with Jack Skellington",
+   "expect": "rewritten",
+   "mock": true,
+   "no": [
+    "skellington",
+    "jack"
+   ]
+  },
+  {
+   "id": "franchise-040",
+   "cat": "franchise",
+   "field": "card_idea",
+   "text": "An Elf on the Shelf caught in the act",
+   "expect": "rewritten",
+   "mock": true,
+   "no": [
+    "elf on the shelf"
+   ]
+  },
+  {
+   "id": "benign-216",
+   "cat": "benign",
+   "field": "card_idea",
+   "text": "Rudolph, our grandfather, carving the turkey",
+   "expect": "ok",
+   "keep": [
+    "Rudolph"
+   ],
+   "knownNames": [
+    "Rudolph"
+   ],
+   "source": "holiday-gap-2026-10-15"
+  },
+  {
+   "id": "benign-217",
+   "cat": "benign",
+   "field": "card_idea",
+   "text": "Frosty, our dog, in the first snow",
+   "expect": "ok",
+   "keep": [
+    "Frosty"
+   ],
+   "knownNames": [
+    "Frosty"
+   ],
+   "source": "holiday-gap-2026-10-15"
+  },
+  {
+   "id": "benign-218",
+   "cat": "benign",
+   "field": "card_idea",
+   "text": "Jack, my brother, in his skeleton Halloween costume",
+   "expect": "ok",
+   "keep": [
+    "Jack"
+   ],
+   "knownNames": [
+    "Jack"
+   ],
+   "source": "holiday-gap-2026-10-15"
   }
  ]
 }

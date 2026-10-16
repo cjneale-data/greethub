@@ -60,6 +60,10 @@ export function buildCheckoutSessionParams(input: CheckoutSessionInput, opts: { 
     p.set(`line_items[${i}][price_data][unit_amount]`, String(l.unitAmountCents));
     p.set(`line_items[${i}][price_data][product_data][name]`, l.description);
     if (l.creationId) p.set(`line_items[${i}][price_data][product_data][metadata][creation_id]`, l.creationId);
+    if (l.taxCode) {
+      p.set(`line_items[${i}][price_data][product_data][tax_code]`, l.taxCode);
+      p.set(`line_items[${i}][price_data][tax_behavior]`, "exclusive");
+    }
   });
   if (opts.automaticTax) p.set("automatic_tax[enabled]", "true");
   return p;

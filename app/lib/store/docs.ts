@@ -1,7 +1,7 @@
 import type { CartItem } from "@greethub/shared";
 import type { WritingProfile } from "../writing/types";
 import type { MembershipRecord } from "../membership/types";
-import type { ContentReport, Draft, Order, OutboxMessage, PendingCheckout, Person, SavedAddress, UserRecord } from "../shop/types";
+import type { BatchJob, ContentReport, Draft, Order, OutboxMessage, PendingCheckout, Person, SavedAddress, UserRecord } from "../shop/types";
 
 /**
  * Keyed document store: the persistence seam for shop records. Each collection is a table in Supabase
@@ -24,6 +24,7 @@ export type Docs = {
   magic_tokens: { email: string; next: string; expiresAt: number; used: boolean; accepted?: boolean };
   delete_tokens: { userId: string; expiresAt: number };
   fake_printer_jobs: { stage: number; printer: string };
+  batch_jobs: BatchJob;
   outbox: OutboxMessage;
   content_reports: ContentReport;
 };
@@ -45,6 +46,7 @@ export const INDEX: { [C in Collection]: (doc: Docs[C], id: string) => { owner?:
   magic_tokens: (d) => ({ owner: d.email }),
   delete_tokens: (d) => ({ owner: d.userId }),
   fake_printer_jobs: () => ({}),
+  batch_jobs: (d) => ({ owner: d.userId, refs: d.externalId ? [d.externalId] : [] }),
   outbox: () => ({}),
   content_reports: () => ({}),
 };

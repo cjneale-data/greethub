@@ -1,0 +1,2 @@
+# False positive: example idempotencyKey in a tool-call sample, not a credential.
+c90884c6df69e569b2ac8110f6bb9bdb30a49675:docs/integrations/05-tool-spec.md:generic-api-key:260
