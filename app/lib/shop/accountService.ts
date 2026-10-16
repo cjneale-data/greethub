@@ -172,6 +172,7 @@ export async function deleteAccount(userId: string): Promise<{ email?: string; f
   const u = await store.get("users", userId);
   const who = { email: u?.email, firstName: u?.firstName };
   await deleteMembership(userId); // stop any subscription billing before anything else goes
+  await store.removeByOwner("stock_creations", userId); // customised messages are customer content
   await deleteWriting(userId); // signature and handwriting images first: they are private files, not just rows
   await Promise.all((["users", "credentials", "carts", "addresses", "drafts", "people"] as const).map((c) => store.remove(c, userId)));
   await store.removeByOwner("delete_tokens", userId);

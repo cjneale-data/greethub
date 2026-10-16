@@ -1,4 +1,5 @@
 import { docs } from "../store";
+import { adoptGuestStockCreations } from "../stock/store";
 import { POLICY_VERSION } from "./policies";
 import { isValidGuestId, userIdForEmail } from "./session";
 
@@ -21,6 +22,7 @@ export async function ensureUser(email: string, accepted?: boolean): Promise<str
 export async function mergeGuestInto(guestId: string, userId: string): Promise<void> {
   if (!isValidGuestId(guestId) || guestId === userId) return;
   const store = docs();
+  await adoptGuestStockCreations(guestId, userId);
   // Cart: guest lines move to the account, merging identical lines by creation.
   const guestCart = await store.get("carts", guestId);
   if (guestCart?.length) {

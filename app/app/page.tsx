@@ -4,6 +4,7 @@ import { Badge, ButtonLink } from "@/components/brand";
 import { HeroShowcase } from "@/components/shop/HeroShowcase";
 import { HomeGallery } from "@/components/shop/HomeGallery";
 import { HomeToast } from "@/components/shop/HomeToast";
+import { ReadyCardsBand } from "@/components/stock/ReadyCardsBand";
 import { ShopShell } from "@/components/shop/ShopShell";
 import { priceTokens } from "@greethub/shared";
 import { pageMetadata } from "@/lib/seo";
@@ -42,6 +43,8 @@ export default function Home() {
       </section>
 
       <HomeGallery />
+
+      <ReadyCardsBand />
 
       <section className="gs-section">
         <h2 className="gs-h2">Three steps. A card takes about ten minutes.</h2>

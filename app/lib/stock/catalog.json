@@ -1,0 +1,529 @@
+{
+  "$comment": "GreetHub stock cards v1 catalog. Source of truth for pre-generated cards. Written by the Head of Design 2026-10-16. Nothing here has been rendered yet.",
+  "version": "1.0.0",
+  "updated": "2026-10-16",
+  "status": "draft_unrendered",
+  "product": {
+    "size": "5x7 folded",
+    "trimIn": [
+      5,
+      7
+    ],
+    "bleedIn": 0.125,
+    "insideMessageMaxChars": 110
+  },
+  "counts": {
+    "total": 48,
+    "byOccasion": {
+      "birthday": 6,
+      "new_baby": 3,
+      "thank_you": 4,
+      "just_because": 3,
+      "get_well": 3,
+      "sympathy": 3,
+      "congratulations": 3,
+      "graduation": 3,
+      "wedding": 3,
+      "anniversary": 3,
+      "mothers_day": 3,
+      "fathers_day": 3,
+      "christmas": 4,
+      "new_home": 2,
+      "valentines": 2
+    }
+  },
+  "costEstimate": {
+    "source": "finance/measured_costs.json (2026-10-10)",
+    "perCardUsd": {
+      "twoCandidates2K": 0.1218,
+      "final4K": 0.1233,
+      "visionQaAndIpCheck": 0.005,
+      "total": 0.2501
+    },
+    "catalogUsd": 12.0,
+    "withRerollBufferUsd": 15.61,
+    "assumptions": "Insides are typeset by us, not rendered. 4K final is an assumption (5.25x7.25 in at 300 DPI is 1575x2175 px); if 2K proves enough the cost drops to about $0.13 per card. Owner must approve a dollar cap before any run."
+  },
+  "cards": [
+    {
+      "id": "stock-birthday-too-many-candles",
+      "occasion": "birthday",
+      "tone": "funny",
+      "title": "Too Many Candles",
+      "styleId": "bold_cartoon_pop",
+      "frontArtBrief": "A lopsided three-tier cake with far too many candles, tiny flames, confetti falling over a flat teal background. Calm solid-color band across the top third. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Another year, another cake. Please enjoy it and every slice. Happy birthday.",
+      "altText": "Cartoon birthday cake with too many candles on a teal background with confetti."
+    },
+    {
+      "id": "stock-birthday-party-hat-cat",
+      "occasion": "birthday",
+      "tone": "funny",
+      "title": "Party Hat Cat",
+      "styleId": "flat_vector_friendly",
+      "frontArtBrief": "An original round orange cat in a pointy striped party hat, sitting very seriously beside one small cupcake, plain sunny yellow background. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "You are not old. You are vintage. Happy birthday.",
+      "altText": "A serious orange cat wearing a party hat next to a cupcake."
+    },
+    {
+      "id": "stock-birthday-lemons-and-tea",
+      "occasion": "birthday",
+      "tone": "heartfelt",
+      "title": "Lemons and Tea",
+      "styleId": "watercolor_wash",
+      "frontArtBrief": "A sunlit kitchen table with a blue bowl of lemons, a cup of tea and wildflowers in a jug, soft morning window light, peach and sage. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "I hope today is slow and sweet and full of people who love you. Happy birthday.",
+      "altText": "Watercolor kitchen table with lemons, a cup of tea and wildflowers."
+    },
+    {
+      "id": "stock-birthday-party-pattern",
+      "occasion": "birthday",
+      "tone": "celebratory",
+      "title": "Party Pattern",
+      "styleId": "maximalist_pattern",
+      "frontArtBrief": "An all-over pattern of balloons, stars, streamers and slices of cake in coral, teal, mustard and plum, with a clear plain rounded window left empty in the center. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Wishing you a day as bright as this card. Happy birthday.",
+      "altText": "Colorful pattern of balloons, stars and streamers."
+    },
+    {
+      "id": "stock-birthday-paper-balloons",
+      "occasion": "birthday",
+      "tone": "celebratory",
+      "title": "Paper Balloons",
+      "styleId": "paper_cut_collage",
+      "frontArtBrief": "A bunch of layered cut-paper balloons in persimmon, mustard, blush and plum tied with a paper string, on a deep plum ground, soft paper shadows. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Here is to you today. Make a wish and mean it. Happy birthday.",
+      "altText": "Cut-paper balloons floating on a plum background."
+    },
+    {
+      "id": "stock-birthday-birthday-sky",
+      "occasion": "birthday",
+      "tone": "calm",
+      "title": "Birthday Sky",
+      "styleId": "midcentury_shapes",
+      "frontArtBrief": "Simple geometric kite and hot air balloon shapes drifting across a pale sky in a five-color palette of teal, mustard, coral, cream and navy. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "May this year bring you easy mornings and good news. Happy birthday.",
+      "altText": "Mid-century style balloon and kite shapes in a pale sky."
+    },
+    {
+      "id": "stock-new-baby-little-fox-moon",
+      "occasion": "new_baby",
+      "tone": "heartfelt",
+      "title": "Little Fox Moon",
+      "styleId": "watercolor_wash",
+      "frontArtBrief": "A sleeping baby fox curled in a crescent-moon cradle among soft clouds and tiny stars, pastel peach and sage. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Welcome, little one. We are so happy you are here. Congratulations.",
+      "altText": "A sleeping baby fox in a crescent moon cradle among clouds."
+    },
+    {
+      "id": "stock-new-baby-tiny-stars",
+      "occasion": "new_baby",
+      "tone": "calm",
+      "title": "Tiny Stars",
+      "styleId": "pastel_chalk",
+      "frontArtBrief": "A soft chalk-pastel night sky with a small sleeping lamb on a cloud and a handful of stars in butter yellow and powder blue. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "A new baby, a new family, a whole lot of love. Congratulations.",
+      "altText": "Pastel chalk lamb sleeping on a cloud under stars."
+    },
+    {
+      "id": "stock-new-baby-hello-world",
+      "occasion": "new_baby",
+      "tone": "celebratory",
+      "title": "Hello World",
+      "styleId": "flat_vector_friendly",
+      "frontArtBrief": "An original round baby bunny peeking out of a patterned blanket on a mint background with a few balloons. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Hello, world, and hello, you. Congratulations to your growing family.",
+      "altText": "Cartoon baby bunny peeking from a blanket with balloons."
+    },
+    {
+      "id": "stock-thank-you-thank-you-daisies",
+      "occasion": "thank_you",
+      "tone": "heartfelt",
+      "title": "Thank You Daisies",
+      "styleId": "ink_wash",
+      "frontArtBrief": "A hand-drawn bunch of daisies tied with twine on a soft blush wash, generous white space. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Thank you. It meant more than I can say, and I wanted you to know.",
+      "altText": "Ink and wash daisies tied with twine on a blush background."
+    },
+    {
+      "id": "stock-thank-you-thanks-coach",
+      "occasion": "thank_you",
+      "tone": "funny",
+      "title": "Thanks, Coach",
+      "styleId": "paper_cut_collage",
+      "frontArtBrief": "A cut-paper whistle and clipboard beside a crooked trophy on a plum background, layered shapes in orange and mustard. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Thank you for believing in us, even when we ran the wrong way.",
+      "altText": "Cut-paper whistle, clipboard and crooked trophy."
+    },
+    {
+      "id": "stock-thank-you-teacher-apple",
+      "occasion": "thank_you",
+      "tone": "heartfelt",
+      "title": "Teacher Apple",
+      "styleId": "crayon_pencil",
+      "frontArtBrief": "A wobbly crayon apple with one leaf on a chalkboard-green scribbled background, heavy waxy strokes and uneven fills. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Thank you for showing up for us every day. You make a real difference.",
+      "altText": "Crayon-style apple on a green scribbled background."
+    },
+    {
+      "id": "stock-thank-you-thank-you-botanicals",
+      "occasion": "thank_you",
+      "tone": "calm",
+      "title": "Thank You Botanicals",
+      "styleId": "botanical_gouache",
+      "frontArtBrief": "Three garden flowers (peony, sweet pea, fern) in opaque gouache arranged in a loose posy, cream ground. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Thank you, with all my heart.",
+      "altText": "Gouache posy of peony, sweet pea and fern."
+    },
+    {
+      "id": "stock-just-because-thinking-of-you",
+      "occasion": "just_because",
+      "tone": "heartfelt",
+      "title": "Thinking of You",
+      "styleId": "hand_lettered_type",
+      "frontArtBrief": "A loose frame of tiny leaves and small flowers at the edges only, large empty cream center. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Just thinking of you today and smiling.",
+      "altText": "Cream card edged with tiny leaves and flowers."
+    },
+    {
+      "id": "stock-just-because-snack-pals",
+      "occasion": "just_because",
+      "tone": "funny",
+      "title": "Snack Pals",
+      "styleId": "wonky_ink_cartoon",
+      "frontArtBrief": "Two original lumpy creatures sharing one oversized pretzel on a pale blue background, big noses, messy ink line. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "You are my favorite person to share snacks with. Just saying.",
+      "altText": "Two lumpy cartoon creatures sharing a giant pretzel."
+    },
+    {
+      "id": "stock-just-because-quiet-window",
+      "occasion": "just_because",
+      "tone": "calm",
+      "title": "Quiet Window",
+      "styleId": "cozy_gouache",
+      "frontArtBrief": "A warm lit window with a mug on the sill and a rainy dusk garden beyond, plum, amber and forest green. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "No reason. I just wanted you to know I am thinking of you.",
+      "altText": "Warm lit window with a mug on the sill on a rainy evening."
+    },
+    {
+      "id": "stock-get-well-grumpy-bear",
+      "occasion": "get_well",
+      "tone": "funny",
+      "title": "Grumpy Bear",
+      "styleId": "bold_cartoon_pop",
+      "frontArtBrief": "An original bear in striped pajamas wrapped in a blanket with a thermometer and a huge mug of soup, comically glum, bright yellow wall. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Get well soon. The soup is on me and so is the blanket.",
+      "altText": "Cartoon bear in pajamas and blanket with soup, looking glum."
+    },
+    {
+      "id": "stock-get-well-rest-up",
+      "occasion": "get_well",
+      "tone": "heartfelt",
+      "title": "Rest Up",
+      "styleId": "watercolor_wash",
+      "frontArtBrief": "A cozy armchair with a patchwork quilt, a teapot and a stack of books by a rainy window, soft sage and peach. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Rest up. Take it slow. I am thinking of you and I am here if you need anything.",
+      "altText": "Watercolor armchair with a quilt, teapot and books."
+    },
+    {
+      "id": "stock-get-well-sunny-side",
+      "occasion": "get_well",
+      "tone": "celebratory",
+      "title": "Sunny Side",
+      "styleId": "flat_vector_friendly",
+      "frontArtBrief": "A smiling flat sun rising over green hills with a small bunch of flowers in the foreground on a pale yellow sky. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Sending sunshine your way. Feel better soon.",
+      "altText": "Smiling sun over green hills with flowers."
+    },
+    {
+      "id": "stock-sympathy-quiet-branch",
+      "occasion": "sympathy",
+      "tone": "calm",
+      "title": "Quiet Branch",
+      "styleId": "ink_wash",
+      "frontArtBrief": "A single bare-leaved branch with one small bird at rest, soft warm gray wash, wide empty space, no bright color. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "I am so sorry. I am thinking of you and I am here.",
+      "altText": "Ink and wash branch with a small bird on a gray background."
+    },
+    {
+      "id": "stock-sympathy-garden-light",
+      "occasion": "sympathy",
+      "tone": "calm",
+      "title": "Garden Light",
+      "styleId": "botanical_gouache",
+      "frontArtBrief": "A few white and soft-green garden flowers in opaque gouache on a muted warm gray-cream ground, no red, no bright color. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Thinking of you with love. Take all the time you need.",
+      "altText": "Gouache white and green flowers on a soft gray-cream ground."
+    },
+    {
+      "id": "stock-sympathy-evening-hush",
+      "occasion": "sympathy",
+      "tone": "calm",
+      "title": "Evening Hush",
+      "styleId": "watercolor_wash",
+      "frontArtBrief": "A still lake at dusk with a lone small rowboat, soft blue and dusty rose washes, no people, wide calm sky. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "With you in your sadness today and in the days ahead.",
+      "altText": "Watercolor lake at dusk with a small empty rowboat."
+    },
+    {
+      "id": "stock-congratulations-you-did-it",
+      "occasion": "congratulations",
+      "tone": "celebratory",
+      "title": "You Did It",
+      "styleId": "bold_cartoon_pop",
+      "frontArtBrief": "A big cartoon gold star with rays, confetti and streamers bursting on a coral background. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "You did it, and we are so proud. Congratulations.",
+      "altText": "Cartoon gold star with confetti on a coral background."
+    },
+    {
+      "id": "stock-congratulations-gold-burst",
+      "occasion": "congratulations",
+      "tone": "celebratory",
+      "title": "Gold Burst",
+      "styleId": "deco_geometric",
+      "frontArtBrief": "A symmetrical art-deco fan burst in teal, cream and gold-look lines, empty center. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Big news, well earned. Congratulations.",
+      "altText": "Symmetrical art-deco burst in teal and gold."
+    },
+    {
+      "id": "stock-congratulations-high-five",
+      "occasion": "congratulations",
+      "tone": "funny",
+      "title": "High Five",
+      "styleId": "comic_panel",
+      "frontArtBrief": "Two plain original cartoon hands meeting in a high five with a bold impact burst and halftone dots on yellow. No words in the burst. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Look at you go. High five. Congratulations.",
+      "altText": "Two cartoon hands high-fiving with a burst."
+    },
+    {
+      "id": "stock-graduation-cap-toss",
+      "occasion": "graduation",
+      "tone": "celebratory",
+      "title": "Cap Toss",
+      "styleId": "paper_cut_collage",
+      "frontArtBrief": "Cut-paper graduation caps in plum and mustard in mid-air with confetti on a blush background. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "You earned every bit of this. Congratulations, graduate.",
+      "altText": "Cut-paper graduation caps tossed in the air."
+    },
+    {
+      "id": "stock-graduation-next-page",
+      "occasion": "graduation",
+      "tone": "heartfelt",
+      "title": "Next Page",
+      "styleId": "watercolor_wash",
+      "frontArtBrief": "An open book on a hilltop path leading toward a sunrise, soft peach and sage washes, no people. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "So proud of how far you have come. Whatever is next, go and get it.",
+      "altText": "Watercolor open book on a path toward the sunrise."
+    },
+    {
+      "id": "stock-graduation-laurel-and-gold",
+      "occasion": "graduation",
+      "tone": "calm",
+      "title": "Laurel and Gold",
+      "styleId": "foil_luxe",
+      "frontArtBrief": "A fine gold-look laurel wreath on deep navy with an empty center. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Congratulations on a big achievement.",
+      "altText": "Gold-look laurel wreath on navy."
+    },
+    {
+      "id": "stock-wedding-olive-branches",
+      "occasion": "wedding",
+      "tone": "heartfelt",
+      "title": "Olive Branches",
+      "styleId": "ink_wash",
+      "frontArtBrief": "Two overlapping olive branches forming a loose heart, gold accents and dusty rose washes, elegant open space. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Wishing you a lifetime of love and laughter. Congratulations.",
+      "altText": "Two olive branches forming a loose heart."
+    },
+    {
+      "id": "stock-wedding-gold-wreath",
+      "occasion": "wedding",
+      "tone": "calm",
+      "title": "Gold Wreath",
+      "styleId": "foil_luxe",
+      "frontArtBrief": "A delicate gold-look floral ring on ivory with a clear empty center. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Congratulations on your wedding. May every day together be a good one.",
+      "altText": "Gold-look floral ring on ivory."
+    },
+    {
+      "id": "stock-wedding-two-peonies",
+      "occasion": "wedding",
+      "tone": "calm",
+      "title": "Two Peonies",
+      "styleId": "botanical_gouache",
+      "frontArtBrief": "Two peonies and eucalyptus leaves in opaque gouache, blush and sage on cream. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Happy wedding day. We are so glad to celebrate with you.",
+      "altText": "Gouache peonies and eucalyptus on cream."
+    },
+    {
+      "id": "stock-anniversary-still-us",
+      "occasion": "anniversary",
+      "tone": "heartfelt",
+      "title": "Still Us",
+      "styleId": "minimal_line_art",
+      "frontArtBrief": "One continuous thin line drawing two teacups side by side, a single small coral accent, wide white space. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Happy anniversary. I would choose you again every time.",
+      "altText": "Line drawing of two teacups side by side."
+    },
+    {
+      "id": "stock-anniversary-deco-hearts",
+      "occasion": "anniversary",
+      "tone": "calm",
+      "title": "Deco Hearts",
+      "styleId": "deco_geometric",
+      "frontArtBrief": "Interlocking geometric circles in burgundy, gold-look and cream, symmetrical, empty center. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Another year with you. Happy anniversary.",
+      "altText": "Interlocking geometric circles in burgundy and gold."
+    },
+    {
+      "id": "stock-anniversary-two-birds",
+      "occasion": "anniversary",
+      "tone": "funny",
+      "title": "Two Birds",
+      "styleId": "vintage_storybook",
+      "frontArtBrief": "Two original round birds sharing one tiny umbrella in a gentle drizzle, muted red, teal and mustard, dot eyes. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Still your favorite. Happy anniversary.",
+      "altText": "Two round birds sharing a small umbrella in the rain."
+    },
+    {
+      "id": "stock-mothers-day-big-paper-flower",
+      "occasion": "mothers_day",
+      "tone": "heartfelt",
+      "title": "Big Paper Flower",
+      "styleId": "paper_cut_collage",
+      "frontArtBrief": "A big layered paper flower in blush, persimmon and mustard with a small cut-paper teapot, plum background. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Thank you for everything, Mom. I love you.",
+      "altText": "Layered paper flower and teapot on plum."
+    },
+    {
+      "id": "stock-mothers-day-spring-posy",
+      "occasion": "mothers_day",
+      "tone": "calm",
+      "title": "Spring Posy",
+      "styleId": "botanical_gouache",
+      "frontArtBrief": "A hand-tied posy of tulips and ranunculus in soft pinks and greens, cream ground. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Happy Mother's Day. I am thinking of you with love.",
+      "altText": "Gouache posy of tulips and ranunculus."
+    },
+    {
+      "id": "stock-mothers-day-tea-queen",
+      "occasion": "mothers_day",
+      "tone": "funny",
+      "title": "Tea Queen",
+      "styleId": "crayon_pencil",
+      "frontArtBrief": "A smiling crayon teapot wearing a tiny crown beside a crooked mug, heavy waxy strokes on pink. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "You are the boss of us all. Happy Mother's Day.",
+      "altText": "Crayon teapot with a crown next to a mug."
+    },
+    {
+      "id": "stock-fathers-day-dad-grill",
+      "occasion": "fathers_day",
+      "tone": "funny",
+      "title": "Dad Grill",
+      "styleId": "bold_cartoon_pop",
+      "frontArtBrief": "A barbecue grill with an oversized spatula and a cartoon sausage, teal and orange, plain background. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Happy Father's Day. You grill, we cheer.",
+      "altText": "Cartoon grill with a spatula and sausage."
+    },
+    {
+      "id": "stock-fathers-day-fishing-dawn",
+      "occasion": "fathers_day",
+      "tone": "heartfelt",
+      "title": "Fishing Dawn",
+      "styleId": "cozy_gouache",
+      "frontArtBrief": "A small wooden rowboat with two fishing rods and a thermos at sunrise on a calm lake, no people. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Thanks for the quiet mornings and the good advice. Happy Father's Day.",
+      "altText": "Gouache rowboat with fishing rods on a lake at sunrise."
+    },
+    {
+      "id": "stock-fathers-day-mid-century-tools",
+      "occasion": "fathers_day",
+      "tone": "calm",
+      "title": "Mid-Century Tools",
+      "styleId": "midcentury_shapes",
+      "frontArtBrief": "A simple five-color arrangement of a hammer, a coffee cup and an armchair in geometric shapes. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Happy Father's Day. Thank you for everything.",
+      "altText": "Mid-century shapes of a hammer, coffee cup and armchair."
+    },
+    {
+      "id": "stock-christmas-merry-and-bright",
+      "occasion": "christmas",
+      "tone": "heartfelt",
+      "title": "Merry and Bright",
+      "styleId": "cozy_gouache",
+      "frontArtBrief": "A snowy cabin with glowing windows, a lit fir tree and a trail of footprints, deep plum night sky and amber lamplight. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Wishing you a warm and merry Christmas.",
+      "altText": "Gouache snowy cabin with glowing windows under a plum sky."
+    },
+    {
+      "id": "stock-christmas-winter-block",
+      "occasion": "christmas",
+      "tone": "calm",
+      "title": "Winter Block",
+      "styleId": "block_print",
+      "frontArtBrief": "A carved block-print fir tree with a small star on a deep green ground with cream snowflakes. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Merry Christmas and a peaceful new year.",
+      "altText": "Block-print fir tree with a star on green."
+    },
+    {
+      "id": "stock-christmas-gold-star-tree",
+      "occasion": "christmas",
+      "tone": "celebratory",
+      "title": "Gold Star Tree",
+      "styleId": "foil_luxe",
+      "frontArtBrief": "A gold-look stylized tree and stars on deep forest green with an empty center. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Merry Christmas. Wishing you joy.",
+      "altText": "Gold-look tree and stars on forest green."
+    },
+    {
+      "id": "stock-christmas-snowman-slump",
+      "occasion": "christmas",
+      "tone": "funny",
+      "title": "Snowman Slump",
+      "styleId": "wonky_ink_cartoon",
+      "frontArtBrief": "An original lumpy snowman leaning at an angle with a scarf and a carrot nose, big messy ink line, pale blue. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Merry Christmas. Stay upright out there.",
+      "altText": "Lumpy cartoon snowman leaning with a scarf."
+    },
+    {
+      "id": "stock-new-home-new-keys",
+      "occasion": "new_home",
+      "tone": "celebratory",
+      "title": "New Keys",
+      "styleId": "flat_vector_friendly",
+      "frontArtBrief": "A tiny friendly house with a ribbon-tied key and a potted plant on a mint background. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Congratulations on your new home. May it fill up with good days.",
+      "altText": "Flat illustration of a small house with a key and plant."
+    },
+    {
+      "id": "stock-new-home-box-tower",
+      "occasion": "new_home",
+      "tone": "funny",
+      "title": "Box Tower",
+      "styleId": "bold_cartoon_pop",
+      "frontArtBrief": "A moving truck with a wobbling tower of boxes, a houseplant up front and a cat on top, bright street. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "Happy new home. May all your boxes find a room.",
+      "altText": "Cartoon moving truck with a wobbling tower of boxes and a cat."
+    },
+    {
+      "id": "stock-valentines-line-of-hearts",
+      "occasion": "valentines",
+      "tone": "heartfelt",
+      "title": "Line of Hearts",
+      "styleId": "minimal_line_art",
+      "frontArtBrief": "A single thin continuous line drawing two entwined hearts, one small coral accent, wide white space. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "You are my favorite. Happy Valentine's Day.",
+      "altText": "Line drawing of two entwined hearts."
+    },
+    {
+      "id": "stock-valentines-pizza-heart",
+      "occasion": "valentines",
+      "tone": "funny",
+      "title": "Pizza Heart",
+      "styleId": "bold_cartoon_pop",
+      "frontArtBrief": "A heart-shaped pizza with extra cheese on a pink background, small hearts as confetti. Original characters only. No text, letters, logos or brands in the image. Full-bleed to every edge, no border or vignette. Keep the main subject inside the central 80 percent.",
+      "defaultInside": "I love you more than pizza. Almost. Happy Valentine's Day.",
+      "altText": "Cartoon heart-shaped pizza on pink."
+    }
+  ]
+}

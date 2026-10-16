@@ -9,6 +9,9 @@ export const PRICING = {
   skus: {
     card_digital: { label: "Digital card", cents: 399, postageCents: 0, printed: false },
     card_mailed: { label: "Mailed card", cents: 799, postageCents: 299, printed: true },
+    // Ready Cards (stock cards). CFO proposal docs/finance/stock-cards-pricing.md, NOT owner-approved. Postage unchanged.
+    stock_card_digital: { label: "Ready-made digital card", cents: 349, postageCents: 0, printed: false },
+    stock_card_mailed: { label: "Ready-made mailed card", cents: 749, postageCents: 299, printed: true },
     book_digital: { label: "Digital book", cents: 1999, postageCents: 0, printed: false },
     book_24: { label: "Picture book, 24 pages", cents: 3900, postageCents: 599, printed: true },
     book_32: { label: "Picture book, 32 pages", cents: 4900, postageCents: 599, printed: true },

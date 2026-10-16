@@ -29,7 +29,7 @@
 @keyframes hs-bob { 0%, 100% { transform: rotate(-4deg) translateY(0); } 50% { transform: rotate(-2deg) translateY(-6px); } }
 
 /* ---------- Gallery ---------- */
-.hg { position: relative; max-width: 1200px; margin: 0 auto; padding: 56px 28px 48px; --p: 0; isolation: isolate; }
+.hg { position: relative; max-width: 1200px; margin: 0 auto; padding: 56px 28px 48px; --p: 0; isolation: isolate; overflow-x: clip; }
 @media (max-width: 719px) { .hg { padding: 36px 16px 32px; } }
 .hg__head { margin-bottom: 28px; }
 .hg__lede { margin: 0; color: var(--gh-cocoa-70); font-size: 18px; max-width: 520px; }

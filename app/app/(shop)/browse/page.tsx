@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { Browse } from "@/components/shop/Browse";
+import { TierSwitch } from "@/components/stock/TierSwitch";
 import { SkeletonList } from "@/components/shop/ui";
 import { pageMetadata } from "@/lib/seo";
 
@@ -12,6 +13,9 @@ export const metadata = pageMetadata({
 export default function BrowsePage() {
   return (
     <div className="gs-page">
+      <div style={{ marginBottom: 16 }}>
+        <TierSwitch current="made" />
+      </div>
       <Suspense fallback={<SkeletonList rows={2} h={220} />}>
         <Browse />
       </Suspense>

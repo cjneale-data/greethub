@@ -21,6 +21,8 @@ export const NewCardItemSchema = z.object({
   kind: z.literal("card"),
   format: z.enum(["mailed", "digital"]),
   mailTo: z.enum(["buyer", "recipient"]).default("buyer"),
+  /** Where the card came from. Absent means an AI card ("ai"); "stock" is a Ready Card (creationId = a stock_creations id). */
+  source: z.enum(["ai", "stock"]).optional(),
 });
 
 export const NewBookItemSchema = z.object({
@@ -42,6 +44,7 @@ export type CartItem = CardCartItem | BookCartItem;
 /* ---------- pricing math ---------- */
 
 export function itemSku(item: CartItem): Sku {
+  if (item.kind === "card" && item.source === "stock") return item.format === "mailed" ? "stock_card_mailed" : "stock_card_digital";
   if (item.kind === "card") return item.format === "mailed" ? "card_mailed" : "card_digital";
   return item.pageCount === 24 ? "book_24" : "book_32";
 }
@@ -118,7 +121,7 @@ type CartItemInput = Omit<CardCartItem, "id" | "addedAt"> | Omit<BookCartItem, "
 
 export function sameLine(a: CartItem, b: CartItemInput): boolean {
   if (a.kind !== b.kind || a.creationId !== b.creationId || a.mailTo !== b.mailTo) return false;
-  if (a.kind === "card" && b.kind === "card") return a.format === b.format;
+  if (a.kind === "card" && b.kind === "card") return a.format === b.format && (a.source ?? "ai") === (b.source ?? "ai");
   if (a.kind === "book" && b.kind === "book") return a.pageCount === b.pageCount && a.digitalCopy === b.digitalCopy;
   return false;
 }
@@ -148,6 +151,9 @@ export function blockedItems(items: CartItem[]): CartItem[] {
 }
 
 export function describeItem(item: CartItem): string {
-  if (item.kind === "card") return item.format === "mailed" ? "Mailed card" : "Digital card";
+  if (item.kind === "card") {
+    const kind = item.format === "mailed" ? "mailed card" : "digital card";
+    return item.source === "stock" ? `Ready-made ${kind}` : kind === "mailed card" ? "Mailed card" : "Digital card";
+  }
   return `Hardcover, ${item.pageCount} pages${item.digitalCopy ? ", plus digital copy" : ""}`;
 }

@@ -1,6 +1,7 @@
 import type { CartItem } from "@greethub/shared";
 import type { WritingProfile } from "../writing/types";
 import type { MembershipRecord } from "../membership/types";
+import type { StockCreation } from "../stock/types";
 import type { BatchJob, ContentReport, Draft, Order, OutboxMessage, PendingCheckout, Person, SavedAddress, UserRecord } from "../shop/types";
 
 /**
@@ -18,6 +19,8 @@ export type Docs = {
   people: Person[];
   writing: WritingProfile;
   memberships: MembershipRecord;
+  /** Ready Cards (stock cards): one customised card per row; id is the cart creationId. */
+  stock_creations: StockCreation;
   checkouts: PendingCheckout;
   orders: Order;
   processed_events: { at: string };
@@ -42,6 +45,7 @@ export const INDEX: { [C in Collection]: (doc: Docs[C], id: string) => { owner?:
   writing: (_d, id) => ({ owner: id }),
   // refs: the Stripe customer and subscription ids, so webhooks find the member.
   memberships: (d, id) => ({ owner: id, refs: [d.stripeCustomerId ?? "", d.stripeSubscriptionId ?? ""].filter(Boolean) }),
+  stock_creations: (d) => ({ owner: d.userId }),
   checkouts: (d) => ({ owner: d.userId, refs: d.sessionId ? [d.sessionId] : [] }),
   orders: (d) => ({ owner: d.userId, refs: [d.stripeSessionId, ...d.items.map((i) => i.fulfillment?.externalId ?? "")].filter(Boolean) }),
   processed_events: () => ({}),

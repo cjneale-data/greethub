@@ -1,3 +1,4 @@
+import type { StockCreation } from "../stock/types";
 import type { WritingProfile } from "../writing/types";
 import type { MembershipRecord } from "../membership/types";
 import type { Address, CartItem, ShippingMethodId, Sku } from "@greethub/shared";
@@ -51,6 +52,8 @@ export type OrderItem = {
   id: string;
   creationId: string;
   kind: "card" | "book";
+  /** Optional split for reports and support; absent means an AI card. */
+  source?: "ai" | "stock";
   sku: Sku | "photo_card";
   title: string;
   description: string;
@@ -164,6 +167,7 @@ export type DB = {
   people: Record<string, Person[]>;
   writing: Record<string, WritingProfile>;
   memberships: Record<string, MembershipRecord>;
+  stockCreations: Record<string, StockCreation>;
   checkouts: Record<string, PendingCheckout>;
   orders: Record<string, Order>;
   processedEvents: string[];

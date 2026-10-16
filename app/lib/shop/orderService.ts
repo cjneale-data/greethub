@@ -18,6 +18,7 @@ export function toOrderItem(item: CartItem, pending: PendingCheckout): OrderItem
     id: newId("li"),
     creationId: item.creationId,
     kind: item.kind,
+    source: item.kind === "card" && item.source === "stock" ? "stock" : undefined,
     sku: itemSku(item),
     title: item.title,
     description: describeItem(item),
