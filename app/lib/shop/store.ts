@@ -22,6 +22,7 @@ const emptyDB = (): DB => ({
   processedEvents: [],
   magicTokens: {},
   deleteTokens: {},
+  credentials: {},
   fakePrinterJobs: {},
   batchJobs: {},
   outbox: [],
@@ -81,6 +82,7 @@ const MAPS = {
   orders: "orders",
   magic_tokens: "magicTokens",
   delete_tokens: "deleteTokens",
+  credentials: "credentials",
   fake_printer_jobs: "fakePrinterJobs",
   batch_jobs: "batchJobs",
 } as const satisfies Partial<Record<Collection, keyof DB>>;

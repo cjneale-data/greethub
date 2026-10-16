@@ -169,6 +169,7 @@ export type DB = {
   processedEvents: string[];
   magicTokens: Record<string, { email: string; next: string; expiresAt: number; used: boolean; accepted?: boolean }>;
   deleteTokens: Record<string, { userId: string; expiresAt: number }>;
+  credentials: Record<string, { passwordHash: string }>;
   fakePrinterJobs: Record<string, { stage: number; printer: string }>;
   batchJobs: Record<string, BatchJob>;
   outbox: OutboxMessage[];

@@ -23,6 +23,8 @@ export type Docs = {
   processed_events: { at: string };
   magic_tokens: { email: string; next: string; expiresAt: number; used: boolean; accepted?: boolean };
   delete_tokens: { userId: string; expiresAt: number };
+  /** Local auth only: password hashes (Supabase Auth keeps its own). id = user id. */
+  credentials: { passwordHash: string };
   fake_printer_jobs: { stage: number; printer: string };
   batch_jobs: BatchJob;
   outbox: OutboxMessage;
@@ -45,6 +47,7 @@ export const INDEX: { [C in Collection]: (doc: Docs[C], id: string) => { owner?:
   processed_events: () => ({}),
   magic_tokens: (d) => ({ owner: d.email }),
   delete_tokens: (d) => ({ owner: d.userId }),
+  credentials: (_d, id) => ({ owner: id }),
   fake_printer_jobs: () => ({}),
   batch_jobs: (d) => ({ owner: d.userId, refs: d.externalId ? [d.externalId] : [] }),
   outbox: () => ({}),

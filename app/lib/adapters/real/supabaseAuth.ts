@@ -6,6 +6,8 @@ import { docs } from "../../store";
 import { ensureUser, mergeGuestInto } from "../../shop/accounts";
 import { safeNext, userIdForEmail } from "../../shop/session";
 import { supabaseServer } from "../../supabase/server";
+import { supabaseAdmin } from "../../store/supabaseDocs";
+import { PasswordAuthError, type PasswordReason } from "../password";
 
 const site = () => process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 /** Set while a Google sign-up that ticked the terms box is away at Google. */
@@ -85,6 +87,28 @@ export const supabaseAuth: AuthAdapter = {
     return { url: data.url };
   },
 
+  async signUpWithPassword(email, password, opts) {
+    const addr = email.trim().toLowerCase();
+    // An account from local auth or an email link has no Supabase password; a sign-up must not take it over.
+    if (await docs().get("users", userIdForEmail(addr))) throw new PasswordAuthError("exists");
+    // Created confirmed through the admin API, so no confirmation email is needed (the built-in mailer is rate-limited).
+    const { error } = await supabaseAdmin().auth.admin.createUser({ email: addr, password, email_confirm: true });
+    if (error) throw new PasswordAuthError(passwordReason(error), `Supabase sign-up failed: ${error.message}`);
+    const sb = await supabaseServer();
+    const signIn = await sb.auth.signInWithPassword({ email: addr, password });
+    if (signIn.error) throw new PasswordAuthError(passwordReason(signIn.error), `Supabase sign-in after sign-up failed: ${signIn.error.message}`);
+    return { userId: await ensureUser(addr, opts?.accepted), email: addr };
+  },
+
+  async signInWithPassword(email, password) {
+    const addr = email.trim().toLowerCase();
+    const sb = await supabaseServer();
+    const { data, error } = await sb.auth.signInWithPassword({ email: addr, password });
+    if (error) throw new PasswordAuthError(passwordReason(error), `Supabase sign-in failed: ${error.message}`);
+    const verified = (data.user?.email ?? addr).toLowerCase();
+    return { userId: await ensureUser(verified), email: verified };
+  },
+
   upgradeGuest: mergeGuestInto,
 
   async signOut() {
@@ -106,5 +130,14 @@ export class MagicLinkError extends Error {
 export function magicLinkReason(e: { code?: string; status?: number; message?: string }): MagicLinkReason {
   if (e.code === "email_address_invalid" || /email address .* is invalid/i.test(e.message ?? "")) return "invalid_email";
   if (e.status === 429 || e.code === "over_email_send_rate_limit" || e.code === "over_request_rate_limit" || /rate limit/i.test(e.message ?? "")) return "rate_limited";
+  return "unavailable";
+}
+
+/** Supabase Auth error codes for password sign-up and sign-in. */
+export function passwordReason(e: { code?: string; status?: number; message?: string }): PasswordReason {
+  if (e.code === "email_exists" || e.code === "user_already_exists" || /already (been )?registered/i.test(e.message ?? "")) return "exists";
+  if (e.code === "invalid_credentials" || e.code === "email_not_confirmed" || /invalid login credentials/i.test(e.message ?? "")) return "bad_credentials";
+  if (e.code === "weak_password") return "weak_password";
+  if (e.status === 429 || e.code === "over_request_rate_limit") return "rate_limited";
   return "unavailable";
 }

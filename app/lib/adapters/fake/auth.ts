@@ -2,11 +2,17 @@ import { cookies } from "next/headers";
 import type { AuthAdapter, Session } from "../types";
 import { docs } from "../../store";
 import { ensureUser, mergeGuestInto } from "../../shop/accounts";
-import { GUEST_COOKIE, SESSION_COOKIE, SESSION_MAX_AGE, isValidGuestId, safeNext, signSession, verifySession } from "../../shop/session";
+import { GUEST_COOKIE, SESSION_COOKIE, SESSION_MAX_AGE, isValidGuestId, safeNext, signSession, userIdForEmail, verifySession } from "../../shop/session";
 import { fakeAllowed } from "../../shop/policies";
 import { sendTemplate } from "../../shop/mail";
+import { PasswordAuthError, hashPassword, verifyPassword } from "../password";
 
 const site = () => process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+async function startSession(userId: string, email: string) {
+  const jar = await cookies();
+  jar.set(SESSION_COOKIE, signSession(userId, email), { httpOnly: true, sameSite: "lax", path: "/", maxAge: SESSION_MAX_AGE, secure: process.env.NODE_ENV === "production" });
+}
 
 /** The anonymous guest behind a request (both auth providers share the gh_guest cookie). */
 export async function guestSession(): Promise<Session> {
@@ -44,8 +50,7 @@ export const fakeAuth: AuthAdapter = {
     const ok = t as { email: string; next: string; accepted?: boolean } | null;
     if (!ok) return null;
     const userId = await ensureUser(ok.email, ok.accepted);
-    const jar = await cookies();
-    jar.set(SESSION_COOKIE, signSession(userId, ok.email), { httpOnly: true, sameSite: "lax", path: "/", maxAge: SESSION_MAX_AGE, secure: process.env.NODE_ENV === "production" });
+    await startSession(userId, ok.email);
     return { userId, email: ok.email, next: ok.next, accepted: ok.accepted };
   },
 
@@ -55,6 +60,27 @@ export const fakeAuth: AuthAdapter = {
     const token = crypto.randomUUID().replace(/-/g, "");
     await docs().insertIfAbsent("magic_tokens", token, { email: "sam.demo@gmail.test", next: safeNext(redirectTo), expiresAt: Date.now() + 5 * 60 * 1000, used: false, accepted: !!opts?.accepted });
     return { url: `/api/auth/callback?token=${token}&provider=google` };
+  },
+
+  async signUpWithPassword(email, password, opts) {
+    const addr = email.trim().toLowerCase();
+    const id = userIdForEmail(addr);
+    // An account made with an email link has no password; setting one here would let anyone claim it.
+    if (await docs().get("users", id)) throw new PasswordAuthError("exists");
+    if (!(await docs().insertIfAbsent("credentials", id, { passwordHash: await hashPassword(password) }))) throw new PasswordAuthError("exists");
+    const userId = await ensureUser(addr, opts?.accepted);
+    await startSession(userId, addr);
+    return { userId, email: addr };
+  },
+
+  async signInWithPassword(email, password) {
+    const addr = email.trim().toLowerCase();
+    const id = userIdForEmail(addr);
+    const cred = await docs().get("credentials", id);
+    if (!cred || !(await verifyPassword(password, cred.passwordHash))) throw new PasswordAuthError("bad_credentials");
+    const userId = await ensureUser(addr);
+    await startSession(userId, addr);
+    return { userId, email: addr };
   },
 
   upgradeGuest: mergeGuestInto,

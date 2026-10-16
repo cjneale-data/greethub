@@ -14,6 +14,10 @@ export interface AuthAdapter {
    */
   verifyCallback(params: URLSearchParams): Promise<{ userId: string; email: string; next: string; accepted?: boolean } | null>;
   signInWithGoogle(redirectTo: string, opts?: { accepted?: boolean }): Promise<{ url: string }>;
+  /** Email + password sign-up: creates the account with no confirmation email and starts the session. Throws PasswordAuthError. */
+  signUpWithPassword(email: string, password: string, opts?: { accepted?: boolean }): Promise<{ userId: string; email: string }>;
+  /** Email + password sign-in; starts the session. Throws PasswordAuthError. */
+  signInWithPassword(email: string, password: string): Promise<{ userId: string; email: string }>;
   /** Carries the guest draft and cart over to the account after sign-up. */
   upgradeGuest(guestUserId: string, newUserId: string): Promise<void>;
   signOut(): Promise<void>;
