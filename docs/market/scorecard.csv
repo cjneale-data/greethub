@@ -52,3 +52,65 @@ month,competitor,category,metric,value,unit,source_url,date_read,confidence,note
 2026-10,Lulu,print_vendor,square_8.5x8.5_hardcover,yes,text,https://www.lulu.com/create/photo-books,2026-10-12,S,search snippet; matches pod package 0850X0850FCPREMCW080CW444GXX in code
 2026-10,GreetHub,ours,express_surcharge,8.99,usd,app/packages/shared/src/pricing.ts,2026-10-12,V,PLACEHOLDER in code; not in CFO model
 2026-10,GreetHub,ours,default_arrive_by_days,7,days,app/packages/shared/src/pricing.ts,2026-10-12,V,estimate; no printer data; competitors 8-13
+2026-11,Imagitime,book_photo_ai,hardcover_price,54.99,usd,https://www.imagitime.com/,2026-11-02,V,unchanged
+2026-11,Imagitime,book_photo_ai,paperback_price,39.99,usd,https://www.imagitime.com/,2026-11-02,V,unchanged
+2026-11,Imagitime,book_photo_ai,shipping,9.99,usd,https://www.imagitime.com/,2026-11-02,V,unchanged; FREESHIP from second order
+2026-11,Imagitime,book_photo_ai,delivery_days,8-13,days,https://www.imagitime.com/,2026-11-02,V,unchanged; no holiday cut-off shown
+2026-11,Imagitime,book_photo_ai,promo,10% off for email subscribers; FREESHIP from 2nd order,text,https://www.imagitime.com/,2026-11-02,V,FREESHIP not seen in Oct
+2026-11,Imagitime,book_photo_ai,trustpilot_score,4.8,stars,https://ca.trustpilot.com/review/imagitime.com?page=9,2026-11-02,S,snippet; Trustpilot says company does not invite reviews
+2026-11,Imagitime,book_photo_ai,trustpilot_count,3640,reviews,https://ca.trustpilot.com/review/imagitime.com?page=9,2026-11-02,S,snippet; same as Oct (snippet may be cached)
+2026-11,Imagitime,book_photo_ai,photo_retention,12 months saved / 24h unsaved,text,https://www.imagitime.com/,2026-11-02,V,unchanged
+2026-11,Imagitime,book_photo_ai,cards_product,no,text,https://www.imagitime.com/,2026-11-02,V,books only plus one adult love book
+2026-11,Hooray Heroes,book_template,shown_price,39.99,usd,https://www.hoorayheroes.com/,2026-11-02,V,unchanged; one title 29.99 (49.99 list)
+2026-11,Hooray Heroes,book_template,list_price,59.99,usd,https://www.hoorayheroes.com/,2026-11-02,V,unchanged
+2026-11,Hooray Heroes,book_template,shipping,not found,text,https://www.hoorayheroes.com/,2026-11-02,V,at checkout; one listing says shipped in 3 days
+2026-11,Hooray Heroes,book_template,status_note,migration banner not seen; non-US store links are placeholders,text,https://www.hoorayheroes.com/,2026-11-02,V,
+2026-11,Hooray Heroes,book_template,cards_product,personalized cards linked; details not found,text,https://www.hoorayheroes.com/,2026-11-02,V,cards page returned 429; builder-character reuse not confirmed
+2026-11,Cardwise,card_ai,physical_card,6.99,usd,https://getcardwise.com/,2026-11-02,V,unchanged; Free plan
+2026-11,Cardwise,card_ai,gold_plan,6.99,usd_per_month,https://getcardwise.com/,2026-11-02,V,unchanged; 50 credits; shipping included
+2026-11,Cardwise,card_ai,photo_likeness,not found,text,https://getcardwise.com/,2026-11-02,V,no photo upload mentioned
+2026-11,Gemini Storybook,ai_generator,print_ordering,no (browser print or PDF only),text,https://support.google.com/gemini/answer/16434396,2026-11-02,S,no Oct 2026 update found
+2026-11,Hallmark,card_incumbent,ai_card_generator,not found,text,https://www.birthday-cards.ai/ai-birthday-card-apps-to-watch,2026-11-02,S,competitor blog checked Aug 2026
+2026-11,Punkpost,card_mailed,status,closed 2024-07-30; domain re-registered by a third party May 2025,text,https://www.shipnote.co/blog/postable-alternatives,2026-11-02,S,competitor blog (ShipNote); closure notice on Punkpost social accounts per search
+2026-11,CardCrafter Suite,card_ai,launch_date,2026-07-01,date,https://cms.sawatchsolutions.com/2026/07/01/introducing-cardcrafter-suite/,2026-11-02,V,Sawatch Solutions LLC Dayton OH
+2026-11,CardCrafter Suite,card_ai,subscription,11.97,usd_per_month,https://cardcraftersuite.com/home,2026-11-02,V,unlimited card designs; separate SendOutCards account needed
+2026-11,CardCrafter Suite,card_ai,card_mailed_all_in_sub,2.24,usd,https://cardcraftersuite.com/home,2026-11-02,V,approx; via SendOutCards subscription; postage included
+2026-11,CardCrafter Suite,card_ai,card_mailed_all_in_payg,4.00,usd,https://cardcraftersuite.com/home,2026-11-02,V,approx; varies with paper
+2026-11,CardCrafter Suite,card_ai,photo_likeness,not found,text,https://cardcraftersuite.com/home,2026-11-02,V,AI editor can edit a personal photo; no photo-to-illustration claim
+2026-11,SendOutCards,card_mailed,price_published,no,text,https://www.g2.com/products/sendoutcards/pricing,2026-11-02,S,G2 says contact vendor; own pricing URL 404
+2026-11,SendOutCards,card_mailed,card_mailed_all_in_sub,2.24,usd,https://cardcraftersuite.com/home,2026-11-02,S,third-party (CardCrafter FAQ) figure
+2026-11,Silly Robot Cards,card_ai,physical_card_from,4.99,usd,https://www.sillyrobotcards.com/,2026-11-02,V,delivery extra; shown at checkout
+2026-11,Silly Robot Cards,card_ai,ecard_from,0.99,usd,https://www.sillyrobotcards.com/stained-glass-easter-cards,2026-11-02,V,
+2026-11,Silly Robot Cards,card_ai,photo_upload,yes,text,https://www.sillyrobotcards.com/,2026-11-02,V,face swap templates; operated by Gleeboard Ltd (UK signals)
+2026-11,Silly Robot Cards,card_ai,trustpilot_score,4.4,stars,https://www.sillyrobotcards.com/,2026-11-02,V,site display; count not shown
+2026-11,Silly Robot Cards,card_ai,print_location,North America (US and Canada delivery),text,https://www.sillyrobotcards.com/stained-glass-easter-cards,2026-11-02,V,
+2026-11,Greetly,card_ai,mails_physical,no (digital by text or email),text,https://evergreenawards.com/awards/greetly-best-ai-powered-greeting-card-platform-in-the-united-states-of-2026,2026-11-02,V,also usanews release 2026-05-20
+2026-11,Greetly,card_ai,award,Evergreen Awards 2026 Best AI Powered Greeting Card Platform US,text,https://evergreenawards.com/awards/greetly-best-ai-powered-greeting-card-platform-in-the-united-states-of-2026,2026-11-02,V,award process and fees not found
+2026-11,Greetly,card_ai,price,not found,text,https://gogreetly.com/,2026-11-02,V,page body empty to fetch tool
+2026-11,Thanks.io,card_mailed,notecard_payg,3.04,usd,https://www.thanks.io/pricing,2026-11-02,V,postage included; folded 5.5x8.5 landscape
+2026-11,Thanks.io,card_mailed,notecard_business,1.83,usd,https://www.thanks.io/pricing,2026-11-02,V,Business plan 49/mo
+2026-11,Thanks.io,card_mailed,notecard_professional,1.49,usd,https://www.thanks.io/pricing,2026-11-02,V,Professional plan 199/mo
+2026-11,Thanks.io,card_mailed,postcard_4x6_payg,1.18,usd,https://www.thanks.io/pricing,2026-11-02,V,postage included
+2026-11,Thanks.io,card_mailed,folded_5x7,not found,text,https://www.thanks.io/pricing,2026-11-02,V,only folded product is the notecard
+2026-11,Thanks.io,card_mailed,api_mcp,yes (API and hosted MCP on all plans),text,https://www.thanks.io/pricing,2026-11-02,V,
+2026-11,Thanks.io,card_mailed,focus,business and marketing,text,https://www.thanks.io/pricing,2026-11-02,V,
+2026-11,Handwrytten,card_mailed,card_price,3.75,usd,https://www.handwrytten.com/pricing/,2026-11-02,V,retail; postage extra at USPS rate
+2026-11,Handwrytten,card_mailed,card_price_low,1.19,usd,https://www.handwrytten.com/pricing/,2026-11-02,V,Agency plan 2499/mo
+2026-11,Handwrytten,card_mailed,consumer_plans,100/200/382,usd_per_month,https://www.handwrytten.com/pricing/,2026-11-02,V,24/50/100 cards per month
+2026-11,Handwrytten,card_mailed,card_mailed_all_in,4.57,usd,https://www.shipnote.co/blog/postable-alternatives,2026-11-02,S,competitor blog; 3.75 + 0.82
+2026-11,Handwrytten,card_mailed,formats,flat 5x7; folded A2; custom front upload,text,https://handwrytten.helpscoutdocs.com/article/29-past-custom-cards,2026-11-02,V,folded 5x7 not found
+2026-11,Handwrytten,card_mailed,api_mcp,yes (API; Claude MCP connector),text,https://www.handwrytten.com/,2026-11-02,V,
+2026-11,AI Cards,card_ai,card_mailed_all_in,9.99,usd,https://aicards.co/,2026-11-02,V,recipient photo to illustrated scene; mailed within 1 business day
+2026-11,Pigeon Post,card_ai,card_mailed_all_in,1.78,usd,https://app.pigeon-post.ai/,2026-11-02,V,plus 19.99/yr membership; first card free; photo to illustration; Atlanta GA
+2026-11,ShipNote,card_mailed,card_mailed_all_in,1.99,usd,https://www.shipnote.co/blog/postable-alternatives,2026-11-02,S,own blog; 10+ cards
+2026-11,Postable,card_mailed,single_card_mailed_all_in,6.11,usd,https://www.shipnote.co/blog/postable-alternatives,2026-11-02,S,competitor blog
+2026-11,Market,category,cross_product_likeness_cards_and_books,not found,text,see 03-monthly-report-2026-11.md section 3,2026-11-02,U,absence of evidence only
+2026-11,GreetHub,ours,book_24pp_all_in,44.99,usd,app/packages/shared/src/pricing.ts,2026-11-02,V,unchanged
+2026-11,GreetHub,ours,book_32pp_all_in,54.99,usd,app/packages/shared/src/pricing.ts,2026-11-02,V,unchanged
+2026-11,GreetHub,ours,card_mailed_all_in,10.98,usd,app/packages/shared/src/pricing.ts,2026-11-02,V,unchanged
+2026-11,GreetHub,ours,digital_book,19.99,usd,app/packages/shared/src/pricing.ts,2026-11-02,V,unchanged
+2026-11,GreetHub,ours,ready_card_mailed_all_in,10.48,usd,app/packages/shared/src/pricing.ts,2026-11-02,V,branch stock-templates; CFO proposal 7.49 + 2.99; not approved
+2026-11,GreetHub,ours,ready_card_digital,3.49,usd,app/packages/shared/src/pricing.ts,2026-11-02,V,branch stock-templates; not approved
+2026-11,GreetHub,ours,print_vendor_selected,no,text,owner conversation 2026-11-02,2026-11-02,U,candidates Lulu; Gooten; Prodigi; Thanks.io; Handwrytten
+2026-11,Gooten,print_vendor,folded_5x7_card,1.85,usd,owner conversation 2026-11-02,2026-11-02,U,plus shipping from 4.99; not verified by me
+2026-11,Prodigi,print_vendor,mail4me_us,no (UK only),text,owner conversation 2026-11-02,2026-11-02,U,US self-send SKUs GLOBAL-GRE-MOH-7X5-BLA and GLOBAL-GRE-GLOS-7X5-BLA; not verified by me
